@@ -84,7 +84,7 @@
 //	[_signOutButton addTarget:self action:@selector(signOut:) forControlEvents:UIControlEventTouchUpInside];
 //	[self.view addSubview:_signOutButton];
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_updateUI) name:kCDKPlusDidChangeNotificationName object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_updateUI) name:kIPKPlusDidChangeNotificationName object:nil];
 	[self _updateUI];
 }
 
@@ -127,7 +127,7 @@
 #pragma mark - Private
 
 - (void)_updateUI {
-	CDKUser *user = [CDKUser currentUser];
+	IPKUser *user = [IPKUser currentUser];
 	if (user.hasPlus.boolValue) {
 		NSString *text = @"You currently have a Plus account. You're awesome! You can create unlimited lists!";
 		[_label setText:text afterInheritingLabelAttributesAndConfiguringWithBlock:^NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {

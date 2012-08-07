@@ -48,7 +48,7 @@
 	_webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	_webView.delegate = self;
 	_webView.alpha = 0.0f;
-	[_webView loadURLString:[NSString stringWithFormat:@"https://api.cheddarapp.com/oauth/authorize?client_id=%@", kCDIAPIClientID]];
+//	[_webView loadURLString:[NSString stringWithFormat:@"https://api.cheddarapp.com/oauth/authorize?client_id=%@", kCDIAPIClientID]];
 	[self.view addSubview:_webView];
 }
 
@@ -71,13 +71,13 @@
 		_webView.alpha = 0.0f;
 	} completion:nil];
 	
-	[[CDKHTTPClient sharedClient] signInWithAuthorizationCode:code success:^(AFJSONRequestOperation *operation, id responseObject) {
-		[self.navigationController dismissModalViewControllerAnimated:YES];
-	} failure:^(AFJSONRequestOperation *operation, NSError *error) {
-		NSLog(@"Failed to sign in: %@", error);
-		[_webView loadURLString:[NSString stringWithFormat:@"https://api.cheddarapp.com/oauth/authorize?client_id=%@", kCDIAPIClientID]];
-		_authorizing = NO;
-	}];
+//	[[CDKHTTPClient sharedClient] signInWithAuthorizationCode:code success:^(AFJSONRequestOperation *operation, id responseObject) {
+//		[self.navigationController dismissModalViewControllerAnimated:YES];
+//	} failure:^(AFJSONRequestOperation *operation, NSError *error) {
+//		NSLog(@"Failed to sign in: %@", error);
+//		[_webView loadURLString:[NSString stringWithFormat:@"https://api.cheddarapp.com/oauth/authorize?client_id=%@", kCDIAPIClientID]];
+//		_authorizing = NO;
+//	}];
 }
 
 

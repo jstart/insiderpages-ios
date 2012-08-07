@@ -7,13 +7,12 @@
 //
 
 #import "CDIAppDelegate.h"
-#import "CDISplitViewController.h"
-#import "CDIListsViewController.h"
-#import "CDITransactionObserver.h"
+//#import "CDISplitViewController.h"
+//#import "CDIListsViewController.h"
 #import "CDIDefines.h"
 #import "UIFont+CheddariOSAdditions.h"
 #import "LocalyticsUtilities.h"
-#import <Crashlytics/Crashlytics.h>
+//#import <Crashlytics/Crashlytics.h>
 #import <StoreKit/StoreKit.h>
 
 @implementation CDIAppDelegate
@@ -52,13 +51,13 @@
 	
 	[[self class] applyStylesheet];
 	
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-		self.window.rootViewController = [[CDISplitViewController alloc] init];
-	} else {
-		UIViewController *viewController = [[CDIListsViewController alloc] init];
-		UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-		self.window.rootViewController = navigationController;
-	}
+//	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+//		self.window.rootViewController = [[CDISplitViewController alloc] init];
+//	} else {
+//		UIViewController *viewController = [[CDIListsViewController alloc] init];
+//		UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+//		self.window.rootViewController = navigationController;
+//	}
 	
 	[self.window makeKeyAndVisible];
 	
@@ -68,13 +67,13 @@
 		[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
 		
 		// Set the OAuth client
-		[[CDKHTTPClient sharedClient] setClientID:kCDIAPIClientID secret:kCDIAPIClientSecret];
+//		[[CDKHTTPClient sharedClient] setClientID:kCDIAPIClientID secret:kCDIAPIClientSecret];
 		
 		// Initialize the connection to Pusher		
-		[CDKPushController sharedController];
+//		[CDKPushController sharedController];
 		
 		// Add the transaction observer
-		[[SKPaymentQueue defaultQueue] addTransactionObserver:[CDITransactionObserver defaultObserver]];
+//		[[SKPaymentQueue defaultQueue] addTransactionObserver:[CDITransactionObserver defaultObserver]];
 	});
 
 	return YES;

@@ -8,10 +8,8 @@
 
 #import "CDITableViewCell.h"
 
-@class CDKList;
-
 @interface CDIListTableViewCell : CDITableViewCell
 
-@property (nonatomic, strong) CDKList *list;
+@property (nonatomic, strong) IPKPage *list;
 
 @end

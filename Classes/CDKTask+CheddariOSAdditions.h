@@ -6,9 +6,7 @@
 //  Copyright (c) 2012 Nothing Magical. All rights reserved.
 //
 
-#import <CheddarKit/CheddarKit.h>
-
-@interface CDKTask (CheddariOSAdditions)
+@interface IPKProvider (CheddariOSAdditions)
 
 - (NSAttributedString *)attributedDisplayText;
 - (void)addEntitiesToAttributedString:(NSMutableAttributedString *)attributedString;

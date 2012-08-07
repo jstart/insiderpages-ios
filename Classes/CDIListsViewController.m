@@ -16,7 +16,6 @@
 #import "CDIUpgradeViewController.h"
 #import "CDINoListsView.h"
 #import "CDIAddListTableViewCell.h"
-#import "SMTEDelegateController.h"
 #import <SSToolkit/UIScrollView+SSToolkitAdditions.h>
 
 #ifdef CHEDDAR_USE_PASSWORD_FLOW
@@ -28,7 +27,6 @@
 NSString *const kCDISelectedListKey = @"CDISelectedListKey";
 
 @interface CDIListsViewController ()
-@property (nonatomic, strong) SMTEDelegateController *textExpander;
 - (void)_listUpdated:(NSNotification *)notification;
 - (void)_currentUserDidChange:(NSNotification *)notification;
 - (void)_createList:(id)sender;
@@ -77,11 +75,6 @@ NSString *const kCDISelectedListKey = @"CDISelectedListKey";
 	_checkForOneList = YES;
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_currentUserDidChange:) name:kCDKCurrentUserChangedNotificationName object:nil];
 	
-	if ([SMTEDelegateController isTextExpanderTouchInstalled]) {
-		self.textExpander = [[SMTEDelegateController alloc] init];
-		self.textExpander.nextDelegate = self;
-		[[NSNotificationCenter defaultCenter] addObserver:self.textExpander selector:@selector(willEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
-	}
 }
 
 

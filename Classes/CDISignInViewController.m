@@ -37,16 +37,16 @@
 	SSHUDView *hud = [[SSHUDView alloc] initWithTitle:@"Signing in..." loading:YES];
 	[hud show];
 	
-	[[CDKHTTPClient sharedClient] signInWithLogin:self.usernameTextField.text password:self.passwordTextField.text success:^(AFJSONRequestOperation *operation, id responseObject) {
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[hud completeAndDismissWithTitle:@"Signed In!"];
-			[self.navigationController dismissModalViewControllerAnimated:YES];
-		});
-	} failure:^(AFJSONRequestOperation *operation, NSError *error) {
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[hud failAndDismissWithTitle:[[operation response] statusCode] == 401 ? @"Invalid" : @"Failed"];
-		});
-	}];
+//	[[CDKHTTPClient sharedClient] signInWithLogin:self.usernameTextField.text password:self.passwordTextField.text success:^(AFJSONRequestOperation *operation, id responseObject) {
+//		dispatch_async(dispatch_get_main_queue(), ^{
+//			[hud completeAndDismissWithTitle:@"Signed In!"];
+//			[self.navigationController dismissModalViewControllerAnimated:YES];
+//		});
+//	} failure:^(AFJSONRequestOperation *operation, NSError *error) {
+//		dispatch_async(dispatch_get_main_queue(), ^{
+//			[hud failAndDismissWithTitle:[[operation response] statusCode] == 401 ? @"Invalid" : @"Failed"];
+//		});
+//	}];
 }
 
 

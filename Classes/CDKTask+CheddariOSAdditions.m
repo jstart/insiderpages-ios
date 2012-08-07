@@ -9,7 +9,7 @@
 #import "CDKTask+CheddariOSAdditions.h"
 #import "TTTAttributedLabel.h"
 
-@implementation CDKTask (CheddariOSAdditions)
+@implementation IPKProvider (CheddariOSAdditions)
 - (NSAttributedString *)attributedDisplayText {
 	if (!self.displayText) {
 		if (!self.text) {

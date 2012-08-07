@@ -13,10 +13,10 @@
 
 @synthesize list = _list;
 
-- (void)setList:(CDKList *)list {
+- (void)setList:(IPKPage *)list {
 	_list = list;
 	
-	self.textLabel.text = list.title;
+	self.textLabel.text = list.name;
 	[self setNeedsLayout];
 }
 

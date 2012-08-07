@@ -65,16 +65,16 @@
 	SSHUDView *hud = [[SSHUDView alloc] initWithTitle:@"Signing up..." loading:YES];
 	[hud show];
 	
-	[[CDKHTTPClient sharedClient] signUpWithUsername:self.usernameTextField.text email:self.emailTextField.text password:self.passwordTextField.text success:^(AFJSONRequestOperation *operation, id responseObject) {
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[hud completeAndDismissWithTitle:@"Signed Up!"];
-			[self.navigationController dismissModalViewControllerAnimated:YES];
-		});
-	} failure:^(AFJSONRequestOperation *operation, NSError *error) {
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[hud failAndDismissWithTitle:@"Failed"];
-		});
-	}];
+//	[[CDKHTTPClient sharedClient] signUpWithUsername:self.usernameTextField.text email:self.emailTextField.text password:self.passwordTextField.text success:^(AFJSONRequestOperation *operation, id responseObject) {
+//		dispatch_async(dispatch_get_main_queue(), ^{
+//			[hud completeAndDismissWithTitle:@"Signed Up!"];
+//			[self.navigationController dismissModalViewControllerAnimated:YES];
+//		});
+//	} failure:^(AFJSONRequestOperation *operation, NSError *error) {
+//		dispatch_async(dispatch_get_main_queue(), ^{
+//			[hud failAndDismissWithTitle:@"Failed"];
+//		});
+//	}];
 }
 
 

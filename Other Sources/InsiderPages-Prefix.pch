@@ -1,9 +1,7 @@
 //
-//  Cheddar for iOS-Prefix.pch
-//  Cheddar for iOS
+//  InsiderPages for iOS-Prefix.pch
+//  InsiderPages for iOS
 //
-//  Created by Sam Soffes on 3/25/12.
-//  Copyright (c) 2012 Nothing Magical. All rights reserved.
 //
 
 #import <Availability.h>
@@ -16,7 +14,7 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import <CoreData/CoreData.h>
-	#import <CheddarKit/CheddarKit.h>
+	#import <InsiderPagesKit/InsiderPagesKit.h>
 	#import <SSToolkit/SSToolkit.h>
 	#import "CDIDefines.h"
 #endif

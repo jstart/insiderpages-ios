@@ -12,7 +12,6 @@
 #import "UIColor+CheddariOSAdditions.h"
 #import "UIFont+CheddariOSAdditions.h"
 #import "UIButton+CheddariOSAdditions.h"
-#import "SMTEDelegateController.h"
 
 @interface CDIAddTaskView () <UITextFieldDelegate>
 @property (nonatomic, strong) SMTEDelegateController *textExpander;
@@ -61,7 +60,6 @@
 #pragma mark - NSObject
 
 - (void)dealloc {
-	[[NSNotificationCenter defaultCenter] removeObserver:self.textExpander];
 }
 
 
@@ -128,12 +126,6 @@
 		_shadowView.alpha = 0.0f;
 		[self addSubview:_shadowView];
 		
-		if ([SMTEDelegateController isTextExpanderTouchInstalled]) {
-			self.textExpander = [[SMTEDelegateController alloc] init];
-			self.textExpander.nextDelegate = self;
-			_textField.delegate = self.textExpander;
-			[[NSNotificationCenter defaultCenter] addObserver:self.textExpander selector:@selector(willEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
-		}
 	}
 	return self;
 }
