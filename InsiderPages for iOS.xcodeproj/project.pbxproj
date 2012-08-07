@@ -113,7 +113,6 @@
 		B208BC9A15BF63A80080705D /* textfield@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B208BC2615BF63A80080705D /* textfield@2x.png */; };
 		B208BC9B15BF63A80080705D /* x.png in Resources */ = {isa = PBXBuildFile; fileRef = B208BC2715BF63A80080705D /* x.png */; };
 		B208BC9C15BF63A80080705D /* x@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B208BC2815BF63A80080705D /* x@2x.png */; };
-		B208C10115BF63E20080705D /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B208BE4315BF63E00080705D /* Crashlytics.framework */; };
 		B208C10F15BF63E20080705D /* LocalyticsDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BE6015BF63E00080705D /* LocalyticsDatabase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B208C11015BF63E20080705D /* LocalyticsSession.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BE6215BF63E00080705D /* LocalyticsSession.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B208C11115BF63E20080705D /* LocalyticsUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BE6415BF63E00080705D /* LocalyticsUploader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -131,7 +130,6 @@
 		B208C1F915BF64630080705D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B208C1F115BF64630080705D /* Security.framework */; };
 		B208C1FA15BF64630080705D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B208C1F215BF64630080705D /* SystemConfiguration.framework */; };
 		B208C1FB15BF64630080705D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B208C1F315BF64630080705D /* UIKit.framework */; };
-		B208C5FC15BF658D0080705D /* libCheddarKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B208C5BF15BF654B0080705D /* libCheddarKit.a */; };
 		B23261AA15C207FF00D455EF /* CDIWebSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B23261A915C207FF00D455EF /* CDIWebSignInViewController.m */; };
 		B26AE9B415C5CF2B0008AB1F /* CDISettingsTapPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B26AE9B315C5CF2B0008AB1F /* CDISettingsTapPickerViewController.m */; };
 		B26AE9B715C5D0040008AB1F /* CDISettingsTextSizePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B26AE9B615C5D0040008AB1F /* CDISettingsTextSizePickerViewController.m */; };
@@ -151,7 +149,6 @@
 		B28FD2DC15BF742D00365CD6 /* Gotham-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = B28FD2D615BF742D00365CD6 /* Gotham-BoldItalic.otf */; };
 		B28FD2DD15BF742D00365CD6 /* Gotham-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = B28FD2D715BF742D00365CD6 /* Gotham-Book.otf */; };
 		B28FD2DE15BF742D00365CD6 /* Gotham-BookItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = B28FD2D815BF742D00365CD6 /* Gotham-BookItalic.otf */; };
-		B28FD2E215BF755600365CD6 /* Cheddar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B28FD2E015BF755600365CD6 /* Cheddar.xcdatamodeld */; };
 		B28FD2E815BF774D00365CD6 /* CDIDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = B28FD2E715BF774D00365CD6 /* CDIDefines.m */; };
 		B290118A15C49B07008FC626 /* toolbar-background-mini.png in Resources */ = {isa = PBXBuildFile; fileRef = B290118615C49B07008FC626 /* toolbar-background-mini.png */; };
 		B290118B15C49B07008FC626 /* toolbar-background-mini@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B290118715C49B07008FC626 /* toolbar-background-mini@2x.png */; };
@@ -193,9 +190,35 @@
 		B2AD02EE15C475B100D9B909 /* nav-button-mini@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B2AD02EA15C475B100D9B909 /* nav-button-mini@2x.png */; };
 		B2AD02F015C47BF000D9B909 /* nav-background-mini.png in Resources */ = {isa = PBXBuildFile; fileRef = B2AD02EF15C47BF000D9B909 /* nav-background-mini.png */; };
 		B2AD02F215C47E4300D9B909 /* nav-background-mini@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B2AD02F115C47E4300D9B909 /* nav-background-mini@2x.png */; };
-		B2AD02F415C482B200D9B909 /* TextExpander.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2AD02F315C482B200D9B909 /* TextExpander.framework */; };
 		B2AD031915C4896E00D9B909 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2AD031815C4896E00D9B909 /* AudioToolbox.framework */; };
 		B2AD032115C493C200D9B909 /* CDIWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2AD032015C493C100D9B909 /* CDIWebViewController.m */; };
+		FDAEF9AE15D1DB4E009FAD52 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = FDAEF96C15D1DB4E009FAD52 /* .gitignore */; };
+		FDAEF9AF15D1DB4E009FAD52 /* .gitmodules in Resources */ = {isa = PBXBuildFile; fileRef = FDAEF96D15D1DB4E009FAD52 /* .gitmodules */; };
+		FDAEF9B015D1DB4E009FAD52 /* IPKDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAEF97115D1DB4E009FAD52 /* IPKDefines.m */; };
+		FDAEF9B115D1DB4E009FAD52 /* IPKHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAEF97315D1DB4E009FAD52 /* IPKHTTPClient.m */; };
+		FDAEF9B215D1DB4E009FAD52 /* IPKPushController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAEF97515D1DB4E009FAD52 /* IPKPushController.m */; };
+		FDAEF9B315D1DB4E009FAD52 /* IPKQueryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAEF97715D1DB4E009FAD52 /* IPKQueryModel.m */; };
+		FDAEF9B415D1DB4E009FAD52 /* IPKRemoteManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAEF97915D1DB4E009FAD52 /* IPKRemoteManagedObject.m */; };
+		FDAEF9B515D1DB4E009FAD52 /* IPKActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAEF97C15D1DB4E009FAD52 /* IPKActivity.m */; };
+		FDAEF9B615D1DB4E009FAD52 /* IPKList.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAEF97E15D1DB4E009FAD52 /* IPKList.m */; };
+		FDAEF9B715D1DB4E009FAD52 /* IPKNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAEF98015D1DB4E009FAD52 /* IPKNotification.m */; };
+		FDAEF9B815D1DB4E009FAD52 /* IPKPage.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAEF98215D1DB4E009FAD52 /* IPKPage.m */; };
+		FDAEF9B915D1DB4E009FAD52 /* IPKProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAEF98415D1DB4E009FAD52 /* IPKProvider.m */; };
+		FDAEF9BA15D1DB4E009FAD52 /* IPKTag.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAEF98615D1DB4E009FAD52 /* IPKTag.m */; };
+		FDAEF9BB15D1DB4E009FAD52 /* IPKTask.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAEF98815D1DB4E009FAD52 /* IPKTask.m */; };
+		FDAEF9BC15D1DB4E009FAD52 /* IPKUser.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAEF98A15D1DB4E009FAD52 /* IPKUser.m */; };
+		FDAEF9BD15D1DB4E009FAD52 /* NSDictionary+InsiderPagesKit.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAEF98C15D1DB4E009FAD52 /* NSDictionary+InsiderPagesKit.m */; };
+		FDAEF9BE15D1DB4E009FAD52 /* NSMutableDictionary+InsiderPagesKit.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAEF98E15D1DB4E009FAD52 /* NSMutableDictionary+InsiderPagesKit.m */; };
+		FDAEF9BF15D1DB4E009FAD52 /* NSString+InsiderPagesKit.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAEF99015D1DB4E009FAD52 /* NSString+InsiderPagesKit.m */; };
+		FDAEF9C015D1DB4E009FAD52 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FDAEF99B15D1DB4E009FAD52 /* InfoPlist.strings */; };
+		FDAEF9C115D1DB4E009FAD52 /* InsiderPagesKitTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FDAEF99D15D1DB4E009FAD52 /* InsiderPagesKitTests-Info.plist */; };
+		FDAEF9C215D1DB4E009FAD52 /* InsiderPagesKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAEF9A015D1DB4E009FAD52 /* InsiderPagesKitTests.m */; };
+		FDAEF9C315D1DB4E009FAD52 /* NSRunLoop+TimeOutAndFlag.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAEF9A215D1DB4E009FAD52 /* NSRunLoop+TimeOutAndFlag.m */; };
+		FDAEF9C415D1DB4E009FAD52 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = FDAEF9A315D1DB4E009FAD52 /* LICENSE */; };
+		FDAEF9C515D1DB4E009FAD52 /* InsiderPages.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FDAEF9A515D1DB4E009FAD52 /* InsiderPages.xcdatamodeld */; };
+		FDAEF9C615D1DB4E009FAD52 /* InsiderPagesKitMac-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FDAEF9A715D1DB4E009FAD52 /* InsiderPagesKitMac-Info.plist */; };
+		FDAEF9C715D1DB4E009FAD52 /* Readme.markdown in Resources */ = {isa = PBXBuildFile; fileRef = FDAEF9A815D1DB4E009FAD52 /* Readme.markdown */; };
+		FDAEF9D115D1DB54009FAD52 /* libInsiderPagesKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FDAEF9CC15D1DB4E009FAD52 /* libInsiderPagesKit.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -234,26 +257,26 @@
 			remoteGlobalIDString = B2C507E9151BA64400E94614;
 			remoteInfo = SSToolkitResources;
 		};
-		B208C5BE15BF654B0080705D /* PBXContainerItemProxy */ = {
+		FDAEF9CB15D1DB4E009FAD52 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = B208C21215BF65490080705D /* CheddarKit.xcodeproj */;
+			containerPortal = FDAEF99715D1DB4E009FAD52 /* InsiderPagesKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = B244408515BE53DC00D4D4CA;
-			remoteInfo = CheddarKit;
+			remoteInfo = InsiderPagesKit;
 		};
-		B208C5FA15BF656C0080705D /* PBXContainerItemProxy */ = {
+		FDAEF9CD15D1DB4E009FAD52 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = B208C21215BF65490080705D /* CheddarKit.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = B244408415BE53DC00D4D4CA;
-			remoteInfo = CheddarKit;
-		};
-		B2A2B05C15C0B64700772CF6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B208C21215BF65490080705D /* CheddarKit.xcodeproj */;
+			containerPortal = FDAEF99715D1DB4E009FAD52 /* InsiderPagesKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = B2D8D59015BF7EE600A61836;
-			remoteInfo = CheddarKitMac;
+			remoteInfo = InsiderPagesKitMac;
+		};
+		FDAEF9CF15D1DB4E009FAD52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FDAEF99715D1DB4E009FAD52 /* InsiderPagesKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FD76561C15C9D6FF00A3D10A;
+			remoteInfo = InsiderPagesKitTests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -397,7 +420,6 @@
 		B208BC2615BF63A80080705D /* textfield@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "textfield@2x.png"; sourceTree = "<group>"; };
 		B208BC2715BF63A80080705D /* x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = x.png; sourceTree = "<group>"; };
 		B208BC2815BF63A80080705D /* x@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "x@2x.png"; sourceTree = "<group>"; };
-		B208BE4315BF63E00080705D /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		B208BE5F15BF63E00080705D /* LocalyticsDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalyticsDatabase.h; sourceTree = "<group>"; };
 		B208BE6015BF63E00080705D /* LocalyticsDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalyticsDatabase.m; sourceTree = "<group>"; };
 		B208BE6115BF63E00080705D /* LocalyticsSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalyticsSession.h; sourceTree = "<group>"; };
@@ -425,10 +447,9 @@
 		B208C1F115BF64630080705D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		B208C1F215BF64630080705D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		B208C1F315BF64630080705D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		B208C21215BF65490080705D /* CheddarKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = CheddarKit.xcodeproj; sourceTree = "<group>"; };
 		B23261A815C207FF00D455EF /* CDIWebSignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIWebSignInViewController.h; sourceTree = "<group>"; };
 		B23261A915C207FF00D455EF /* CDIWebSignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIWebSignInViewController.m; sourceTree = "<group>"; };
-		B23FA755151FE0710069A0D1 /* Cheddar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cheddar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B23FA755151FE0710069A0D1 /* InsiderPages-Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "InsiderPages-Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B26AE9B215C5CF2B0008AB1F /* CDISettingsTapPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDISettingsTapPickerViewController.h; sourceTree = "<group>"; };
 		B26AE9B315C5CF2B0008AB1F /* CDISettingsTapPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDISettingsTapPickerViewController.m; sourceTree = "<group>"; };
 		B26AE9B515C5D0040008AB1F /* CDISettingsTextSizePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDISettingsTextSizePickerViewController.h; sourceTree = "<group>"; };
@@ -451,8 +472,6 @@
 		B28FD2D615BF742D00365CD6 /* Gotham-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Gotham-BoldItalic.otf"; sourceTree = "<group>"; };
 		B28FD2D715BF742D00365CD6 /* Gotham-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Gotham-Book.otf"; sourceTree = "<group>"; };
 		B28FD2D815BF742D00365CD6 /* Gotham-BookItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Gotham-BookItalic.otf"; sourceTree = "<group>"; };
-		B28FD2E115BF755600365CD6 /* Cheddar.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Cheddar.xcdatamodel; sourceTree = "<group>"; };
-		B28FD2E315BF756800365CD6 /* Cheddar 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Cheddar 2.xcdatamodel"; sourceTree = "<group>"; };
 		B28FD2E415BF761C00365CD6 /* CDIDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIDefines.h; sourceTree = "<group>"; };
 		B28FD2E715BF774D00365CD6 /* CDIDefines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIDefines.m; sourceTree = "<group>"; };
 		B290118615C49B07008FC626 /* toolbar-background-mini.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbar-background-mini.png"; sourceTree = "<group>"; };
@@ -497,10 +516,56 @@
 		B2AD02EA15C475B100D9B909 /* nav-button-mini@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-button-mini@2x.png"; sourceTree = "<group>"; };
 		B2AD02EF15C47BF000D9B909 /* nav-background-mini.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-background-mini.png"; sourceTree = "<group>"; };
 		B2AD02F115C47E4300D9B909 /* nav-background-mini@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-background-mini@2x.png"; sourceTree = "<group>"; };
-		B2AD02F315C482B200D9B909 /* TextExpander.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TextExpander.framework; sourceTree = "<group>"; };
 		B2AD031815C4896E00D9B909 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		B2AD031F15C493C100D9B909 /* CDIWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIWebViewController.h; sourceTree = "<group>"; };
 		B2AD032015C493C100D9B909 /* CDIWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIWebViewController.m; sourceTree = "<group>"; };
+		FDAEF96C15D1DB4E009FAD52 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		FDAEF96D15D1DB4E009FAD52 /* .gitmodules */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitmodules; sourceTree = "<group>"; };
+		FDAEF96F15D1DB4E009FAD52 /* InsiderPagesKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InsiderPagesKit.h; sourceTree = "<group>"; };
+		FDAEF97015D1DB4E009FAD52 /* IPKDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPKDefines.h; sourceTree = "<group>"; };
+		FDAEF97115D1DB4E009FAD52 /* IPKDefines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPKDefines.m; sourceTree = "<group>"; };
+		FDAEF97215D1DB4E009FAD52 /* IPKHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPKHTTPClient.h; sourceTree = "<group>"; };
+		FDAEF97315D1DB4E009FAD52 /* IPKHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPKHTTPClient.m; sourceTree = "<group>"; };
+		FDAEF97415D1DB4E009FAD52 /* IPKPushController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPKPushController.h; sourceTree = "<group>"; };
+		FDAEF97515D1DB4E009FAD52 /* IPKPushController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPKPushController.m; sourceTree = "<group>"; };
+		FDAEF97615D1DB4E009FAD52 /* IPKQueryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPKQueryModel.h; sourceTree = "<group>"; };
+		FDAEF97715D1DB4E009FAD52 /* IPKQueryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPKQueryModel.m; sourceTree = "<group>"; };
+		FDAEF97815D1DB4E009FAD52 /* IPKRemoteManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPKRemoteManagedObject.h; sourceTree = "<group>"; };
+		FDAEF97915D1DB4E009FAD52 /* IPKRemoteManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPKRemoteManagedObject.m; sourceTree = "<group>"; };
+		FDAEF97B15D1DB4E009FAD52 /* IPKActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPKActivity.h; sourceTree = "<group>"; };
+		FDAEF97C15D1DB4E009FAD52 /* IPKActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPKActivity.m; sourceTree = "<group>"; };
+		FDAEF97D15D1DB4E009FAD52 /* IPKList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPKList.h; sourceTree = "<group>"; };
+		FDAEF97E15D1DB4E009FAD52 /* IPKList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPKList.m; sourceTree = "<group>"; };
+		FDAEF97F15D1DB4E009FAD52 /* IPKNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPKNotification.h; sourceTree = "<group>"; };
+		FDAEF98015D1DB4E009FAD52 /* IPKNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPKNotification.m; sourceTree = "<group>"; };
+		FDAEF98115D1DB4E009FAD52 /* IPKPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPKPage.h; sourceTree = "<group>"; };
+		FDAEF98215D1DB4E009FAD52 /* IPKPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPKPage.m; sourceTree = "<group>"; };
+		FDAEF98315D1DB4E009FAD52 /* IPKProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPKProvider.h; sourceTree = "<group>"; };
+		FDAEF98415D1DB4E009FAD52 /* IPKProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPKProvider.m; sourceTree = "<group>"; };
+		FDAEF98515D1DB4E009FAD52 /* IPKTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPKTag.h; sourceTree = "<group>"; };
+		FDAEF98615D1DB4E009FAD52 /* IPKTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPKTag.m; sourceTree = "<group>"; };
+		FDAEF98715D1DB4E009FAD52 /* IPKTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPKTask.h; sourceTree = "<group>"; };
+		FDAEF98815D1DB4E009FAD52 /* IPKTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPKTask.m; sourceTree = "<group>"; };
+		FDAEF98915D1DB4E009FAD52 /* IPKUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPKUser.h; sourceTree = "<group>"; };
+		FDAEF98A15D1DB4E009FAD52 /* IPKUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPKUser.m; sourceTree = "<group>"; };
+		FDAEF98B15D1DB4E009FAD52 /* NSDictionary+InsiderPagesKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+InsiderPagesKit.h"; sourceTree = "<group>"; };
+		FDAEF98C15D1DB4E009FAD52 /* NSDictionary+InsiderPagesKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+InsiderPagesKit.m"; sourceTree = "<group>"; };
+		FDAEF98D15D1DB4E009FAD52 /* NSMutableDictionary+InsiderPagesKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+InsiderPagesKit.h"; sourceTree = "<group>"; };
+		FDAEF98E15D1DB4E009FAD52 /* NSMutableDictionary+InsiderPagesKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+InsiderPagesKit.m"; sourceTree = "<group>"; };
+		FDAEF98F15D1DB4E009FAD52 /* NSString+InsiderPagesKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+InsiderPagesKit.h"; sourceTree = "<group>"; };
+		FDAEF99015D1DB4E009FAD52 /* NSString+InsiderPagesKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+InsiderPagesKit.m"; sourceTree = "<group>"; };
+		FDAEF99715D1DB4E009FAD52 /* InsiderPagesKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = InsiderPagesKit.xcodeproj; sourceTree = "<group>"; };
+		FDAEF99C15D1DB4E009FAD52 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FDAEF99D15D1DB4E009FAD52 /* InsiderPagesKitTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "InsiderPagesKitTests-Info.plist"; sourceTree = "<group>"; };
+		FDAEF99E15D1DB4E009FAD52 /* InsiderPagesKitTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "InsiderPagesKitTests-Prefix.pch"; sourceTree = "<group>"; };
+		FDAEF99F15D1DB4E009FAD52 /* InsiderPagesKitTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InsiderPagesKitTests.h; sourceTree = "<group>"; };
+		FDAEF9A015D1DB4E009FAD52 /* InsiderPagesKitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InsiderPagesKitTests.m; sourceTree = "<group>"; };
+		FDAEF9A115D1DB4E009FAD52 /* NSRunLoop+TimeOutAndFlag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSRunLoop+TimeOutAndFlag.h"; sourceTree = "<group>"; };
+		FDAEF9A215D1DB4E009FAD52 /* NSRunLoop+TimeOutAndFlag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSRunLoop+TimeOutAndFlag.m"; sourceTree = "<group>"; };
+		FDAEF9A315D1DB4E009FAD52 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		FDAEF9A615D1DB4E009FAD52 /* InsiderPages.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = InsiderPages.xcdatamodel; sourceTree = "<group>"; };
+		FDAEF9A715D1DB4E009FAD52 /* InsiderPagesKitMac-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "InsiderPagesKitMac-Info.plist"; sourceTree = "<group>"; };
+		FDAEF9A815D1DB4E009FAD52 /* Readme.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme.markdown; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -508,6 +573,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDAEF9D115D1DB54009FAD52 /* libInsiderPagesKit.a in Frameworks */,
 				B2AD031915C4896E00D9B909 /* AudioToolbox.framework in Frameworks */,
 				B28FD2D115BF739300365CD6 /* libicucore.dylib in Frameworks */,
 				B208C1F715BF64630080705D /* MobileCoreServices.framework in Frameworks */,
@@ -517,7 +583,6 @@
 				B28FD2C215BF731B00365CD6 /* MessageUI.framework in Frameworks */,
 				B28FD2C015BF731100365CD6 /* CoreGraphics.framework in Frameworks */,
 				B28FD2BE15BF730100365CD6 /* CFNetwork.framework in Frameworks */,
-				B208C5FC15BF658D0080705D /* libCheddarKit.a in Frameworks */,
 				B208C1F415BF64630080705D /* CoreData.framework in Frameworks */,
 				B208C1F515BF64630080705D /* CoreText.framework in Frameworks */,
 				B208C1F615BF64630080705D /* Foundation.framework in Frameworks */,
@@ -526,8 +591,6 @@
 				B208C1FA15BF64630080705D /* SystemConfiguration.framework in Frameworks */,
 				B208C1FB15BF64630080705D /* UIKit.framework in Frameworks */,
 				B208C1EB15BF64630080705D /* libSSToolkit.a in Frameworks */,
-				B208C10115BF63E20080705D /* Crashlytics.framework in Frameworks */,
-				B2AD02F415C482B200D9B909 /* TextExpander.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -690,13 +753,11 @@
 		B208BC9D15BF63E00080705D /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				B208C1FD15BF65490080705D /* CheddarKit */,
+				FDAEF96B15D1DB4E009FAD52 /* InsiderPagesKit */,
 				B208BE5E15BF63E00080705D /* Localytics */,
 				B208BEBF15BF63E00080705D /* SSPullToRefresh */,
 				B208BECA15BF63E00080705D /* SSToolkit */,
 				B208BF7915BF63E00080705D /* TTTAttributedLabel */,
-				B208BE4315BF63E00080705D /* Crashlytics.framework */,
-				B2AD02F315C482B200D9B909 /* TextExpander.framework */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -779,24 +840,6 @@
 				B208C1F315BF64630080705D /* UIKit.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		B208C1FD15BF65490080705D /* CheddarKit */ = {
-			isa = PBXGroup;
-			children = (
-				B28FD2DF15BF755600365CD6 /* Other Sources */,
-				B208C21215BF65490080705D /* CheddarKit.xcodeproj */,
-			);
-			path = CheddarKit;
-			sourceTree = "<group>";
-		};
-		B208C21315BF65490080705D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				B208C5BF15BF654B0080705D /* libCheddarKit.a */,
-				B2A2B05D15C0B64700772CF6 /* CheddarKit.framework */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		B232619F15C206B700D455EF /* Misc */ = {
@@ -927,7 +970,7 @@
 		B23FA756151FE0710069A0D1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B23FA755151FE0710069A0D1 /* Cheddar.app */,
+				B23FA755151FE0710069A0D1 /* InsiderPages-Dev.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -941,14 +984,6 @@
 				B28FD2D815BF742D00365CD6 /* Gotham-BookItalic.otf */,
 			);
 			path = Fonts;
-			sourceTree = "<group>";
-		};
-		B28FD2DF15BF755600365CD6 /* Other Sources */ = {
-			isa = PBXGroup;
-			children = (
-				B28FD2E015BF755600365CD6 /* Cheddar.xcdatamodeld */,
-			);
-			path = "Other Sources";
 			sourceTree = "<group>";
 		};
 		B2D1241F15C1FC3C00ED1218 /* Application */ = {
@@ -1017,12 +1052,156 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
+		FDAEF96B15D1DB4E009FAD52 /* InsiderPagesKit */ = {
+			isa = PBXGroup;
+			children = (
+				FDAEF96C15D1DB4E009FAD52 /* .gitignore */,
+				FDAEF96D15D1DB4E009FAD52 /* .gitmodules */,
+				FDAEF96E15D1DB4E009FAD52 /* InsiderPagesKit */,
+				FDAEF99715D1DB4E009FAD52 /* InsiderPagesKit.xcodeproj */,
+				FDAEF99A15D1DB4E009FAD52 /* InsiderPagesKitTests */,
+				FDAEF9A315D1DB4E009FAD52 /* LICENSE */,
+				FDAEF9A415D1DB4E009FAD52 /* Other Sources */,
+				FDAEF9A815D1DB4E009FAD52 /* Readme.markdown */,
+			);
+			path = InsiderPagesKit;
+			sourceTree = "<group>";
+		};
+		FDAEF96E15D1DB4E009FAD52 /* InsiderPagesKit */ = {
+			isa = PBXGroup;
+			children = (
+				FDAEF96F15D1DB4E009FAD52 /* InsiderPagesKit.h */,
+				FDAEF97015D1DB4E009FAD52 /* IPKDefines.h */,
+				FDAEF97115D1DB4E009FAD52 /* IPKDefines.m */,
+				FDAEF97215D1DB4E009FAD52 /* IPKHTTPClient.h */,
+				FDAEF97315D1DB4E009FAD52 /* IPKHTTPClient.m */,
+				FDAEF97415D1DB4E009FAD52 /* IPKPushController.h */,
+				FDAEF97515D1DB4E009FAD52 /* IPKPushController.m */,
+				FDAEF97615D1DB4E009FAD52 /* IPKQueryModel.h */,
+				FDAEF97715D1DB4E009FAD52 /* IPKQueryModel.m */,
+				FDAEF97815D1DB4E009FAD52 /* IPKRemoteManagedObject.h */,
+				FDAEF97915D1DB4E009FAD52 /* IPKRemoteManagedObject.m */,
+				FDAEF97A15D1DB4E009FAD52 /* Models */,
+				FDAEF98B15D1DB4E009FAD52 /* NSDictionary+InsiderPagesKit.h */,
+				FDAEF98C15D1DB4E009FAD52 /* NSDictionary+InsiderPagesKit.m */,
+				FDAEF98D15D1DB4E009FAD52 /* NSMutableDictionary+InsiderPagesKit.h */,
+				FDAEF98E15D1DB4E009FAD52 /* NSMutableDictionary+InsiderPagesKit.m */,
+				FDAEF98F15D1DB4E009FAD52 /* NSString+InsiderPagesKit.h */,
+				FDAEF99015D1DB4E009FAD52 /* NSString+InsiderPagesKit.m */,
+				FDAEF99115D1DB4E009FAD52 /* Vendor */,
+			);
+			path = InsiderPagesKit;
+			sourceTree = "<group>";
+		};
+		FDAEF97A15D1DB4E009FAD52 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FDAEF97B15D1DB4E009FAD52 /* IPKActivity.h */,
+				FDAEF97C15D1DB4E009FAD52 /* IPKActivity.m */,
+				FDAEF97D15D1DB4E009FAD52 /* IPKList.h */,
+				FDAEF97E15D1DB4E009FAD52 /* IPKList.m */,
+				FDAEF97F15D1DB4E009FAD52 /* IPKNotification.h */,
+				FDAEF98015D1DB4E009FAD52 /* IPKNotification.m */,
+				FDAEF98115D1DB4E009FAD52 /* IPKPage.h */,
+				FDAEF98215D1DB4E009FAD52 /* IPKPage.m */,
+				FDAEF98315D1DB4E009FAD52 /* IPKProvider.h */,
+				FDAEF98415D1DB4E009FAD52 /* IPKProvider.m */,
+				FDAEF98515D1DB4E009FAD52 /* IPKTag.h */,
+				FDAEF98615D1DB4E009FAD52 /* IPKTag.m */,
+				FDAEF98715D1DB4E009FAD52 /* IPKTask.h */,
+				FDAEF98815D1DB4E009FAD52 /* IPKTask.m */,
+				FDAEF98915D1DB4E009FAD52 /* IPKUser.h */,
+				FDAEF98A15D1DB4E009FAD52 /* IPKUser.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		FDAEF99115D1DB4E009FAD52 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				FDAEF99215D1DB4E009FAD52 /* AFIncrementalStore */,
+				FDAEF99315D1DB4E009FAD52 /* Bully */,
+				FDAEF99415D1DB4E009FAD52 /* Reachability */,
+				FDAEF99515D1DB4E009FAD52 /* SSDataKit */,
+				FDAEF99615D1DB4E009FAD52 /* SSKeychain */,
+			);
+			path = Vendor;
+			sourceTree = "<group>";
+		};
+		FDAEF99215D1DB4E009FAD52 /* AFIncrementalStore */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AFIncrementalStore;
+			sourceTree = "<group>";
+		};
+		FDAEF99315D1DB4E009FAD52 /* Bully */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Bully;
+			sourceTree = "<group>";
+		};
+		FDAEF99415D1DB4E009FAD52 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Reachability;
+			sourceTree = "<group>";
+		};
+		FDAEF99515D1DB4E009FAD52 /* SSDataKit */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SSDataKit;
+			sourceTree = "<group>";
+		};
+		FDAEF99615D1DB4E009FAD52 /* SSKeychain */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SSKeychain;
+			sourceTree = "<group>";
+		};
+		FDAEF99815D1DB4E009FAD52 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FDAEF9CC15D1DB4E009FAD52 /* libInsiderPagesKit.a */,
+				FDAEF9CE15D1DB4E009FAD52 /* InsiderPagesKit.framework */,
+				FDAEF9D015D1DB4E009FAD52 /* InsiderPagesKitTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FDAEF99A15D1DB4E009FAD52 /* InsiderPagesKitTests */ = {
+			isa = PBXGroup;
+			children = (
+				FDAEF99B15D1DB4E009FAD52 /* InfoPlist.strings */,
+				FDAEF99D15D1DB4E009FAD52 /* InsiderPagesKitTests-Info.plist */,
+				FDAEF99E15D1DB4E009FAD52 /* InsiderPagesKitTests-Prefix.pch */,
+				FDAEF99F15D1DB4E009FAD52 /* InsiderPagesKitTests.h */,
+				FDAEF9A015D1DB4E009FAD52 /* InsiderPagesKitTests.m */,
+				FDAEF9A115D1DB4E009FAD52 /* NSRunLoop+TimeOutAndFlag.h */,
+				FDAEF9A215D1DB4E009FAD52 /* NSRunLoop+TimeOutAndFlag.m */,
+			);
+			path = InsiderPagesKitTests;
+			sourceTree = "<group>";
+		};
+		FDAEF9A415D1DB4E009FAD52 /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				FDAEF9A515D1DB4E009FAD52 /* InsiderPages.xcdatamodeld */,
+				FDAEF9A715D1DB4E009FAD52 /* InsiderPagesKitMac-Info.plist */,
+			);
+			path = "Other Sources";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B23FA754151FE0710069A0D1 /* Cheddar for iOS */ = {
+		B23FA754151FE0710069A0D1 /* InsiderPages for iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B23FA772151FE0710069A0D1 /* Build configuration list for PBXNativeTarget "Cheddar for iOS" */;
+			buildConfigurationList = B23FA772151FE0710069A0D1 /* Build configuration list for PBXNativeTarget "InsiderPages for iOS" */;
 			buildPhases = (
 				B23FA751151FE0710069A0D1 /* Sources */,
 				B23FA752151FE0710069A0D1 /* Frameworks */,
@@ -1032,13 +1211,12 @@
 			buildRules = (
 			);
 			dependencies = (
-				B208C5FB15BF656C0080705D /* PBXTargetDependency */,
 				B208C1E815BF64240080705D /* PBXTargetDependency */,
 				B208C1EA15BF64240080705D /* PBXTargetDependency */,
 			);
-			name = "Cheddar for iOS";
+			name = "InsiderPages for iOS";
 			productName = Cheddar;
-			productReference = B23FA755151FE0710069A0D1 /* Cheddar.app */;
+			productReference = B23FA755151FE0710069A0D1 /* InsiderPages-Dev.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1051,7 +1229,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Nothing Magical";
 			};
-			buildConfigurationList = B23FA74F151FE0710069A0D1 /* Build configuration list for PBXProject "Cheddar for iOS" */;
+			buildConfigurationList = B23FA74F151FE0710069A0D1 /* Build configuration list for PBXProject "InsiderPages for iOS" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1078,8 +1256,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = B208C21315BF65490080705D /* Products */;
-					ProjectRef = B208C21215BF65490080705D /* CheddarKit.xcodeproj */;
+					ProductGroup = FDAEF99815D1DB4E009FAD52 /* Products */;
+					ProjectRef = FDAEF99715D1DB4E009FAD52 /* InsiderPagesKit.xcodeproj */;
 				},
 				{
 					ProductGroup = B208BF6815BF63E00080705D /* Products */;
@@ -1088,7 +1266,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				B23FA754151FE0710069A0D1 /* Cheddar for iOS */,
+				B23FA754151FE0710069A0D1 /* InsiderPages for iOS */,
 			);
 		};
 /* End PBXProject section */
@@ -1115,18 +1293,25 @@
 			remoteRef = B208C1E215BF63E30080705D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B208C5BF15BF654B0080705D /* libCheddarKit.a */ = {
+		FDAEF9CC15D1DB4E009FAD52 /* libInsiderPagesKit.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libCheddarKit.a;
-			remoteRef = B208C5BE15BF654B0080705D /* PBXContainerItemProxy */;
+			path = libInsiderPagesKit.a;
+			remoteRef = FDAEF9CB15D1DB4E009FAD52 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B2A2B05D15C0B64700772CF6 /* CheddarKit.framework */ = {
+		FDAEF9CE15D1DB4E009FAD52 /* InsiderPagesKit.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = CheddarKit.framework;
-			remoteRef = B2A2B05C15C0B64700772CF6 /* PBXContainerItemProxy */;
+			path = InsiderPagesKit.framework;
+			remoteRef = FDAEF9CD15D1DB4E009FAD52 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FDAEF9D015D1DB4E009FAD52 /* InsiderPagesKitTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = InsiderPagesKitTests.octest;
+			remoteRef = FDAEF9CF15D1DB4E009FAD52 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1254,6 +1439,13 @@
 				B29011BE15C4D247008FC626 /* safari-button-mini@2x.png in Resources */,
 				B29011BF15C4D247008FC626 /* stop-button-mini.png in Resources */,
 				B29011C015C4D247008FC626 /* stop-button-mini@2x.png in Resources */,
+				FDAEF9AE15D1DB4E009FAD52 /* .gitignore in Resources */,
+				FDAEF9AF15D1DB4E009FAD52 /* .gitmodules in Resources */,
+				FDAEF9C015D1DB4E009FAD52 /* InfoPlist.strings in Resources */,
+				FDAEF9C115D1DB4E009FAD52 /* InsiderPagesKitTests-Info.plist in Resources */,
+				FDAEF9C415D1DB4E009FAD52 /* LICENSE in Resources */,
+				FDAEF9C615D1DB4E009FAD52 /* InsiderPagesKitMac-Info.plist in Resources */,
+				FDAEF9C715D1DB4E009FAD52 /* Readme.markdown in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1320,7 +1512,6 @@
 				B208C14115BF63E20080705D /* SSPullToRefreshSimpleContentView.m in Sources */,
 				B208C14215BF63E20080705D /* SSPullToRefreshView.m in Sources */,
 				B208C1A515BF63E20080705D /* TTTAttributedLabel.m in Sources */,
-				B28FD2E215BF755600365CD6 /* Cheddar.xcdatamodeld in Sources */,
 				B28FD2E815BF774D00365CD6 /* CDIDefines.m in Sources */,
 				B2A2B07B15C0BE7300772CF6 /* CDKTask+CheddariOSAdditions.m in Sources */,
 				B23261AA15C207FF00D455EF /* CDIWebSignInViewController.m in Sources */,
@@ -1331,6 +1522,25 @@
 				B26AE9BA15C5D0100008AB1F /* CDISettingsFontPickerViewController.m in Sources */,
 				B26AE9BD15C5D25E0008AB1F /* CDIGroupedTableViewController.m in Sources */,
 				B26AE9C015C5D52D0008AB1F /* CDIPickerViewController.m in Sources */,
+				FDAEF9B015D1DB4E009FAD52 /* IPKDefines.m in Sources */,
+				FDAEF9B115D1DB4E009FAD52 /* IPKHTTPClient.m in Sources */,
+				FDAEF9B215D1DB4E009FAD52 /* IPKPushController.m in Sources */,
+				FDAEF9B315D1DB4E009FAD52 /* IPKQueryModel.m in Sources */,
+				FDAEF9B415D1DB4E009FAD52 /* IPKRemoteManagedObject.m in Sources */,
+				FDAEF9B515D1DB4E009FAD52 /* IPKActivity.m in Sources */,
+				FDAEF9B615D1DB4E009FAD52 /* IPKList.m in Sources */,
+				FDAEF9B715D1DB4E009FAD52 /* IPKNotification.m in Sources */,
+				FDAEF9B815D1DB4E009FAD52 /* IPKPage.m in Sources */,
+				FDAEF9B915D1DB4E009FAD52 /* IPKProvider.m in Sources */,
+				FDAEF9BA15D1DB4E009FAD52 /* IPKTag.m in Sources */,
+				FDAEF9BB15D1DB4E009FAD52 /* IPKTask.m in Sources */,
+				FDAEF9BC15D1DB4E009FAD52 /* IPKUser.m in Sources */,
+				FDAEF9BD15D1DB4E009FAD52 /* NSDictionary+InsiderPagesKit.m in Sources */,
+				FDAEF9BE15D1DB4E009FAD52 /* NSMutableDictionary+InsiderPagesKit.m in Sources */,
+				FDAEF9BF15D1DB4E009FAD52 /* NSString+InsiderPagesKit.m in Sources */,
+				FDAEF9C215D1DB4E009FAD52 /* InsiderPagesKitTests.m in Sources */,
+				FDAEF9C315D1DB4E009FAD52 /* NSRunLoop+TimeOutAndFlag.m in Sources */,
+				FDAEF9C515D1DB4E009FAD52 /* InsiderPages.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1347,12 +1557,18 @@
 			name = SSToolkitResources;
 			targetProxy = B208C1E915BF64240080705D /* PBXContainerItemProxy */;
 		};
-		B208C5FB15BF656C0080705D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = CheddarKit;
-			targetProxy = B208C5FA15BF656C0080705D /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		FDAEF99B15D1DB4E009FAD52 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FDAEF99C15D1DB4E009FAD52 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		B23FA770151FE0710069A0D1 /* Debug */ = {
@@ -1428,7 +1644,7 @@
 					"-all_load",
 					"-ObjC",
 				);
-				PRODUCT_NAME = Cheddar;
+				PRODUCT_NAME = "InsiderPages-Dev";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -1461,7 +1677,7 @@
 					"-all_load",
 					"-ObjC",
 				);
-				PRODUCT_NAME = Cheddar;
+				PRODUCT_NAME = InsiderPages;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1472,7 +1688,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B23FA74F151FE0710069A0D1 /* Build configuration list for PBXProject "Cheddar for iOS" */ = {
+		B23FA74F151FE0710069A0D1 /* Build configuration list for PBXProject "InsiderPages for iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B23FA770151FE0710069A0D1 /* Debug */,
@@ -1481,7 +1697,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B23FA772151FE0710069A0D1 /* Build configuration list for PBXNativeTarget "Cheddar for iOS" */ = {
+		B23FA772151FE0710069A0D1 /* Build configuration list for PBXNativeTarget "InsiderPages for iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B23FA773151FE0710069A0D1 /* Debug */,
@@ -1493,14 +1709,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		B28FD2E015BF755600365CD6 /* Cheddar.xcdatamodeld */ = {
+		FDAEF9A515D1DB4E009FAD52 /* InsiderPages.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				B28FD2E315BF756800365CD6 /* Cheddar 2.xcdatamodel */,
-				B28FD2E115BF755600365CD6 /* Cheddar.xcdatamodel */,
+				FDAEF9A615D1DB4E009FAD52 /* InsiderPages.xcdatamodel */,
 			);
-			currentVersion = B28FD2E315BF756800365CD6 /* Cheddar 2.xcdatamodel */;
-			path = Cheddar.xcdatamodeld;
+			currentVersion = FDAEF9A615D1DB4E009FAD52 /* InsiderPages.xcdatamodel */;
+			path = InsiderPages.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
