@@ -11,7 +11,7 @@
 @class CDKList;
 @class CDKTag;
 
-@interface CDIListViewController : CDIManagedTableViewController
+@interface IPIListViewController : CDIManagedTableViewController
 
 @property (nonatomic, strong, readonly) CDKList *list;
 @property (nonatomic, strong) CDKTag *currentTag;

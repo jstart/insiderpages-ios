@@ -6,22 +6,22 @@
 //  Copyright (c) 2012 Nothing Magical. All rights reserved.
 //
 
-#import "CDIAppDelegate.h"
-//#import "CDISplitViewController.h"
-//#import "CDIListsViewController.h"
+#import "IPIAppDelegate.h"
+#import "IPISplitViewController.h"
+#import "IPIListsViewController.h"
 #import "CDIDefines.h"
 #import "UIFont+CheddariOSAdditions.h"
 #import "LocalyticsUtilities.h"
 //#import <Crashlytics/Crashlytics.h>
 #import <StoreKit/StoreKit.h>
 
-@implementation CDIAppDelegate
+@implementation IPIAppDelegate
 
 @synthesize window = _window;
 
 
-+ (CDIAppDelegate *)sharedAppDelegate {
-	return (CDIAppDelegate *)[[UIApplication sharedApplication] delegate];
++ (IPIAppDelegate *)sharedAppDelegate {
+	return (IPIAppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
 
@@ -51,13 +51,13 @@
 	
 	[[self class] applyStylesheet];
 	
-//	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-//		self.window.rootViewController = [[CDISplitViewController alloc] init];
-//	} else {
-//		UIViewController *viewController = [[CDIListsViewController alloc] init];
-//		UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-//		self.window.rootViewController = navigationController;
-//	}
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+		self.window.rootViewController = [[IPISplitViewController alloc] init];
+	} else {
+		UIViewController *viewController = [[IPIListsViewController alloc] init];
+		UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+		self.window.rootViewController = navigationController;
+	}
 	
 	[self.window makeKeyAndVisible];
 	

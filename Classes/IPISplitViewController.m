@@ -6,15 +6,15 @@
 //  Copyright (c) 2012 Nothing Magical. All rights reserved.
 //
 
-#import "CDISplitViewController.h"
-#import "CDIListsViewController.h"
-#import "CDIListViewController.h"
-#import "CDIAppDelegate.h"
+#import "IPISplitViewController.h"
+#import "IPIListsViewController.h"
+#import "IPIListViewController.h"
+#import "IPIAppDelegate.h"
 
-@interface CDISplitViewController () <UISplitViewControllerDelegate>
+@interface IPISplitViewController () <UISplitViewControllerDelegate>
 @end
 
-@implementation CDISplitViewController
+@implementation IPISplitViewController
 
 @synthesize listsViewController = _listsViewController;
 @synthesize listViewController = _listViewController;
@@ -22,8 +22,8 @@
 
 #pragma mark - Class Methods
 
-+ (CDISplitViewController *)sharedSplitViewController {
-	return (CDISplitViewController *)[[[CDIAppDelegate sharedAppDelegate] window] rootViewController];
++ (IPISplitViewController *)sharedSplitViewController {
+	return (IPISplitViewController *)[[[IPIAppDelegate sharedAppDelegate] window] rootViewController];
 }
 
 
@@ -31,8 +31,8 @@
 
 - (id)init {
 	if ((self = [super init])) {
-		_listsViewController = [[CDIListsViewController alloc] init];
-		_listViewController = [[CDIListViewController alloc] init];
+		_listsViewController = [[IPIListsViewController alloc] init];
+		_listViewController = [[IPIListViewController alloc] init];
 		
 		self.viewControllers = [[NSArray alloc] initWithObjects:
 								[[UINavigationController alloc] initWithRootViewController:_listsViewController],

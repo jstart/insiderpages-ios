@@ -3,7 +3,7 @@
 //  InsiderPages for iOS
 //
 
-#import "CDIAppDelegate.h"
+#import "IPIAppDelegate.h"
 #import "CDITableViewCellDeleteConfirmationControl.h"
 #import <objc/runtime.h>
 
@@ -17,6 +17,6 @@ int main(int argc, char *argv[]) {
 			method_exchangeImplementations(drawRect, drawRectCustom);
 		}
 
-		return UIApplicationMain(argc, argv, nil, NSStringFromClass([CDIAppDelegate class]));
+		return UIApplicationMain(argc, argv, nil, NSStringFromClass([IPIAppDelegate class]));
 	}
 }

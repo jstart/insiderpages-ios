@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		B208BC2915BF63A80080705D /* CDIAddListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BB9315BF63A80080705D /* CDIAddListTableViewCell.m */; };
 		B208BC2A15BF63A80080705D /* CDIAddTaskAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BB9515BF63A80080705D /* CDIAddTaskAnimationView.m */; };
-		B208BC2C15BF63A80080705D /* CDIAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BB9915BF63A80080705D /* CDIAppDelegate.m */; };
+		B208BC2C15BF63A80080705D /* IPIAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BB9915BF63A80080705D /* IPIAppDelegate.m */; };
 		B208BC2D15BF63A80080705D /* CDIAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BB9B15BF63A80080705D /* CDIAttributedLabel.m */; };
 		B208BC3215BF63A80080705D /* CDILoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BBA515BF63A80080705D /* CDILoadingView.m */; };
 		B208BC3315BF63A80080705D /* CDIManagedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BBA715BF63A80080705D /* CDIManagedTableViewController.m */; };
@@ -180,6 +180,10 @@
 		B2AD031915C4896E00D9B909 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2AD031815C4896E00D9B909 /* AudioToolbox.framework */; };
 		B2AD032115C493C200D9B909 /* CDIWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2AD032015C493C100D9B909 /* CDIWebViewController.m */; };
 		FDAEF9D115D1DB54009FAD52 /* libInsiderPagesKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FDAEF9CC15D1DB4E009FAD52 /* libInsiderPagesKit.a */; };
+		FDAEF9DC15D1E258009FAD52 /* IPISplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BBBB15BF63A80080705D /* IPISplitViewController.m */; };
+		FDAEF9DD15D1E25A009FAD52 /* IPIListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BB9F15BF63A80080705D /* IPIListsViewController.m */; };
+		FDAEF9DE15D1E572009FAD52 /* IPIListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BBA315BF63A80080705D /* IPIListViewController.m */; };
+		FDFAD30315D1E88B00ADFB73 /* InsiderPages.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FDFAD30115D1E88B00ADFB73 /* InsiderPages.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -255,18 +259,18 @@
 		B208BB9515BF63A80080705D /* CDIAddTaskAnimationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIAddTaskAnimationView.m; sourceTree = "<group>"; };
 		B208BB9615BF63A80080705D /* CDIAddTaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIAddTaskView.h; sourceTree = "<group>"; };
 		B208BB9715BF63A80080705D /* CDIAddTaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIAddTaskView.m; sourceTree = "<group>"; };
-		B208BB9815BF63A80080705D /* CDIAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIAppDelegate.h; sourceTree = "<group>"; };
-		B208BB9915BF63A80080705D /* CDIAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIAppDelegate.m; sourceTree = "<group>"; };
+		B208BB9815BF63A80080705D /* IPIAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIAppDelegate.h; sourceTree = "<group>"; };
+		B208BB9915BF63A80080705D /* IPIAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIAppDelegate.m; sourceTree = "<group>"; };
 		B208BB9A15BF63A80080705D /* CDIAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIAttributedLabel.h; sourceTree = "<group>"; };
 		B208BB9B15BF63A80080705D /* CDIAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIAttributedLabel.m; sourceTree = "<group>"; };
 		B208BB9C15BF63A80080705D /* CDICreateListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDICreateListViewController.h; sourceTree = "<group>"; };
 		B208BB9D15BF63A80080705D /* CDICreateListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDICreateListViewController.m; sourceTree = "<group>"; };
-		B208BB9E15BF63A80080705D /* CDIListsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIListsViewController.h; sourceTree = "<group>"; };
-		B208BB9F15BF63A80080705D /* CDIListsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIListsViewController.m; sourceTree = "<group>"; };
+		B208BB9E15BF63A80080705D /* IPIListsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIListsViewController.h; sourceTree = "<group>"; };
+		B208BB9F15BF63A80080705D /* IPIListsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIListsViewController.m; sourceTree = "<group>"; };
 		B208BBA015BF63A80080705D /* CDIListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIListTableViewCell.h; sourceTree = "<group>"; };
 		B208BBA115BF63A80080705D /* CDIListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIListTableViewCell.m; sourceTree = "<group>"; };
-		B208BBA215BF63A80080705D /* CDIListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIListViewController.h; sourceTree = "<group>"; };
-		B208BBA315BF63A80080705D /* CDIListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIListViewController.m; sourceTree = "<group>"; };
+		B208BBA215BF63A80080705D /* IPIListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIListViewController.h; sourceTree = "<group>"; };
+		B208BBA315BF63A80080705D /* IPIListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIListViewController.m; sourceTree = "<group>"; };
 		B208BBA415BF63A80080705D /* CDILoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDILoadingView.h; sourceTree = "<group>"; };
 		B208BBA515BF63A80080705D /* CDILoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDILoadingView.m; sourceTree = "<group>"; };
 		B208BBA615BF63A80080705D /* CDIManagedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIManagedTableViewController.h; sourceTree = "<group>"; };
@@ -289,8 +293,8 @@
 		B208BBB715BF63A80080705D /* CDISignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDISignInViewController.m; sourceTree = "<group>"; };
 		B208BBB815BF63A80080705D /* CDISignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDISignUpViewController.h; sourceTree = "<group>"; };
 		B208BBB915BF63A80080705D /* CDISignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDISignUpViewController.m; sourceTree = "<group>"; };
-		B208BBBA15BF63A80080705D /* CDISplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDISplitViewController.h; sourceTree = "<group>"; };
-		B208BBBB15BF63A80080705D /* CDISplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDISplitViewController.m; sourceTree = "<group>"; };
+		B208BBBA15BF63A80080705D /* IPISplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPISplitViewController.h; sourceTree = "<group>"; };
+		B208BBBB15BF63A80080705D /* IPISplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPISplitViewController.m; sourceTree = "<group>"; };
 		B208BBBC15BF63A80080705D /* CDITableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDITableViewCell.h; sourceTree = "<group>"; };
 		B208BBBD15BF63A80080705D /* CDITableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDITableViewCell.m; sourceTree = "<group>"; };
 		B208BBBE15BF63A80080705D /* CDITableViewCellDeleteConfirmationControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDITableViewCellDeleteConfirmationControl.h; sourceTree = "<group>"; };
@@ -484,6 +488,7 @@
 		B2AD031F15C493C100D9B909 /* CDIWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIWebViewController.h; sourceTree = "<group>"; };
 		B2AD032015C493C100D9B909 /* CDIWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIWebViewController.m; sourceTree = "<group>"; };
 		FDAEF99715D1DB4E009FAD52 /* InsiderPagesKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = InsiderPagesKit.xcodeproj; sourceTree = "<group>"; };
+		FDFAD30215D1E88B00ADFB73 /* InsiderPages.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = InsiderPages.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -796,8 +801,8 @@
 		B23261A215C206EC00D455EF /* Lists */ = {
 			isa = PBXGroup;
 			children = (
-				B208BB9E15BF63A80080705D /* CDIListsViewController.h */,
-				B208BB9F15BF63A80080705D /* CDIListsViewController.m */,
+				B208BB9E15BF63A80080705D /* IPIListsViewController.h */,
+				B208BB9F15BF63A80080705D /* IPIListsViewController.m */,
 				B208BB9C15BF63A80080705D /* CDICreateListViewController.h */,
 				B208BB9D15BF63A80080705D /* CDICreateListViewController.m */,
 			);
@@ -807,8 +812,8 @@
 		B23261A315C206F200D455EF /* List */ = {
 			isa = PBXGroup;
 			children = (
-				B208BBA215BF63A80080705D /* CDIListViewController.h */,
-				B208BBA315BF63A80080705D /* CDIListViewController.m */,
+				B208BBA215BF63A80080705D /* IPIListViewController.h */,
+				B208BBA315BF63A80080705D /* IPIListViewController.m */,
 				B208BBB015BF63A80080705D /* CDIRenameTaskViewController.h */,
 				B208BBB115BF63A80080705D /* CDIRenameTaskViewController.m */,
 				B2AD031F15C493C100D9B909 /* CDIWebViewController.h */,
@@ -865,8 +870,8 @@
 		B23261A715C2071300D455EF /* iPad */ = {
 			isa = PBXGroup;
 			children = (
-				B208BBBA15BF63A80080705D /* CDISplitViewController.h */,
-				B208BBBB15BF63A80080705D /* CDISplitViewController.m */,
+				B208BBBA15BF63A80080705D /* IPISplitViewController.h */,
+				B208BBBB15BF63A80080705D /* IPISplitViewController.m */,
 			);
 			name = iPad;
 			sourceTree = "<group>";
@@ -874,6 +879,7 @@
 		B23FA74A151FE0710069A0D1 = {
 			isa = PBXGroup;
 			children = (
+				FDFAD30115D1E88B00ADFB73 /* InsiderPages.xcdatamodeld */,
 				B208BB9115BF63A80080705D /* Classes */,
 				B208BBD015BF63A80080705D /* Other Sources */,
 				B208BBD315BF63A80080705D /* Resources */,
@@ -905,8 +911,8 @@
 		B2D1241F15C1FC3C00ED1218 /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				B208BB9815BF63A80080705D /* CDIAppDelegate.h */,
-				B208BB9915BF63A80080705D /* CDIAppDelegate.m */,
+				B208BB9815BF63A80080705D /* IPIAppDelegate.h */,
+				B208BB9915BF63A80080705D /* IPIAppDelegate.m */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -1014,9 +1020,9 @@
 		B23FA74C151FE0710069A0D1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = CDI;
+				CLASSPREFIX = IPI;
 				LastUpgradeCheck = 0450;
-				ORGANIZATIONNAME = "Nothing Magical";
+				ORGANIZATIONNAME = InisderPages;
 			};
 			buildConfigurationList = B23FA74F151FE0710069A0D1 /* Build configuration list for PBXProject "InsiderPages for iOS" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1254,9 +1260,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDFAD30315D1E88B00ADFB73 /* InsiderPages.xcdatamodeld in Sources */,
 				B208BC2915BF63A80080705D /* CDIAddListTableViewCell.m in Sources */,
 				B208BC2A15BF63A80080705D /* CDIAddTaskAnimationView.m in Sources */,
-				B208BC2C15BF63A80080705D /* CDIAppDelegate.m in Sources */,
+				B208BC2C15BF63A80080705D /* IPIAppDelegate.m in Sources */,
 				B208BC2D15BF63A80080705D /* CDIAttributedLabel.m in Sources */,
 				B208BC3215BF63A80080705D /* CDILoadingView.m in Sources */,
 				B208BC3315BF63A80080705D /* CDIManagedTableViewController.m in Sources */,
@@ -1291,6 +1298,9 @@
 				B26AE9BA15C5D0100008AB1F /* CDISettingsFontPickerViewController.m in Sources */,
 				B26AE9BD15C5D25E0008AB1F /* CDIGroupedTableViewController.m in Sources */,
 				B26AE9C015C5D52D0008AB1F /* CDIPickerViewController.m in Sources */,
+				FDAEF9DC15D1E258009FAD52 /* IPISplitViewController.m in Sources */,
+				FDAEF9DD15D1E25A009FAD52 /* IPIListsViewController.m in Sources */,
+				FDAEF9DE15D1E572009FAD52 /* IPIListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1379,6 +1389,7 @@
 					"\"$(SRCROOT)/Vendor/SSToolkit\"",
 					"\"$(SRCROOT)/Vendor/Bully\"",
 					"\"$(SRCROOT)/Vendor/InsiderPagesKit\"/**",
+					"\"$(SRCROOT)/Vendor/TTTAttributedLabel",
 				);
 				INFOPLIST_FILE = "Resources/InsiderPages-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -1412,6 +1423,7 @@
 					"\"$(SRCROOT)/Vendor/SSToolkit\"",
 					"\"$(SRCROOT)/Vendor/Bully\"",
 					"\"$(SRCROOT)/Vendor/InsiderPagesKit\"/**",
+					"\"$(SRCROOT)/Vendor/TTTAttributedLabel",
 				);
 				INFOPLIST_FILE = "Resources/InsiderPages-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -1449,6 +1461,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		FDFAD30115D1E88B00ADFB73 /* InsiderPages.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				FDFAD30215D1E88B00ADFB73 /* InsiderPages.xcdatamodel */,
+			);
+			currentVersion = FDFAD30215D1E88B00ADFB73 /* InsiderPages.xcdatamodel */;
+			name = InsiderPages.xcdatamodeld;
+			path = "Vendor/InsiderPagesKit/Other Sources/InsiderPages.xcdatamodeld";
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = B23FA74C151FE0710069A0D1 /* Project object */;
 }

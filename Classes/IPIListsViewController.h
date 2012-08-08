@@ -8,9 +8,9 @@
 
 #import "CDIManagedTableViewController.h"
 
-extern NSString *const kCDISelectedListKey;
+extern NSString *const kIPISelectedListKey;
 
-@interface CDIListsViewController : CDIManagedTableViewController
+@interface IPIListsViewController : CDIManagedTableViewController
 
 - (void)showSettings:(id)sender;
 - (void)createList:(id)sender;
