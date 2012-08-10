@@ -16,5 +16,11 @@
     #import <CoreData/CoreData.h>
 	#import <InsiderPagesKit/InsiderPagesKit.h>
 	#import <SSToolkit/SSToolkit.h>
+    #import "NimbusCore.h"
+    #import "NimbusCSS.h"
+    #import "NimbusNetworkImage.h"
 	#import "CDIDefines.h"
+    #if INSIDER_PAGES_TESTING_MODE
+        #import "TestFlight.h"
+    #endif
 #endif

@@ -8,12 +8,15 @@
 
 #import "IPIAppDelegate.h"
 #import "IPISplitViewController.h"
-#import "IPIListsViewController.h"
+#import "IPIActivityViewController.h"
+#import "CDISignUpViewController.h"
 #import "CDIDefines.h"
 #import "UIFont+CheddariOSAdditions.h"
 #import "LocalyticsUtilities.h"
 //#import <Crashlytics/Crashlytics.h>
-#import <StoreKit/StoreKit.h>
+#ifdef INSIDER_PAGES_API_DEVELOPMENT_MODE
+    #import "DCIntrospect.h"
+#endif
 
 @implementation IPIAppDelegate
 
@@ -26,23 +29,24 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
 	// Configure analytics
 	// If you don't work at Nothing Magical, you shouldn't turn these on.
-#if CHEDDAR_PRODUCTION_MODE
-	#ifdef CHEDDAR_CRASHLYTICS_KEY
+#if INSIDER_PAGES_PRODUCTION_MODE
+	#ifdef INSIDER_PAGES_CRASHLYTICS_KEY
 	[Crashlytics startWithAPIKey:CHEDDAR_CRASHLYTICS_KEY];
 	#endif
 
-	#ifdef CHEDDAR_LOCALYTICS_KEY
+	#ifdef INSIDER_PAGES_LOCALYTICS_KEY
 	LLStartSession(CHEDDAR_LOCALYTICS_KEY);
 	#endif
 #endif
 	
 	// Optionally enable development mode
 	// If you don't work at Nothing Magical, you shouldn't turn this on.
-#ifdef CHEDDAR_API_DEVELOPMENT_MODE
-	[CDKHTTPClient setDevelopmentModeEnabled:YES];
-	[CDKPushController setDevelopmentModeEnabled:YES];
+#ifdef INSIDER_PAGES_API_DEVELOPMENT_MODE
+	[IPKHTTPClient setDevelopmentModeEnabled:YES];
+//	[CDKPushController setDevelopmentModeEnabled:YES];
 #endif
 	
 	// Initialize the window
@@ -50,17 +54,37 @@
 	self.window.backgroundColor = [UIColor blackColor];
 	
 	[[self class] applyStylesheet];
+    [self openSessionCheckCache:YES];
+	if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
+        [self login];
+        // To-do, show logged in view
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            self.window.rootViewController = [[IPISplitViewController alloc] init];
+        } else {
+            UIViewController *viewController = [[IPIActivityViewController alloc] init];
+            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+            self.window.rootViewController = navigationController;
+        }
+    } else {
+        // No, display the login page.
+        [self showLoginView];
+    }
 	
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-		self.window.rootViewController = [[IPISplitViewController alloc] init];
-	} else {
-		UIViewController *viewController = [[IPIListsViewController alloc] init];
-		UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-		self.window.rootViewController = navigationController;
-	}
 	
 	[self.window makeKeyAndVisible];
-	
+    
+    #if TARGET_IPHONE_SIMULATOR
+        [[DCIntrospect sharedIntrospector] start];
+    #endif
+    
+    #if INSIDER_PAGES_TESTING_MODE
+        [TestFlight takeOff:@"30d92a896df4ab4b4873886ea58f8b06_NzE0NzIyMDEyLTAzLTE0IDEzOjQ0OjU4Ljk3MDAxOQ"];
+    #endif
+    
+    #define TESTING 1
+    #ifdef TESTING
+        [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
+    #endif
 	// Defer some stuff to make launching faster
 	dispatch_async(dispatch_get_main_queue(), ^{
 		// Setup status bar network indicator
@@ -79,6 +103,126 @@
 	return YES;
 }
 
+-(void)showLoginView{
+    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[CDISignUpViewController alloc] init]];
+}
+
+-(void)registerOrLogin{
+    SSHUDView *hud = [[SSHUDView alloc] initWithTitle:@"Contacting Facebook..." loading:YES];
+	[hud show];
+    FBRequest *request = [FBRequest requestForMe];
+    [request setSession:self.session];
+    [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error){
+        dispatch_async(dispatch_get_main_queue(), ^{
+        });
+        [[NSUserDefaults standardUserDefaults] setObject:[result objectForKey:@"id"] forKey:@"FBUserId"];
+        [[IPKHTTPClient sharedClient] signInWithFacebookUserID:[result objectForKey:@"id"] accessToken:self.session.accessToken facebookMeResponse:result success:^(AFJSONRequestOperation *operation, id responseObject) {
+            if ([[responseObject objectForKey:@"message"] isEqualToString:@"logged in"]) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [hud completeAndDismissWithTitle:@"Successfully Logged In"];
+                });
+            }else{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [hud completeAndDismissWithTitle:@"Successfully Registered"];
+                });
+            }
+        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+            });
+        }];
+    }];
+}
+
+-(void)login{
+    SSHUDView *hud = [[SSHUDView alloc] initWithTitle:@"Logging in..." loading:YES];
+	[hud show];
+    [[IPKHTTPClient sharedClient] signInWithFacebookUserID:[[NSUserDefaults standardUserDefaults] objectForKey:@"FBUserId"] accessToken:self.session.accessToken facebookMeResponse:[NSDictionary dictionary] success:^(AFJSONRequestOperation *operation, id responseObject) {
+        if ([[responseObject objectForKey:@"message"] isEqualToString:@"logged in"]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [hud completeAndDismissWithTitle:@"Successfully Logged In"];
+            });
+        }else{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [hud completeAndDismissWithTitle:@"Successfully Registered"];
+            });
+        }
+    } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+        });
+    }];
+}
+
+#pragma mark - Facebook
+
+- (FBSession *)createNewSession
+{
+    NSArray *permissions = [[NSArray alloc] initWithObjects:
+                            @"user_likes", 
+                            @"read_stream",
+                            nil];
+    self.session = [[FBSession alloc] initWithPermissions:permissions];
+    return self.session;
+}
+
+- (void)sessionStateChanged:(FBSession *)session 
+                      state:(FBSessionState) state
+                      error:(NSError *)error
+{
+    switch (state) {
+        case FBSessionStateOpen: {
+            if (![IPKUser currentUser]) {
+                [self registerOrLogin];
+            }
+        }
+            break;
+        case FBSessionStateClosed:
+        case FBSessionStateClosedLoginFailed:
+            // Once the user has logged in, we want them to 
+            // be looking at the root view.
+            [self openSessionCheckCache:NO];
+            [FBSession.activeSession closeAndClearTokenInformation];
+            break;
+        default:
+            break;
+    }
+    
+    if (error) {
+        UIAlertView *alertView = [[UIAlertView alloc]
+                                  initWithTitle:@"Error"
+                                  message:error.localizedDescription
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+        [alertView show];
+    }    
+}
+
+- (void) openSessionCheckCache:(BOOL)check {
+    // Create a new session object
+    if (!self.session.isOpen) {
+        [self createNewSession];
+    }
+    // Open the session in two scenarios:
+    // - When we are not loading from the cache, e.g. when a login
+    //   button is clicked.
+    // - When we are checking cache and have an available token,
+    //   e.g. when we need to show a logged vs. logged out display.
+    if (!check ||
+        (self.session.state == FBSessionStateCreatedTokenLoaded)) {
+        [self.session openWithCompletionHandler:
+         ^(FBSession *session, FBSessionState state, NSError *error) {
+             [self sessionStateChanged:session state:state error:error];
+         }];
+    }
+}
+
+- (BOOL)application:(UIApplication *)application 
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication 
+         annotation:(id)annotation 
+{
+    return [self.session handleOpenURL:url];
+}
 
 #if ANALYTICS_ENABLED
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -99,13 +243,14 @@
 	#if ANALYTICS_ENABLED
     [[LocalyticsSession sharedLocalyticsSession] close];
 	#endif
+    // if the app is going away, we close the session object
 }
 
 
 + (void)applyStylesheet {
 	// Navigation bar
 	UINavigationBar *navigationBar = [UINavigationBar appearance];
-	[navigationBar setBackgroundImage:[UIImage imageNamed:@"nav-background.png"] forBarMetrics:UIBarMetricsDefault];
+//	[navigationBar setBackgroundColor:[UIColor grayColor]];
 	[navigationBar setTitleVerticalPositionAdjustment:-1.0f forBarMetrics:UIBarMetricsDefault];
 	[navigationBar setTitleTextAttributes:[[NSDictionary alloc] initWithObjectsAndKeys:
 										   [UIFont cheddarFontOfSize:20.0f], UITextAttributeFont,

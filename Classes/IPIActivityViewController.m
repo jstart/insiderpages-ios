@@ -6,16 +6,10 @@
 //  Copyright (c) 2012 Nothing Magical. All rights reserved.
 //
 
-#import "IPIListsViewController.h"
-//#import "CDIListTableViewCell.h"
-//#import "CDIListViewController.h"
-//#import "CDICreateListViewController.h"
-//#import "CDISettingsViewController.h"
+#import "IPIActivityViewController.h"
 #import "IPISplitViewController.h"
+#import "CDIActivityTableViewCell.h"
 #import "UIColor+CheddariOSAdditions.h"
-//#import "CDIUpgradeViewController.h"
-//#import "CDINoListsView.h"
-//#import "CDIAddListTableViewCell.h"
 #import <SSToolkit/UIScrollView+SSToolkitAdditions.h>
 
 #define CHEDDAR_USE_PASSWORD_FLOW 1
@@ -26,9 +20,7 @@
 	#import "CDIWebSignInViewController.h"
 #endif
 
-NSString *const kIPISelectedListKey = @"IPISelectedListKey";
-
-@interface IPIListsViewController ()
+@interface IPIActivityViewController ()
 - (void)_listUpdated:(NSNotification *)notification;
 - (void)_currentUserDidChange:(NSNotification *)notification;
 - (void)_createList:(id)sender;
@@ -37,7 +29,7 @@ NSString *const kIPISelectedListKey = @"IPISelectedListKey";
 - (void)_checkUser;
 @end
 
-@implementation IPIListsViewController {
+@implementation IPIActivityViewController {
 	IPKList *_selectedList;
 	BOOL _adding;
 	BOOL _checkForOneList;
@@ -122,7 +114,7 @@ NSString *const kIPISelectedListKey = @"IPISelectedListKey";
 #pragma mark - SSManagedViewController
 
 - (Class)entityClass {
-	return [IPKPage class];
+	return [IPKActivity class];
 }
 
 
@@ -134,8 +126,8 @@ NSString *const kIPISelectedListKey = @"IPISelectedListKey";
 #pragma mark - SSManagedTableViewController
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-//	CDKList *list = [self objectForViewIndexPath:indexPath];
-//	[(CDIListTableViewCell *)cell setList:list];
+	IPKActivity *activity = [self objectForViewIndexPath:indexPath];
+	[(CDIActivityTableViewCell *)cell setActivity:activity];
 }
 
 
@@ -172,19 +164,16 @@ NSString *const kIPISelectedListKey = @"IPISelectedListKey";
 	}
 	
 	self.loading = YES;
-//	[[CDKHTTPClient sharedClient] getListsWithSuccess:^(AFJSONRequestOperation *operation, id responseObject) {
-//		dispatch_async(dispatch_get_main_queue(), ^{
-//			self.loading = NO;
-//		});
-//	} failure:^(AFJSONRequestOperation *operation, NSError *error) {
-//		dispatch_async(dispatch_get_main_queue(), ^{
-//			[SSRateLimit resetLimitForName:@"refresh-lists"];
-//			self.loading = NO;
-//		});
-//	}];
-//
-//	// Also update their user incase push for updates failed
-//	[[CDKHTTPClient sharedClient] updateCurrentUserWithSuccess:nil failure:nil];
+	[[IPKHTTPClient sharedClient] getMyActivititesOfType:IPKActivityTypeAll currentPage:@1 perPage:@10 success:^(AFJSONRequestOperation *operation, id responseObject) {
+		dispatch_async(dispatch_get_main_queue(), ^{
+			self.loading = NO;
+		});
+	} failure:^(AFJSONRequestOperation *operation, NSError *error) {
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[SSRateLimit resetLimitForName:@"refresh-lists"];
+			self.loading = NO;
+		});
+	}];
 }
 
 
@@ -366,29 +355,13 @@ NSString *const kIPISelectedListKey = @"IPISelectedListKey";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	static NSString *const cellIdentifier = @"cellIdentifier";
-	static NSString *const addCellIdentifier = @"addCellIdentifier";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:addCellIdentifier];
 
-//	if (_adding && indexPath.row == 0) {
-//		CDIAddListTableViewCell *cell = (CDIAddListTableViewCell *)[tableView dequeueReusableCellWithIdentifier:addCellIdentifier];
-//		if (!cell) {
-//			cell = [[CDIAddListTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:addCellIdentifier];
-//
-//            cell.textField.delegate = self;			
-//			[cell.closeButton addTarget:self action:@selector(_cancelAddingList:) forControlEvents:UIControlEventTouchUpInside];
-//		}
-//		[cell.textField becomeFirstResponder];
-//
-//		return cell;
-//	}
-//
-//	CDIListTableViewCell *cell = (CDIListTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-//	if (!cell) {
-//		cell = [[CDIListTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-//		[cell.editingTapGestureRecognizer addTarget:self action:@selector(editRow:)];
-//	}
-//	
-//	cell.list = [self objectForViewIndexPath:indexPath];
+	CDIActivityTableViewCell *cell = (CDIActivityTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+	if (!cell) {
+		cell = [[CDIActivityTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+	}
+	
+	cell.activity = [self objectForViewIndexPath:indexPath];
 	
 	return cell;
 }

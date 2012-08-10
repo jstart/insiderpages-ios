@@ -179,10 +179,61 @@
 		B2AD02F215C47E4300D9B909 /* nav-background-mini@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B2AD02F115C47E4300D9B909 /* nav-background-mini@2x.png */; };
 		B2AD031915C4896E00D9B909 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2AD031815C4896E00D9B909 /* AudioToolbox.framework */; };
 		B2AD032115C493C200D9B909 /* CDIWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2AD032015C493C100D9B909 /* CDIWebViewController.m */; };
+		FD6F945E15D45AEA00FF686B /* NICommonMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F943415D45AEA00FF686B /* NICommonMetrics.m */; };
+		FD6F945F15D45AEA00FF686B /* NIDataStructures.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F943615D45AEA00FF686B /* NIDataStructures.m */; };
+		FD6F946015D45AEA00FF686B /* NIDebuggingTools.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F943815D45AEA00FF686B /* NIDebuggingTools.m */; };
+		FD6F946115D45AEA00FF686B /* NIDeviceOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F943A15D45AEA00FF686B /* NIDeviceOrientation.m */; };
+		FD6F946215D45AEA00FF686B /* NIError.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F943C15D45AEA00FF686B /* NIError.m */; };
+		FD6F946315D45AEA00FF686B /* NIFoundationMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F943E15D45AEA00FF686B /* NIFoundationMethods.m */; };
+		FD6F946415D45AEA00FF686B /* NIInMemoryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F944015D45AEA00FF686B /* NIInMemoryCache.m */; };
+		FD6F946515D45AEA00FF686B /* NINavigationAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F944515D45AEA00FF686B /* NINavigationAppearance.m */; };
+		FD6F946615D45AEA00FF686B /* NINetworkActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F944715D45AEA00FF686B /* NINetworkActivity.m */; };
+		FD6F946715D45AEA00FF686B /* NINonEmptyCollectionTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F944915D45AEA00FF686B /* NINonEmptyCollectionTesting.m */; };
+		FD6F946815D45AEA00FF686B /* NINonRetainingCollections.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F944B15D45AEA00FF686B /* NINonRetainingCollections.m */; };
+		FD6F946915D45AEA00FF686B /* NIOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F944D15D45AEA00FF686B /* NIOperations.m */; };
+		FD6F946A15D45AEA00FF686B /* NIPaths.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F945015D45AEA00FF686B /* NIPaths.m */; };
+		FD6F946B15D45AEA00FF686B /* NIRuntimeClassModifications.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F945315D45AEA00FF686B /* NIRuntimeClassModifications.m */; };
+		FD6F946C15D45AEA00FF686B /* NISDKAvailability.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F945515D45AEA00FF686B /* NISDKAvailability.m */; };
+		FD6F946D15D45AEA00FF686B /* NISnapshotRotation.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F945715D45AEA00FF686B /* NISnapshotRotation.m */; };
+		FD6F946E15D45AEA00FF686B /* NIState.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F945915D45AEA00FF686B /* NIState.m */; };
+		FD6F946F15D45AEA00FF686B /* NIViewRecycler.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F945B15D45AEA00FF686B /* NIViewRecycler.m */; };
+		FD6F947015D45AEA00FF686B /* NSString+NimbusCore.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F945D15D45AEA00FF686B /* NSString+NimbusCore.m */; };
+		FD6F949715D45B3C00FF686B /* CSSTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F947315D45B3C00FF686B /* CSSTokenizer.m */; };
+		FD6F949815D45B3C00FF686B /* CSSTokens.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F947515D45B3C00FF686B /* CSSTokens.m */; };
+		FD6F949915D45B3C00FF686B /* NIChameleonObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F947715D45B3C00FF686B /* NIChameleonObserver.m */; };
+		FD6F949A15D45B3C00FF686B /* NICSSParser.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F947915D45B3C00FF686B /* NICSSParser.m */; };
+		FD6F949B15D45B3C00FF686B /* NICSSRuleset.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F947B15D45B3C00FF686B /* NICSSRuleset.m */; };
+		FD6F949C15D45B3C00FF686B /* NIDOM.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F947D15D45B3C00FF686B /* NIDOM.m */; };
+		FD6F949D15D45B3C00FF686B /* NIStylesheet.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F948215D45B3C00FF686B /* NIStylesheet.m */; };
+		FD6F949E15D45B3C00FF686B /* NIStylesheetCache.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F948415D45B3C00FF686B /* NIStylesheetCache.m */; };
+		FD6F949F15D45B3C00FF686B /* UIActivityIndicatorView+NIStyleable.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F948615D45B3C00FF686B /* UIActivityIndicatorView+NIStyleable.m */; };
+		FD6F94A015D45B3C00FF686B /* UIButton+NIStyleable.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F948815D45B3C00FF686B /* UIButton+NIStyleable.m */; };
+		FD6F94A115D45B3C00FF686B /* UILabel+NIStyleable.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F948A15D45B3C00FF686B /* UILabel+NIStyleable.m */; };
+		FD6F94A215D45B3C00FF686B /* UINavigationBar+NIStyleable.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F948C15D45B3C00FF686B /* UINavigationBar+NIStyleable.m */; };
+		FD6F94A315D45B3C00FF686B /* UIScrollView+NIStyleable.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F948E15D45B3C00FF686B /* UIScrollView+NIStyleable.m */; };
+		FD6F94A415D45B3C00FF686B /* UISearchBar+NIStyleable.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F949015D45B3C00FF686B /* UISearchBar+NIStyleable.m */; };
+		FD6F94A515D45B3C00FF686B /* UITableView+NIStyleable.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F949215D45B3C00FF686B /* UITableView+NIStyleable.m */; };
+		FD6F94A615D45B3C00FF686B /* UIToolbar+NIStyleable.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F949415D45B3C00FF686B /* UIToolbar+NIStyleable.m */; };
+		FD6F94A715D45B3C00FF686B /* UIView+NIStyleable.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F949615D45B3C00FF686B /* UIView+NIStyleable.m */; };
+		FD6F94AE15D45B4B00FF686B /* NIImageProcessing.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F94A915D45B4B00FF686B /* NIImageProcessing.m */; };
+		FD6F94AF15D45B4B00FF686B /* NINetworkImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F94AD15D45B4B00FF686B /* NINetworkImageView.m */; };
+		FD7732EB15D3278100E857C8 /* IPIActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7732EA15D3278100E857C8 /* IPIActivityViewController.m */; };
+		FD7732EE15D32B6300E857C8 /* CDIActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7732ED15D32B6300E857C8 /* CDIActivityTableViewCell.m */; };
 		FDAEF9D115D1DB54009FAD52 /* libInsiderPagesKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FDAEF9CC15D1DB4E009FAD52 /* libInsiderPagesKit.a */; };
 		FDAEF9DC15D1E258009FAD52 /* IPISplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BBBB15BF63A80080705D /* IPISplitViewController.m */; };
 		FDAEF9DD15D1E25A009FAD52 /* IPIListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BB9F15BF63A80080705D /* IPIListsViewController.m */; };
 		FDAEF9DE15D1E572009FAD52 /* IPIListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BBA315BF63A80080705D /* IPIListViewController.m */; };
+		FDB7BC4715D2DAA2008E62EF /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB7BC4615D2DAA2008E62EF /* FacebookSDK.framework */; };
+		FDB7BC4915D2DACA008E62EF /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FDB7BC4815D2DACA008E62EF /* FacebookSDKResources.bundle */; };
+		FDB7BC5B15D2F5EA008E62EF /* LoginWithFacebookNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = FDB7BC5715D2F5EA008E62EF /* LoginWithFacebookNormal.png */; };
+		FDB7BC5C15D2F5EA008E62EF /* LoginWithFacebookNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDB7BC5815D2F5EA008E62EF /* LoginWithFacebookNormal@2x.png */; };
+		FDB7BC5D15D2F5EA008E62EF /* LoginWithFacebookPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = FDB7BC5915D2F5EA008E62EF /* LoginWithFacebookPressed.png */; };
+		FDB7BC5E15D2F5EA008E62EF /* LoginWithFacebookPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDB7BC5A15D2F5EA008E62EF /* LoginWithFacebookPressed@2x.png */; };
+		FDD99E7115D4CED1003BB635 /* DCCrossHairView.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD99E5115D4CED1003BB635 /* DCCrossHairView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FDD99E7215D4CED1003BB635 /* DCFrameView.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD99E5315D4CED1003BB635 /* DCFrameView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FDD99E7315D4CED1003BB635 /* DCIntrospect.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD99E5515D4CED1003BB635 /* DCIntrospect.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FDD99E7415D4CED1003BB635 /* DCStatusBarOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD99E5815D4CED1003BB635 /* DCStatusBarOverlay.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FDD99E8415D4D3C9003BB635 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FDD99E8215D4D3C9003BB635 /* libTestFlight.a */; };
 		FDFAD30315D1E88B00ADFB73 /* InsiderPages.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FDFAD30115D1E88B00ADFB73 /* InsiderPages.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
@@ -487,7 +538,113 @@
 		B2AD031815C4896E00D9B909 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		B2AD031F15C493C100D9B909 /* CDIWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIWebViewController.h; sourceTree = "<group>"; };
 		B2AD032015C493C100D9B909 /* CDIWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIWebViewController.m; sourceTree = "<group>"; };
+		FD6F943315D45AEA00FF686B /* NICommonMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NICommonMetrics.h; path = nimbus/src/core/src/NICommonMetrics.h; sourceTree = "<group>"; };
+		FD6F943415D45AEA00FF686B /* NICommonMetrics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NICommonMetrics.m; path = nimbus/src/core/src/NICommonMetrics.m; sourceTree = "<group>"; };
+		FD6F943515D45AEA00FF686B /* NIDataStructures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NIDataStructures.h; path = nimbus/src/core/src/NIDataStructures.h; sourceTree = "<group>"; };
+		FD6F943615D45AEA00FF686B /* NIDataStructures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NIDataStructures.m; path = nimbus/src/core/src/NIDataStructures.m; sourceTree = "<group>"; };
+		FD6F943715D45AEA00FF686B /* NIDebuggingTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NIDebuggingTools.h; path = nimbus/src/core/src/NIDebuggingTools.h; sourceTree = "<group>"; };
+		FD6F943815D45AEA00FF686B /* NIDebuggingTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NIDebuggingTools.m; path = nimbus/src/core/src/NIDebuggingTools.m; sourceTree = "<group>"; };
+		FD6F943915D45AEA00FF686B /* NIDeviceOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NIDeviceOrientation.h; path = nimbus/src/core/src/NIDeviceOrientation.h; sourceTree = "<group>"; };
+		FD6F943A15D45AEA00FF686B /* NIDeviceOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NIDeviceOrientation.m; path = nimbus/src/core/src/NIDeviceOrientation.m; sourceTree = "<group>"; };
+		FD6F943B15D45AEA00FF686B /* NIError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NIError.h; path = nimbus/src/core/src/NIError.h; sourceTree = "<group>"; };
+		FD6F943C15D45AEA00FF686B /* NIError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NIError.m; path = nimbus/src/core/src/NIError.m; sourceTree = "<group>"; };
+		FD6F943D15D45AEA00FF686B /* NIFoundationMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NIFoundationMethods.h; path = nimbus/src/core/src/NIFoundationMethods.h; sourceTree = "<group>"; };
+		FD6F943E15D45AEA00FF686B /* NIFoundationMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NIFoundationMethods.m; path = nimbus/src/core/src/NIFoundationMethods.m; sourceTree = "<group>"; };
+		FD6F943F15D45AEA00FF686B /* NIInMemoryCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NIInMemoryCache.h; path = nimbus/src/core/src/NIInMemoryCache.h; sourceTree = "<group>"; };
+		FD6F944015D45AEA00FF686B /* NIInMemoryCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NIInMemoryCache.m; path = nimbus/src/core/src/NIInMemoryCache.m; sourceTree = "<group>"; };
+		FD6F944115D45AEA00FF686B /* NimbusCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NimbusCore.h; path = nimbus/src/core/src/NimbusCore.h; sourceTree = "<group>"; };
+		FD6F944215D45AEA00FF686B /* NimbusCore+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NimbusCore+Additions.h"; path = "nimbus/src/core/src/NimbusCore+Additions.h"; sourceTree = "<group>"; };
+		FD6F944315D45AEA00FF686B /* NimbusCore+Namespace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NimbusCore+Namespace.h"; path = "nimbus/src/core/src/NimbusCore+Namespace.h"; sourceTree = "<group>"; };
+		FD6F944415D45AEA00FF686B /* NINavigationAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NINavigationAppearance.h; path = nimbus/src/core/src/NINavigationAppearance.h; sourceTree = "<group>"; };
+		FD6F944515D45AEA00FF686B /* NINavigationAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NINavigationAppearance.m; path = nimbus/src/core/src/NINavigationAppearance.m; sourceTree = "<group>"; };
+		FD6F944615D45AEA00FF686B /* NINetworkActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NINetworkActivity.h; path = nimbus/src/core/src/NINetworkActivity.h; sourceTree = "<group>"; };
+		FD6F944715D45AEA00FF686B /* NINetworkActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NINetworkActivity.m; path = nimbus/src/core/src/NINetworkActivity.m; sourceTree = "<group>"; };
+		FD6F944815D45AEA00FF686B /* NINonEmptyCollectionTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NINonEmptyCollectionTesting.h; path = nimbus/src/core/src/NINonEmptyCollectionTesting.h; sourceTree = "<group>"; };
+		FD6F944915D45AEA00FF686B /* NINonEmptyCollectionTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NINonEmptyCollectionTesting.m; path = nimbus/src/core/src/NINonEmptyCollectionTesting.m; sourceTree = "<group>"; };
+		FD6F944A15D45AEA00FF686B /* NINonRetainingCollections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NINonRetainingCollections.h; path = nimbus/src/core/src/NINonRetainingCollections.h; sourceTree = "<group>"; };
+		FD6F944B15D45AEA00FF686B /* NINonRetainingCollections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NINonRetainingCollections.m; path = nimbus/src/core/src/NINonRetainingCollections.m; sourceTree = "<group>"; };
+		FD6F944C15D45AEA00FF686B /* NIOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NIOperations.h; path = nimbus/src/core/src/NIOperations.h; sourceTree = "<group>"; };
+		FD6F944D15D45AEA00FF686B /* NIOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NIOperations.m; path = nimbus/src/core/src/NIOperations.m; sourceTree = "<group>"; };
+		FD6F944E15D45AEA00FF686B /* NIOperations+Subclassing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NIOperations+Subclassing.h"; path = "nimbus/src/core/src/NIOperations+Subclassing.h"; sourceTree = "<group>"; };
+		FD6F944F15D45AEA00FF686B /* NIPaths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NIPaths.h; path = nimbus/src/core/src/NIPaths.h; sourceTree = "<group>"; };
+		FD6F945015D45AEA00FF686B /* NIPaths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NIPaths.m; path = nimbus/src/core/src/NIPaths.m; sourceTree = "<group>"; };
+		FD6F945115D45AEA00FF686B /* NIPreprocessorMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NIPreprocessorMacros.h; path = nimbus/src/core/src/NIPreprocessorMacros.h; sourceTree = "<group>"; };
+		FD6F945215D45AEA00FF686B /* NIRuntimeClassModifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NIRuntimeClassModifications.h; path = nimbus/src/core/src/NIRuntimeClassModifications.h; sourceTree = "<group>"; };
+		FD6F945315D45AEA00FF686B /* NIRuntimeClassModifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NIRuntimeClassModifications.m; path = nimbus/src/core/src/NIRuntimeClassModifications.m; sourceTree = "<group>"; };
+		FD6F945415D45AEA00FF686B /* NISDKAvailability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NISDKAvailability.h; path = nimbus/src/core/src/NISDKAvailability.h; sourceTree = "<group>"; };
+		FD6F945515D45AEA00FF686B /* NISDKAvailability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NISDKAvailability.m; path = nimbus/src/core/src/NISDKAvailability.m; sourceTree = "<group>"; };
+		FD6F945615D45AEA00FF686B /* NISnapshotRotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NISnapshotRotation.h; path = nimbus/src/core/src/NISnapshotRotation.h; sourceTree = "<group>"; };
+		FD6F945715D45AEA00FF686B /* NISnapshotRotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NISnapshotRotation.m; path = nimbus/src/core/src/NISnapshotRotation.m; sourceTree = "<group>"; };
+		FD6F945815D45AEA00FF686B /* NIState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NIState.h; path = nimbus/src/core/src/NIState.h; sourceTree = "<group>"; };
+		FD6F945915D45AEA00FF686B /* NIState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NIState.m; path = nimbus/src/core/src/NIState.m; sourceTree = "<group>"; };
+		FD6F945A15D45AEA00FF686B /* NIViewRecycler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NIViewRecycler.h; path = nimbus/src/core/src/NIViewRecycler.h; sourceTree = "<group>"; };
+		FD6F945B15D45AEA00FF686B /* NIViewRecycler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NIViewRecycler.m; path = nimbus/src/core/src/NIViewRecycler.m; sourceTree = "<group>"; };
+		FD6F945C15D45AEA00FF686B /* NSString+NimbusCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+NimbusCore.h"; path = "nimbus/src/core/src/NSString+NimbusCore.h"; sourceTree = "<group>"; };
+		FD6F945D15D45AEA00FF686B /* NSString+NimbusCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+NimbusCore.m"; path = "nimbus/src/core/src/NSString+NimbusCore.m"; sourceTree = "<group>"; };
+		FD6F947315D45B3C00FF686B /* CSSTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CSSTokenizer.m; path = nimbus/src/css/src/CSSTokenizer.m; sourceTree = "<group>"; };
+		FD6F947415D45B3C00FF686B /* CSSTokens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CSSTokens.h; path = nimbus/src/css/src/CSSTokens.h; sourceTree = "<group>"; };
+		FD6F947515D45B3C00FF686B /* CSSTokens.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CSSTokens.m; path = nimbus/src/css/src/CSSTokens.m; sourceTree = "<group>"; };
+		FD6F947615D45B3C00FF686B /* NIChameleonObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NIChameleonObserver.h; path = nimbus/src/css/src/NIChameleonObserver.h; sourceTree = "<group>"; };
+		FD6F947715D45B3C00FF686B /* NIChameleonObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NIChameleonObserver.m; path = nimbus/src/css/src/NIChameleonObserver.m; sourceTree = "<group>"; };
+		FD6F947815D45B3C00FF686B /* NICSSParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NICSSParser.h; path = nimbus/src/css/src/NICSSParser.h; sourceTree = "<group>"; };
+		FD6F947915D45B3C00FF686B /* NICSSParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NICSSParser.m; path = nimbus/src/css/src/NICSSParser.m; sourceTree = "<group>"; };
+		FD6F947A15D45B3C00FF686B /* NICSSRuleset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NICSSRuleset.h; path = nimbus/src/css/src/NICSSRuleset.h; sourceTree = "<group>"; };
+		FD6F947B15D45B3C00FF686B /* NICSSRuleset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NICSSRuleset.m; path = nimbus/src/css/src/NICSSRuleset.m; sourceTree = "<group>"; };
+		FD6F947C15D45B3C00FF686B /* NIDOM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NIDOM.h; path = nimbus/src/css/src/NIDOM.h; sourceTree = "<group>"; };
+		FD6F947D15D45B3C00FF686B /* NIDOM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NIDOM.m; path = nimbus/src/css/src/NIDOM.m; sourceTree = "<group>"; };
+		FD6F947E15D45B3C00FF686B /* NimbusCSS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NimbusCSS.h; path = nimbus/src/css/src/NimbusCSS.h; sourceTree = "<group>"; };
+		FD6F947F15D45B3C00FF686B /* NimbusCss+Namespace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NimbusCss+Namespace.h"; path = "nimbus/src/css/src/NimbusCss+Namespace.h"; sourceTree = "<group>"; };
+		FD6F948015D45B3C00FF686B /* NIStyleable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NIStyleable.h; path = nimbus/src/css/src/NIStyleable.h; sourceTree = "<group>"; };
+		FD6F948115D45B3C00FF686B /* NIStylesheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NIStylesheet.h; path = nimbus/src/css/src/NIStylesheet.h; sourceTree = "<group>"; };
+		FD6F948215D45B3C00FF686B /* NIStylesheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NIStylesheet.m; path = nimbus/src/css/src/NIStylesheet.m; sourceTree = "<group>"; };
+		FD6F948315D45B3C00FF686B /* NIStylesheetCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NIStylesheetCache.h; path = nimbus/src/css/src/NIStylesheetCache.h; sourceTree = "<group>"; };
+		FD6F948415D45B3C00FF686B /* NIStylesheetCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NIStylesheetCache.m; path = nimbus/src/css/src/NIStylesheetCache.m; sourceTree = "<group>"; };
+		FD6F948515D45B3C00FF686B /* UIActivityIndicatorView+NIStyleable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIActivityIndicatorView+NIStyleable.h"; path = "nimbus/src/css/src/UIActivityIndicatorView+NIStyleable.h"; sourceTree = "<group>"; };
+		FD6F948615D45B3C00FF686B /* UIActivityIndicatorView+NIStyleable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIActivityIndicatorView+NIStyleable.m"; path = "nimbus/src/css/src/UIActivityIndicatorView+NIStyleable.m"; sourceTree = "<group>"; };
+		FD6F948715D45B3C00FF686B /* UIButton+NIStyleable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+NIStyleable.h"; path = "nimbus/src/css/src/UIButton+NIStyleable.h"; sourceTree = "<group>"; };
+		FD6F948815D45B3C00FF686B /* UIButton+NIStyleable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+NIStyleable.m"; path = "nimbus/src/css/src/UIButton+NIStyleable.m"; sourceTree = "<group>"; };
+		FD6F948915D45B3C00FF686B /* UILabel+NIStyleable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UILabel+NIStyleable.h"; path = "nimbus/src/css/src/UILabel+NIStyleable.h"; sourceTree = "<group>"; };
+		FD6F948A15D45B3C00FF686B /* UILabel+NIStyleable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UILabel+NIStyleable.m"; path = "nimbus/src/css/src/UILabel+NIStyleable.m"; sourceTree = "<group>"; };
+		FD6F948B15D45B3C00FF686B /* UINavigationBar+NIStyleable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationBar+NIStyleable.h"; path = "nimbus/src/css/src/UINavigationBar+NIStyleable.h"; sourceTree = "<group>"; };
+		FD6F948C15D45B3C00FF686B /* UINavigationBar+NIStyleable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationBar+NIStyleable.m"; path = "nimbus/src/css/src/UINavigationBar+NIStyleable.m"; sourceTree = "<group>"; };
+		FD6F948D15D45B3C00FF686B /* UIScrollView+NIStyleable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+NIStyleable.h"; path = "nimbus/src/css/src/UIScrollView+NIStyleable.h"; sourceTree = "<group>"; };
+		FD6F948E15D45B3C00FF686B /* UIScrollView+NIStyleable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+NIStyleable.m"; path = "nimbus/src/css/src/UIScrollView+NIStyleable.m"; sourceTree = "<group>"; };
+		FD6F948F15D45B3C00FF686B /* UISearchBar+NIStyleable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UISearchBar+NIStyleable.h"; path = "nimbus/src/css/src/UISearchBar+NIStyleable.h"; sourceTree = "<group>"; };
+		FD6F949015D45B3C00FF686B /* UISearchBar+NIStyleable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UISearchBar+NIStyleable.m"; path = "nimbus/src/css/src/UISearchBar+NIStyleable.m"; sourceTree = "<group>"; };
+		FD6F949115D45B3C00FF686B /* UITableView+NIStyleable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITableView+NIStyleable.h"; path = "nimbus/src/css/src/UITableView+NIStyleable.h"; sourceTree = "<group>"; };
+		FD6F949215D45B3C00FF686B /* UITableView+NIStyleable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITableView+NIStyleable.m"; path = "nimbus/src/css/src/UITableView+NIStyleable.m"; sourceTree = "<group>"; };
+		FD6F949315D45B3C00FF686B /* UIToolbar+NIStyleable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIToolbar+NIStyleable.h"; path = "nimbus/src/css/src/UIToolbar+NIStyleable.h"; sourceTree = "<group>"; };
+		FD6F949415D45B3C00FF686B /* UIToolbar+NIStyleable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIToolbar+NIStyleable.m"; path = "nimbus/src/css/src/UIToolbar+NIStyleable.m"; sourceTree = "<group>"; };
+		FD6F949515D45B3C00FF686B /* UIView+NIStyleable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+NIStyleable.h"; path = "nimbus/src/css/src/UIView+NIStyleable.h"; sourceTree = "<group>"; };
+		FD6F949615D45B3C00FF686B /* UIView+NIStyleable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+NIStyleable.m"; path = "nimbus/src/css/src/UIView+NIStyleable.m"; sourceTree = "<group>"; };
+		FD6F94A815D45B4B00FF686B /* NIImageProcessing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NIImageProcessing.h; path = nimbus/src/networkimage/src/NIImageProcessing.h; sourceTree = "<group>"; };
+		FD6F94A915D45B4B00FF686B /* NIImageProcessing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NIImageProcessing.m; path = nimbus/src/networkimage/src/NIImageProcessing.m; sourceTree = "<group>"; };
+		FD6F94AA15D45B4B00FF686B /* NimbusNetworkImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NimbusNetworkImage.h; path = nimbus/src/networkimage/src/NimbusNetworkImage.h; sourceTree = "<group>"; };
+		FD6F94AB15D45B4B00FF686B /* NimbusNetworkImage+Namespace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NimbusNetworkImage+Namespace.h"; path = "nimbus/src/networkimage/src/NimbusNetworkImage+Namespace.h"; sourceTree = "<group>"; };
+		FD6F94AC15D45B4B00FF686B /* NINetworkImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NINetworkImageView.h; path = nimbus/src/networkimage/src/NINetworkImageView.h; sourceTree = "<group>"; };
+		FD6F94AD15D45B4B00FF686B /* NINetworkImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NINetworkImageView.m; path = nimbus/src/networkimage/src/NINetworkImageView.m; sourceTree = "<group>"; };
+		FD7732E915D3278100E857C8 /* IPIActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIActivityViewController.h; sourceTree = "<group>"; };
+		FD7732EA15D3278100E857C8 /* IPIActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIActivityViewController.m; sourceTree = "<group>"; };
+		FD7732EC15D32B6300E857C8 /* CDIActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIActivityTableViewCell.h; sourceTree = "<group>"; };
+		FD7732ED15D32B6300E857C8 /* CDIActivityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIActivityTableViewCell.m; sourceTree = "<group>"; };
 		FDAEF99715D1DB4E009FAD52 /* InsiderPagesKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = InsiderPagesKit.xcodeproj; sourceTree = "<group>"; };
+		FDB7BC4615D2DAA2008E62EF /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		FDB7BC4815D2DACA008E62EF /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = ../../Documents/FacebookSDK/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
+		FDB7BC5715D2F5EA008E62EF /* LoginWithFacebookNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LoginWithFacebookNormal.png; sourceTree = "<group>"; };
+		FDB7BC5815D2F5EA008E62EF /* LoginWithFacebookNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LoginWithFacebookNormal@2x.png"; sourceTree = "<group>"; };
+		FDB7BC5915D2F5EA008E62EF /* LoginWithFacebookPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LoginWithFacebookPressed.png; sourceTree = "<group>"; };
+		FDB7BC5A15D2F5EA008E62EF /* LoginWithFacebookPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LoginWithFacebookPressed@2x.png"; sourceTree = "<group>"; };
+		FDD99E5015D4CED1003BB635 /* DCCrossHairView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCCrossHairView.h; sourceTree = "<group>"; };
+		FDD99E5115D4CED1003BB635 /* DCCrossHairView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCCrossHairView.m; sourceTree = "<group>"; };
+		FDD99E5215D4CED1003BB635 /* DCFrameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCFrameView.h; sourceTree = "<group>"; };
+		FDD99E5315D4CED1003BB635 /* DCFrameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCFrameView.m; sourceTree = "<group>"; };
+		FDD99E5415D4CED1003BB635 /* DCIntrospect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCIntrospect.h; sourceTree = "<group>"; };
+		FDD99E5515D4CED1003BB635 /* DCIntrospect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCIntrospect.m; sourceTree = "<group>"; };
+		FDD99E5615D4CED1003BB635 /* DCIntrospectSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCIntrospectSettings.h; sourceTree = "<group>"; };
+		FDD99E5715D4CED1003BB635 /* DCStatusBarOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCStatusBarOverlay.h; sourceTree = "<group>"; };
+		FDD99E5815D4CED1003BB635 /* DCStatusBarOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCStatusBarOverlay.m; sourceTree = "<group>"; };
+		FDD99E8215D4D3C9003BB635 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTestFlight.a; path = TestFlightSDK1.0/libTestFlight.a; sourceTree = "<group>"; };
+		FDD99E8315D4D3C9003BB635 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestFlight.h; path = TestFlightSDK1.0/TestFlight.h; sourceTree = "<group>"; };
 		FDFAD30215D1E88B00ADFB73 /* InsiderPages.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = InsiderPages.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -514,6 +671,8 @@
 				B208C1FA15BF64630080705D /* SystemConfiguration.framework in Frameworks */,
 				B208C1FB15BF64630080705D /* UIKit.framework in Frameworks */,
 				B208C1EB15BF64630080705D /* libSSToolkit.a in Frameworks */,
+				FDB7BC4715D2DAA2008E62EF /* FacebookSDK.framework in Frameworks */,
+				FDD99E8415D4D3C9003BB635 /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -557,6 +716,10 @@
 		B208BBD615BF63A80080705D /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				FDB7BC5715D2F5EA008E62EF /* LoginWithFacebookNormal.png */,
+				FDB7BC5815D2F5EA008E62EF /* LoginWithFacebookNormal@2x.png */,
+				FDB7BC5915D2F5EA008E62EF /* LoginWithFacebookPressed.png */,
+				FDB7BC5A15D2F5EA008E62EF /* LoginWithFacebookPressed@2x.png */,
 				B29011A915C4D247008FC626 /* action-button-mini.png */,
 				B29011AA15C4D247008FC626 /* action-button-mini@2x.png */,
 				B29011AB15C4D247008FC626 /* back-button-mini.png */,
@@ -676,11 +839,8 @@
 		B208BC9D15BF63E00080705D /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				FDAEF96B15D1DB4E009FAD52 /* InsiderPagesKit */,
-				B208BE5E15BF63E00080705D /* Localytics */,
-				B208BEBF15BF63E00080705D /* SSPullToRefresh */,
-				B208BECA15BF63E00080705D /* SSToolkit */,
-				B208BF7915BF63E00080705D /* TTTAttributedLabel */,
+				FDD99E3715D4CEAF003BB635 /* Development */,
+				FDD99E3815D4CEBB003BB635 /* Production */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -745,6 +905,8 @@
 		B208C1FC15BF64690080705D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FDB7BC4815D2DACA008E62EF /* FacebookSDKResources.bundle */,
+				FDB7BC4615D2DAA2008E62EF /* FacebookSDK.framework */,
 				B2AD031815C4896E00D9B909 /* AudioToolbox.framework */,
 				B28FD2D015BF739300365CD6 /* libicucore.dylib */,
 				B28FD2C715BF732F00365CD6 /* libsqlite3.dylib */,
@@ -777,6 +939,8 @@
 			children = (
 				B208BB9215BF63A80080705D /* CDIAddListTableViewCell.h */,
 				B208BB9315BF63A80080705D /* CDIAddListTableViewCell.m */,
+				FD7732EC15D32B6300E857C8 /* CDIActivityTableViewCell.h */,
+				FD7732ED15D32B6300E857C8 /* CDIActivityTableViewCell.m */,
 				B208BBA015BF63A80080705D /* CDIListTableViewCell.h */,
 				B208BBA115BF63A80080705D /* CDIListTableViewCell.m */,
 				B208BBBC15BF63A80080705D /* CDITableViewCell.h */,
@@ -947,6 +1111,10 @@
 		B2D1242115C1FC7000ED1218 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				FD7732B515D30EA000E857C8 /* Provider */,
+				FD7732B415D30E9C00E857C8 /* Page */,
+				FD7732B315D30E9400E857C8 /* Pages */,
+				FD7732B215D30E8C00E857C8 /* Activity */,
 				B23261A215C206EC00D455EF /* Lists */,
 				B23261A315C206F200D455EF /* List */,
 				B23261A615C2070D00D455EF /* Abstract */,
@@ -972,6 +1140,152 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
+		FD6F943115D45AAA00FF686B /* Nimbus */ = {
+			isa = PBXGroup;
+			children = (
+				FD6F947215D45B2700FF686B /* Network Image View */,
+				FD6F947115D45B2200FF686B /* CSS */,
+				FD6F943215D45AD200FF686B /* Core */,
+			);
+			name = Nimbus;
+			sourceTree = "<group>";
+		};
+		FD6F943215D45AD200FF686B /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				FD6F943315D45AEA00FF686B /* NICommonMetrics.h */,
+				FD6F943415D45AEA00FF686B /* NICommonMetrics.m */,
+				FD6F943515D45AEA00FF686B /* NIDataStructures.h */,
+				FD6F943615D45AEA00FF686B /* NIDataStructures.m */,
+				FD6F943715D45AEA00FF686B /* NIDebuggingTools.h */,
+				FD6F943815D45AEA00FF686B /* NIDebuggingTools.m */,
+				FD6F943915D45AEA00FF686B /* NIDeviceOrientation.h */,
+				FD6F943A15D45AEA00FF686B /* NIDeviceOrientation.m */,
+				FD6F943B15D45AEA00FF686B /* NIError.h */,
+				FD6F943C15D45AEA00FF686B /* NIError.m */,
+				FD6F943D15D45AEA00FF686B /* NIFoundationMethods.h */,
+				FD6F943E15D45AEA00FF686B /* NIFoundationMethods.m */,
+				FD6F943F15D45AEA00FF686B /* NIInMemoryCache.h */,
+				FD6F944015D45AEA00FF686B /* NIInMemoryCache.m */,
+				FD6F944115D45AEA00FF686B /* NimbusCore.h */,
+				FD6F944215D45AEA00FF686B /* NimbusCore+Additions.h */,
+				FD6F944315D45AEA00FF686B /* NimbusCore+Namespace.h */,
+				FD6F944415D45AEA00FF686B /* NINavigationAppearance.h */,
+				FD6F944515D45AEA00FF686B /* NINavigationAppearance.m */,
+				FD6F944615D45AEA00FF686B /* NINetworkActivity.h */,
+				FD6F944715D45AEA00FF686B /* NINetworkActivity.m */,
+				FD6F944815D45AEA00FF686B /* NINonEmptyCollectionTesting.h */,
+				FD6F944915D45AEA00FF686B /* NINonEmptyCollectionTesting.m */,
+				FD6F944A15D45AEA00FF686B /* NINonRetainingCollections.h */,
+				FD6F944B15D45AEA00FF686B /* NINonRetainingCollections.m */,
+				FD6F944C15D45AEA00FF686B /* NIOperations.h */,
+				FD6F944D15D45AEA00FF686B /* NIOperations.m */,
+				FD6F944E15D45AEA00FF686B /* NIOperations+Subclassing.h */,
+				FD6F944F15D45AEA00FF686B /* NIPaths.h */,
+				FD6F945015D45AEA00FF686B /* NIPaths.m */,
+				FD6F945115D45AEA00FF686B /* NIPreprocessorMacros.h */,
+				FD6F945215D45AEA00FF686B /* NIRuntimeClassModifications.h */,
+				FD6F945315D45AEA00FF686B /* NIRuntimeClassModifications.m */,
+				FD6F945415D45AEA00FF686B /* NISDKAvailability.h */,
+				FD6F945515D45AEA00FF686B /* NISDKAvailability.m */,
+				FD6F945615D45AEA00FF686B /* NISnapshotRotation.h */,
+				FD6F945715D45AEA00FF686B /* NISnapshotRotation.m */,
+				FD6F945815D45AEA00FF686B /* NIState.h */,
+				FD6F945915D45AEA00FF686B /* NIState.m */,
+				FD6F945A15D45AEA00FF686B /* NIViewRecycler.h */,
+				FD6F945B15D45AEA00FF686B /* NIViewRecycler.m */,
+				FD6F945C15D45AEA00FF686B /* NSString+NimbusCore.h */,
+				FD6F945D15D45AEA00FF686B /* NSString+NimbusCore.m */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		FD6F947115D45B2200FF686B /* CSS */ = {
+			isa = PBXGroup;
+			children = (
+				FD6F947315D45B3C00FF686B /* CSSTokenizer.m */,
+				FD6F947415D45B3C00FF686B /* CSSTokens.h */,
+				FD6F947515D45B3C00FF686B /* CSSTokens.m */,
+				FD6F947615D45B3C00FF686B /* NIChameleonObserver.h */,
+				FD6F947715D45B3C00FF686B /* NIChameleonObserver.m */,
+				FD6F947815D45B3C00FF686B /* NICSSParser.h */,
+				FD6F947915D45B3C00FF686B /* NICSSParser.m */,
+				FD6F947A15D45B3C00FF686B /* NICSSRuleset.h */,
+				FD6F947B15D45B3C00FF686B /* NICSSRuleset.m */,
+				FD6F947C15D45B3C00FF686B /* NIDOM.h */,
+				FD6F947D15D45B3C00FF686B /* NIDOM.m */,
+				FD6F947E15D45B3C00FF686B /* NimbusCSS.h */,
+				FD6F947F15D45B3C00FF686B /* NimbusCss+Namespace.h */,
+				FD6F948015D45B3C00FF686B /* NIStyleable.h */,
+				FD6F948115D45B3C00FF686B /* NIStylesheet.h */,
+				FD6F948215D45B3C00FF686B /* NIStylesheet.m */,
+				FD6F948315D45B3C00FF686B /* NIStylesheetCache.h */,
+				FD6F948415D45B3C00FF686B /* NIStylesheetCache.m */,
+				FD6F948515D45B3C00FF686B /* UIActivityIndicatorView+NIStyleable.h */,
+				FD6F948615D45B3C00FF686B /* UIActivityIndicatorView+NIStyleable.m */,
+				FD6F948715D45B3C00FF686B /* UIButton+NIStyleable.h */,
+				FD6F948815D45B3C00FF686B /* UIButton+NIStyleable.m */,
+				FD6F948915D45B3C00FF686B /* UILabel+NIStyleable.h */,
+				FD6F948A15D45B3C00FF686B /* UILabel+NIStyleable.m */,
+				FD6F948B15D45B3C00FF686B /* UINavigationBar+NIStyleable.h */,
+				FD6F948C15D45B3C00FF686B /* UINavigationBar+NIStyleable.m */,
+				FD6F948D15D45B3C00FF686B /* UIScrollView+NIStyleable.h */,
+				FD6F948E15D45B3C00FF686B /* UIScrollView+NIStyleable.m */,
+				FD6F948F15D45B3C00FF686B /* UISearchBar+NIStyleable.h */,
+				FD6F949015D45B3C00FF686B /* UISearchBar+NIStyleable.m */,
+				FD6F949115D45B3C00FF686B /* UITableView+NIStyleable.h */,
+				FD6F949215D45B3C00FF686B /* UITableView+NIStyleable.m */,
+				FD6F949315D45B3C00FF686B /* UIToolbar+NIStyleable.h */,
+				FD6F949415D45B3C00FF686B /* UIToolbar+NIStyleable.m */,
+				FD6F949515D45B3C00FF686B /* UIView+NIStyleable.h */,
+				FD6F949615D45B3C00FF686B /* UIView+NIStyleable.m */,
+			);
+			name = CSS;
+			sourceTree = "<group>";
+		};
+		FD6F947215D45B2700FF686B /* Network Image View */ = {
+			isa = PBXGroup;
+			children = (
+				FD6F94A815D45B4B00FF686B /* NIImageProcessing.h */,
+				FD6F94A915D45B4B00FF686B /* NIImageProcessing.m */,
+				FD6F94AA15D45B4B00FF686B /* NimbusNetworkImage.h */,
+				FD6F94AB15D45B4B00FF686B /* NimbusNetworkImage+Namespace.h */,
+				FD6F94AC15D45B4B00FF686B /* NINetworkImageView.h */,
+				FD6F94AD15D45B4B00FF686B /* NINetworkImageView.m */,
+			);
+			name = "Network Image View";
+			sourceTree = "<group>";
+		};
+		FD7732B215D30E8C00E857C8 /* Activity */ = {
+			isa = PBXGroup;
+			children = (
+				FD7732E915D3278100E857C8 /* IPIActivityViewController.h */,
+				FD7732EA15D3278100E857C8 /* IPIActivityViewController.m */,
+			);
+			name = Activity;
+			sourceTree = "<group>";
+		};
+		FD7732B315D30E9400E857C8 /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Pages;
+			sourceTree = "<group>";
+		};
+		FD7732B415D30E9C00E857C8 /* Page */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Page;
+			sourceTree = "<group>";
+		};
+		FD7732B515D30EA000E857C8 /* Provider */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Provider;
+			sourceTree = "<group>";
+		};
 		FDAEF96B15D1DB4E009FAD52 /* InsiderPagesKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -988,6 +1302,62 @@
 				FDAEF9D015D1DB4E009FAD52 /* InsiderPagesKitTests.octest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		FDD99E3715D4CEAF003BB635 /* Development */ = {
+			isa = PBXGroup;
+			children = (
+				FDD99E8115D4D38C003BB635 /* TestFlight */,
+				FDD99E4D15D4CED1003BB635 /* DCIntrospect */,
+			);
+			name = Development;
+			sourceTree = "<group>";
+		};
+		FDD99E3815D4CEBB003BB635 /* Production */ = {
+			isa = PBXGroup;
+			children = (
+				FD6F943115D45AAA00FF686B /* Nimbus */,
+				FDAEF96B15D1DB4E009FAD52 /* InsiderPagesKit */,
+				B208BE5E15BF63E00080705D /* Localytics */,
+				B208BEBF15BF63E00080705D /* SSPullToRefresh */,
+				B208BECA15BF63E00080705D /* SSToolkit */,
+				B208BF7915BF63E00080705D /* TTTAttributedLabel */,
+			);
+			name = Production;
+			sourceTree = "<group>";
+		};
+		FDD99E4D15D4CED1003BB635 /* DCIntrospect */ = {
+			isa = PBXGroup;
+			children = (
+				FDD99E4F15D4CED1003BB635 /* DCIntrospect */,
+			);
+			name = DCIntrospect;
+			path = Development/DCIntrospect;
+			sourceTree = "<group>";
+		};
+		FDD99E4F15D4CED1003BB635 /* DCIntrospect */ = {
+			isa = PBXGroup;
+			children = (
+				FDD99E5015D4CED1003BB635 /* DCCrossHairView.h */,
+				FDD99E5115D4CED1003BB635 /* DCCrossHairView.m */,
+				FDD99E5215D4CED1003BB635 /* DCFrameView.h */,
+				FDD99E5315D4CED1003BB635 /* DCFrameView.m */,
+				FDD99E5415D4CED1003BB635 /* DCIntrospect.h */,
+				FDD99E5515D4CED1003BB635 /* DCIntrospect.m */,
+				FDD99E5615D4CED1003BB635 /* DCIntrospectSettings.h */,
+				FDD99E5715D4CED1003BB635 /* DCStatusBarOverlay.h */,
+				FDD99E5815D4CED1003BB635 /* DCStatusBarOverlay.m */,
+			);
+			path = DCIntrospect;
+			sourceTree = "<group>";
+		};
+		FDD99E8115D4D38C003BB635 /* TestFlight */ = {
+			isa = PBXGroup;
+			children = (
+				FDD99E8215D4D3C9003BB635 /* libTestFlight.a */,
+				FDD99E8315D4D3C9003BB635 /* TestFlight.h */,
+			);
+			name = TestFlight;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1045,6 +1415,7 @@
 				sv,
 				zh_Hans,
 				zh_Hant,
+				he,
 			);
 			mainGroup = B23FA74A151FE0710069A0D1;
 			productRefGroup = B23FA756151FE0710069A0D1 /* Products */;
@@ -1234,6 +1605,11 @@
 				B29011BE15C4D247008FC626 /* safari-button-mini@2x.png in Resources */,
 				B29011BF15C4D247008FC626 /* stop-button-mini.png in Resources */,
 				B29011C015C4D247008FC626 /* stop-button-mini@2x.png in Resources */,
+				FDB7BC4915D2DACA008E62EF /* FacebookSDKResources.bundle in Resources */,
+				FDB7BC5B15D2F5EA008E62EF /* LoginWithFacebookNormal.png in Resources */,
+				FDB7BC5C15D2F5EA008E62EF /* LoginWithFacebookNormal@2x.png in Resources */,
+				FDB7BC5D15D2F5EA008E62EF /* LoginWithFacebookPressed.png in Resources */,
+				FDB7BC5E15D2F5EA008E62EF /* LoginWithFacebookPressed@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1301,6 +1677,50 @@
 				FDAEF9DC15D1E258009FAD52 /* IPISplitViewController.m in Sources */,
 				FDAEF9DD15D1E25A009FAD52 /* IPIListsViewController.m in Sources */,
 				FDAEF9DE15D1E572009FAD52 /* IPIListViewController.m in Sources */,
+				FD7732EB15D3278100E857C8 /* IPIActivityViewController.m in Sources */,
+				FD7732EE15D32B6300E857C8 /* CDIActivityTableViewCell.m in Sources */,
+				FD6F945E15D45AEA00FF686B /* NICommonMetrics.m in Sources */,
+				FD6F945F15D45AEA00FF686B /* NIDataStructures.m in Sources */,
+				FD6F946015D45AEA00FF686B /* NIDebuggingTools.m in Sources */,
+				FD6F946115D45AEA00FF686B /* NIDeviceOrientation.m in Sources */,
+				FD6F946215D45AEA00FF686B /* NIError.m in Sources */,
+				FD6F946315D45AEA00FF686B /* NIFoundationMethods.m in Sources */,
+				FD6F946415D45AEA00FF686B /* NIInMemoryCache.m in Sources */,
+				FD6F946515D45AEA00FF686B /* NINavigationAppearance.m in Sources */,
+				FD6F946615D45AEA00FF686B /* NINetworkActivity.m in Sources */,
+				FD6F946715D45AEA00FF686B /* NINonEmptyCollectionTesting.m in Sources */,
+				FD6F946815D45AEA00FF686B /* NINonRetainingCollections.m in Sources */,
+				FD6F946915D45AEA00FF686B /* NIOperations.m in Sources */,
+				FD6F946A15D45AEA00FF686B /* NIPaths.m in Sources */,
+				FD6F946B15D45AEA00FF686B /* NIRuntimeClassModifications.m in Sources */,
+				FD6F946C15D45AEA00FF686B /* NISDKAvailability.m in Sources */,
+				FD6F946D15D45AEA00FF686B /* NISnapshotRotation.m in Sources */,
+				FD6F946E15D45AEA00FF686B /* NIState.m in Sources */,
+				FD6F946F15D45AEA00FF686B /* NIViewRecycler.m in Sources */,
+				FD6F947015D45AEA00FF686B /* NSString+NimbusCore.m in Sources */,
+				FD6F949715D45B3C00FF686B /* CSSTokenizer.m in Sources */,
+				FD6F949815D45B3C00FF686B /* CSSTokens.m in Sources */,
+				FD6F949915D45B3C00FF686B /* NIChameleonObserver.m in Sources */,
+				FD6F949A15D45B3C00FF686B /* NICSSParser.m in Sources */,
+				FD6F949B15D45B3C00FF686B /* NICSSRuleset.m in Sources */,
+				FD6F949C15D45B3C00FF686B /* NIDOM.m in Sources */,
+				FD6F949D15D45B3C00FF686B /* NIStylesheet.m in Sources */,
+				FD6F949E15D45B3C00FF686B /* NIStylesheetCache.m in Sources */,
+				FD6F949F15D45B3C00FF686B /* UIActivityIndicatorView+NIStyleable.m in Sources */,
+				FD6F94A015D45B3C00FF686B /* UIButton+NIStyleable.m in Sources */,
+				FD6F94A115D45B3C00FF686B /* UILabel+NIStyleable.m in Sources */,
+				FD6F94A215D45B3C00FF686B /* UINavigationBar+NIStyleable.m in Sources */,
+				FD6F94A315D45B3C00FF686B /* UIScrollView+NIStyleable.m in Sources */,
+				FD6F94A415D45B3C00FF686B /* UISearchBar+NIStyleable.m in Sources */,
+				FD6F94A515D45B3C00FF686B /* UITableView+NIStyleable.m in Sources */,
+				FD6F94A615D45B3C00FF686B /* UIToolbar+NIStyleable.m in Sources */,
+				FD6F94A715D45B3C00FF686B /* UIView+NIStyleable.m in Sources */,
+				FD6F94AE15D45B4B00FF686B /* NIImageProcessing.m in Sources */,
+				FD6F94AF15D45B4B00FF686B /* NINetworkImageView.m in Sources */,
+				FDD99E7115D4CED1003BB635 /* DCCrossHairView.m in Sources */,
+				FDD99E7215D4CED1003BB635 /* DCFrameView.m in Sources */,
+				FDD99E7315D4CED1003BB635 /* DCIntrospect.m in Sources */,
+				FDD99E7415D4CED1003BB635 /* DCStatusBarOverlay.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1382,6 +1802,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Vendor\"",
+					"\"$(SRCROOT)/../../Documents/FacebookSDK\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Other Sources/InsiderPages-Prefix.pch";
@@ -1393,10 +1814,15 @@
 				);
 				INFOPLIST_FILE = "Resources/InsiderPages-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Vendor/TestFlightSDK1.0\"",
+				);
 				OTHER_CFLAGS = "-DDEBUG";
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",
+					"-lsqlite3.0",
 				);
 				PRODUCT_NAME = "InsiderPages-Dev";
 				PROVISIONING_PROFILE = "";
@@ -1416,6 +1842,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Vendor\"",
+					"\"$(SRCROOT)/../../Documents/FacebookSDK\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Other Sources/InsiderPages-Prefix.pch";
@@ -1427,9 +1854,14 @@
 				);
 				INFOPLIST_FILE = "Resources/InsiderPages-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Vendor/TestFlightSDK1.0\"",
+				);
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",
+					"-lsqlite3.0",
 				);
 				PRODUCT_NAME = InsiderPages;
 				PROVISIONING_PROFILE = "";

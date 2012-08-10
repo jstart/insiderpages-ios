@@ -330,9 +330,9 @@
 }
 
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 //	return self.addTaskView;
-}
+//}
 
 
 #pragma mark - UITableViewDelegate
@@ -383,17 +383,17 @@
 }
 
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
 //	return [CDIAddTaskView height];
-}
+//}
 
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 //	CDKTask *task = [self objectForViewIndexPath:indexPath];
 //	CGFloat offset = self.editing ? 29.0f : 0.0f;
 //	return [CDITaskTableViewCell cellHeightForTask:task width:tableView.frame.size.width - offset];
 //	return [CDITaskTableViewCell cellHeightForTask:task width:tableView.frame.size.width];
-}
+//}
 
 
 #pragma mark - UIScrollViewDelegate
@@ -545,7 +545,7 @@
 //	[task update];
 //	
 //	[self endCellTextEditing];
-//	return NO;
+	return NO;
 }
 
 

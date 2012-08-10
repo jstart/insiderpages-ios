@@ -12,58 +12,82 @@
 #import "CDISignInViewController.h"
 
 @interface CDISignUpViewController ()
-@property (nonatomic, strong, readonly) UITextField *emailTextField;
+@property (nonatomic, strong, readonly) UIButton *facebookButton;
 @end
 
 @implementation CDISignUpViewController
 
-@synthesize emailTextField = _emailTextField;
+@synthesize facebookButton = _facebookButton;
 
-- (UITextField *)emailTextField {
-	if (!_emailTextField) {
-		_emailTextField = [[UITextField alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [[self class] textFieldWith], 30.0f)];
-		_emailTextField.keyboardType = UIKeyboardTypeEmailAddress;
-		_emailTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-		_emailTextField.autocorrectionType = UITextAutocorrectionTypeNo;
-		_emailTextField.textColor = [UIColor cheddarBlueColor];
-		_emailTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-		_emailTextField.delegate = self;
-		_emailTextField.returnKeyType = UIReturnKeyNext;
-		_emailTextField.placeholder = @"Your email address";
-		_emailTextField.font = [UIFont cheddarFontOfSize:18.0f];
-	}
-	return _emailTextField;
+- (UIButton *)facebookButton {
+	if (!_facebookButton) {
+        _facebookButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_facebookButton addTarget:self
+                        action:@selector(login)
+              forControlEvents:UIControlEventTouchUpInside];
+        [_facebookButton setImage:
+         [UIImage imageNamed:@"LoginWithFacebookNormal.png"]
+                     forState:UIControlStateNormal];
+        [_facebookButton setImage:
+         [UIImage imageNamed:@"LoginWithFacebookPressed.png"] forState:UIControlStateHighlighted];
+        [_facebookButton sizeToFit];
+    }
+	return _facebookButton;
 }
+
+- (UILabel *)registerLabel {
+    UILabel * registerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
+    registerLabel.backgroundColor = [UIColor clearColor];
+    registerLabel.textAlignment = UITextAlignmentCenter;
+    registerLabel.textColor = [UIColor whiteColor];
+    [registerLabel setText:@"Connect with Facebook"];
+    return registerLabel;
+}
+
 
 
 #pragma mark - UIViewController
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	self.title = @"Cheddar";
-	self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Sign Up" style:UIBarButtonItemStyleBordered target:nil action:nil];
-//	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Sign Up" style:UIBarButtonItemStyleBordered target:self action:@selector(signUp:)];
-
-	UIButton *footer = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 34.0f)];
-	[footer setTitle:@"Already have an account? Sign In →" forState:UIControlStateNormal];
-	[footer setTitleColor:[UIColor cheddarBlueColor] forState:UIControlStateNormal];
-	[footer setTitleColor:[UIColor cheddarTextColor] forState:UIControlStateHighlighted];
-	[footer addTarget:self action:@selector(signIn:) forControlEvents:UIControlEventTouchUpInside];
-	footer.titleLabel.font = [UIFont cheddarFontOfSize:16.0f];
-	self.tableView.tableFooterView = footer;
+    self.title = @"InsiderPages";
+//    UIButton *footer = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 34.0f)];
+//    [footer setTitle:@"Already have an account? Sign In →" forState:UIControlStateNormal];
+//    [footer setTitleColor:[UIColor cheddarBlueColor] forState:UIControlStateNormal];
+//    [footer setTitleColor:[UIColor cheddarTextColor] forState:UIControlStateHighlighted];
+//    [footer addTarget:self action:@selector(signIn:) forControlEvents:UIControlEventTouchUpInside];
+//    footer.titleLabel.font = [UIFont cheddarFontOfSize:16.0f];
+//    self.tableView.tableFooterView = footer;
+    self.view.backgroundColor = [UIColor grayColor];
+    UIButton * faceboookButton = [self facebookButton];
+    CGPoint buttonCenter = self.view.center;
+    buttonCenter.y = buttonCenter.y - 40;
+    faceboookButton.center = buttonCenter;
+    [[self view] addSubview:faceboookButton];
+    
+    UILabel * registerLabel = [self registerLabel];
+    CGPoint labelCenter = faceboookButton.center;
+    labelCenter.y = labelCenter.y - 35;
+    registerLabel.center = labelCenter;
+    [[self view] addSubview:registerLabel];
 }
 
 
 #pragma mark - Actions
 
+-(void)login{
+    [[IPIAppDelegate sharedAppDelegate] openSessionCheckCache:NO];
+}
+
+// These are not used but migth be useful when we do email login
 - (void)signIn:(id)sender {
 	[self.navigationController pushViewController:[[CDISignInViewController alloc] init] animated:YES];
 }
 
 
 - (void)signUp:(id)sender {
-	SSHUDView *hud = [[SSHUDView alloc] initWithTitle:@"Signing up..." loading:YES];
-	[hud show];
+//	SSHUDView *hud = [[SSHUDView alloc] initWithTitle:@"Signing up..." loading:YES];
+//	[hud show];
 	
 //	[[CDKHTTPClient sharedClient] signUpWithUsername:self.usernameTextField.text email:self.emailTextField.text password:self.passwordTextField.text success:^(AFJSONRequestOperation *operation, id responseObject) {
 //		dispatch_async(dispatch_get_main_queue(), ^{
@@ -77,53 +101,28 @@
 //	}];
 }
 
-
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return 3;
-}
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	static NSString *const cellIdentifier = @"cellIdentifier";
-	
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-	if (!cell) {
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
-		cell.textLabel.textColor = [UIColor cheddarTextColor];
-		cell.textLabel.font = [UIFont cheddarFontOfSize:18.0f];
-	}
-	
-	if (indexPath.row == 0) {
-		cell.textLabel.text = @"Username";
-		cell.accessoryView = self.usernameTextField;
-		self.usernameTextField.placeholder = @"Choose a username";
-	} else if (indexPath.row == 1) {
-		cell.textLabel.text = @"Email";
-		cell.accessoryView = self.emailTextField;
-	} else if (indexPath.row == 2) {
-		cell.textLabel.text = @"Password";
-		cell.accessoryView = self.passwordTextField;
-		self.passwordTextField.placeholder = @"Choose a password";
-	}
-	
-	return cell;
-}
-
-
-#pragma mark - UITextFieldDelegate
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-	if (textField == self.usernameTextField) {
-		[self.emailTextField becomeFirstResponder];
-	} else if (textField == self.emailTextField) {
-		[self.passwordTextField becomeFirstResponder];
-	} else if (textField == self.passwordTextField) {
-		[self signUp:textField];
-	}
-	return NO;
-}
+//#pragma mark - UITableViewDataSource
+//
+//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+//	return 1;
+//}
+//
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+//	static NSString *const cellIdentifier = @"cellIdentifier";
+//	
+//	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+//	if (!cell) {
+//		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+//		cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//	}
+//	
+//	if (indexPath.row == 0) {
+//        UIButton * facebookButton = [self facebookButton];
+//        facebookButton.center = cell.center;
+//		[cell addSubview:facebookButton];
+//	}
+//	
+//	return cell;
+//}
 
 @end

@@ -56,10 +56,10 @@
 
 - (id)init {
 	if ((self = [super initWithStyle:UITableViewStyleGrouped])) {
-		self.title = @"Cheddar";
-		UIImageView *title = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nav-title.png"]];
-		title.frame = CGRectMake(0.0f, 0.0f, 116.0f, 21.0f);	
-		self.navigationItem.titleView = title;
+		self.title = @"InsiderPages";
+//		UIImageView *title = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nav-title.png"]];
+//		title.frame = CGRectMake(0.0f, 0.0f, 116.0f, 21.0f);
+//		self.navigationItem.titleView = title;
 	}
 	return self;
 }
@@ -78,7 +78,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-	[self.usernameTextField becomeFirstResponder];
+//	[self.usernameTextField becomeFirstResponder];
 }
 
 

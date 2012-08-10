@@ -13,3 +13,15 @@
 [submodule "Vendor/SSPullToRefresh"]
 	path = Vendor/SSPullToRefresh
 	url = https://github.com/samsoffes/sspulltorefresh.git
+[submodule "Vendor/facebook-ios-sdk"]
+	path = Vendor/facebook-ios-sdk
+	url = git://github.com/facebook/facebook-ios-sdk.git
+[submodule "Vendor/nimbus"]
+	path = Vendor/nimbus
+	url = https://github.com/jverkoey/nimbus.git
+[submodule "Vendor/Development"]
+	path = Vendor/Development
+	url = git://github.com/domesticcatsoftware/DCIntrospect.git
+[submodule "Vendor/Development/DCIntrospect"]
+	path = Vendor/Development/DCIntrospect
+	url = git://github.com/domesticcatsoftware/DCIntrospect.git
