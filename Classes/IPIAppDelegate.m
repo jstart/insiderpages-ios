@@ -22,11 +22,9 @@
 
 @synthesize window = _window;
 
-
 + (IPIAppDelegate *)sharedAppDelegate {
 	return (IPIAppDelegate *)[[UIApplication sharedApplication] delegate];
 }
-
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     

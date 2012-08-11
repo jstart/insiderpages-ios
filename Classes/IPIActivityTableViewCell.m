@@ -48,8 +48,10 @@
         [self.profileImageView setFrame:CGRectMake(15, 6, 40, 40)];
         [self addSubview:self.profileImageView];
         
-        self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width-40, 5, 40, 20)];
+        self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width-80, 5, 80, 20)];
         self.timeLabel.backgroundColor = [UIColor clearColor];
+        [self.timeLabel setFont:[UIFont systemFontOfSize:[UIFont smallSystemFontSize]]];
+        [self addSubview:self.timeLabel];
 	}
 	return self;
 }
