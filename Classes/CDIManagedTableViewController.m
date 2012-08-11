@@ -62,13 +62,13 @@
 	background.backgroundColor = [UIColor cheddarArchesColor];
 	self.tableView.backgroundView = background;
 	
-	SSGradientView *footer = [[SSGradientView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 3.0f)];
-	footer.backgroundColor = [UIColor clearColor];
-	footer.colors = [NSArray arrayWithObjects:
-					 [UIColor colorWithWhite:0.937f alpha:1.0f],
-					 [UIColor colorWithWhite:0.937f alpha:0.0f],
-					 nil];
-	self.tableView.tableFooterView = footer;
+//	SSGradientView *footer = [[SSGradientView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 3.0f)];
+//	footer.backgroundColor = [UIColor clearColor];
+//	footer.colors = [NSArray arrayWithObjects:
+//					 [UIColor colorWithWhite:0.937f alpha:1.0f],
+//					 [UIColor colorWithWhite:0.937f alpha:0.0f],
+//					 nil];
+//	self.tableView.tableFooterView = footer;
 	
 	_tableViewTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(endCellTextEditing)];
 	_tableViewTapGestureRecognizer.enabled = NO;

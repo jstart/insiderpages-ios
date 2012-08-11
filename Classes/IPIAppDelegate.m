@@ -48,51 +48,44 @@
 	[IPKHTTPClient setDevelopmentModeEnabled:YES];
 //	[CDKPushController setDevelopmentModeEnabled:YES];
 #endif
-	
+    
+#if INSIDER_PAGES_TESTING_MODE
+    [TestFlight takeOff:@"30d92a896df4ab4b4873886ea58f8b06_NzE0NzIyMDEyLTAzLTE0IDEzOjQ0OjU4Ljk3MDAxOQ"];
+#endif
+    
+#define TESTING 1
+#ifdef TESTING
+    [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
+#endif
+    
+    [self reloadCookies];
+    
 	// Initialize the window
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	self.window.backgroundColor = [UIColor blackColor];
 	
 	[[self class] applyStylesheet];
     [self openSessionCheckCache:YES];
-	if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
-        [self login];
-        // To-do, show logged in view
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            self.window.rootViewController = [[IPISplitViewController alloc] init];
-        } else {
-            UIViewController *viewController = [[IPIActivityViewController alloc] init];
-            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-            self.window.rootViewController = navigationController;
-        }
+    // To-do, show logged in view
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        self.window.rootViewController = [[IPISplitViewController alloc] init];
     } else {
-        // No, display the login page.
-        [self showLoginView];
+        UIViewController *viewController = [[IPIActivityViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+        self.window.rootViewController = navigationController;
     }
-	
 	
 	[self.window makeKeyAndVisible];
     
     #if TARGET_IPHONE_SIMULATOR
         [[DCIntrospect sharedIntrospector] start];
     #endif
-    
-    #if INSIDER_PAGES_TESTING_MODE
-        [TestFlight takeOff:@"30d92a896df4ab4b4873886ea58f8b06_NzE0NzIyMDEyLTAzLTE0IDEzOjQ0OjU4Ljk3MDAxOQ"];
-    #endif
-    
-    #define TESTING 1
-    #ifdef TESTING
-        [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
-    #endif
+
 	// Defer some stuff to make launching faster
 	dispatch_async(dispatch_get_main_queue(), ^{
 		// Setup status bar network indicator
 		[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
-		
-		// Set the OAuth client
-//		[[CDKHTTPClient sharedClient] setClientID:kCDIAPIClientID secret:kCDIAPIClientSecret];
-		
+				
 		// Initialize the connection to Pusher		
 //		[CDKPushController sharedController];
 		
@@ -118,10 +111,13 @@
         [[NSUserDefaults standardUserDefaults] setObject:[result objectForKey:@"id"] forKey:@"FBUserId"];
         [[IPKHTTPClient sharedClient] signInWithFacebookUserID:[result objectForKey:@"id"] accessToken:self.session.accessToken facebookMeResponse:result success:^(AFJSONRequestOperation *operation, id responseObject) {
             if ([[responseObject objectForKey:@"message"] isEqualToString:@"logged in"]) {
+                [self storeCookies];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [hud completeAndDismissWithTitle:@"Successfully Logged In"];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"Logged In" object:nil];
                 });
             }else{
+                [self storeCookies];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [hud completeAndDismissWithTitle:@"Successfully Registered"];
                 });
@@ -133,11 +129,31 @@
     }];
 }
 
+-(void)storeCookies{
+    NSArray* allCookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:@"http://local.insiderpages.com"]];
+    for (NSHTTPCookie *cookie in allCookies) {
+        NSMutableDictionary* cookieDictionary = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"SavedCookies"]];
+        [cookieDictionary setValue:cookie.properties forKey:@"http://local.insiderpages.com"];
+        [[NSUserDefaults standardUserDefaults] setObject:cookieDictionary forKey:@"SavedCookies"];
+    }
+}
+
+-(void)reloadCookies{
+    NSDictionary* cookieDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"SavedCookies"];
+    NSDictionary* cookieProperties = [cookieDictionary valueForKey:@"http://local.insiderpages.com"];
+    if (cookieProperties != nil) {
+        NSHTTPCookie* cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
+        NSArray* cookieArray = [NSArray arrayWithObject:cookie];
+        [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookies:cookieArray forURL:[NSURL URLWithString:@"http://local.insiderpages.com"] mainDocumentURL:nil];
+    }
+}
+
 -(void)login{
     SSHUDView *hud = [[SSHUDView alloc] initWithTitle:@"Logging in..." loading:YES];
 	[hud show];
     [[IPKHTTPClient sharedClient] signInWithFacebookUserID:[[NSUserDefaults standardUserDefaults] objectForKey:@"FBUserId"] accessToken:self.session.accessToken facebookMeResponse:[NSDictionary dictionary] success:^(AFJSONRequestOperation *operation, id responseObject) {
         if ([[responseObject objectForKey:@"message"] isEqualToString:@"logged in"]) {
+            [self storeCookies];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [hud completeAndDismissWithTitle:@"Successfully Logged In"];
             });
@@ -172,6 +188,14 @@
         case FBSessionStateOpen: {
             if (![IPKUser currentUser]) {
                 [self registerOrLogin];
+            }else{
+                if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+                    self.window.rootViewController = [[IPISplitViewController alloc] init];
+                } else {
+                    UIViewController *viewController = [[IPIActivityViewController alloc] initWithStyle:UITableViewStyleGrouped];
+                    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+                    self.window.rootViewController = navigationController;
+                }
             }
         }
             break;

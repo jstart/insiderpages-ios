@@ -12,7 +12,4 @@ extern NSString *const kIPISelectedListKey;
 
 @interface IPIActivityViewController : CDIManagedTableViewController
 
-- (void)showSettings:(id)sender;
-- (void)createList:(id)sender;
-
 @end

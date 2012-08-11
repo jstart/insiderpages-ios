@@ -30,7 +30,7 @@
 		_textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 		_textField.returnKeyType = UIReturnKeyDone;
 		_textField.alpha = 0.0f;
-		[self.contentView addSubview:_textField];
+//		[self.contentView addSubview:_textField];
 	}
 	return _textField;
 }
@@ -90,10 +90,12 @@
 		background.contentMode = UIViewContentModeRedraw;
 		self.backgroundView = background;		
 		self.contentView.clipsToBounds = YES;
-		
-		_editingTapGestureRecognizer = [[UITapGestureRecognizer alloc] init];
-		_editingTapGestureRecognizer.delegate = self;
-		[self addGestureRecognizer:_editingTapGestureRecognizer];
+        [self.textLabel setBackgroundColor:[UIColor clearColor]];
+        [self.detailTextLabel setBackgroundColor:[UIColor clearColor]];
+//		
+//		_editingTapGestureRecognizer = [[UITapGestureRecognizer alloc] init];
+//		_editingTapGestureRecognizer.delegate = self;
+//		[self addGestureRecognizer:_editingTapGestureRecognizer];
 	}
 	return self;
 }
@@ -101,9 +103,6 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
 	[super setSelected:selected animated:animated];
-	if (!selected) {
-		self.textLabel.backgroundColor = [UIColor whiteColor];
-	}
 }
 
 

@@ -9,8 +9,10 @@
 #import "CDITableViewCell.h"
 #import "NINetworkImageView.h"
 
-@interface CDIActivityTableViewCell : CDITableViewCell
+@interface IPIActivityTableViewCell : CDITableViewCell
 
 @property (nonatomic, strong) IPKActivity *activity;
 @property (nonatomic, strong) NINetworkImageView * profileImageView;
+@property (nonatomic, strong) UILabel * timeLabel;
+
 @end

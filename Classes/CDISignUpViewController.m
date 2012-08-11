@@ -70,6 +70,7 @@
     labelCenter.y = labelCenter.y - 35;
     registerLabel.center = labelCenter;
     [[self view] addSubview:registerLabel];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loggedIn) name:@"Logged In" object:nil];
 }
 
 
@@ -77,6 +78,11 @@
 
 -(void)login{
     [[IPIAppDelegate sharedAppDelegate] openSessionCheckCache:NO];
+}
+
+-(void)loggedIn{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.parentViewController dismissModalViewControllerAnimated:YES];
 }
 
 // These are not used but migth be useful when we do email login

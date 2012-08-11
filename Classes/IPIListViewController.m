@@ -247,7 +247,6 @@
 		return;
 	}
 	
-	CDKList *list = self.list;
 	self.loading = YES;
 //	[[CDKHTTPClient sharedClient] getTasksWithList:list success:^(AFJSONRequestOperation *operation, id responseObject) {
 //		dispatch_async(dispatch_get_main_queue(), ^{

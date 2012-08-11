@@ -8,7 +8,11 @@
 
 #import "IPIActivityViewController.h"
 #import "IPISplitViewController.h"
-#import "CDIActivityTableViewCell.h"
+#import "IPIPageViewController.h"
+#import "IPIActivityTableViewCell.h"
+#import "IPIActivityPageTableViewHeader.h"
+#import "IPIActivityPageTableViewFooter.h"
+#import "CDINoListsView.h"
 #import "UIColor+CheddariOSAdditions.h"
 #import <SSToolkit/UIScrollView+SSToolkitAdditions.h>
 
@@ -23,16 +27,11 @@
 @interface IPIActivityViewController ()
 - (void)_listUpdated:(NSNotification *)notification;
 - (void)_currentUserDidChange:(NSNotification *)notification;
-- (void)_createList:(id)sender;
-- (void)_cancelAddingList:(id)sender;
-- (void)_selectListAtIndexPath:(NSIndexPath *)indexPath newList:(BOOL)newList;
 - (void)_checkUser;
 @end
 
 @implementation IPIActivityViewController {
-	IPKList *_selectedList;
 	BOOL _adding;
-	BOOL _checkForOneList;
 }
 
 #pragma mark - NSObject
@@ -49,18 +48,16 @@
 //	UIImageView *title = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nav-title.png"]];
 //	title.frame = CGRectMake(0.0f, 0.0f, 116.0f, 21.0f);	
 //	self.navigationItem.titleView = title;
-	self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Lists" style:UIBarButtonItemStyleBordered target:nil action:nil];
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"plus.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(createList:)];
-
+    self.title = @"InsiderPages";
 	[self setEditing:NO animated:NO];
-
+    
+    _adding = NO;
 //	self.noContentView = [[CDINoListsView alloc] initWithFrame:CGRectZero];
-
+    self.tableView.backgroundView.backgroundColor = [UIColor grayColor];
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_listUpdated:) name:kIPKListDidUpdateNotificationName object:nil];
 	}
 
-	_checkForOneList = YES;
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_currentUserDidChange:) name:kIPKCurrentUserChangedNotificationName object:nil];
 	
 }
@@ -81,24 +78,7 @@
 	
 	[SSRateLimit executeBlock:^{
 		[self refresh:nil];
-	} name:@"refresh-lists" limit:30.0];
-}
-
-
-- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
-	[super setEditing:editing animated:animated];
-	
-	if (editing) {
-		self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(toggleEditMode:)];
-		self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStyleBordered target:self action:@selector(showSettings:)];
-	} else {
-		self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStyleBordered target:self action:@selector(toggleEditMode:)];
-		self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"plus.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(createList:)];
-	}
-
-	if (!editing && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-		[self.tableView selectRowAtIndexPath:[self.fetchedResultsController indexPathForObject:_selectedList] animated:YES scrollPosition:UITableViewScrollPositionNone];
-	}
+	} name:@"refresh-activity" limit:30.0];
 }
 
 
@@ -122,12 +102,23 @@
 	return [NSPredicate predicateWithFormat:@"user_id = %@", [IPKUser currentUser].id];
 }
 
+-(NSArray *)sortDescriptors{
+    return [NSArray arrayWithObjects:
+            [NSSortDescriptor sortDescriptorWithKey:@"page.name" ascending:NO],
+            [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO],
+            [NSSortDescriptor sortDescriptorWithKey:@"remoteID" ascending:NO],
+            nil];
+}
+
+- (NSString *)sectionNameKeyPath {
+	return @"page.name";
+}
 
 #pragma mark - SSManagedTableViewController
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 	IPKActivity *activity = [self objectForViewIndexPath:indexPath];
-	[(CDIActivityTableViewCell *)cell setActivity:activity];
+	[(IPIActivityTableViewCell *)cell setActivity:activity];
 }
 
 
@@ -152,7 +143,6 @@
 #pragma mark - CDIManagedTableViewController
 
 - (void)coverViewTapped:(id)sender {
-	[self _cancelAddingList:sender];
 }
 
 
@@ -164,53 +154,20 @@
 	}
 	
 	self.loading = YES;
-	[[IPKHTTPClient sharedClient] getMyActivititesOfType:IPKActivityTypeAll currentPage:@1 perPage:@10 success:^(AFJSONRequestOperation *operation, id responseObject) {
+
+	[[IPKHTTPClient sharedClient] getMyActivititesOfType:IPKTrackableTypeAll currentPage:@1 perPage:@10 success:^(AFJSONRequestOperation *operation, id responseObject) {
+        self.fetchedResultsController = nil;
 		dispatch_async(dispatch_get_main_queue(), ^{
 			self.loading = NO;
+            [[self tableView] reloadData];
 		});
 	} failure:^(AFJSONRequestOperation *operation, NSError *error) {
 		dispatch_async(dispatch_get_main_queue(), ^{
-			[SSRateLimit resetLimitForName:@"refresh-lists"];
+			[SSRateLimit resetLimitForName:@"refresh-activity"];
 			self.loading = NO;
 		});
 	}];
 }
-
-
-- (void)showSettings:(id)sender {
-//	CDISettingsViewController *viewController = [[CDISettingsViewController alloc] init];
-//	UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-//	navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-//	[self.navigationController presentModalViewController:navigationController animated:YES];
-}
-
-
-- (void)createList:(id)sender {
-//	if (self.fetchedResultsController.fetchedObjects.count >= 2 && [IPKUser currentUser]) {
-//		UIViewController *viewController = [[CDIUpgradeViewController alloc] init];
-//		UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-//		navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-//		[self.navigationController presentModalViewController:navigationController animated:YES];
-//		return;
-//	}
-//
-//	[self hideNoContentView:YES];
-//	UIView *coverView = self.coverView;
-//	coverView.frame = self.view.bounds;
-//	[self setEditing:NO animated:YES];
-//	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(_cancelAddingList:)];
-//	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Create" style:UIBarButtonItemStyleDone target:self action:@selector(_createList:)];
-//	[UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
-//		[self.tableView scrollToTopAnimated:NO];
-//		coverView.alpha = 1.0f;
-//
-//		_adding = YES;
-//		[self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationTop];
-//		coverView.frame = CGRectMake(0.0f, [CDIListTableViewCell cellHeight], self.tableView.bounds.size.width, self.tableView.bounds.size.height - [CDIListTableViewCell cellHeight]);
-//	} completion:nil];
-//	return;
-}
-
 
 #pragma mark - Private
 
@@ -227,98 +184,8 @@
 
 
 - (void)_currentUserDidChange:(NSNotification *)notification {
-	self.fetchedResultsController = nil;
-	_checkForOneList = YES;
 	[self.tableView reloadData];
 }
-
-
-- (void)_createList:(id)sender {
-//	CDIAddListTableViewCell *cell = (CDIAddListTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-//	UITextField *textField = cell.textField;
-//	if (textField.text.length == 0) {
-//		[self _cancelAddingList:nil];
-//		return;
-//	}
-//
-//	SSHUDView *hud = [[SSHUDView alloc] initWithTitle:@"Creating..." loading:YES];
-//	[hud show];
-//	
-//	CDKList *list = [[CDKList alloc] init];
-//	list.title = textField.text;
-//	list.position = [NSNumber numberWithInteger:INT32_MAX];
-//	list.user = [CDKUser currentUser];
-//	
-//	[list createWithSuccess:^{
-//		dispatch_async(dispatch_get_main_queue(), ^{
-//			[hud completeAndDismissWithTitle:@"Created!"];
-//			[self _cancelAddingList:nil];
-//			textField.text = nil;
-//			NSIndexPath *indexPath = [self.fetchedResultsController indexPathForObject:list];
-//			[self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-//			[self _selectListAtIndexPath:indexPath newList:YES];
-//		});
-//	} failure:^(AFJSONRequestOperation *remoteOperation, NSError *error) {
-//		dispatch_async(dispatch_get_main_queue(), ^{
-//			NSDictionary *responseObject = remoteOperation.responseJSON;		
-//			if ([responseObject isKindOfClass:[NSDictionary class]] && [[responseObject objectForKey:@"error"] isEqualToString:@"plus_required"]) {
-//				[hud dismiss];
-//				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Plus Required" message:@"You need Cheddar Plus to create more than 2 lists. Please upgrade to continue." delegate:self cancelButtonTitle:@"Later" otherButtonTitles:@"Upgrade", nil];
-//				[alert show];
-//			} else {
-//				[hud failAndDismissWithTitle:@"Failed"];
-//				[textField becomeFirstResponder];
-//			}
-//		});
-//	}];
-}
-
-
-- (void)_cancelAddingList:(id)sender {
-	if (!_adding) {
-		return;
-	}
-
-	_adding = NO;
-//
-//	CDIAddListTableViewCell *cell = (CDIAddListTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-//	if ([cell.textField isFirstResponder]) {
-//		[cell.textField resignFirstResponder];
-//	}
-
-	[self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationTop];
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"plus.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(createList:)];
-	[self setEditing:NO animated:NO];
-	[self hideCoverView];
-	[self updatePlaceholderViews:YES];
-}
-
-
-- (void)_selectListAtIndexPath:(NSIndexPath *)indexPath newList:(BOOL)newList {
-//	if (_adding) {
-//		return;
-//	}
-//
-//	if ([[self.tableView indexPathForSelectedRow] isEqual:indexPath] == NO) {
-//		[self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-//	}
-//	
-//	CDKList *list = [self objectForViewIndexPath:indexPath];
-//	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-//	[userDefaults setObject:list.remoteID forKey:kCDISelectedListKey];
-//	[userDefaults synchronize];
-//	
-//	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-//		[IPISplitViewController sharedSplitViewController].listViewController.managedObject = list;
-//		_selectedList = list;
-//	} else {		
-//		CDIListViewController *viewController = [[CDIListViewController alloc] init];
-//		viewController.managedObject = list;
-//		viewController.focusKeyboard = newList;
-//		[self.navigationController pushViewController:viewController animated:YES];
-//	}
-}
-
 
 - (void)_checkUser {
 	if (![IPKUser currentUser]) {
@@ -356,9 +223,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	static NSString *const cellIdentifier = @"cellIdentifier";
 
-	CDIActivityTableViewCell *cell = (CDIActivityTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+	IPIActivityTableViewCell *cell = (IPIActivityTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 	if (!cell) {
-		cell = [[CDIActivityTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+		cell = [[IPIActivityTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
 	}
 	
 	cell.activity = [self objectForViewIndexPath:indexPath];
@@ -366,125 +233,108 @@
 	return cell;
 }
 
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView{
+    // necessary, disables uitableviewindex http://stackoverflow.com/questions/3189345/remove-gray-uitableview-index-bar
+    return nil;
+}
 
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	[self _selectListAtIndexPath:indexPath newList:NO];
+    
+    IPKActivity * activity = ((IPKActivity*)[self objectForViewIndexPath:indexPath]);
+    if (activity.page.id == @0) {
+        if (self.loading || ![IPKUser currentUser]) {
+            return;
+        }
+        
+        self.loading = YES;
+        NSString * userIDString = [NSString stringWithFormat:@"%@", activity.user_id];
+        [[IPKHTTPClient sharedClient] getPagesForUserWithId:userIDString success:^(AFJSONRequestOperation *operation, id responseObject) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.loading = NO;
+            });
+        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SSRateLimit resetLimitForName:@"refresh-activity"];
+                self.loading = NO;
+            });
+        }];
+    }
+    
+    switch (activity.trackableType) {
+        case IPKTrackableTypeProvider:{
+            // Display BPP with approriate action
+            IPIPageViewController * pageVC = [[IPIPageViewController alloc] init];
+            pageVC.managedObject = activity.page;
+            [self.navigationController pushViewController:pageVC animated:YES];
+        }
+            break;
+        case IPKTrackableTypeReview:{
+            //Display Review with approriate action
+            IPIPageViewController * pageVC = [[IPIPageViewController alloc] init];
+            pageVC.managedObject = activity.page;
+            [self.navigationController pushViewController:pageVC animated:YES];
+        }
+            break;
+        case IPKTrackableTypeUser:{
+            //UPP
+            IPIPageViewController * pageVC = [[IPIPageViewController alloc] init];
+            pageVC.managedObject = activity.page;
+            [self.navigationController pushViewController:pageVC animated:YES];
+        }
+            break;
+        case IPKTrackableTypeAll:{
+            //Generic Activity
+            IPIPageViewController * pageVC = [[IPIPageViewController alloc] init];
+            pageVC.managedObject = activity.page;
+            [self.navigationController pushViewController:pageVC animated:YES];
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
-
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
-	if (sourceIndexPath.row == destinationIndexPath.row) {
-		return;
-	}
-	
-//	self.ignoreChange = YES;
-//	NSMutableArray *lists = [self.fetchedResultsController.fetchedObjects mutableCopy];
-//	CDKList *list = [self objectForViewIndexPath:sourceIndexPath];
-//	[lists removeObject:list];
-//	[lists insertObject:list atIndex:destinationIndexPath.row];
-//	
-//	NSInteger i = 0;
-//	for (list in lists) {
-//		list.position = [NSNumber numberWithInteger:i++];
-//	}
-//	
-//	[self.managedObjectContext save:nil];
-//	self.ignoreChange = NO;
-//	
-//	[CDKList sortWithObjects:lists];
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 92.5 + 10;
 }
 
-
-- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return @"Archive";
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 30;
 }
 
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-	if (editingStyle != UITableViewCellEditingStyleDelete) {
-		return;
-	}
-	
-//	CDKList *list = [self objectForViewIndexPath:indexPath];
-//	
-//	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-//		CDIListViewController *listViewController = [IPISplitViewController sharedSplitViewController].listViewController;
-//		if ([listViewController.managedObject isEqual:list]) {
-//			listViewController.managedObject = nil;
-//		}
-//	}
-	
-//	list.archivedAt = [NSDate date];
-//	[list save];
-//	[list update];
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    NSIndexPath * sectionIndexPath = [NSIndexPath indexPathForItem:0 inSection:section];
+    IPKPage * page = ((IPKActivity *)[self objectForViewIndexPath:sectionIndexPath]).page;
+    IPIActivityPageTableViewHeader * headerView = [[IPIActivityPageTableViewHeader alloc] initWithFrame:CGRectMake(10, 0, 300, 92.5)];
+    [headerView setPage:page];
+    
+    return headerView;
 }
 
-
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-	return YES;
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    NSIndexPath * sectionIndexPath = [NSIndexPath indexPathForItem:0 inSection:section];
+    IPKPage * page = ((IPKActivity *)[self objectForViewIndexPath:sectionIndexPath]).page;
+    IPIActivityPageTableViewFooter * footerView = [[IPIActivityPageTableViewFooter alloc] initWithFrame:CGRectMake(10, 0, 300, 30)];
+    [footerView setPage:page];
+    
+    return footerView;
 }
-
 
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 	if (_adding) {
-		[self _cancelAddingList:scrollView];
 	}
 }
-
-
-#pragma mark - UITextFieldDelegate
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-	if (_adding) {
-		[self _createList:textField];
-		return NO;
-	}
-
-//	CDKList *list = [self objectForViewIndexPath:self.editingIndexPath];
-//	list.title = textField.text;
-//	[list save];
-//	[list update];
-	
-	[self endCellTextEditing];
-	return NO;
-}
-
-
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-	if (_adding) {
-		[self _cancelAddingList:textField];
-	}
-}
-
 
 #pragma mark - NSFetchedResultsController
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
 	[super controllerDidChangeContent:controller];
 	
-//	if (_checkForOneList) {
-//		NSNumber *selectedList = [[NSUserDefaults standardUserDefaults] objectForKey:kIPISelectedListKey];
-//		if (selectedList) {
-//			CDKList *list = [CDKList objectWithRemoteID:selectedList];
-//			NSIndexPath *fIndexPath = [self.fetchedResultsController indexPathForObject:list];
-//			if (!fIndexPath) {
-//				_checkForOneList = NO;
-//				return;
-//			}
-//			
-//			NSIndexPath *selectedIndexPath = [self viewIndexPathForFetchedIndexPath:fIndexPath];
-//			[self _selectListAtIndexPath:selectedIndexPath newList:NO];
-//		}
-//		
-//		if (self.fetchedResultsController.fetchedObjects.count == 1) {
-//			[self _selectListAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] newList:NO];
-//		}
-//		_checkForOneList = NO;
-//	}
 }
 
 @end

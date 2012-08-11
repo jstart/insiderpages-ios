@@ -222,7 +222,6 @@ NSString *const kIPISelectedListKey = @"IPISelectedListKey";
 //	return;
 }
 
-
 #pragma mark - Private
 
 - (void)_listUpdated:(NSNotification *)notification {
@@ -366,8 +365,7 @@ NSString *const kIPISelectedListKey = @"IPISelectedListKey";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	static NSString *const cellIdentifier = @"cellIdentifier";
-	static NSString *const addCellIdentifier = @"addCellIdentifier";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:addCellIdentifier];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 
 //	if (_adding && indexPath.row == 0) {
 //		CDIAddListTableViewCell *cell = (CDIAddListTableViewCell *)[tableView dequeueReusableCellWithIdentifier:addCellIdentifier];
