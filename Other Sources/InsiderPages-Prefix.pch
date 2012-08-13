@@ -19,6 +19,7 @@
     #import "NimbusCore.h"
     #import "NimbusCSS.h"
     #import "NimbusNetworkImage.h"
+    #import "YIFullScreenScroll.h"
 	#import "CDIDefines.h"
     #if INSIDER_PAGES_TESTING_MODE
         #import "TestFlight.h"

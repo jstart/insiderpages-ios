@@ -173,6 +173,12 @@
 		B2AD02F215C47E4300D9B909 /* nav-background-mini@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B2AD02F115C47E4300D9B909 /* nav-background-mini@2x.png */; };
 		B2AD031915C4896E00D9B909 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2AD031815C4896E00D9B909 /* AudioToolbox.framework */; };
 		B2AD032115C493C200D9B909 /* CDIWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2AD032015C493C100D9B909 /* CDIWebViewController.m */; };
+		FD269E7215D6FF480050BF46 /* UIExpandableTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269E7115D6FF480050BF46 /* UIExpandableTableView.m */; };
+		FD269E7515D6FF6E0050BF46 /* GHCollapsingAndSpinningTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269E7415D6FF6E0050BF46 /* GHCollapsingAndSpinningTableViewCell.m */; };
+		FD269EA715D77B580050BF46 /* UIView+YIFullScreenScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269EA415D77B580050BF46 /* UIView+YIFullScreenScroll.m */; };
+		FD269EA815D77B580050BF46 /* YIFullScreenScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269EA615D77B580050BF46 /* YIFullScreenScroll.m */; };
+		FD63AA1515D66F0400764EF2 /* favorite_active.png in Resources */ = {isa = PBXBuildFile; fileRef = FD63AA1315D66F0400764EF2 /* favorite_active.png */; };
+		FD63AA1615D66F0400764EF2 /* favorite_inactive.png in Resources */ = {isa = PBXBuildFile; fileRef = FD63AA1415D66F0400764EF2 /* favorite_inactive.png */; };
 		FD6F945E15D45AEA00FF686B /* NICommonMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F943415D45AEA00FF686B /* NICommonMetrics.m */; };
 		FD6F945F15D45AEA00FF686B /* NIDataStructures.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F943615D45AEA00FF686B /* NIDataStructures.m */; };
 		FD6F946015D45AEA00FF686B /* NIDebuggingTools.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F943815D45AEA00FF686B /* NIDebuggingTools.m */; };
@@ -530,6 +536,16 @@
 		B2AD031815C4896E00D9B909 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		B2AD031F15C493C100D9B909 /* CDIWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIWebViewController.h; sourceTree = "<group>"; };
 		B2AD032015C493C100D9B909 /* CDIWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIWebViewController.m; sourceTree = "<group>"; };
+		FD269E7015D6FF480050BF46 /* UIExpandableTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIExpandableTableView.h; path = UIExpandableTableView/UIExpandableTableView.h; sourceTree = "<group>"; };
+		FD269E7115D6FF480050BF46 /* UIExpandableTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIExpandableTableView.m; path = UIExpandableTableView/UIExpandableTableView.m; sourceTree = "<group>"; };
+		FD269E7315D6FF6E0050BF46 /* GHCollapsingAndSpinningTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHCollapsingAndSpinningTableViewCell.h; path = UIExpandableTableView/UIExpandableTableViewSample/UIExpandableTableViewSample/GHCollapsingAndSpinningTableViewCell.h; sourceTree = "<group>"; };
+		FD269E7415D6FF6E0050BF46 /* GHCollapsingAndSpinningTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHCollapsingAndSpinningTableViewCell.m; path = UIExpandableTableView/UIExpandableTableViewSample/UIExpandableTableViewSample/GHCollapsingAndSpinningTableViewCell.m; sourceTree = "<group>"; };
+		FD269EA315D77B580050BF46 /* UIView+YIFullScreenScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+YIFullScreenScroll.h"; sourceTree = "<group>"; };
+		FD269EA415D77B580050BF46 /* UIView+YIFullScreenScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+YIFullScreenScroll.m"; sourceTree = "<group>"; };
+		FD269EA515D77B580050BF46 /* YIFullScreenScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YIFullScreenScroll.h; sourceTree = "<group>"; };
+		FD269EA615D77B580050BF46 /* YIFullScreenScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YIFullScreenScroll.m; sourceTree = "<group>"; };
+		FD63AA1315D66F0400764EF2 /* favorite_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = favorite_active.png; sourceTree = "<group>"; };
+		FD63AA1415D66F0400764EF2 /* favorite_inactive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = favorite_inactive.png; sourceTree = "<group>"; };
 		FD6F943315D45AEA00FF686B /* NICommonMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NICommonMetrics.h; path = nimbus/src/core/src/NICommonMetrics.h; sourceTree = "<group>"; };
 		FD6F943415D45AEA00FF686B /* NICommonMetrics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NICommonMetrics.m; path = nimbus/src/core/src/NICommonMetrics.m; sourceTree = "<group>"; };
 		FD6F943515D45AEA00FF686B /* NIDataStructures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NIDataStructures.h; path = nimbus/src/core/src/NIDataStructures.h; sourceTree = "<group>"; };
@@ -716,6 +732,8 @@
 		B208BBD615BF63A80080705D /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				FD63AA1315D66F0400764EF2 /* favorite_active.png */,
+				FD63AA1415D66F0400764EF2 /* favorite_inactive.png */,
 				FDB7BC5715D2F5EA008E62EF /* LoginWithFacebookNormal.png */,
 				FDB7BC5815D2F5EA008E62EF /* LoginWithFacebookNormal@2x.png */,
 				FDB7BC5915D2F5EA008E62EF /* LoginWithFacebookPressed.png */,
@@ -1138,6 +1156,29 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
+		FD269E6F15D6FF350050BF46 /* UIExpandableTableView */ = {
+			isa = PBXGroup;
+			children = (
+				FD269E7315D6FF6E0050BF46 /* GHCollapsingAndSpinningTableViewCell.h */,
+				FD269E7415D6FF6E0050BF46 /* GHCollapsingAndSpinningTableViewCell.m */,
+				FD269E7015D6FF480050BF46 /* UIExpandableTableView.h */,
+				FD269E7115D6FF480050BF46 /* UIExpandableTableView.m */,
+			);
+			name = UIExpandableTableView;
+			sourceTree = "<group>";
+		};
+		FD269EA215D77B580050BF46 /* YIFullScreenScroll */ = {
+			isa = PBXGroup;
+			children = (
+				FD269EA315D77B580050BF46 /* UIView+YIFullScreenScroll.h */,
+				FD269EA415D77B580050BF46 /* UIView+YIFullScreenScroll.m */,
+				FD269EA515D77B580050BF46 /* YIFullScreenScroll.h */,
+				FD269EA615D77B580050BF46 /* YIFullScreenScroll.m */,
+			);
+			name = YIFullScreenScroll;
+			path = YIFullScreenScroll/YIFullScreenScroll;
+			sourceTree = "<group>";
+		};
 		FD3AD04615D5C7D9007699E8 /* Table Footers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1334,6 +1375,8 @@
 		FDD99E3815D4CEBB003BB635 /* Production */ = {
 			isa = PBXGroup;
 			children = (
+				FD269EA215D77B580050BF46 /* YIFullScreenScroll */,
+				FD269E6F15D6FF350050BF46 /* UIExpandableTableView */,
 				FD6F943115D45AAA00FF686B /* Nimbus */,
 				FDAEF96B15D1DB4E009FAD52 /* InsiderPagesKit */,
 				B208BE5E15BF63E00080705D /* Localytics */,
@@ -1622,6 +1665,8 @@
 				FDB7BC5C15D2F5EA008E62EF /* LoginWithFacebookNormal@2x.png in Resources */,
 				FDB7BC5D15D2F5EA008E62EF /* LoginWithFacebookPressed.png in Resources */,
 				FDB7BC5E15D2F5EA008E62EF /* LoginWithFacebookPressed@2x.png in Resources */,
+				FD63AA1515D66F0400764EF2 /* favorite_active.png in Resources */,
+				FD63AA1615D66F0400764EF2 /* favorite_inactive.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1737,6 +1782,10 @@
 				FDAA2E6C15D5887D00793375 /* CDIPageTableViewCell.m in Sources */,
 				FDAA2E7815D5B1A100793375 /* IPIActivityPageTableViewHeader.m in Sources */,
 				FD91BFE415D5C888008158A6 /* IPIActivityPageTableViewFooter.m in Sources */,
+				FD269E7215D6FF480050BF46 /* UIExpandableTableView.m in Sources */,
+				FD269E7515D6FF6E0050BF46 /* GHCollapsingAndSpinningTableViewCell.m in Sources */,
+				FD269EA715D77B580050BF46 /* UIView+YIFullScreenScroll.m in Sources */,
+				FD269EA815D77B580050BF46 /* YIFullScreenScroll.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1826,7 +1875,7 @@
 					"\"$(SRCROOT)/Vendor/SSToolkit\"",
 					"\"$(SRCROOT)/Vendor/Bully\"",
 					"\"$(SRCROOT)/Vendor/InsiderPagesKit\"/**",
-					"\"$(SRCROOT)/Vendor/TTTAttributedLabel",
+					"\"$(SRCROOT)/Vendor/TTTAttributedLabel \"$(SRCROOT)/Vendor/YIFullScreenScroll/**",
 				);
 				INFOPLIST_FILE = "Resources/InsiderPages-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -1866,7 +1915,7 @@
 					"\"$(SRCROOT)/Vendor/SSToolkit\"",
 					"\"$(SRCROOT)/Vendor/Bully\"",
 					"\"$(SRCROOT)/Vendor/InsiderPagesKit\"/**",
-					"\"$(SRCROOT)/Vendor/TTTAttributedLabel",
+					"\"$(SRCROOT)/Vendor/TTTAttributedLabel \"$(SRCROOT)/Vendor/YIFullScreenScroll/**",
 				);
 				INFOPLIST_FILE = "Resources/InsiderPages-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;

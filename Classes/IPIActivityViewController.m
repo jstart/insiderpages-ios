@@ -32,6 +32,7 @@
 
 @implementation IPIActivityViewController {
 	BOOL _adding;
+    YIFullScreenScroll* _fullScreenDelegate;
 }
 
 #pragma mark - NSObject
@@ -52,6 +53,14 @@
 	[self setEditing:NO animated:NO];
     
     _adding = NO;
+    
+    UITabBar * tabBar = [[UITabBar alloc] initWithFrame:CGRectMake(0, 410, 320, 50)];
+    UITabBarItem * item1 = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemBookmarks tag:0];
+    UITabBarItem * item2 = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemFavorites tag:0];
+    UITabBarItem * item3 = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemContacts tag:0];
+
+    [tabBar setItems:@[item1, item2, item3]];
+    [[self view] addSubview:tabBar];
 //	self.noContentView = [[CDINoListsView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundView.backgroundColor = [UIColor grayColor];
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -59,7 +68,9 @@
 	}
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_currentUserDidChange:) name:kIPKCurrentUserChangedNotificationName object:nil];
-	
+    
+	_fullScreenDelegate = [[YIFullScreenScroll alloc] initWithViewController:self];
+    _fullScreenDelegate.shouldShowUIBarsOnScrollUp = YES;
 }
 
 
@@ -68,6 +79,7 @@
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
 		[self _checkUser];
 	}
+    [_fullScreenDelegate layoutTabBarController];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -145,6 +157,11 @@
 - (void)coverViewTapped:(id)sender {
 }
 
+#pragma mark IPIActivityHeaderViewDelegate
+-(void)favoriteButtonPressed:(IPKPage*)page{
+    page.is_favorite = [NSNumber numberWithBool:YES];
+    [page save];
+}
 
 #pragma mark - Actions
 
@@ -310,8 +327,12 @@
     IPKPage * page = ((IPKActivity *)[self objectForViewIndexPath:sectionIndexPath]).page;
     IPIActivityPageTableViewHeader * headerView = [[IPIActivityPageTableViewHeader alloc] initWithFrame:CGRectMake(10, 0, 300, 92.5)];
     [headerView setPage:page];
-    
+
     return headerView;
+}
+
+-(void)test{
+    NSLog(@"%@", @"woo");
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
@@ -325,9 +346,28 @@
 
 #pragma mark - UIScrollViewDelegate
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-	if (_adding) {
-	}
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [_fullScreenDelegate scrollViewWillBeginDragging:scrollView];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    //    LOG_INT(self.tableView.tracking);
+    //    LOG_INT(self.tableView.dragging);
+    //    LOG_INT(self.tableView.decelerating);
+    
+    [_fullScreenDelegate scrollViewDidScroll:scrollView];
+}
+
+- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView
+{
+    return [_fullScreenDelegate scrollViewShouldScrollToTop:scrollView];;
+}
+
+- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView
+{
+    [_fullScreenDelegate scrollViewDidScrollToTop:scrollView];
 }
 
 #pragma mark - NSFetchedResultsController
@@ -335,6 +375,16 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
 	[super controllerDidChangeContent:controller];
 	
+}
+
+#pragma mark - Private
+
+- (void)updateTableViewOffsets {
+	CGFloat offset = self.tableView.contentOffset.y;
+	CGFloat top = fminf(0.0f, offset);
+	CGFloat bottom = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? self.keyboardRect.size.height : 0.0f;
+	self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(top, 0.0f, bottom, 0.0f);
+	self.pullToRefreshView.defaultContentInset = UIEdgeInsetsMake(0.0f, 0.0f, bottom, 0.0f);
 }
 
 @end

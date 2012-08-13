@@ -51,9 +51,41 @@
         [shapeLayer setAnchorPoint:CGPointMake(0.0f, 0.0f)];
         [shapeLayer setPosition:CGPointMake(0.0f, 0.0f)];
         [[self layer] addSublayer:shapeLayer];
-    }
+        
+        self.favoriteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.favoriteButton setUserInteractionEnabled:YES];
+        [self.favoriteButton setFrame:CGRectMake(self.frame.size.width-10, 10, 20, 20)];
+        [self.favoriteButton setAutoresizingMask:UIViewAutoresizingNone];
+        [self.favoriteButton setBackgroundImage:[UIImage imageNamed:@"favorite_inactive.png"] forState:UIControlStateNormal];
+        [self.favoriteButton setBackgroundImage:[UIImage imageNamed:@"favorite_active.png"] forState:UIControlStateHighlighted];
+        [self.favoriteButton.titleLabel setTextColor:[UIColor darkGrayColor]];
+        [self.favoriteButton.titleLabel setFont:[UIFont systemFontOfSize:30]];
+        [self.favoriteButton addTarget:self action:@selector(favoriteButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:self.favoriteButton];
+        
+        //hacky way to draw favorites corner overlay
+        frame.origin.x = frame.origin.x - 10;
+        CGMutablePathRef cornerPath = CGPathCreateMutable();
+        CGPathMoveToPoint(cornerPath,NULL,frame.size.width - 42.5,10);
+        CGPathAddLineToPoint(cornerPath, NULL, frame.size.width, 10);
+        CGPathAddLineToPoint(cornerPath, NULL, frame.size.width, 42.5);
+        
+        CAShapeLayer *cornerShapeLayer = [CAShapeLayer layer];
+        [cornerShapeLayer setPath:cornerPath];
+        [cornerShapeLayer setFillColor:[[UIColor whiteColor] CGColor]];
+        [cornerShapeLayer setBounds:frame];
+        [cornerShapeLayer setAnchorPoint:CGPointMake(0.0f, 0.0f)];
+        [cornerShapeLayer setPosition:CGPointMake(10.0f, 10.0f)];
+        [cornerShapeLayer setOpacity:0.85];
+//        [[self layer] addSublayer:cornerShapeLayer];
+        
+        }
 
     return self;
+}
+
+-(void)favoriteButtonPressed{
+    [self.delegate favoriteButtonPressed:self.page];
 }
 
 -(void)setPage:(IPKPage *)page{
@@ -62,6 +94,9 @@
         [self.nameLabel setText:page.name];
         //load image view with URL
         [self.pageCoverImageView setPathToNetworkImage:@"http://gentlemint.com/media/images/2012/04/26/3f31ab05.jpg.650x650_q85.jpg" forDisplaySize:self.pageCoverImageView.frame.size contentMode:UIViewContentModeCenter];
+        if ([page.is_favorite boolValue]) {
+            [self.favoriteButton setSelected:YES];
+        }
     }
 }
 

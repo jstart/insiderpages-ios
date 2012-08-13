@@ -28,3 +28,9 @@
 [submodule "Vendor/sockit"]
 	path = Vendor/sockit
 	url = git://github.com/jverkoey/sockit.git
+[submodule "Vendor/UIExpandableTableView"]
+	path = Vendor/UIExpandableTableView
+	url = git://github.com/OliverLetterer/UIExpandableTableView.git
+[submodule "Vendor/YIFullScreenScroll"]
+	path = Vendor/YIFullScreenScroll
+	url = git://github.com/inamiy/YIFullScreenScroll.git
