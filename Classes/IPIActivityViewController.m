@@ -10,11 +10,11 @@
 #import "IPISplitViewController.h"
 #import "IPIPageViewController.h"
 #import "IPIActivityTableViewCell.h"
-#import "IPIActivityPageTableViewHeader.h"
 #import "IPIActivityPageTableViewFooter.h"
 #import "CDINoListsView.h"
 #import "UIColor+CheddariOSAdditions.h"
 #import <SSToolkit/UIScrollView+SSToolkitAdditions.h>
+#import "IIViewDeckController.h"
 
 #define CHEDDAR_USE_PASSWORD_FLOW 1
 
@@ -51,6 +51,8 @@
 //	self.navigationItem.titleView = title;
     self.title = @"InsiderPages";
 	[self setEditing:NO animated:NO];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self.viewDeckController action:@selector(toggleLeftView)];
     
     _adding = NO;
     
@@ -155,12 +157,42 @@
 #pragma mark - CDIManagedTableViewController
 
 - (void)coverViewTapped:(id)sender {
+    
 }
 
-#pragma mark IPIActivityHeaderViewDelegate
+#pragma mark IPIActivityTableViewHeaderDelegate
 -(void)favoriteButtonPressed:(IPKPage*)page{
-    page.is_favorite = [NSNumber numberWithBool:YES];
-    [page save];
+    NSString * pageID = [NSString stringWithFormat:@"%@", page.id];
+
+    if ([page.is_favorite boolValue]) {
+        self.loading = YES;
+
+        [[IPKHTTPClient sharedClient] unfavoritePageWithId:pageID success:^(AFJSONRequestOperation *operation, id responseObject) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.loading = NO;
+                [[self tableView] reloadData];
+            });
+        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.loading = NO;
+            });
+        }];
+    }
+    else{
+        self.loading = YES;
+        
+        [[IPKHTTPClient sharedClient] favoritePageWithId:pageID success:^(AFJSONRequestOperation *operation, id responseObject) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.loading = NO;
+                [[self tableView] reloadData];
+            });
+        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.loading = NO;
+            });
+        }];
+    }
+    [self.tableView reloadData];
 }
 
 #pragma mark - Actions
@@ -172,7 +204,7 @@
 	
 	self.loading = YES;
 
-	[[IPKHTTPClient sharedClient] getMyActivititesOfType:IPKTrackableTypeAll currentPage:@1 perPage:@10 success:^(AFJSONRequestOperation *operation, id responseObject) {
+	[[IPKHTTPClient sharedClient] getActivititesOfType:IPKTrackableTypeAll includeFollowing:YES currentPage:@1 perPage:@10 success:^(AFJSONRequestOperation *operation, id responseObject) {
         self.fetchedResultsController = nil;
 		dispatch_async(dispatch_get_main_queue(), ^{
 			self.loading = NO;
@@ -326,13 +358,10 @@
     NSIndexPath * sectionIndexPath = [NSIndexPath indexPathForItem:0 inSection:section];
     IPKPage * page = ((IPKActivity *)[self objectForViewIndexPath:sectionIndexPath]).page;
     IPIActivityPageTableViewHeader * headerView = [[IPIActivityPageTableViewHeader alloc] initWithFrame:CGRectMake(10, 0, 300, 92.5)];
+    [headerView setDelegate:self];
     [headerView setPage:page];
 
     return headerView;
-}
-
--(void)test{
-    NSLog(@"%@", @"woo");
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {

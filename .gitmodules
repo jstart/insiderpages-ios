@@ -34,3 +34,6 @@
 [submodule "Vendor/YIFullScreenScroll"]
 	path = Vendor/YIFullScreenScroll
 	url = git://github.com/inamiy/YIFullScreenScroll.git
+[submodule "Vendor/ViewDeck"]
+	path = Vendor/ViewDeck
+	url = git://github.com/Inferis/ViewDeck.git

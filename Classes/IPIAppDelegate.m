@@ -9,7 +9,9 @@
 #import "IPIAppDelegate.h"
 #import "IPISplitViewController.h"
 #import "IPIActivityViewController.h"
+#import "IPILeftPagesViewController.h"
 #import "CDISignUpViewController.h"
+#import "IIViewDeckController.h"
 #import "CDIDefines.h"
 #import "UIFont+CheddariOSAdditions.h"
 #import "LocalyticsUtilities.h"
@@ -65,14 +67,12 @@
 	[[self class] applyStylesheet];
     [self openSessionCheckCache:YES];
     // To-do, show logged in view
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        self.window.rootViewController = [[IPISplitViewController alloc] init];
-    } else {
-        UIViewController *viewController = [[IPIActivityViewController alloc] initWithStyle:UITableViewStyleGrouped];
-        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-        self.window.rootViewController = navigationController;
-    }
-	
+
+    UIViewController *viewController = [[IPIActivityViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    IPILeftPagesViewController * leftPagesViewController = [[IPILeftPagesViewController alloc] init];
+    IIViewDeckController * viewDeckController = [[IIViewDeckController alloc] initWithCenterViewController:navigationController leftViewController:leftPagesViewController];
+    self.window.rootViewController = viewDeckController;
 	[self.window makeKeyAndVisible];
     
     #if TARGET_IPHONE_SIMULATOR
@@ -187,13 +187,9 @@
             if (![IPKUser currentUser]) {
                 [self registerOrLogin];
             }else{
-                if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-                    self.window.rootViewController = [[IPISplitViewController alloc] init];
-                } else {
-                    UIViewController *viewController = [[IPIActivityViewController alloc] initWithStyle:UITableViewStyleGrouped];
-                    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-                    self.window.rootViewController = navigationController;
-                }
+                UIViewController *viewController = [[IPIActivityViewController alloc] initWithStyle:UITableViewStyleGrouped];
+                UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+                self.window.rootViewController = navigationController;
             }
         }
             break;
@@ -283,7 +279,7 @@
 	
 	// Navigation bar mini
 	[navigationBar setTitleVerticalPositionAdjustment:-2.0f forBarMetrics:UIBarMetricsLandscapePhone];
-	[navigationBar setBackgroundImage:[UIImage imageNamed:@"nav-background-mini.png"] forBarMetrics:UIBarMetricsLandscapePhone];
+//	[navigationBar setBackgroundImage:[UIImage imageNamed:@"nav-background-mini.png"] forBarMetrics:UIBarMetricsLandscapePhone];
 	
 	// Navigation button
 	NSDictionary *barButtonTitleTextAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
@@ -295,32 +291,32 @@
 	[barButton setTitlePositionAdjustment:UIOffsetMake(0.0f, 1.0f) forBarMetrics:UIBarMetricsDefault];
 	[barButton setTitleTextAttributes:barButtonTitleTextAttributes forState:UIControlStateNormal];
 	[barButton setTitleTextAttributes:barButtonTitleTextAttributes forState:UIControlStateHighlighted];
-	[barButton setBackgroundImage:[[UIImage imageNamed:@"nav-button.png"] stretchableImageWithLeftCapWidth:6 topCapHeight:0] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-	[barButton setBackgroundImage:[[UIImage imageNamed:@"nav-button-highlighted.png"] stretchableImageWithLeftCapWidth:6 topCapHeight:0] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+//	[barButton setBackgroundImage:[[UIImage imageNamed:@"nav-button.png"] stretchableImageWithLeftCapWidth:6 topCapHeight:0] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+//	[barButton setBackgroundImage:[[UIImage imageNamed:@"nav-button-highlighted.png"] stretchableImageWithLeftCapWidth:6 topCapHeight:0] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
 	
 	// Navigation back button
 	[barButton setBackButtonTitlePositionAdjustment:UIOffsetMake(1.0f, -2.0f) forBarMetrics:UIBarMetricsDefault];
-	[barButton setBackButtonBackgroundImage:[[UIImage imageNamed:@"nav-back.png"] stretchableImageWithLeftCapWidth:13 topCapHeight:0] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-	[barButton setBackButtonBackgroundImage:[[UIImage imageNamed:@"nav-back-highlighted.png"] stretchableImageWithLeftCapWidth:13 topCapHeight:0] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+//	[barButton setBackButtonBackgroundImage:[[UIImage imageNamed:@"nav-back.png"] stretchableImageWithLeftCapWidth:13 topCapHeight:0] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+//	[barButton setBackButtonBackgroundImage:[[UIImage imageNamed:@"nav-back-highlighted.png"] stretchableImageWithLeftCapWidth:13 topCapHeight:0] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
 
 	// Navigation button mini
 	[barButton setTitlePositionAdjustment:UIOffsetMake(0.0f, 1.0f) forBarMetrics:UIBarMetricsLandscapePhone];
-	[barButton setBackgroundImage:[[UIImage imageNamed:@"nav-button-mini.png"] stretchableImageWithLeftCapWidth:6 topCapHeight:0] forState:UIControlStateNormal barMetrics:UIBarMetricsLandscapePhone];
-	[barButton setBackgroundImage:[[UIImage imageNamed:@"nav-button-mini-highlighted.png"] stretchableImageWithLeftCapWidth:6 topCapHeight:0] forState:UIControlStateHighlighted barMetrics:UIBarMetricsLandscapePhone];
+//	[barButton setBackgroundImage:[[UIImage imageNamed:@"nav-button-mini.png"] stretchableImageWithLeftCapWidth:6 topCapHeight:0] forState:UIControlStateNormal barMetrics:UIBarMetricsLandscapePhone];
+//	[barButton setBackgroundImage:[[UIImage imageNamed:@"nav-button-mini-highlighted.png"] stretchableImageWithLeftCapWidth:6 topCapHeight:0] forState:UIControlStateHighlighted barMetrics:UIBarMetricsLandscapePhone];
 	
 	// Navigation back button mini
 	[barButton setBackButtonTitlePositionAdjustment:UIOffsetMake(1.0f, -2.0f) forBarMetrics:UIBarMetricsLandscapePhone];
-	[barButton setBackButtonBackgroundImage:[[UIImage imageNamed:@"nav-back-mini.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:0] forState:UIControlStateNormal barMetrics:UIBarMetricsLandscapePhone];
-	[barButton setBackButtonBackgroundImage:[[UIImage imageNamed:@"nav-back-mini-highlighted.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:0] forState:UIControlStateHighlighted barMetrics:UIBarMetricsLandscapePhone];
+//	[barButton setBackButtonBackgroundImage:[[UIImage imageNamed:@"nav-back-mini.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:0] forState:UIControlStateNormal barMetrics:UIBarMetricsLandscapePhone];
+//	[barButton setBackButtonBackgroundImage:[[UIImage imageNamed:@"nav-back-mini-highlighted.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:0] forState:UIControlStateHighlighted barMetrics:UIBarMetricsLandscapePhone];
 	
 	// Toolbar
-	UIToolbar *toolbar = [UIToolbar appearance];
-	[toolbar setBackgroundImage:[UIImage imageNamed:@"navigation-background.png"] forToolbarPosition:UIToolbarPositionTop barMetrics:UIBarMetricsDefault];
-	[toolbar setBackgroundImage:[UIImage imageNamed:@"toolbar-background.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
+//	UIToolbar *toolbar = [UIToolbar appearance];
+//	[toolbar setBackgroundImage:[UIImage imageNamed:@"navigation-background.png"] forToolbarPosition:UIToolbarPositionTop barMetrics:UIBarMetricsDefault];
+//	[toolbar setBackgroundImage:[UIImage imageNamed:@"toolbar-background.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
 	
 	// Toolbar mini
-	[toolbar setBackgroundImage:[UIImage imageNamed:@"navigation-background-mini.png"] forToolbarPosition:UIToolbarPositionTop barMetrics:UIBarMetricsLandscapePhone];
-	[toolbar setBackgroundImage:[UIImage imageNamed:@"toolbar-background-mini.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsLandscapePhone];
+//	[toolbar setBackgroundImage:[UIImage imageNamed:@"navigation-background-mini.png"] forToolbarPosition:UIToolbarPositionTop barMetrics:UIBarMetricsLandscapePhone];
+//	[toolbar setBackgroundImage:[UIImage imageNamed:@"toolbar-background-mini.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsLandscapePhone];
 }
 
 @end

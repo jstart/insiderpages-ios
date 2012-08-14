@@ -7,9 +7,10 @@
 //
 
 #import "CDIManagedTableViewController.h"
+#import "IPIActivityPageTableViewHeader.h"
 
 extern NSString *const kIPISelectedListKey;
 
-@interface IPIActivityViewController : CDIManagedTableViewController
+@interface IPIActivityViewController : CDIManagedTableViewController <IPIActivityTableViewHeaderDelegate>
 
 @end

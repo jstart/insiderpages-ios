@@ -20,7 +20,7 @@
 @property (nonatomic, strong) UIView * overlayView;
 @property (nonatomic, strong) UILabel * nameLabel;
 @property (nonatomic, strong) UIButton * favoriteButton;
-@property (nonatomic, assign) id<IPIActivityTableViewHeaderDelegate> delegate;
+@property (nonatomic, weak) id<IPIActivityTableViewHeaderDelegate> delegate;
 
 @property (nonatomic, strong) IPKPage * page;
 

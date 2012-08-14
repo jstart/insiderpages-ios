@@ -40,9 +40,9 @@
         
         //hacky way to draw an arrow
         CGMutablePathRef path = CGPathCreateMutable();
-        CGPathMoveToPoint(path,NULL,60.0,frame.size.height + 25);
+        CGPathMoveToPoint(path,NULL,60.0,frame.size.height + 21);
         CGPathAddLineToPoint(path, NULL, 70.0f, frame.size.height + 10);
-        CGPathAddLineToPoint(path, NULL, 80.0f, frame.size.height + 25);
+        CGPathAddLineToPoint(path, NULL, 80.0f, frame.size.height + 21);
         
         CAShapeLayer *shapeLayer = [CAShapeLayer layer];
         [shapeLayer setPath:path];
@@ -57,6 +57,7 @@
         [self.favoriteButton setFrame:CGRectMake(self.frame.size.width-10, 10, 20, 20)];
         [self.favoriteButton setAutoresizingMask:UIViewAutoresizingNone];
         [self.favoriteButton setBackgroundImage:[UIImage imageNamed:@"favorite_inactive.png"] forState:UIControlStateNormal];
+        [self.favoriteButton setBackgroundImage:[UIImage imageNamed:@"favorite_active.png"] forState:UIControlStateSelected];
         [self.favoriteButton setBackgroundImage:[UIImage imageNamed:@"favorite_active.png"] forState:UIControlStateHighlighted];
         [self.favoriteButton.titleLabel setTextColor:[UIColor darkGrayColor]];
         [self.favoriteButton.titleLabel setFont:[UIFont systemFontOfSize:30]];
@@ -96,8 +97,14 @@
         [self.pageCoverImageView setPathToNetworkImage:@"http://gentlemint.com/media/images/2012/04/26/3f31ab05.jpg.650x650_q85.jpg" forDisplaySize:self.pageCoverImageView.frame.size contentMode:UIViewContentModeCenter];
         if ([page.is_favorite boolValue]) {
             [self.favoriteButton setSelected:YES];
+        }else{
+            [self.favoriteButton setSelected:NO];
         }
     }
+}
+
+-(void)dealloc{
+    self.delegate = nil;
 }
 
 /*
