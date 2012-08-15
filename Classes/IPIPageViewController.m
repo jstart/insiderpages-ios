@@ -70,53 +70,12 @@
 	return (IPKPage *)self.managedObject;
 }
 
-
-//- (CDIAddTaskView *)addTaskView {
-//	if (!_addTaskView) {
-//		_addTaskView = [[CDIAddTaskView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.tableView.bounds.size.width, [CDIAddTaskView height])];
-//		_addTaskView.delegate = self;
-//		[_addTaskView.renameListButton addTarget:self action:@selector(_renameList:) forControlEvents:UIControlEventTouchUpInside];
-//		[_addTaskView.archiveTasksButton addTarget:self action:@selector(_archiveTasks:) forControlEvents:UIControlEventTouchUpInside];
-//		[_addTaskView.archiveAllTasksButton addTarget:self action:@selector(_archiveAllTasks:) forControlEvents:UIControlEventTouchUpInside];
-//		[_addTaskView.archiveCompletedTasksButton addTarget:self action:@selector(_archiveCompletedTasks:) forControlEvents:UIControlEventTouchUpInside];
-//	}
-//	return _addTaskView;
-//}
-
-
-//- (void)setCurrentTag:(CDKTag *)tag {
-//	if ((!_currentTag && !tag) || [_currentTag isEqual:tag]) {
-//		return;
-//	}
-//	
-//	_currentTag = tag;
-//	
-//	SSFilterableFetchedResultsController *controller = (SSFilterableFetchedResultsController *)self.fetchedResultsController;
-//	
-//	if (_currentTag) {
-//		NSString *filterName = [NSString stringWithFormat:@"tag-%@", tag.name];
-//		[self.addTaskView showTag:_currentTag.name];		
-//		[controller addFilterPredicate:^BOOL(id obj) {
-//			return [(CDKTask *)obj hasTag:_currentTag];
-//		} forKey:filterName];
-//		[controller setActiveFilterByKey:filterName];
-//		self.navigationItem.rightBarButtonItem.enabled = NO;
-//		[self setEditing:NO animated:YES];
-//	} else {
-//		[self.addTaskView hideTag];
-//		[controller removeCurrentFilter];
-//		self.navigationItem.rightBarButtonItem.enabled = YES;
-//	}
-//}
-
-
 #pragma mark - NSObject
 
 - (id)init {
 	if ((self = [super init])) {
 		_createTaskSemaphore = dispatch_semaphore_create(0);
 		dispatch_semaphore_signal(_createTaskSemaphore);
-		
 		self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Tasks" style:UIBarButtonItemStyleBordered target:nil action:nil];
 	}
 	return self;

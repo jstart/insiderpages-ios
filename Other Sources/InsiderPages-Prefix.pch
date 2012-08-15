@@ -16,8 +16,9 @@
     #import <CoreData/CoreData.h>
 	#import <InsiderPagesKit/InsiderPagesKit.h>
 	#import <SSToolkit/SSToolkit.h>
+    #import <QuartzCore/QuartzCore.h>
+    #import <CoreGraphics/CoreGraphics.h>
     #import "NimbusCore.h"
-    #import "NimbusCSS.h"
     #import "NimbusNetworkImage.h"
     #import "YIFullScreenScroll.h"
 	#import "CDIDefines.h"

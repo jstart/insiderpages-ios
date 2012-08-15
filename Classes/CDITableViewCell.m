@@ -16,66 +16,35 @@
 
 @implementation CDITableViewCell
 
-@synthesize editingText = _editingText;
-@synthesize textField = _textField;
-@synthesize editingTapGestureRecognizer = _editingTapGestureRecognizer;
-
-- (UITextField *)textField {
-	if (!_textField) {
-		_textField = [[SSTextField alloc] initWithFrame:CGRectZero];
-		_textField.textColor = self.textLabel.textColor;
-		_textField.placeholderTextColor = [UIColor cheddarLightTextColor];
-		_textField.font = self.textLabel.font;
-		_textField.backgroundColor = [UIColor whiteColor];
-		_textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-		_textField.returnKeyType = UIReturnKeyDone;
-		_textField.alpha = 0.0f;
-//		[self.contentView addSubview:_textField];
-	}
-	return _textField;
+- (void)setAppearanceBackgroundImage:(UIImage *)image {
+    self.backgroundView = [[UIImageView alloc] initWithImage:image];
 }
 
-
-- (void)setEditingText:(BOOL)editingText {
-	_editingText = editingText;
-	if (_editingText) {
-		[self.contentView addSubview:self.textField];
-		[self setNeedsLayout];
-		[_textField becomeFirstResponder];
-		
-		[UIView animateWithDuration:0.2 delay:0.0f options:UIViewAnimationCurveEaseInOut | UIViewAnimationOptionAllowUserInteraction animations:^{
-			_textField.alpha = 1.0f;
-		} completion:nil];
-	} else {
-		[_textField resignFirstResponder];
-		[UIView animateWithDuration:0.2 delay:0.0f options:UIViewAnimationCurveEaseInOut | UIViewAnimationOptionAllowUserInteraction animations:^{
-			_textField.alpha = 0.0f;
-		} completion:^(BOOL finished) {
-			[_textField removeFromSuperview];
-			_textField = nil;
-		}];
-	}
+- (void)setAppearanceBackgroundColor:(UIColor *)backgroundColor {
+    self.backgroundColor = backgroundColor;
 }
 
+- (void)setTextLabelColor:(UIColor *)textLabelColor {
+    self.textLabel.textColor = textLabelColor;
+}
+
+- (void)setTextLabelFont:(UIFont *)textLabelFont {
+    self.textLabel.font = textLabelFont;
+}
+
+- (void)setDetailTextLabelColor:(UIColor *)detailTextLabelColor {
+    self.detailTextLabel.textColor = detailTextLabelColor;
+}
+
+- (void)setDetailTextLabelFont:(UIFont *)detailTextLabelFont {
+    self.detailTextLabel.font = detailTextLabelFont;
+}
 
 #pragma mark - Class Methods
 
 + (CGFloat)cellHeight {
 	return 51.0f;
 }
-
-
-#pragma mark - UIView
-
-- (void)layoutSubviews {
-	[super layoutSubviews];
-	CGSize size = self.contentView.bounds.size;
-	
-	if (self.editing) {
-		_textField.frame = CGRectMake(10.0f, 1.0f, size.width - 46.0f, size.height - 2.0f);
-	}
-}
-
 
 #pragma mark - UITableViewCell
 
@@ -92,36 +61,9 @@
 		self.contentView.clipsToBounds = YES;
         [self.textLabel setBackgroundColor:[UIColor clearColor]];
         [self.detailTextLabel setBackgroundColor:[UIColor clearColor]];
-//		
-//		_editingTapGestureRecognizer = [[UITapGestureRecognizer alloc] init];
-//		_editingTapGestureRecognizer.delegate = self;
-//		[self addGestureRecognizer:_editingTapGestureRecognizer];
+
 	}
 	return self;
-}
-
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-	[super setSelected:selected animated:animated];
-}
-
-
-- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
-	[super setEditing:editing animated:animated];
-	_editingTapGestureRecognizer.enabled = editing;
-}
-
-
-- (void)prepareForReuse {
-	[super prepareForReuse];
-	[self setEditingText:NO];
-}
-
-
-#pragma mark - UIGestureRecognizerDelegate
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-	return [touch.view isKindOfClass:[UIControl class]] == NO;
 }
 
 @end

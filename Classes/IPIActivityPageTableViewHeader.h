@@ -24,6 +24,12 @@
 
 @property (nonatomic, strong) IPKPage * page;
 
+- (void)setOverlayColor:(UIColor *)overlayColor UI_APPEARANCE_SELECTOR;
+- (void)setNameTextLabelFont:(UIFont *)detailTextLabelFont UI_APPEARANCE_SELECTOR;
+- (void)setNameTextLabelColor:(UIColor *)nameTextLabelColor UI_APPEARANCE_SELECTOR;
+- (void)setFavoriteButtonNormalImage:(UIImage *)normalImage UI_APPEARANCE_SELECTOR;
+- (void)setFavoriteButtonSelectedImage:(UIImage *)selectedImage UI_APPEARANCE_SELECTOR;
+
 -(void)favoriteButtonPressed;
 
 @end

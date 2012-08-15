@@ -26,7 +26,6 @@
         overlayFrame.origin.x = 0;
         overlayFrame.origin.y = frame.size.height - overlayFrame.size.height;
         self.overlayView = [[UIView alloc] initWithFrame:overlayFrame];
-        self.overlayView.backgroundColor = [UIColor blackColor];
         self.overlayView.alpha = 0.6;
         [self.pageCoverImageView addSubview:self.overlayView];
         
@@ -101,6 +100,26 @@
             [self.favoriteButton setSelected:NO];
         }
     }
+}
+
+- (void)setOverlayColor:(UIColor *)overlayColor {
+    self.overlayView.backgroundColor = overlayColor;
+}
+
+- (void)setNameTextLabelFont:(UIFont *)detailTextLabelFont {
+    self.nameLabel.font = detailTextLabelFont;
+}
+
+- (void)setNameTextLabelColor:(UIColor *)nameTextLabelColor {
+    self.nameLabel.textColor = nameTextLabelColor;
+}
+
+- (void)setFavoriteButtonNormalImage:(UIImage *)normalImage {
+    [self.favoriteButton setImage:normalImage forState:UIControlStateNormal];
+}
+
+- (void)setFavoriteButtonSelectedImage:(UIImage *)selectedImage {
+    [self.favoriteButton setImage:selectedImage forState:UIControlStateSelected];
 }
 
 -(void)dealloc{

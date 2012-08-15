@@ -204,7 +204,7 @@
 	
 	self.loading = YES;
 
-	[[IPKHTTPClient sharedClient] getActivititesOfType:IPKTrackableTypeAll includeFollowing:YES currentPage:@1 perPage:@10 success:^(AFJSONRequestOperation *operation, id responseObject) {
+	[[IPKHTTPClient sharedClient] getActivititesOfType:IPKTrackableTypeAll includeFollowing:YES currentPage:@1 perPage:@100 success:^(AFJSONRequestOperation *operation, id responseObject) {
         self.fetchedResultsController = nil;
 		dispatch_async(dispatch_get_main_queue(), ^{
 			self.loading = NO;
@@ -355,7 +355,7 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    NSIndexPath * sectionIndexPath = [NSIndexPath indexPathForItem:0 inSection:section];
+    NSIndexPath * sectionIndexPath = [NSIndexPath indexPathForRow:0 inSection:section];
     IPKPage * page = ((IPKActivity *)[self objectForViewIndexPath:sectionIndexPath]).page;
     IPIActivityPageTableViewHeader * headerView = [[IPIActivityPageTableViewHeader alloc] initWithFrame:CGRectMake(10, 0, 300, 92.5)];
     [headerView setDelegate:self];
@@ -365,7 +365,7 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    NSIndexPath * sectionIndexPath = [NSIndexPath indexPathForItem:0 inSection:section];
+    NSIndexPath * sectionIndexPath = [NSIndexPath indexPathForRow:0 inSection:section];
     IPKPage * page = ((IPKActivity *)[self objectForViewIndexPath:sectionIndexPath]).page;
     IPIActivityPageTableViewFooter * footerView = [[IPIActivityPageTableViewFooter alloc] initWithFrame:CGRectMake(10, 0, 300, 30)];
     [footerView setPage:page];

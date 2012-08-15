@@ -1,17 +1,16 @@
 //
 //  CDITableViewCell.h
-//  Cheddar for iOS
-//
-//  Created by Sam Soffes on 3/31/12.
-//  Copyright (c) 2012 Nothing Magical. All rights reserved.
 //
 
 @interface CDITableViewCell : UITableViewCell
 
-@property (nonatomic, strong, readonly) SSTextField *textField;
-@property (nonatomic, assign) BOOL editingText;
-@property (nonatomic, strong, readonly) UITapGestureRecognizer *editingTapGestureRecognizer;
-
 + (CGFloat)cellHeight;
+
+- (void)setAppearanceBackgroundImage:(UIImage *)image UI_APPEARANCE_SELECTOR;
+- (void)setAppearanceBackgroundColor:(UIColor *)backgroundColor UI_APPEARANCE_SELECTOR;
+- (void)setTextLabelColor:(UIColor *)textLabelColor UI_APPEARANCE_SELECTOR;
+- (void)setTextLabelFont:(UIFont *)textLabelFont UI_APPEARANCE_SELECTOR;
+- (void)setDetailTextLabelColor:(UIColor *)detailTextLabelColor UI_APPEARANCE_SELECTOR;
+- (void)setDetailTextLabelFont:(UIFont *)detailTextLabelFont UI_APPEARANCE_SELECTOR;
 
 @end

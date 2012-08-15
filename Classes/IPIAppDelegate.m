@@ -9,20 +9,31 @@
 #import "IPIAppDelegate.h"
 #import "IPISplitViewController.h"
 #import "IPIActivityViewController.h"
-#import "IPILeftPagesViewController.h"
+//#import "IPILeftPagesViewController.h"
+#import "IPIAccordionViewController.h"
 #import "CDISignUpViewController.h"
 #import "IIViewDeckController.h"
 #import "CDIDefines.h"
 #import "UIFont+CheddariOSAdditions.h"
 #import "LocalyticsUtilities.h"
+#import "UISS.h"
+#import "UISSStatusWindow.h"
+
 //#import <Crashlytics/Crashlytics.h>
 #ifdef INSIDER_PAGES_API_DEVELOPMENT_MODE
     #import "DCIntrospect.h"
 #endif
 
+@interface IPIAppDelegate ()
+
+@property (nonatomic, strong) UISS *uiss;
+@property (nonatomic, strong) UISSStatusWindow *statusWindow;
+
+@end
+
 @implementation IPIAppDelegate
 
-@synthesize window = _window;
+@synthesize window = _window, uiss, statusWindow;
 
 + (IPIAppDelegate *)sharedAppDelegate {
 	return (IPIAppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -49,11 +60,7 @@
 //	[CDKPushController setDevelopmentModeEnabled:YES];
 #endif
     
-#if INSIDER_PAGES_TESTING_MODE
-    [TestFlight takeOff:@"30d92a896df4ab4b4873886ea58f8b06_NzE0NzIyMDEyLTAzLTE0IDEzOjQ0OjU4Ljk3MDAxOQ"];
-#endif
-    
-#define TESTING 1
+#define TESTING 0
 #ifdef TESTING
     [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
 #endif
@@ -64,14 +71,18 @@
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	self.window.backgroundColor = [UIColor blackColor];
 	
-	[[self class] applyStylesheet];
+	[self applyStylesheet];
     [self openSessionCheckCache:YES];
     // To-do, show logged in view
 
-    UIViewController *viewController = [[IPIActivityViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-    IPILeftPagesViewController * leftPagesViewController = [[IPILeftPagesViewController alloc] init];
-    IIViewDeckController * viewDeckController = [[IIViewDeckController alloc] initWithCenterViewController:navigationController leftViewController:leftPagesViewController];
+    IPIActivityViewController *viewController = [[IPIActivityViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    UINavigationController *activityNavigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+//    IPILeftPagesViewController * leftPagesViewController = [[IPILeftPagesViewController alloc] init];
+    IPIAccordionViewController * accordionViewController = [[IPIAccordionViewController alloc] init];
+    UINavigationController *leftPagesNavigationController = [[UINavigationController alloc] initWithRootViewController:accordionViewController];
+
+    IIViewDeckController * viewDeckController = [[IIViewDeckController alloc] initWithCenterViewController:activityNavigationController leftViewController:accordionViewController];
+    [viewDeckController setPanningMode:IIViewDeckPanningViewPanning];
     self.window.rootViewController = viewDeckController;
 	[self.window makeKeyAndVisible];
     
@@ -90,7 +101,11 @@
 		// Add the transaction observer
 //		[[SKPaymentQueue defaultQueue] addTransactionObserver:[CDITransactionObserver defaultObserver]];
 	});
-
+    
+#if INSIDER_PAGES_TESTING_MODE
+    [TestFlight takeOff:@"30d92a896df4ab4b4873886ea58f8b06_NzE0NzIyMDEyLTAzLTE0IDEzOjQ0OjU4Ljk3MDAxOQ"];
+#endif
+    
 	return YES;
 }
 
@@ -128,21 +143,22 @@
 }
 
 -(void)storeCookies{
-    NSArray* allCookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:@"http://local.insiderpages.com"]];
-    for (NSHTTPCookie *cookie in allCookies) {
-        NSMutableDictionary* cookieDictionary = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"SavedCookies"]];
-        [cookieDictionary setValue:cookie.properties forKey:@"http://local.insiderpages.com"];
-        [[NSUserDefaults standardUserDefaults] setObject:cookieDictionary forKey:@"SavedCookies"];
-    }
+    NSHTTPCookie *cookie = [[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies] objectAtIndex:0];
+    NSMutableDictionary* cookieDictionary = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"SavedCookies"]];
+    [cookieDictionary setValue:cookie.properties forKey:@"http://local.insiderpages.com"];
+    [[NSUserDefaults standardUserDefaults] setObject:cookieDictionary forKey:@"SavedCookies"];
 }
 
 -(void)reloadCookies{
     NSDictionary* cookieDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"SavedCookies"];
     NSDictionary* cookieProperties = [cookieDictionary valueForKey:@"http://local.insiderpages.com"];
-    if (cookieProperties != nil) {
-        NSHTTPCookie* cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
-        NSArray* cookieArray = [NSArray arrayWithObject:cookie];
-        [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookies:cookieArray forURL:[NSURL URLWithString:@"http://local.insiderpages.com"] mainDocumentURL:nil];
+        if (cookieProperties != nil) {
+            NSMutableDictionary* mutableCookieProperties = [cookieProperties mutableCopy];
+            [mutableCookieProperties setObject:@"local.insiderpages.com" forKey:@"Domain"];
+
+            NSHTTPCookie* cookie = [NSHTTPCookie cookieWithProperties:mutableCookieProperties];
+            NSArray* cookieArray = [NSArray arrayWithObject:cookie];
+            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookies:cookieArray forURL:[NSURL URLWithString:@"http://local.insiderpages.com"] mainDocumentURL:nil];
     }
 }
 
@@ -265,7 +281,17 @@
 }
 
 
-+ (void)applyStylesheet {
+-(void)applyStylesheet {
+    self.uiss = [[UISS alloc] init];
+    self.uiss.style.url = [NSURL URLWithString:@"file://localhost/Users/trumanc/Desktop/insiderpages-ios/Resources/Stylesheets/style.json"];
+    self.uiss.statusWindowEnabled = YES;
+    [self.uiss registerReloadGestureRecognizerInView:self.window];
+  
+    [self.uiss load];
+#if TARGET_IPHONE_SIMULATOR
+    [self.uiss enableAutoReloadWithTimeInterval:3];
+#endif
+    
 	// Navigation bar
 	UINavigationBar *navigationBar = [UINavigationBar appearance];
 //	[navigationBar setBackgroundColor:[UIColor grayColor]];

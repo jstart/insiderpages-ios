@@ -11,7 +11,7 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) FBSession *session;
 
-+ (void)applyStylesheet;
+- (void)applyStylesheet;
 + (IPIAppDelegate *)sharedAppDelegate;
 - (void) openSessionCheckCache:(BOOL)check;
 

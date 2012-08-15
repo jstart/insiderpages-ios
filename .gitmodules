@@ -37,3 +37,6 @@
 [submodule "Vendor/ViewDeck"]
 	path = Vendor/ViewDeck
 	url = git://github.com/Inferis/ViewDeck.git
+[submodule "Vendor/UISS"]
+	path = Vendor/UISS
+	url = git@github.com:jstart/UISS.git

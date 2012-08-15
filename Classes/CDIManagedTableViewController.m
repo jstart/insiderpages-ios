@@ -184,15 +184,15 @@
 
 
 - (void)editRow:(UITapGestureRecognizer *)editingTapGestureRecognizer {
-	CDITableViewCell *cell = (CDITableViewCell *)[self.tableView cellForRowAtIndexPath:_editingIndexPath];
-	cell.editingText = NO;
-	cell.textField.delegate = nil;
-	
-	cell = (CDITableViewCell *)editingTapGestureRecognizer.view;
-	cell.editingText = YES;
-	cell.textField.delegate = self;
-
-	_editingIndexPath = [self.tableView indexPathForCell:cell];
+//	CDITableViewCell *cell = (CDITableViewCell *)[self.tableView cellForRowAtIndexPath:_editingIndexPath];
+//	cell.editingText = NO;
+//	cell.textField.delegate = nil;
+//	
+//	cell = (CDITableViewCell *)editingTapGestureRecognizer.view;
+//	cell.editingText = YES;
+//	cell.textField.delegate = self;
+//
+//	_editingIndexPath = [self.tableView indexPathForCell:cell];
 }
 
 
@@ -252,10 +252,10 @@
 #pragma mark - Private
 
 - (void)endCellTextEditing {
-	CDITableViewCell *cell = (CDITableViewCell *)[self.tableView cellForRowAtIndexPath:_editingIndexPath];
-	cell.editingText = NO;
-	cell.textField.delegate = nil;
-	_editingIndexPath = nil;
+//	CDITableViewCell *cell = (CDITableViewCell *)[self.tableView cellForRowAtIndexPath:_editingIndexPath];
+//	cell.editingText = NO;
+//	cell.textField.delegate = nil;
+//	_editingIndexPath = nil;
 }
 
 

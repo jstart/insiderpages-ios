@@ -180,6 +180,49 @@
 		FD269F1F15D9B31F0050BF46 /* IIViewDeckController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F1C15D9B31F0050BF46 /* IIViewDeckController.m */; };
 		FD269F2015D9B31F0050BF46 /* WrapController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F1E15D9B31F0050BF46 /* WrapController.m */; };
 		FD269F2315D9B64B0050BF46 /* IPIPageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F2215D9B64B0050BF46 /* IPIPageTableViewCell.m */; };
+		FD269F4E15DA15DE0050BF46 /* IPIExpandingPageHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F4D15DA15DE0050BF46 /* IPIExpandingPageHeaderTableViewCell.m */; };
+		FD269FF215DAB71D0050BF46 /* NSString+UISS.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F9D15DAB71D0050BF46 /* NSString+UISS.m */; };
+		FD269FF315DAB71D0050BF46 /* UILabel+UISS.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F9F15DAB71D0050BF46 /* UILabel+UISS.m */; };
+		FD269FF415DAB71D0050BF46 /* UISS.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FA215DAB71D0050BF46 /* UISS.m */; };
+		FD269FF515DAB71D0050BF46 /* UISSAbstractEnumValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FA415DAB71D0050BF46 /* UISSAbstractEnumValueConverter.m */; };
+		FD269FF615DAB71D0050BF46 /* UISSArgument.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FA715DAB71D0050BF46 /* UISSArgument.m */; };
+		FD269FF715DAB71D0050BF46 /* UISSAxisParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FAA15DAB71D0050BF46 /* UISSAxisParameter.m */; };
+		FD269FF815DAB71D0050BF46 /* UISSBarMetricsValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FAC15DAB71D0050BF46 /* UISSBarMetricsValueConverter.m */; };
+		FD269FF915DAB71D0050BF46 /* UISSCodeGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FAE15DAB71D0050BF46 /* UISSCodeGenerator.m */; };
+		FD269FFA15DAB71D0050BF46 /* UISSColorValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FB015DAB71D0050BF46 /* UISSColorValueConverter.m */; };
+		FD269FFB15DAB71D0050BF46 /* UISSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FB215DAB71D0050BF46 /* UISSConfig.m */; };
+		FD269FFC15DAB71D0050BF46 /* UISSConsoleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FB415DAB71D0050BF46 /* UISSConsoleViewController.m */; };
+		FD269FFD15DAB71D0050BF46 /* UISSControlStateValueConveter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FB615DAB71D0050BF46 /* UISSControlStateValueConveter.m */; };
+		FD269FFE15DAB71D0050BF46 /* UISSDisabledKeysPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FB915DAB71D0050BF46 /* UISSDisabledKeysPreprocessor.m */; };
+		FD269FFF15DAB71D0050BF46 /* UISSEdgeInsetsValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FBB15DAB71D0050BF46 /* UISSEdgeInsetsValueConverter.m */; };
+		FD26A00015DAB71D0050BF46 /* UISSError.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FBD15DAB71D0050BF46 /* UISSError.m */; };
+		FD26A00115DAB71D0050BF46 /* UISSErrorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FBF15DAB71D0050BF46 /* UISSErrorsViewController.m */; };
+		FD26A00215DAB71D0050BF46 /* UISSFloatValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FC115DAB71D0050BF46 /* UISSFloatValueConverter.m */; };
+		FD26A00315DAB71D0050BF46 /* UISSFontValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FC315DAB71D0050BF46 /* UISSFontValueConverter.m */; };
+		FD26A00415DAB71D0050BF46 /* UISSGeneratedCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FC515DAB71D0050BF46 /* UISSGeneratedCodeViewController.m */; };
+		FD26A00515DAB71D0050BF46 /* UISSImageValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FC715DAB71D0050BF46 /* UISSImageValueConverter.m */; };
+		FD26A00615DAB71D0050BF46 /* UISSIntegerValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FC915DAB71D0050BF46 /* UISSIntegerValueConverter.m */; };
+		FD26A00715DAB71D0050BF46 /* UISSOffsetValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FCB15DAB71D0050BF46 /* UISSOffsetValueConverter.m */; };
+		FD26A00815DAB71D0050BF46 /* UISSParser.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FCD15DAB71D0050BF46 /* UISSParser.m */; };
+		FD26A00915DAB71D0050BF46 /* UISSParserContext.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FCF15DAB71D0050BF46 /* UISSParserContext.m */; };
+		FD26A00A15DAB71D0050BF46 /* UISSPointValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FD115DAB71D0050BF46 /* UISSPointValueConverter.m */; };
+		FD26A00B15DAB71D0050BF46 /* UISSProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FD315DAB71D0050BF46 /* UISSProperty.m */; };
+		FD26A00C15DAB71D0050BF46 /* UISSPropertySetter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FD515DAB71D0050BF46 /* UISSPropertySetter.m */; };
+		FD26A00D15DAB71D0050BF46 /* UISSRectValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FD715DAB71D0050BF46 /* UISSRectValueConverter.m */; };
+		FD26A00E15DAB71D0050BF46 /* UISSSearchBarIconValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FD915DAB71D0050BF46 /* UISSSearchBarIconValueConverter.m */; };
+		FD26A00F15DAB71D0050BF46 /* UISSSegmentedControlSegmentValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FDB15DAB71D0050BF46 /* UISSSegmentedControlSegmentValueConverter.m */; };
+		FD26A01015DAB71D0050BF46 /* UISSSizeValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FDD15DAB71D0050BF46 /* UISSSizeValueConverter.m */; };
+		FD26A01115DAB71D0050BF46 /* UISSStatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FDF15DAB71D0050BF46 /* UISSStatusView.m */; };
+		FD26A01215DAB71D0050BF46 /* UISSStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FE115DAB71D0050BF46 /* UISSStatusViewController.m */; };
+		FD26A01315DAB71D0050BF46 /* UISSStatusWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FE315DAB71D0050BF46 /* UISSStatusWindow.m */; };
+		FD26A01415DAB71D0050BF46 /* UISSStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FE515DAB71D0050BF46 /* UISSStyle.m */; };
+		FD26A01515DAB71D0050BF46 /* UISSTextAttributesValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FE715DAB71D0050BF46 /* UISSTextAttributesValueConverter.m */; };
+		FD26A01615DAB71D0050BF46 /* UISSToolbarPositionConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FE915DAB71D0050BF46 /* UISSToolbarPositionConverter.m */; };
+		FD26A01715DAB71D0050BF46 /* UISSUIntegerValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FEB15DAB71D0050BF46 /* UISSUIntegerValueConverter.m */; };
+		FD26A01815DAB71D0050BF46 /* UISSUserInterfaceIdiomPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FED15DAB71D0050BF46 /* UISSUserInterfaceIdiomPreprocessor.m */; };
+		FD26A01915DAB71D0050BF46 /* UISSVariablesPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FEF15DAB71D0050BF46 /* UISSVariablesPreprocessor.m */; };
+		FD26A01A15DAB71D0050BF46 /* UIView+UISS.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FF115DAB71D0050BF46 /* UIView+UISS.m */; };
+		FD26A01C15DAB8390050BF46 /* Stylesheets in Resources */ = {isa = PBXBuildFile; fileRef = FD26A01B15DAB8390050BF46 /* Stylesheets */; };
 		FD63AA1515D66F0400764EF2 /* favorite_active.png in Resources */ = {isa = PBXBuildFile; fileRef = FD63AA1315D66F0400764EF2 /* favorite_active.png */; };
 		FD63AA1615D66F0400764EF2 /* favorite_inactive.png in Resources */ = {isa = PBXBuildFile; fileRef = FD63AA1415D66F0400764EF2 /* favorite_inactive.png */; };
 		FD6F945E15D45AEA00FF686B /* NICommonMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F943415D45AEA00FF686B /* NICommonMetrics.m */; };
@@ -240,6 +283,9 @@
 		FDD99E7315D4CED1003BB635 /* DCIntrospect.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD99E5515D4CED1003BB635 /* DCIntrospect.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FDD99E7415D4CED1003BB635 /* DCStatusBarOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD99E5815D4CED1003BB635 /* DCStatusBarOverlay.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FDD99E8415D4D3C9003BB635 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FDD99E8215D4D3C9003BB635 /* libTestFlight.a */; };
+		FDD9FDFD15DADC7F003E34EE /* AccordionView.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD9FDFC15DADC7F003E34EE /* AccordionView.m */; };
+		FDD9FE0015DADF50003E34EE /* IPIAccordionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD9FDFF15DADF50003E34EE /* IPIAccordionViewController.m */; };
+		FDD9FE0315DAE909003E34EE /* IPIAccordionPagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD9FE0215DAE909003E34EE /* IPIAccordionPagesViewController.m */; };
 		FDFAD30315D1E88B00ADFB73 /* InsiderPages.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FDFAD30115D1E88B00ADFB73 /* InsiderPages.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
@@ -552,6 +598,95 @@
 		FD269F1E15D9B31F0050BF46 /* WrapController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WrapController.m; sourceTree = "<group>"; };
 		FD269F2115D9B64A0050BF46 /* IPIPageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIPageTableViewCell.h; sourceTree = "<group>"; };
 		FD269F2215D9B64B0050BF46 /* IPIPageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIPageTableViewCell.m; sourceTree = "<group>"; };
+		FD269F4C15DA15DD0050BF46 /* IPIExpandingPageHeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIExpandingPageHeaderTableViewCell.h; sourceTree = "<group>"; };
+		FD269F4D15DA15DE0050BF46 /* IPIExpandingPageHeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIExpandingPageHeaderTableViewCell.m; sourceTree = "<group>"; };
+		FD269F9C15DAB71D0050BF46 /* NSString+UISS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+UISS.h"; path = "UISS/Project/UISS/NSString+UISS.h"; sourceTree = "<group>"; };
+		FD269F9D15DAB71D0050BF46 /* NSString+UISS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+UISS.m"; path = "UISS/Project/UISS/NSString+UISS.m"; sourceTree = "<group>"; };
+		FD269F9E15DAB71D0050BF46 /* UILabel+UISS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UILabel+UISS.h"; path = "UISS/Project/UISS/UILabel+UISS.h"; sourceTree = "<group>"; };
+		FD269F9F15DAB71D0050BF46 /* UILabel+UISS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UILabel+UISS.m"; path = "UISS/Project/UISS/UILabel+UISS.m"; sourceTree = "<group>"; };
+		FD269FA015DAB71D0050BF46 /* UISS-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UISS-Prefix.pch"; path = "UISS/Project/UISS/UISS-Prefix.pch"; sourceTree = "<group>"; };
+		FD269FA115DAB71D0050BF46 /* UISS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISS.h; path = UISS/Project/UISS/UISS.h; sourceTree = "<group>"; };
+		FD269FA215DAB71D0050BF46 /* UISS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISS.m; path = UISS/Project/UISS/UISS.m; sourceTree = "<group>"; };
+		FD269FA315DAB71D0050BF46 /* UISSAbstractEnumValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSAbstractEnumValueConverter.h; path = UISS/Project/UISS/UISSAbstractEnumValueConverter.h; sourceTree = "<group>"; };
+		FD269FA415DAB71D0050BF46 /* UISSAbstractEnumValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSAbstractEnumValueConverter.m; path = UISS/Project/UISS/UISSAbstractEnumValueConverter.m; sourceTree = "<group>"; };
+		FD269FA515DAB71D0050BF46 /* UISSAppearancePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSAppearancePrivate.h; path = UISS/Project/UISS/UISSAppearancePrivate.h; sourceTree = "<group>"; };
+		FD269FA615DAB71D0050BF46 /* UISSArgument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSArgument.h; path = UISS/Project/UISS/UISSArgument.h; sourceTree = "<group>"; };
+		FD269FA715DAB71D0050BF46 /* UISSArgument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSArgument.m; path = UISS/Project/UISS/UISSArgument.m; sourceTree = "<group>"; };
+		FD269FA815DAB71D0050BF46 /* UISSArgumentValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSArgumentValueConverter.h; path = UISS/Project/UISS/UISSArgumentValueConverter.h; sourceTree = "<group>"; };
+		FD269FA915DAB71D0050BF46 /* UISSAxisParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSAxisParameter.h; path = UISS/Project/UISS/UISSAxisParameter.h; sourceTree = "<group>"; };
+		FD269FAA15DAB71D0050BF46 /* UISSAxisParameter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSAxisParameter.m; path = UISS/Project/UISS/UISSAxisParameter.m; sourceTree = "<group>"; };
+		FD269FAB15DAB71D0050BF46 /* UISSBarMetricsValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSBarMetricsValueConverter.h; path = UISS/Project/UISS/UISSBarMetricsValueConverter.h; sourceTree = "<group>"; };
+		FD269FAC15DAB71D0050BF46 /* UISSBarMetricsValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSBarMetricsValueConverter.m; path = UISS/Project/UISS/UISSBarMetricsValueConverter.m; sourceTree = "<group>"; };
+		FD269FAD15DAB71D0050BF46 /* UISSCodeGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSCodeGenerator.h; path = UISS/Project/UISS/UISSCodeGenerator.h; sourceTree = "<group>"; };
+		FD269FAE15DAB71D0050BF46 /* UISSCodeGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSCodeGenerator.m; path = UISS/Project/UISS/UISSCodeGenerator.m; sourceTree = "<group>"; };
+		FD269FAF15DAB71D0050BF46 /* UISSColorValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSColorValueConverter.h; path = UISS/Project/UISS/UISSColorValueConverter.h; sourceTree = "<group>"; };
+		FD269FB015DAB71D0050BF46 /* UISSColorValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSColorValueConverter.m; path = UISS/Project/UISS/UISSColorValueConverter.m; sourceTree = "<group>"; };
+		FD269FB115DAB71D0050BF46 /* UISSConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSConfig.h; path = UISS/Project/UISS/UISSConfig.h; sourceTree = "<group>"; };
+		FD269FB215DAB71D0050BF46 /* UISSConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSConfig.m; path = UISS/Project/UISS/UISSConfig.m; sourceTree = "<group>"; };
+		FD269FB315DAB71D0050BF46 /* UISSConsoleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSConsoleViewController.h; path = UISS/Project/UISS/UISSConsoleViewController.h; sourceTree = "<group>"; };
+		FD269FB415DAB71D0050BF46 /* UISSConsoleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSConsoleViewController.m; path = UISS/Project/UISS/UISSConsoleViewController.m; sourceTree = "<group>"; };
+		FD269FB515DAB71D0050BF46 /* UISSControlStateValueConveter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSControlStateValueConveter.h; path = UISS/Project/UISS/UISSControlStateValueConveter.h; sourceTree = "<group>"; };
+		FD269FB615DAB71D0050BF46 /* UISSControlStateValueConveter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSControlStateValueConveter.m; path = UISS/Project/UISS/UISSControlStateValueConveter.m; sourceTree = "<group>"; };
+		FD269FB715DAB71D0050BF46 /* UISSDictionaryPreprocessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSDictionaryPreprocessor.h; path = UISS/Project/UISS/UISSDictionaryPreprocessor.h; sourceTree = "<group>"; };
+		FD269FB815DAB71D0050BF46 /* UISSDisabledKeysPreprocessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSDisabledKeysPreprocessor.h; path = UISS/Project/UISS/UISSDisabledKeysPreprocessor.h; sourceTree = "<group>"; };
+		FD269FB915DAB71D0050BF46 /* UISSDisabledKeysPreprocessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSDisabledKeysPreprocessor.m; path = UISS/Project/UISS/UISSDisabledKeysPreprocessor.m; sourceTree = "<group>"; };
+		FD269FBA15DAB71D0050BF46 /* UISSEdgeInsetsValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSEdgeInsetsValueConverter.h; path = UISS/Project/UISS/UISSEdgeInsetsValueConverter.h; sourceTree = "<group>"; };
+		FD269FBB15DAB71D0050BF46 /* UISSEdgeInsetsValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSEdgeInsetsValueConverter.m; path = UISS/Project/UISS/UISSEdgeInsetsValueConverter.m; sourceTree = "<group>"; };
+		FD269FBC15DAB71D0050BF46 /* UISSError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSError.h; path = UISS/Project/UISS/UISSError.h; sourceTree = "<group>"; };
+		FD269FBD15DAB71D0050BF46 /* UISSError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSError.m; path = UISS/Project/UISS/UISSError.m; sourceTree = "<group>"; };
+		FD269FBE15DAB71D0050BF46 /* UISSErrorsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSErrorsViewController.h; path = UISS/Project/UISS/UISSErrorsViewController.h; sourceTree = "<group>"; };
+		FD269FBF15DAB71D0050BF46 /* UISSErrorsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSErrorsViewController.m; path = UISS/Project/UISS/UISSErrorsViewController.m; sourceTree = "<group>"; };
+		FD269FC015DAB71D0050BF46 /* UISSFloatValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSFloatValueConverter.h; path = UISS/Project/UISS/UISSFloatValueConverter.h; sourceTree = "<group>"; };
+		FD269FC115DAB71D0050BF46 /* UISSFloatValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSFloatValueConverter.m; path = UISS/Project/UISS/UISSFloatValueConverter.m; sourceTree = "<group>"; };
+		FD269FC215DAB71D0050BF46 /* UISSFontValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSFontValueConverter.h; path = UISS/Project/UISS/UISSFontValueConverter.h; sourceTree = "<group>"; };
+		FD269FC315DAB71D0050BF46 /* UISSFontValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSFontValueConverter.m; path = UISS/Project/UISS/UISSFontValueConverter.m; sourceTree = "<group>"; };
+		FD269FC415DAB71D0050BF46 /* UISSGeneratedCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSGeneratedCodeViewController.h; path = UISS/Project/UISS/UISSGeneratedCodeViewController.h; sourceTree = "<group>"; };
+		FD269FC515DAB71D0050BF46 /* UISSGeneratedCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSGeneratedCodeViewController.m; path = UISS/Project/UISS/UISSGeneratedCodeViewController.m; sourceTree = "<group>"; };
+		FD269FC615DAB71D0050BF46 /* UISSImageValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSImageValueConverter.h; path = UISS/Project/UISS/UISSImageValueConverter.h; sourceTree = "<group>"; };
+		FD269FC715DAB71D0050BF46 /* UISSImageValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSImageValueConverter.m; path = UISS/Project/UISS/UISSImageValueConverter.m; sourceTree = "<group>"; };
+		FD269FC815DAB71D0050BF46 /* UISSIntegerValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSIntegerValueConverter.h; path = UISS/Project/UISS/UISSIntegerValueConverter.h; sourceTree = "<group>"; };
+		FD269FC915DAB71D0050BF46 /* UISSIntegerValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSIntegerValueConverter.m; path = UISS/Project/UISS/UISSIntegerValueConverter.m; sourceTree = "<group>"; };
+		FD269FCA15DAB71D0050BF46 /* UISSOffsetValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSOffsetValueConverter.h; path = UISS/Project/UISS/UISSOffsetValueConverter.h; sourceTree = "<group>"; };
+		FD269FCB15DAB71D0050BF46 /* UISSOffsetValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSOffsetValueConverter.m; path = UISS/Project/UISS/UISSOffsetValueConverter.m; sourceTree = "<group>"; };
+		FD269FCC15DAB71D0050BF46 /* UISSParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSParser.h; path = UISS/Project/UISS/UISSParser.h; sourceTree = "<group>"; };
+		FD269FCD15DAB71D0050BF46 /* UISSParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSParser.m; path = UISS/Project/UISS/UISSParser.m; sourceTree = "<group>"; };
+		FD269FCE15DAB71D0050BF46 /* UISSParserContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSParserContext.h; path = UISS/Project/UISS/UISSParserContext.h; sourceTree = "<group>"; };
+		FD269FCF15DAB71D0050BF46 /* UISSParserContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSParserContext.m; path = UISS/Project/UISS/UISSParserContext.m; sourceTree = "<group>"; };
+		FD269FD015DAB71D0050BF46 /* UISSPointValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSPointValueConverter.h; path = UISS/Project/UISS/UISSPointValueConverter.h; sourceTree = "<group>"; };
+		FD269FD115DAB71D0050BF46 /* UISSPointValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSPointValueConverter.m; path = UISS/Project/UISS/UISSPointValueConverter.m; sourceTree = "<group>"; };
+		FD269FD215DAB71D0050BF46 /* UISSProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSProperty.h; path = UISS/Project/UISS/UISSProperty.h; sourceTree = "<group>"; };
+		FD269FD315DAB71D0050BF46 /* UISSProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSProperty.m; path = UISS/Project/UISS/UISSProperty.m; sourceTree = "<group>"; };
+		FD269FD415DAB71D0050BF46 /* UISSPropertySetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSPropertySetter.h; path = UISS/Project/UISS/UISSPropertySetter.h; sourceTree = "<group>"; };
+		FD269FD515DAB71D0050BF46 /* UISSPropertySetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSPropertySetter.m; path = UISS/Project/UISS/UISSPropertySetter.m; sourceTree = "<group>"; };
+		FD269FD615DAB71D0050BF46 /* UISSRectValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSRectValueConverter.h; path = UISS/Project/UISS/UISSRectValueConverter.h; sourceTree = "<group>"; };
+		FD269FD715DAB71D0050BF46 /* UISSRectValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSRectValueConverter.m; path = UISS/Project/UISS/UISSRectValueConverter.m; sourceTree = "<group>"; };
+		FD269FD815DAB71D0050BF46 /* UISSSearchBarIconValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSSearchBarIconValueConverter.h; path = UISS/Project/UISS/UISSSearchBarIconValueConverter.h; sourceTree = "<group>"; };
+		FD269FD915DAB71D0050BF46 /* UISSSearchBarIconValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSSearchBarIconValueConverter.m; path = UISS/Project/UISS/UISSSearchBarIconValueConverter.m; sourceTree = "<group>"; };
+		FD269FDA15DAB71D0050BF46 /* UISSSegmentedControlSegmentValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSSegmentedControlSegmentValueConverter.h; path = UISS/Project/UISS/UISSSegmentedControlSegmentValueConverter.h; sourceTree = "<group>"; };
+		FD269FDB15DAB71D0050BF46 /* UISSSegmentedControlSegmentValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSSegmentedControlSegmentValueConverter.m; path = UISS/Project/UISS/UISSSegmentedControlSegmentValueConverter.m; sourceTree = "<group>"; };
+		FD269FDC15DAB71D0050BF46 /* UISSSizeValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSSizeValueConverter.h; path = UISS/Project/UISS/UISSSizeValueConverter.h; sourceTree = "<group>"; };
+		FD269FDD15DAB71D0050BF46 /* UISSSizeValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSSizeValueConverter.m; path = UISS/Project/UISS/UISSSizeValueConverter.m; sourceTree = "<group>"; };
+		FD269FDE15DAB71D0050BF46 /* UISSStatusView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSStatusView.h; path = UISS/Project/UISS/UISSStatusView.h; sourceTree = "<group>"; };
+		FD269FDF15DAB71D0050BF46 /* UISSStatusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSStatusView.m; path = UISS/Project/UISS/UISSStatusView.m; sourceTree = "<group>"; };
+		FD269FE015DAB71D0050BF46 /* UISSStatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSStatusViewController.h; path = UISS/Project/UISS/UISSStatusViewController.h; sourceTree = "<group>"; };
+		FD269FE115DAB71D0050BF46 /* UISSStatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSStatusViewController.m; path = UISS/Project/UISS/UISSStatusViewController.m; sourceTree = "<group>"; };
+		FD269FE215DAB71D0050BF46 /* UISSStatusWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSStatusWindow.h; path = UISS/Project/UISS/UISSStatusWindow.h; sourceTree = "<group>"; };
+		FD269FE315DAB71D0050BF46 /* UISSStatusWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSStatusWindow.m; path = UISS/Project/UISS/UISSStatusWindow.m; sourceTree = "<group>"; };
+		FD269FE415DAB71D0050BF46 /* UISSStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSStyle.h; path = UISS/Project/UISS/UISSStyle.h; sourceTree = "<group>"; };
+		FD269FE515DAB71D0050BF46 /* UISSStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSStyle.m; path = UISS/Project/UISS/UISSStyle.m; sourceTree = "<group>"; };
+		FD269FE615DAB71D0050BF46 /* UISSTextAttributesValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSTextAttributesValueConverter.h; path = UISS/Project/UISS/UISSTextAttributesValueConverter.h; sourceTree = "<group>"; };
+		FD269FE715DAB71D0050BF46 /* UISSTextAttributesValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSTextAttributesValueConverter.m; path = UISS/Project/UISS/UISSTextAttributesValueConverter.m; sourceTree = "<group>"; };
+		FD269FE815DAB71D0050BF46 /* UISSToolbarPositionConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSToolbarPositionConverter.h; path = UISS/Project/UISS/UISSToolbarPositionConverter.h; sourceTree = "<group>"; };
+		FD269FE915DAB71D0050BF46 /* UISSToolbarPositionConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSToolbarPositionConverter.m; path = UISS/Project/UISS/UISSToolbarPositionConverter.m; sourceTree = "<group>"; };
+		FD269FEA15DAB71D0050BF46 /* UISSUIntegerValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSUIntegerValueConverter.h; path = UISS/Project/UISS/UISSUIntegerValueConverter.h; sourceTree = "<group>"; };
+		FD269FEB15DAB71D0050BF46 /* UISSUIntegerValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSUIntegerValueConverter.m; path = UISS/Project/UISS/UISSUIntegerValueConverter.m; sourceTree = "<group>"; };
+		FD269FEC15DAB71D0050BF46 /* UISSUserInterfaceIdiomPreprocessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSUserInterfaceIdiomPreprocessor.h; path = UISS/Project/UISS/UISSUserInterfaceIdiomPreprocessor.h; sourceTree = "<group>"; };
+		FD269FED15DAB71D0050BF46 /* UISSUserInterfaceIdiomPreprocessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSUserInterfaceIdiomPreprocessor.m; path = UISS/Project/UISS/UISSUserInterfaceIdiomPreprocessor.m; sourceTree = "<group>"; };
+		FD269FEE15DAB71D0050BF46 /* UISSVariablesPreprocessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISSVariablesPreprocessor.h; path = UISS/Project/UISS/UISSVariablesPreprocessor.h; sourceTree = "<group>"; };
+		FD269FEF15DAB71D0050BF46 /* UISSVariablesPreprocessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISSVariablesPreprocessor.m; path = UISS/Project/UISS/UISSVariablesPreprocessor.m; sourceTree = "<group>"; };
+		FD269FF015DAB71D0050BF46 /* UIView+UISS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+UISS.h"; path = "UISS/Project/UISS/UIView+UISS.h"; sourceTree = "<group>"; };
+		FD269FF115DAB71D0050BF46 /* UIView+UISS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+UISS.m"; path = "UISS/Project/UISS/UIView+UISS.m"; sourceTree = "<group>"; };
+		FD26A01B15DAB8390050BF46 /* Stylesheets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Stylesheets; sourceTree = "<group>"; };
 		FD63AA1315D66F0400764EF2 /* favorite_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = favorite_active.png; sourceTree = "<group>"; };
 		FD63AA1415D66F0400764EF2 /* favorite_inactive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = favorite_inactive.png; sourceTree = "<group>"; };
 		FD6F943315D45AEA00FF686B /* NICommonMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NICommonMetrics.h; path = nimbus/src/core/src/NICommonMetrics.h; sourceTree = "<group>"; };
@@ -669,6 +804,12 @@
 		FDD99E5815D4CED1003BB635 /* DCStatusBarOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCStatusBarOverlay.m; sourceTree = "<group>"; };
 		FDD99E8215D4D3C9003BB635 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTestFlight.a; path = TestFlightSDK1.0/libTestFlight.a; sourceTree = "<group>"; };
 		FDD99E8315D4D3C9003BB635 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestFlight.h; path = TestFlightSDK1.0/TestFlight.h; sourceTree = "<group>"; };
+		FDD9FDFB15DADC7F003E34EE /* AccordionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccordionView.h; path = AccordionView/AccordionView.h; sourceTree = "<group>"; };
+		FDD9FDFC15DADC7F003E34EE /* AccordionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccordionView.m; path = AccordionView/AccordionView.m; sourceTree = "<group>"; };
+		FDD9FDFE15DADF50003E34EE /* IPIAccordionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIAccordionViewController.h; sourceTree = "<group>"; };
+		FDD9FDFF15DADF50003E34EE /* IPIAccordionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIAccordionViewController.m; sourceTree = "<group>"; };
+		FDD9FE0115DAE909003E34EE /* IPIAccordionPagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIAccordionPagesViewController.h; sourceTree = "<group>"; };
+		FDD9FE0215DAE909003E34EE /* IPIAccordionPagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIAccordionPagesViewController.m; sourceTree = "<group>"; };
 		FDFAD30215D1E88B00ADFB73 /* InsiderPages.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = InsiderPages.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -677,6 +818,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B28FD2C015BF731100365CD6 /* CoreGraphics.framework in Frameworks */,
 				FDAEF9D115D1DB54009FAD52 /* libInsiderPagesKit.a in Frameworks */,
 				B2AD031915C4896E00D9B909 /* AudioToolbox.framework in Frameworks */,
 				B28FD2D115BF739300365CD6 /* libicucore.dylib in Frameworks */,
@@ -685,7 +827,6 @@
 				B28FD2C615BF732800365CD6 /* StoreKit.framework in Frameworks */,
 				B28FD2C415BF732100365CD6 /* libz.dylib in Frameworks */,
 				B28FD2C215BF731B00365CD6 /* MessageUI.framework in Frameworks */,
-				B28FD2C015BF731100365CD6 /* CoreGraphics.framework in Frameworks */,
 				B28FD2BE15BF730100365CD6 /* CFNetwork.framework in Frameworks */,
 				B208C1F415BF64630080705D /* CoreData.framework in Frameworks */,
 				B208C1F515BF64630080705D /* CoreText.framework in Frameworks */,
@@ -729,6 +870,7 @@
 		B208BBD315BF63A80080705D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FD26A01B15DAB8390050BF46 /* Stylesheets */,
 				B28FD2D215BF742D00365CD6 /* InsiderPages.entitlements */,
 				B28FD2D315BF742D00365CD6 /* Fonts */,
 				B208BBD415BF63A80080705D /* InsiderPages-Info.plist */,
@@ -963,6 +1105,8 @@
 				FD7732ED15D32B6300E857C8 /* IPIActivityTableViewCell.m */,
 				FD269F2115D9B64A0050BF46 /* IPIPageTableViewCell.h */,
 				FD269F2215D9B64B0050BF46 /* IPIPageTableViewCell.m */,
+				FD269F4C15DA15DD0050BF46 /* IPIExpandingPageHeaderTableViewCell.h */,
+				FD269F4D15DA15DE0050BF46 /* IPIExpandingPageHeaderTableViewCell.m */,
 				FDAA2E6A15D5887D00793375 /* IPIProviderTableViewCell.h */,
 				FDAA2E6B15D5887D00793375 /* IPIProviderTableViewCell.m */,
 				B208BBA015BF63A80080705D /* CDIListTableViewCell.h */,
@@ -1199,6 +1343,99 @@
 			path = ViewDeck/ViewDeck;
 			sourceTree = "<group>";
 		};
+		FD269F8515DAB5800050BF46 /* UISS */ = {
+			isa = PBXGroup;
+			children = (
+				FD269F9C15DAB71D0050BF46 /* NSString+UISS.h */,
+				FD269F9D15DAB71D0050BF46 /* NSString+UISS.m */,
+				FD269F9E15DAB71D0050BF46 /* UILabel+UISS.h */,
+				FD269F9F15DAB71D0050BF46 /* UILabel+UISS.m */,
+				FD269FA015DAB71D0050BF46 /* UISS-Prefix.pch */,
+				FD269FA115DAB71D0050BF46 /* UISS.h */,
+				FD269FA215DAB71D0050BF46 /* UISS.m */,
+				FD269FA315DAB71D0050BF46 /* UISSAbstractEnumValueConverter.h */,
+				FD269FA415DAB71D0050BF46 /* UISSAbstractEnumValueConverter.m */,
+				FD269FA515DAB71D0050BF46 /* UISSAppearancePrivate.h */,
+				FD269FA615DAB71D0050BF46 /* UISSArgument.h */,
+				FD269FA715DAB71D0050BF46 /* UISSArgument.m */,
+				FD269FA815DAB71D0050BF46 /* UISSArgumentValueConverter.h */,
+				FD269FA915DAB71D0050BF46 /* UISSAxisParameter.h */,
+				FD269FAA15DAB71D0050BF46 /* UISSAxisParameter.m */,
+				FD269FAB15DAB71D0050BF46 /* UISSBarMetricsValueConverter.h */,
+				FD269FAC15DAB71D0050BF46 /* UISSBarMetricsValueConverter.m */,
+				FD269FAD15DAB71D0050BF46 /* UISSCodeGenerator.h */,
+				FD269FAE15DAB71D0050BF46 /* UISSCodeGenerator.m */,
+				FD269FAF15DAB71D0050BF46 /* UISSColorValueConverter.h */,
+				FD269FB015DAB71D0050BF46 /* UISSColorValueConverter.m */,
+				FD269FB115DAB71D0050BF46 /* UISSConfig.h */,
+				FD269FB215DAB71D0050BF46 /* UISSConfig.m */,
+				FD269FB315DAB71D0050BF46 /* UISSConsoleViewController.h */,
+				FD269FB415DAB71D0050BF46 /* UISSConsoleViewController.m */,
+				FD269FB515DAB71D0050BF46 /* UISSControlStateValueConveter.h */,
+				FD269FB615DAB71D0050BF46 /* UISSControlStateValueConveter.m */,
+				FD269FB715DAB71D0050BF46 /* UISSDictionaryPreprocessor.h */,
+				FD269FB815DAB71D0050BF46 /* UISSDisabledKeysPreprocessor.h */,
+				FD269FB915DAB71D0050BF46 /* UISSDisabledKeysPreprocessor.m */,
+				FD269FBA15DAB71D0050BF46 /* UISSEdgeInsetsValueConverter.h */,
+				FD269FBB15DAB71D0050BF46 /* UISSEdgeInsetsValueConverter.m */,
+				FD269FBC15DAB71D0050BF46 /* UISSError.h */,
+				FD269FBD15DAB71D0050BF46 /* UISSError.m */,
+				FD269FBE15DAB71D0050BF46 /* UISSErrorsViewController.h */,
+				FD269FBF15DAB71D0050BF46 /* UISSErrorsViewController.m */,
+				FD269FC015DAB71D0050BF46 /* UISSFloatValueConverter.h */,
+				FD269FC115DAB71D0050BF46 /* UISSFloatValueConverter.m */,
+				FD269FC215DAB71D0050BF46 /* UISSFontValueConverter.h */,
+				FD269FC315DAB71D0050BF46 /* UISSFontValueConverter.m */,
+				FD269FC415DAB71D0050BF46 /* UISSGeneratedCodeViewController.h */,
+				FD269FC515DAB71D0050BF46 /* UISSGeneratedCodeViewController.m */,
+				FD269FC615DAB71D0050BF46 /* UISSImageValueConverter.h */,
+				FD269FC715DAB71D0050BF46 /* UISSImageValueConverter.m */,
+				FD269FC815DAB71D0050BF46 /* UISSIntegerValueConverter.h */,
+				FD269FC915DAB71D0050BF46 /* UISSIntegerValueConverter.m */,
+				FD269FCA15DAB71D0050BF46 /* UISSOffsetValueConverter.h */,
+				FD269FCB15DAB71D0050BF46 /* UISSOffsetValueConverter.m */,
+				FD269FCC15DAB71D0050BF46 /* UISSParser.h */,
+				FD269FCD15DAB71D0050BF46 /* UISSParser.m */,
+				FD269FCE15DAB71D0050BF46 /* UISSParserContext.h */,
+				FD269FCF15DAB71D0050BF46 /* UISSParserContext.m */,
+				FD269FD015DAB71D0050BF46 /* UISSPointValueConverter.h */,
+				FD269FD115DAB71D0050BF46 /* UISSPointValueConverter.m */,
+				FD269FD215DAB71D0050BF46 /* UISSProperty.h */,
+				FD269FD315DAB71D0050BF46 /* UISSProperty.m */,
+				FD269FD415DAB71D0050BF46 /* UISSPropertySetter.h */,
+				FD269FD515DAB71D0050BF46 /* UISSPropertySetter.m */,
+				FD269FD615DAB71D0050BF46 /* UISSRectValueConverter.h */,
+				FD269FD715DAB71D0050BF46 /* UISSRectValueConverter.m */,
+				FD269FD815DAB71D0050BF46 /* UISSSearchBarIconValueConverter.h */,
+				FD269FD915DAB71D0050BF46 /* UISSSearchBarIconValueConverter.m */,
+				FD269FDA15DAB71D0050BF46 /* UISSSegmentedControlSegmentValueConverter.h */,
+				FD269FDB15DAB71D0050BF46 /* UISSSegmentedControlSegmentValueConverter.m */,
+				FD269FDC15DAB71D0050BF46 /* UISSSizeValueConverter.h */,
+				FD269FDD15DAB71D0050BF46 /* UISSSizeValueConverter.m */,
+				FD269FDE15DAB71D0050BF46 /* UISSStatusView.h */,
+				FD269FDF15DAB71D0050BF46 /* UISSStatusView.m */,
+				FD269FE015DAB71D0050BF46 /* UISSStatusViewController.h */,
+				FD269FE115DAB71D0050BF46 /* UISSStatusViewController.m */,
+				FD269FE215DAB71D0050BF46 /* UISSStatusWindow.h */,
+				FD269FE315DAB71D0050BF46 /* UISSStatusWindow.m */,
+				FD269FE415DAB71D0050BF46 /* UISSStyle.h */,
+				FD269FE515DAB71D0050BF46 /* UISSStyle.m */,
+				FD269FE615DAB71D0050BF46 /* UISSTextAttributesValueConverter.h */,
+				FD269FE715DAB71D0050BF46 /* UISSTextAttributesValueConverter.m */,
+				FD269FE815DAB71D0050BF46 /* UISSToolbarPositionConverter.h */,
+				FD269FE915DAB71D0050BF46 /* UISSToolbarPositionConverter.m */,
+				FD269FEA15DAB71D0050BF46 /* UISSUIntegerValueConverter.h */,
+				FD269FEB15DAB71D0050BF46 /* UISSUIntegerValueConverter.m */,
+				FD269FEC15DAB71D0050BF46 /* UISSUserInterfaceIdiomPreprocessor.h */,
+				FD269FED15DAB71D0050BF46 /* UISSUserInterfaceIdiomPreprocessor.m */,
+				FD269FEE15DAB71D0050BF46 /* UISSVariablesPreprocessor.h */,
+				FD269FEF15DAB71D0050BF46 /* UISSVariablesPreprocessor.m */,
+				FD269FF015DAB71D0050BF46 /* UIView+UISS.h */,
+				FD269FF115DAB71D0050BF46 /* UIView+UISS.m */,
+			);
+			name = UISS;
+			sourceTree = "<group>";
+		};
 		FD3AD04615D5C7D9007699E8 /* Table Footers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1336,8 +1573,12 @@
 		FD7732B315D30E9400E857C8 /* Pages */ = {
 			isa = PBXGroup;
 			children = (
+				FDD9FE0115DAE909003E34EE /* IPIAccordionPagesViewController.h */,
+				FDD9FE0215DAE909003E34EE /* IPIAccordionPagesViewController.m */,
 				B208BB9E15BF63A80080705D /* IPILeftPagesViewController.h */,
 				B208BB9F15BF63A80080705D /* IPILeftPagesViewController.m */,
+				FDD9FDFE15DADF50003E34EE /* IPIAccordionViewController.h */,
+				FDD9FDFF15DADF50003E34EE /* IPIAccordionViewController.m */,
 			);
 			name = Pages;
 			sourceTree = "<group>";
@@ -1397,6 +1638,8 @@
 		FDD99E3815D4CEBB003BB635 /* Production */ = {
 			isa = PBXGroup;
 			children = (
+				FDD9FDF715DADC32003E34EE /* AccordionView */,
+				FD269F8515DAB5800050BF46 /* UISS */,
 				FD269F1A15D9B31E0050BF46 /* ViewDeck */,
 				FD269EA215D77B580050BF46 /* YIFullScreenScroll */,
 				FD269E6F15D6FF350050BF46 /* UIExpandableTableView */,
@@ -1442,6 +1685,15 @@
 				FDD99E8315D4D3C9003BB635 /* TestFlight.h */,
 			);
 			name = TestFlight;
+			sourceTree = "<group>";
+		};
+		FDD9FDF715DADC32003E34EE /* AccordionView */ = {
+			isa = PBXGroup;
+			children = (
+				FDD9FDFB15DADC7F003E34EE /* AccordionView.h */,
+				FDD9FDFC15DADC7F003E34EE /* AccordionView.m */,
+			);
+			name = AccordionView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1690,6 +1942,7 @@
 				FDB7BC5E15D2F5EA008E62EF /* LoginWithFacebookPressed@2x.png in Resources */,
 				FD63AA1515D66F0400764EF2 /* favorite_active.png in Resources */,
 				FD63AA1615D66F0400764EF2 /* favorite_inactive.png in Resources */,
+				FD26A01C15DAB8390050BF46 /* Stylesheets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1811,6 +2064,51 @@
 				FD269F1F15D9B31F0050BF46 /* IIViewDeckController.m in Sources */,
 				FD269F2015D9B31F0050BF46 /* WrapController.m in Sources */,
 				FD269F2315D9B64B0050BF46 /* IPIPageTableViewCell.m in Sources */,
+				FD269F4E15DA15DE0050BF46 /* IPIExpandingPageHeaderTableViewCell.m in Sources */,
+				FD269FF215DAB71D0050BF46 /* NSString+UISS.m in Sources */,
+				FD269FF315DAB71D0050BF46 /* UILabel+UISS.m in Sources */,
+				FD269FF415DAB71D0050BF46 /* UISS.m in Sources */,
+				FD269FF515DAB71D0050BF46 /* UISSAbstractEnumValueConverter.m in Sources */,
+				FD269FF615DAB71D0050BF46 /* UISSArgument.m in Sources */,
+				FD269FF715DAB71D0050BF46 /* UISSAxisParameter.m in Sources */,
+				FD269FF815DAB71D0050BF46 /* UISSBarMetricsValueConverter.m in Sources */,
+				FD269FF915DAB71D0050BF46 /* UISSCodeGenerator.m in Sources */,
+				FD269FFA15DAB71D0050BF46 /* UISSColorValueConverter.m in Sources */,
+				FD269FFB15DAB71D0050BF46 /* UISSConfig.m in Sources */,
+				FD269FFC15DAB71D0050BF46 /* UISSConsoleViewController.m in Sources */,
+				FD269FFD15DAB71D0050BF46 /* UISSControlStateValueConveter.m in Sources */,
+				FD269FFE15DAB71D0050BF46 /* UISSDisabledKeysPreprocessor.m in Sources */,
+				FD269FFF15DAB71D0050BF46 /* UISSEdgeInsetsValueConverter.m in Sources */,
+				FD26A00015DAB71D0050BF46 /* UISSError.m in Sources */,
+				FD26A00115DAB71D0050BF46 /* UISSErrorsViewController.m in Sources */,
+				FD26A00215DAB71D0050BF46 /* UISSFloatValueConverter.m in Sources */,
+				FD26A00315DAB71D0050BF46 /* UISSFontValueConverter.m in Sources */,
+				FD26A00415DAB71D0050BF46 /* UISSGeneratedCodeViewController.m in Sources */,
+				FD26A00515DAB71D0050BF46 /* UISSImageValueConverter.m in Sources */,
+				FD26A00615DAB71D0050BF46 /* UISSIntegerValueConverter.m in Sources */,
+				FD26A00715DAB71D0050BF46 /* UISSOffsetValueConverter.m in Sources */,
+				FD26A00815DAB71D0050BF46 /* UISSParser.m in Sources */,
+				FD26A00915DAB71D0050BF46 /* UISSParserContext.m in Sources */,
+				FD26A00A15DAB71D0050BF46 /* UISSPointValueConverter.m in Sources */,
+				FD26A00B15DAB71D0050BF46 /* UISSProperty.m in Sources */,
+				FD26A00C15DAB71D0050BF46 /* UISSPropertySetter.m in Sources */,
+				FD26A00D15DAB71D0050BF46 /* UISSRectValueConverter.m in Sources */,
+				FD26A00E15DAB71D0050BF46 /* UISSSearchBarIconValueConverter.m in Sources */,
+				FD26A00F15DAB71D0050BF46 /* UISSSegmentedControlSegmentValueConverter.m in Sources */,
+				FD26A01015DAB71D0050BF46 /* UISSSizeValueConverter.m in Sources */,
+				FD26A01115DAB71D0050BF46 /* UISSStatusView.m in Sources */,
+				FD26A01215DAB71D0050BF46 /* UISSStatusViewController.m in Sources */,
+				FD26A01315DAB71D0050BF46 /* UISSStatusWindow.m in Sources */,
+				FD26A01415DAB71D0050BF46 /* UISSStyle.m in Sources */,
+				FD26A01515DAB71D0050BF46 /* UISSTextAttributesValueConverter.m in Sources */,
+				FD26A01615DAB71D0050BF46 /* UISSToolbarPositionConverter.m in Sources */,
+				FD26A01715DAB71D0050BF46 /* UISSUIntegerValueConverter.m in Sources */,
+				FD26A01815DAB71D0050BF46 /* UISSUserInterfaceIdiomPreprocessor.m in Sources */,
+				FD26A01915DAB71D0050BF46 /* UISSVariablesPreprocessor.m in Sources */,
+				FD26A01A15DAB71D0050BF46 /* UIView+UISS.m in Sources */,
+				FDD9FDFD15DADC7F003E34EE /* AccordionView.m in Sources */,
+				FDD9FE0015DADF50003E34EE /* IPIAccordionViewController.m in Sources */,
+				FDD9FE0315DAE909003E34EE /* IPIAccordionPagesViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1902,6 +2200,9 @@
 					"\"$(SRCROOT)/Vendor/InsiderPagesKit\"/**",
 					"\"$(SRCROOT)/Vendor/TTTAttributedLabel \"$(SRCROOT)/Vendor/YIFullScreenScroll/**",
 					"$(SRCROOT)/Vendor/ViewDeck/ViewDeck",
+					"$(SRCROOT)/Vendor/UIExpandableTableView/**",
+					"$(SRCROOT)/Vendor/UISS/Project/UISS/**",
+					"$(SRCROOT)/Vendor/AccordionView",
 				);
 				INFOPLIST_FILE = "Resources/InsiderPages-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -1943,6 +2244,9 @@
 					"\"$(SRCROOT)/Vendor/InsiderPagesKit\"/**",
 					"\"$(SRCROOT)/Vendor/TTTAttributedLabel \"$(SRCROOT)/Vendor/YIFullScreenScroll/**",
 					"$(SRCROOT)/Vendor/ViewDeck/ViewDeck",
+					"$(SRCROOT)/Vendor/UIExpandableTableView/**",
+					"$(SRCROOT)/Vendor/UISS/Project/UISS/**",
+					"$(SRCROOT)/Vendor/AccordionView",
 				);
 				INFOPLIST_FILE = "Resources/InsiderPages-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;

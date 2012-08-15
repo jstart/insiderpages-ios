@@ -1,22 +1,12 @@
 //
-//  CDIListsViewController.m
-//  Cheddar for iOS
-//
-//  Created by Sam Soffes on 3/30/12.
-//  Copyright (c) 2012 Nothing Magical. All rights reserved.
+//  IPILeftPagesViewController.h
 //
 
 #import "IPILeftPagesViewController.h"
 #import "IPIPageTableViewCell.h"
-//#import "CDIListViewController.h"
-//#import "CDICreateListViewController.h"
-//#import "CDISettingsViewController.h"
-#import "IPISplitViewController.h"
+#import "IPIExpandingPageHeaderTableViewCell.h"
 #import "UIColor+CheddariOSAdditions.h"
-//#import "CDIUpgradeViewController.h"
 //#import "CDINoListsView.h"
-//#import "CDIAddListTableViewCell.h"
-#import "SSFilterableFetchedResultsController.h"
 #import <SSToolkit/UIScrollView+SSToolkitAdditions.h>
 
 #define CHEDDAR_USE_PASSWORD_FLOW 1
@@ -40,6 +30,15 @@
 
 }
 
+- (id)init {
+	if ((self = [super init])) {
+        self.tableView = [[UIExpandableTableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 480.0f) style:UITableViewStylePlain];
+        self.tableView.delegate = self;
+        self.tableView.dataSource = self;
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(openCreatePageView)];
+	}
+	return self;
+}
 
 #pragma mark - UIViewController
 
@@ -71,7 +70,7 @@
 	
 	[SSRateLimit executeBlock:^{
 		[self refresh:nil];
-	} name:@"refresh-lists" limit:30.0];
+	} name:@"refresh-mine-pages" limit:30.0];
 }
 
 
@@ -105,7 +104,7 @@
 
 
 - (NSPredicate *)predicate {
-	return [NSPredicate predicateWithFormat:@"name != %@", @""];
+	return [NSPredicate predicateWithFormat:@"name != %@ && section_header != %@", @"",@""];
 }
 
 -(NSArray *)sortDescriptors{
@@ -243,7 +242,12 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-
+    [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
+        IPKPage * page = ((IPKPage*)[self objectForViewIndexPath:indexPath]);
+        IPIPageViewController * pageVC = [[IPIPageViewController alloc] init];
+        pageVC.managedObject = page;
+        [((UINavigationController*)controller.centerController) pushViewController:pageVC animated:YES];
+    }];
 }
 
 
@@ -282,6 +286,32 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
 	[super controllerDidChangeContent:controller];
 	
+}
+
+
+#pragma mark - UIExpandableTableView
+- (BOOL)tableView:(UIExpandableTableView *)tableView canExpandSection:(NSInteger)section{
+    return YES;
+}
+
+- (BOOL)tableView:(UIExpandableTableView *)tableView needsToDownloadDataForExpandableSection:(NSInteger)section{
+    return NO;
+}
+
+- (UITableViewCell<UIExpandingTableViewCell> *)tableView:(UIExpandableTableView *)tableView expandingCellForSection:(NSInteger)section{
+    IPIExpandingPageHeaderTableViewCell *cell = (IPIExpandingPageHeaderTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"sectionIdentifier"];
+	if (!cell) {
+		cell = [[IPIExpandingPageHeaderTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"sectionIdentifier"];
+		cell.selectionStyle = UITableViewCellSelectionStyleNone;
+	}
+	
+	[cell.textLabel setText:((id <NSFetchedResultsSectionInfo>)[[self.fetchedResultsController sections] objectAtIndex:section]).name];
+	
+	return cell;
+}
+
+- (void)tableView:(UIExpandableTableView *)tableView downloadDataForExpandableSection:(NSInteger)section{
+    
 }
 
 @end
