@@ -1,0 +1,85 @@
+{
+    "Variables": {
+        "tabbarColor": "black"
+    },
+    "Phone": {
+        "UINavigationBar": {
+            "tintColor": "none"
+        }
+    },
+    "Pad": {
+        "UINavigationBar": {
+            "backgroundImage": ["background.png", "default"]
+        }
+    },
+
+    "UITabBar": {
+        "tintColor": "$tabbarColor",
+        "selectedImageTintColor": "gray",
+        "UITabBarItem": {
+            "titleTextAttributes": [[{"textColor": "white"}, "selected"],
+                                    [{"textColor": "lightGray"}, "normal"]]
+        },
+        "UILabel": {
+            "backgroundColor": "clear"
+        }
+    },
+    "UIToolbar": {
+        "tintColor": "blue",
+        "backgroundImage": ["background", "bottom", "default"]
+    },
+    "UISSCustomView": {
+        "debugBorderColor": "red",
+        "image": "first.png",
+        "backgroundColor": "gray",
+        "backgroundMargin": 20,
+        "UIImageView": {
+            "backgroundColor": [["lightGray", 0.2]]
+        }
+    },
+    "UILabel": {
+        "Phone": {
+            "textColor": "darkGray"
+        },
+        "Pad": {
+            "textColor": "orange",
+            "backgroundColor": "green"
+        }
+    },
+    "IPIPageTableViewCell": {
+        "backgroundColor": [["#8899ff", 0.5]]
+    },
+    "@Controllers": {
+        "IPILeftPagesViewController": {
+            "UILabel": {
+                "textColor": "red",
+                "backgroundColor": "black"
+            },
+            "IPIPageTableViewCell": {
+                "-debugBorderColor": "none",
+                "UILabel": {
+                    "backgroundColor": "white",
+                    "textColor": "blue"
+                }
+            }
+        },
+        "IPIActivityViewController": {
+
+            "IPIActivityPageTableViewHeader":{
+                "overlayColor":["black"],
+                "nameTextLabelFont":[16],
+                "nameTextLabelColor":"white",
+                "favoriteButtonNormalImage":"favorite_inactive.png",                
+                "favoriteButtonSelectedImage":"favorite_active.png"
+            },
+            "IPIActivityTableViewCell": {
+                "-appearanceBackgroundImage":"nav-background.png",
+                "-appearanceBackgroundColor":"red",
+                "textLabelColor":"black",
+                "textLabelFont":[14],
+                "detailTextLabelColor":"gray",
+                "detailTextLabelFont":["Georgia-Italic", 18]
+            }
+        }
+    }
+}
