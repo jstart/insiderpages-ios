@@ -223,6 +223,8 @@
 		FD26A01915DAB71D0050BF46 /* UISSVariablesPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FEF15DAB71D0050BF46 /* UISSVariablesPreprocessor.m */; };
 		FD26A01A15DAB71D0050BF46 /* UIView+UISS.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FF115DAB71D0050BF46 /* UIView+UISS.m */; };
 		FD26A01C15DAB8390050BF46 /* Stylesheets in Resources */ = {isa = PBXBuildFile; fileRef = FD26A01B15DAB8390050BF46 /* Stylesheets */; };
+		FD547A0415DC3CF000922D5A /* IPIProviderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD547A0315DC3CF000922D5A /* IPIProviderViewController.m */; };
+		FD547A0615DC400100922D5A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD547A0515DC400100922D5A /* MapKit.framework */; };
 		FD63AA1515D66F0400764EF2 /* favorite_active.png in Resources */ = {isa = PBXBuildFile; fileRef = FD63AA1315D66F0400764EF2 /* favorite_active.png */; };
 		FD63AA1615D66F0400764EF2 /* favorite_inactive.png in Resources */ = {isa = PBXBuildFile; fileRef = FD63AA1415D66F0400764EF2 /* favorite_inactive.png */; };
 		FD6F945E15D45AEA00FF686B /* NICommonMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F943415D45AEA00FF686B /* NICommonMetrics.m */; };
@@ -687,6 +689,9 @@
 		FD269FF015DAB71D0050BF46 /* UIView+UISS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+UISS.h"; path = "UISS/Project/UISS/UIView+UISS.h"; sourceTree = "<group>"; };
 		FD269FF115DAB71D0050BF46 /* UIView+UISS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+UISS.m"; path = "UISS/Project/UISS/UIView+UISS.m"; sourceTree = "<group>"; };
 		FD26A01B15DAB8390050BF46 /* Stylesheets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Stylesheets; sourceTree = "<group>"; };
+		FD547A0215DC3CF000922D5A /* IPIProviderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIProviderViewController.h; sourceTree = "<group>"; };
+		FD547A0315DC3CF000922D5A /* IPIProviderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIProviderViewController.m; sourceTree = "<group>"; };
+		FD547A0515DC400100922D5A /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		FD63AA1315D66F0400764EF2 /* favorite_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = favorite_active.png; sourceTree = "<group>"; };
 		FD63AA1415D66F0400764EF2 /* favorite_inactive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = favorite_inactive.png; sourceTree = "<group>"; };
 		FD6F943315D45AEA00FF686B /* NICommonMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NICommonMetrics.h; path = nimbus/src/core/src/NICommonMetrics.h; sourceTree = "<group>"; };
@@ -818,6 +823,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD547A0615DC400100922D5A /* MapKit.framework in Frameworks */,
 				B28FD2C015BF731100365CD6 /* CoreGraphics.framework in Frameworks */,
 				FDAEF9D115D1DB54009FAD52 /* libInsiderPagesKit.a in Frameworks */,
 				B2AD031915C4896E00D9B909 /* AudioToolbox.framework in Frameworks */,
@@ -1209,6 +1215,7 @@
 		B23FA74A151FE0710069A0D1 = {
 			isa = PBXGroup;
 			children = (
+				FD547A0515DC400100922D5A /* MapKit.framework */,
 				FDFAD30115D1E88B00ADFB73 /* InsiderPages.xcdatamodeld */,
 				B208BB9115BF63A80080705D /* Classes */,
 				B208BBD015BF63A80080705D /* Other Sources */,
@@ -1595,6 +1602,8 @@
 		FD7732B515D30EA000E857C8 /* Provider */ = {
 			isa = PBXGroup;
 			children = (
+				FD547A0215DC3CF000922D5A /* IPIProviderViewController.h */,
+				FD547A0315DC3CF000922D5A /* IPIProviderViewController.m */,
 			);
 			name = Provider;
 			sourceTree = "<group>";
@@ -2109,6 +2118,7 @@
 				FDD9FDFD15DADC7F003E34EE /* AccordionView.m in Sources */,
 				FDD9FE0015DADF50003E34EE /* IPIAccordionViewController.m in Sources */,
 				FDD9FE0315DAE909003E34EE /* IPIAccordionPagesViewController.m in Sources */,
+				FD547A0415DC3CF000922D5A /* IPIProviderViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

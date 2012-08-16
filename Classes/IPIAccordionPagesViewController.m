@@ -49,7 +49,10 @@
 #pragma mark - UIViewController
 
 -(UITableView*)tableView{
-    return [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 200) style:UITableViewStylePlain];
+    UITableView * tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 200) style:UITableViewStylePlain];
+    tableView.dataSource = self;
+    tableView.delegate = self;
+    return tableView;
 }
 
 - (void)viewDidLoad {
@@ -138,39 +141,48 @@
 	}
 	
 	self.loading = YES;
+    
     NSString * myUserId = [NSString stringWithFormat:@"%@", [IPKUser currentUser].id];
-	[[IPKHTTPClient sharedClient] getPagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
-		dispatch_async(dispatch_get_main_queue(), ^{
-			self.loading = NO;
-		});
-	} failure:^(AFJSONRequestOperation *operation, NSError *error) {
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[SSRateLimit resetLimitForName:@"refresh-mine-pages"];
-			self.loading = NO;
-		});
-	}];
-    
-    [[IPKHTTPClient sharedClient] getFavoritePagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
-		dispatch_async(dispatch_get_main_queue(), ^{
-			self.loading = NO;
-		});
-	} failure:^(AFJSONRequestOperation *operation, NSError *error) {
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[SSRateLimit resetLimitForName:@"refresh-mine-pages"];
-			self.loading = NO;
-		});
-	}];
-    
-    [[IPKHTTPClient sharedClient] getFollowingPagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
-		dispatch_async(dispatch_get_main_queue(), ^{
-			self.loading = NO;
-		});
-	} failure:^(AFJSONRequestOperation *operation, NSError *error) {
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[SSRateLimit resetLimitForName:@"refresh-mine-pages"];
-			self.loading = NO;
-		});
-	}];
+
+    if ([self.section_header isEqualToString:@"Mine"]) {
+        [[IPKHTTPClient sharedClient] getPagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.loading = NO;
+                [self.tableView reloadData];
+            });
+        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SSRateLimit resetLimitForName:@"refresh-mine-pages"];
+                self.loading = NO;
+            });
+        }];
+    }
+    else if ([self.section_header isEqualToString:@"Following"]){
+        [[IPKHTTPClient sharedClient] getFavoritePagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.loading = NO;
+                [self.tableView reloadData];
+            });
+        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SSRateLimit resetLimitForName:@"refresh-mine-pages"];
+                self.loading = NO;
+            });
+        }];
+    }
+    else if ([self.section_header isEqualToString:@"Favorite"]){
+        [[IPKHTTPClient sharedClient] getFollowingPagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.loading = NO;
+                [self.tableView reloadData];
+            });
+        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SSRateLimit resetLimitForName:@"refresh-mine-pages"];
+                self.loading = NO;
+            });
+        }];
+    }
 }
 
 #pragma mark - Private
@@ -206,12 +218,11 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (self.delegate) {
         IPKPage * page = ((IPKPage*)[self objectForViewIndexPath:indexPath]);
-        IPIPageViewController * pageVC = [[IPIPageViewController alloc] init];
-        pageVC.managedObject = page;
-        [((UINavigationController*)controller.centerController) pushViewController:pageVC animated:YES];
-    }];
+        [self.delegate didChoosePage:page];
+    }
 }
 
 #pragma mark - UIScrollViewDelegate

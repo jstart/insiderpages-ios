@@ -6,7 +6,15 @@
 #import "UIExpandableTableView.h"
 #import "IIViewDeckController.h"
 
+@protocol IPIAccordionPagesViewControllerDelegate <NSObject>
+
+-(void)didChoosePage:(IPKPage*)page;
+
+@end
+
 @interface IPIAccordionPagesViewController : CDIManagedTableViewController
+
+@property id <IPIAccordionPagesViewControllerDelegate> delegate;
 
 -(id)initWithSectionHeader:(NSString*)section_header;
 

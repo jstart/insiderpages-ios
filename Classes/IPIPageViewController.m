@@ -9,6 +9,7 @@
 #import "IPIPageViewController.h"
 #import "TTTAttributedLabel.h"
 #import "IPIProviderTableViewCell.h"
+#import "IPIProviderViewController.h"
 //#import "CDIAddTaskView.h"
 //#import "CDIAddTaskAnimationView.h"
 //#import "CDIAttributedLabel.h"
@@ -26,9 +27,7 @@
 - (void)_archiveCompletedTasks:(id)sender;
 @end
 
-@implementation IPIPageViewController {
-	dispatch_semaphore_t _createTaskSemaphore;
-}
+@implementation IPIPageViewController
 
 - (void)setManagedObject:(SSManagedObject *)managedObject {
 	IPKPage *page = (IPKPage *)self.managedObject;
@@ -74,8 +73,6 @@
 
 - (id)init {
 	if ((self = [super init])) {
-		_createTaskSemaphore = dispatch_semaphore_create(0);
-		dispatch_semaphore_signal(_createTaskSemaphore);
 		self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Tasks" style:UIBarButtonItemStyleBordered target:nil action:nil];
 	}
 	return self;
@@ -85,9 +82,6 @@
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	self.managedObject = nil;
-	
-	dispatch_semaphore_wait(_createTaskSemaphore, DISPATCH_TIME_FOREVER);
-	dispatch_release(_createTaskSemaphore);
 }
 
 
@@ -278,6 +272,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 //	CDKTask *task = [self objectForViewIndexPath:indexPath];
 //	[task toggleCompleted];
+    IPKProvider * provider = [self objectForViewIndexPath:indexPath];
+    IPIProviderViewController * providerViewController = [[IPIProviderViewController alloc] initWithStyle:UITableViewStylePlain];
+    [providerViewController setProvider:provider];
+    [self.navigationController pushViewController:providerViewController animated:YES];
 }
 
 

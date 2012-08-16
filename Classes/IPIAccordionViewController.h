@@ -10,8 +10,9 @@
 #import "IIViewDeckController.h"
 #import "AccordionView.h"
 #import "IPIAccordionPagesViewController.h"
+#import "IIViewDeckController.h"
 
-@interface IPIAccordionViewController : UIViewController <AccordionViewDelegate, UISearchBarDelegate>
+@interface IPIAccordionViewController : UIViewController <AccordionViewDelegate, IPIAccordionPagesViewControllerDelegate, IIViewDeckControllerDelegate, UISearchBarDelegate>
 
 @property (nonatomic, retain) AccordionView * accordionView;
 @property (nonatomic, retain) IPIAccordionPagesViewController * page1;

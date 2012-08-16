@@ -6,8 +6,9 @@
 //  Copyright (c) 2012 InisderPages. All rights reserved.
 //
 
-#import "IPIAccordionViewController.h"
 #import "IPIExpandingPageHeaderTableViewCell.h"
+#import "IPIPageViewController.h"
+#import "IPIAccordionViewController.h"
 
 @interface IPIAccordionViewController ()
 
@@ -24,8 +25,11 @@
         // Custom initialization
         self.accordionView = [[AccordionView alloc] initWithFrame:CGRectMake(0, 44, 320, 416)];
         self.page1 = [[IPIAccordionPagesViewController alloc] initWithSectionHeader:@"Mine"];
+        self.page1.delegate = self;
         self.page2 = [[IPIAccordionPagesViewController alloc] initWithSectionHeader:@"Following"];
+        self.page3.delegate = self;
         self.page3 = [[IPIAccordionPagesViewController alloc] initWithSectionHeader:@"Favorite"];
+        self.page3.delegate = self;
         
         self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 280, 44)];
         self.searchBar.delegate = self;
@@ -41,9 +45,9 @@
         [header3 setTitle:@"Favorite" forState:UIControlStateNormal];
 //        IPIExpandingPageHeaderTableViewCell * pageHeader3 = [[IPIExpandingPageHeaderTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"sectionIdentifier"];
         
-        [self.accordionView addHeader:header1 withView:self.page1.view];
-        [self.accordionView addHeader:header2 withView:self.page2.view];
-        [self.accordionView addHeader:header3 withView:self.page3.view];
+        [self.accordionView addHeader:header1 withView:self.page1.tableView];
+        [self.accordionView addHeader:header2 withView:self.page2.tableView];
+        [self.accordionView addHeader:header3 withView:self.page3.tableView];
         [self.accordionView setDelegate:self];
         [self.accordionView setSelectedIndex:0];
         [[self view] addSubview:self.accordionView];
@@ -53,11 +57,19 @@
     return self;
 }
 
+-(void)didChoosePage:(IPKPage*)page{
+    [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
+        IPIPageViewController * pageVC = [[IPIPageViewController alloc] init];
+        pageVC.managedObject = page;
+        [((UINavigationController*)controller.centerController) pushViewController:pageVC animated:YES];
+    }];
+}
+
 - (void)accordion:(AccordionView *)accordion didChangeSelection:(NSIndexSet *)selection{
     switch ([accordion selectedIndex]) {
         case 0:
+            [self.page1.fetchedResultsController performFetch:nil];
             [self.page1 refresh:nil];
-            self.page1.fetchedResultsController = nil;
             break;
         case 1:
             [self.page2 refresh:nil];
@@ -85,6 +97,10 @@
 	// Do any additional setup after loading the view.
 }
 
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -96,7 +112,14 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma mark - UISearchBarDelegate 
+#pragma mark - IIViewDeckControllerDelegate 
+
+- (BOOL)viewDeckControllerWillCloseLeftView:(IIViewDeckController*)viewDeckController animated:(BOOL)animated{
+    [self.searchBar resignFirstResponder];
+    return YES;
+}
+
+#pragma mark - UISearchBarDelegate
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{return YES;}                      // return NO to not become first responder
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{}                     // called when text starts editing

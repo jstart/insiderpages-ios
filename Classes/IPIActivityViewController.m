@@ -204,7 +204,7 @@
 	
 	self.loading = YES;
 
-	[[IPKHTTPClient sharedClient] getActivititesOfType:IPKTrackableTypeAll includeFollowing:YES currentPage:@1 perPage:@100 success:^(AFJSONRequestOperation *operation, id responseObject) {
+	[[IPKHTTPClient sharedClient] getActivititesOfType:IPKTrackableTypeAll includeFollowing:YES currentPage:@1 perPage:@20 success:^(AFJSONRequestOperation *operation, id responseObject) {
         self.fetchedResultsController = nil;
 		dispatch_async(dispatch_get_main_queue(), ^{
 			self.loading = NO;
