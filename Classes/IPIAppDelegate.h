@@ -5,11 +5,14 @@
 //  Created by Christopher Truman on 8/7/12.
 //
 #import <FacebookSDK/FacebookSDK.h>
+#import "RCLocationManager.h"
 
-@interface IPIAppDelegate : UIResponder <UIApplicationDelegate>
+@interface IPIAppDelegate : UIResponder <UIApplicationDelegate, RCLocationManagerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) FBSession *session;
+@property (strong, nonatomic) RCLocationManager * locationManager;
+@property (strong, nonatomic) CLGeocoder * geocoder;
 
 - (void)applyStylesheet;
 + (IPIAppDelegate *)sharedAppDelegate;
@@ -17,5 +20,6 @@
 
 -(void)login;
 -(void)registerOrLogin;
+-(void)requestLocation;
 
 @end

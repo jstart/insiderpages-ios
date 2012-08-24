@@ -9,11 +9,13 @@
 #import "IPIAppDelegate.h"
 #import "IPISplitViewController.h"
 #import "IPIActivityViewController.h"
-//#import "IPILeftPagesViewController.h"
+#import "IPILeftPagesViewController.h"
 #import "IPIAccordionViewController.h"
 #import "CDISignUpViewController.h"
 #import "IIViewDeckController.h"
 #import "CDIDefines.h"
+
+#import "UIResponder+KeyboardCache.h"
 #import "UIFont+CheddariOSAdditions.h"
 #import "LocalyticsUtilities.h"
 #import "UISS.h"
@@ -53,6 +55,9 @@
 	#endif
 #endif
 	
+    [MagicalRecord setDefaultModelFromClass:[self class]];
+    [MagicalRecord setupCoreDataStack];
+
 	// Optionally enable development mode
 	// If you don't work at Nothing Magical, you shouldn't turn this on.
 #ifdef INSIDER_PAGES_API_DEVELOPMENT_MODE
@@ -66,7 +71,7 @@
 #endif
     
     [self reloadCookies];
-    
+
 	// Initialize the window
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	self.window.backgroundColor = [UIColor blackColor];
@@ -77,11 +82,11 @@
 
     IPIActivityViewController *viewController = [[IPIActivityViewController alloc] initWithStyle:UITableViewStyleGrouped];
     UINavigationController *activityNavigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-//    IPILeftPagesViewController * leftPagesViewController = [[IPILeftPagesViewController alloc] init];
+    IPILeftPagesViewController * leftPagesViewController = [[IPILeftPagesViewController alloc] init];
     IPIAccordionViewController * accordionViewController = [[IPIAccordionViewController alloc] init];
-    UINavigationController *leftPagesNavigationController = [[UINavigationController alloc] initWithRootViewController:accordionViewController];
+//    UINavigationController *leftPagesNavigationController = [[UINavigationController alloc] initWithRootViewController:accordionViewController];
 
-    IIViewDeckController * viewDeckController = [[IIViewDeckController alloc] initWithCenterViewController:activityNavigationController leftViewController:accordionViewController];
+    IIViewDeckController * viewDeckController = [[IIViewDeckController alloc] initWithCenterViewController:activityNavigationController leftViewController:leftPagesViewController];
     [viewDeckController setPanningMode:IIViewDeckPanningViewPanning];
     self.window.rootViewController = viewDeckController;
 	[self.window makeKeyAndVisible];
@@ -106,6 +111,8 @@
     [TestFlight takeOff:@"30d92a896df4ab4b4873886ea58f8b06_NzE0NzIyMDEyLTAzLTE0IDEzOjQ0OjU4Ljk3MDAxOQ"];
 #endif
     
+    [UIResponder cacheKeyboard:YES];
+    [self requestLocation];
 	return YES;
 }
 
@@ -119,8 +126,12 @@
     FBRequest *request = [FBRequest requestForMe];
     [request setSession:self.session];
     [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error){
-        dispatch_async(dispatch_get_main_queue(), ^{
-        });
+        if (error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self registerOrLogin];
+            });
+            return;
+        }
         [[NSUserDefaults standardUserDefaults] setObject:[result objectForKey:@"id"] forKey:@"FBUserId"];
         [[IPKHTTPClient sharedClient] signInWithFacebookUserID:[result objectForKey:@"id"] accessToken:self.session.accessToken facebookMeResponse:result success:^(AFJSONRequestOperation *operation, id responseObject) {
             if ([[responseObject objectForKey:@"message"] isEqualToString:@"logged in"]) {
@@ -128,15 +139,18 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [hud completeAndDismissWithTitle:@"Successfully Logged In"];
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"Logged In" object:nil];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"IPCurrentUserChangedNotification" object:nil];
                 });
             }else{
                 [self storeCookies];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [hud completeAndDismissWithTitle:@"Successfully Registered"];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"IPCurrentUserChangedNotification" object:nil];
                 });
             }
         } failure:^(AFJSONRequestOperation *operation, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
+                [self registerOrLogin];
             });
         }];
     }];
@@ -145,20 +159,20 @@
 -(void)storeCookies{
     NSHTTPCookie *cookie = [[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies] objectAtIndex:0];
     NSMutableDictionary* cookieDictionary = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"SavedCookies"]];
-    [cookieDictionary setValue:cookie.properties forKey:@"http://local.insiderpages.com"];
+    [cookieDictionary setValue:cookie.properties forKey:@"http://qa.insiderpages.com"];
     [[NSUserDefaults standardUserDefaults] setObject:cookieDictionary forKey:@"SavedCookies"];
 }
 
 -(void)reloadCookies{
     NSDictionary* cookieDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"SavedCookies"];
-    NSDictionary* cookieProperties = [cookieDictionary valueForKey:@"http://local.insiderpages.com"];
+    NSDictionary* cookieProperties = [cookieDictionary valueForKey:@"http://qa.insiderpages.com"];
         if (cookieProperties != nil) {
             NSMutableDictionary* mutableCookieProperties = [cookieProperties mutableCopy];
-            [mutableCookieProperties setObject:@"local.insiderpages.com" forKey:@"Domain"];
+            [mutableCookieProperties setObject:@"qa.insiderpages.com" forKey:@"Domain"];
 
             NSHTTPCookie* cookie = [NSHTTPCookie cookieWithProperties:mutableCookieProperties];
             NSArray* cookieArray = [NSArray arrayWithObject:cookie];
-            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookies:cookieArray forURL:[NSURL URLWithString:@"http://local.insiderpages.com"] mainDocumentURL:nil];
+            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookies:cookieArray forURL:[NSURL URLWithString:@"http://qa.insiderpages.com"] mainDocumentURL:nil];
     }
 }
 
@@ -200,7 +214,7 @@
 {
     switch (state) {
         case FBSessionStateOpen: {
-            if (![IPKUser currentUser]) {
+            if (![IPKUser userHasLoggedIn]) {
                 [self registerOrLogin];
             }else{
                 UIViewController *viewController = [[IPIActivityViewController alloc] initWithStyle:UITableViewStyleGrouped];
@@ -211,8 +225,7 @@
             break;
         case FBSessionStateClosed:
         case FBSessionStateClosedLoginFailed:
-            // Once the user has logged in, we want them to 
-            // be looking at the root view.
+
             [self openSessionCheckCache:NO];
             [FBSession.activeSession closeAndClearTokenInformation];
             break;
@@ -273,24 +286,29 @@
 
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-	[[SSManagedObject mainContext] save:nil];
 	#if ANALYTICS_ENABLED
     [[LocalyticsSession sharedLocalyticsSession] close];
 	#endif
     // if the app is going away, we close the session object
+    [self.session close];
+    [MagicalRecord cleanUp];
 }
 
 
 -(void)applyStylesheet {
     self.uiss = [[UISS alloc] init];
-    self.uiss.style.url = [NSURL URLWithString:@"file://localhost/Users/trumanc/Desktop/insiderpages-ios/Resources/Stylesheets/style.json"];
-    self.uiss.statusWindowEnabled = YES;
+    
     [self.uiss registerReloadGestureRecognizerInView:self.window];
-  
-    [self.uiss load];
+    
 #if TARGET_IPHONE_SIMULATOR
-    [self.uiss enableAutoReloadWithTimeInterval:3];
+    self.uiss.statusWindowEnabled = YES;
+
+//    self.uiss.style.url = [NSURL URLWithString:@"file://localhost/Users/trumanc/Desktop/insiderpages-ios/Resources/Stylesheets/style.json"];
+//    [self.uiss load];
+//    [self.uiss enableAutoReloadWithTimeInterval:3];
 #endif
+    [UISS configureWithDefaultJSONFile];
+
     
 	// Navigation bar
 	UINavigationBar *navigationBar = [UINavigationBar appearance];
@@ -343,6 +361,50 @@
 	// Toolbar mini
 //	[toolbar setBackgroundImage:[UIImage imageNamed:@"navigation-background-mini.png"] forToolbarPosition:UIToolbarPositionTop barMetrics:UIBarMetricsLandscapePhone];
 //	[toolbar setBackgroundImage:[UIImage imageNamed:@"toolbar-background-mini.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsLandscapePhone];
+}
+
+-(void)requestLocation{
+    if (!self.locationManager) {
+        self.locationManager = [[RCLocationManager alloc] initWithUserDistanceFilter:kCLLocationAccuracyHundredMeters userDesiredAccuracy:kCLLocationAccuracyBest purpose:@"InsiderPages would like to show you nearby businesses and activities." delegate:self];
+        [self.locationManager startUpdatingLocation];
+    }
+    if (!self.geocoder) {
+        self.geocoder = [[CLGeocoder alloc] init];
+    }
+}
+
+#pragma mark - RCLocationManagerDelegate
+
+- (void)locationManager:(RCLocationManager *)manager didFailWithError:(NSError *)error{
+    
+}
+
+- (void)locationManager:(RCLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
+    #warning post notification to update location views
+    [self.geocoder reverseGeocodeLocation:self.locationManager.location completionHandler:
+     
+     ^(NSArray *placemarks, NSError *error) {
+         //Get nearby address
+         CLPlacemark *placemark = [placemarks objectAtIndex:0];
+
+         //String to hold address
+         NSString *locatedAt = [[placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@", "];
+
+         //Print the location to console
+         NSLog(@"I am currently at %@",locatedAt);
+     }];
+}
+
+- (void)locationManager:(RCLocationManager *)manager didEnterRegion:(CLRegion *)region{
+    
+}
+
+- (void)locationManager:(RCLocationManager *)manager didExitRegion:(CLRegion *)region{
+    
+}
+
+- (void)locationManager:(RCLocationManager *)manager monitoringDidFailForRegion:(CLRegion *)region withError:(NSError *)error{
+    
 }
 
 @end

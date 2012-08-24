@@ -11,6 +11,7 @@
 #import "IPIPageViewController.h"
 #import "IPIActivityTableViewCell.h"
 #import "IPIActivityPageTableViewFooter.h"
+#import "IPITabBar.h"
 #import "CDINoListsView.h"
 #import "UIColor+CheddariOSAdditions.h"
 #import <SSToolkit/UIScrollView+SSToolkitAdditions.h>
@@ -41,7 +42,6 @@
 
 }
 
-
 #pragma mark - UIViewController
 
 - (void)viewDidLoad {
@@ -56,12 +56,8 @@
     
     _adding = NO;
     
-    UITabBar * tabBar = [[UITabBar alloc] initWithFrame:CGRectMake(0, 410, 320, 50)];
-    UITabBarItem * item1 = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemBookmarks tag:0];
-    UITabBarItem * item2 = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemFavorites tag:0];
-    UITabBarItem * item3 = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemContacts tag:0];
-
-    [tabBar setItems:@[item1, item2, item3]];
+    IPITabBar * tabBar = [[IPITabBar alloc] initWithFrame:CGRectMake(0, 410, 320, 50)];
+    [tabBar setDelegate:self];
     [[self view] addSubview:tabBar];
 //	self.noContentView = [[CDINoListsView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundView.backgroundColor = [UIColor grayColor];
@@ -73,6 +69,7 @@
     
 	_fullScreenDelegate = [[YIFullScreenScroll alloc] initWithViewController:self];
     _fullScreenDelegate.shouldShowUIBarsOnScrollUp = YES;
+    [SSRateLimit executeBlock:[self refresh] name:@"refresh-activity" limit:0];
 }
 
 
@@ -81,6 +78,7 @@
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
 		[self _checkUser];
 	}
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
     [_fullScreenDelegate layoutTabBarController];
 }
 
@@ -90,9 +88,6 @@
 		[self _checkUser];
 	}
 	
-	[SSRateLimit executeBlock:^{
-		[self refresh:nil];
-	} name:@"refresh-activity" limit:30.0];
 }
 
 
@@ -111,22 +106,21 @@
 	return [IPKActivity class];
 }
 
-
 - (NSPredicate *)predicate {
-	return [NSPredicate predicateWithFormat:@"user_id = %@", [IPKUser currentUser].id];
+	return [NSPredicate predicateWithFormat:@"page.name != %@ && page.name != nil", @""];
 }
 
--(NSArray *)sortDescriptors{
-    return [NSArray arrayWithObjects:
-            [NSSortDescriptor sortDescriptorWithKey:@"page.name" ascending:NO],
-            [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO],
-            [NSSortDescriptor sortDescriptorWithKey:@"remoteID" ascending:NO],
-            nil];
+-(NSString *)sortDescriptors{
+    return @"page.name,createdAt,remoteID";
 }
 
 - (NSString *)sectionNameKeyPath {
 	return @"page.name";
 }
+
+//+ (Class)fetchedResultsControllerClass {
+//	return [SSFilterableFetchedResultsController class];
+//}
 
 #pragma mark - SSManagedTableViewController
 
@@ -197,25 +191,58 @@
 
 #pragma mark - Actions
 
-- (void)refresh:(id)sender {
-	if (self.loading || ![IPKUser currentUser]) {
-		return;
-	}
-	
-	self.loading = YES;
+- (void(^)(void))refresh {
 
-	[[IPKHTTPClient sharedClient] getActivititesOfType:IPKTrackableTypeAll includeFollowing:YES currentPage:@1 perPage:@20 success:^(AFJSONRequestOperation *operation, id responseObject) {
-        self.fetchedResultsController = nil;
-		dispatch_async(dispatch_get_main_queue(), ^{
-			self.loading = NO;
-            [[self tableView] reloadData];
-		});
-	} failure:^(AFJSONRequestOperation *operation, NSError *error) {
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[SSRateLimit resetLimitForName:@"refresh-activity"];
-			self.loading = NO;
-		});
-	}];
+    return ^(void){
+        if (self.loading || ![IPKUser currentUser]) {
+            self.loading = NO;
+            [SSRateLimit resetLimitForName:@"refresh-activity"];
+            return;
+        }
+        
+        [IPKActivity deleteAllLocal];
+        
+        self.loading = YES;
+        self.currentPage = @(1);
+        [[IPKHTTPClient sharedClient] getActivititesOfType:IPKTrackableTypeAll includeFollowing:YES currentPage:@1 perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.fetchedResultsController = nil;
+                self.loading = NO;
+                
+                [[self tableView] reloadData];
+            });
+        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SSRateLimit resetLimitForName:@"refresh-activity"];
+                self.loading = NO;
+            });
+        }];
+    };
+}
+
+- (void(^)(void))nextPage {
+    return ^(void){
+        if (self.loading || ![IPKUser currentUser]) {
+            self.loading = NO;
+            return;
+        }
+        
+        self.loading = YES;
+        self.currentPage = @([self.currentPage intValue]+1);
+        [[IPKHTTPClient sharedClient] getActivititesOfType:IPKTrackableTypeAll includeFollowing:YES currentPage:self.currentPage perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
+            self.fetchedResultsController = nil;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.loading = NO;
+                
+                [[self tableView] reloadData];
+            });
+        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SSRateLimit resetLimitForName:@"refresh-activity"];
+                self.loading = NO;
+            });
+        }];
+    };
 }
 
 #pragma mark - Private
@@ -233,11 +260,12 @@
 
 
 - (void)_currentUserDidChange:(NSNotification *)notification {
+    [SSRateLimit executeBlock:[self refresh] name:@"refresh-activity" limit:0];
 	[self.tableView reloadData];
 }
 
 - (void)_checkUser {
-	if (![IPKUser currentUser]) {
+	if (![IPKUser userHasLoggedIn]) {
 #ifdef CHEDDAR_USE_PASSWORD_FLOW
 		UIViewController *viewController = [[CDISignUpViewController alloc] init];
 #else
@@ -255,7 +283,6 @@
 	}
 }
 
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -267,7 +294,6 @@
 	
 	return rows;
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	static NSString *const cellIdentifier = @"cellIdentifier";
@@ -371,6 +397,22 @@
     [footerView setPage:page];
     
     return footerView;
+}
+
+#pragma mark - UITabBarDelegate
+
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{
+//    SSFilterableFetchedResultsController *controller = (SSFilterableFetchedResultsController *)self.fetchedResultsController;
+//    
+//	NSString *filterName = @"section_header";
+//    [controller removeCurrentFilter];
+//    [NSFetchedResultsController deleteCacheWithName:@"activity"];
+//
+//	[controller addFilterPredicate:^BOOL(id obj) {
+//		return arc4random()%2;
+//	} forKey:filterName];
+//	[controller setActiveFilterByKey:filterName];
+//    [self.tableView reloadData];
 }
 
 #pragma mark - UIScrollViewDelegate

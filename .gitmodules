@@ -40,3 +40,12 @@
 [submodule "Vendor/UISS"]
 	path = Vendor/UISS
 	url = git@github.com:jstart/UISS.git
+[submodule "Vendor/UIResponder-KeyboardCache"]
+	path = Vendor/UIResponder-KeyboardCache
+	url = git://github.com/mbrandonw/UIResponder-KeyboardCache.git
+[submodule "Vendor/RCLocationManager"]
+	path = Vendor/RCLocationManager
+	url = git://github.com/rcabamo/RCLocationManager.git
+[submodule "Vendor/SVPullToRefresh"]
+	path = Vendor/SVPullToRefresh
+	url = git://github.com/samvermette/SVPullToRefresh.git

@@ -10,6 +10,8 @@
 #import "TTTAttributedLabel.h"
 #import "IPIProviderTableViewCell.h"
 #import "IPIProviderViewController.h"
+#import "IPIPageTableViewHeader.h"
+#import "IPISocialShareHelper.h"
 //#import "CDIAddTaskView.h"
 //#import "CDIAddTaskAnimationView.h"
 //#import "CDIAttributedLabel.h"
@@ -20,7 +22,7 @@
 #import "UIColor+CheddariOSAdditions.h"
 #import "UIFont+CheddariOSAdditions.h"
 
-@interface IPIPageViewController () <TTTAttributedLabelDelegate, UITextFieldDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
+@interface IPIPageViewController () <IPIPageTableViewHeaderDelegate, TTTAttributedLabelDelegate, UITextFieldDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
 - (void)_renameList:(id)sender;
 - (void)_archiveTasks:(id)sender;
 - (void)_archiveAllTasks:(id)sender;
@@ -29,12 +31,15 @@
 
 @implementation IPIPageViewController
 
-- (void)setManagedObject:(SSManagedObject *)managedObject {
+- (void)setManagedObject:(IPKRemoteManagedObject *)managedObject {
 	IPKPage *page = (IPKPage *)self.managedObject;
 
 	void *context = (__bridge void *)self;
 	if (page) {
 		[page removeObserver:self forKeyPath:@"name" context:context];
+        [page removeObserver:self forKeyPath:@"owner" context:context];
+        [page removeObserver:self forKeyPath:@"is_favorite" context:context];
+        [page removeObserver:self forKeyPath:@"is_following" context:context];
 	}
 	
 	[super setManagedObject:managedObject];
@@ -48,22 +53,29 @@
 	}
 	
 	[page addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionNew context:context];
-
-	self.ignoreChange = YES;
+    [page addObserver:self forKeyPath:@"owner" options:NSKeyValueObservingOptionNew context:context];
+    [page addObserver:self forKeyPath:@"is_favorite" options:NSKeyValueObservingOptionNew context:context];
+    [page addObserver:self forKeyPath:@"is_following" options:NSKeyValueObservingOptionNew context:context];
+    
+//	self.ignoreChange = YES;
 	
 	self.fetchedResultsController.fetchRequest.predicate = self.predicate;
-	[self.fetchedResultsController performFetch:nil];
 	[self.tableView reloadData];
 	self.ignoreChange = NO;
 	
-	[self setEditing:NO animated:NO];
-	[self setLoading:NO animated:NO];
-	
-	[SSRateLimit executeBlock:^{
-		[self refresh:nil];
-	} name:[NSString stringWithFormat:@"refresh-list-%@", self.page.remoteID] limit:30.0];
+	[SSRateLimit executeBlock:[self refresh]
+	 name:[NSString stringWithFormat:@"refresh-list-%@", self.page.remoteID] limit:30.0];
 }
 
+//-(UITableView*)tableView{
+//    UITableView * tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
+//    [tableView setContentInset:UIEdgeInsetsMake(44.0f, 0.0f, 0.0f, 0.0f)];
+//    
+//    [tableView setContentOffset:CGPointMake(0.0f, 180.0f)];
+//    tableView.dataSource = self;
+//    tableView.delegate = self;
+//    return tableView;
+//}
 
 - (IPKPage *)page {
 	return (IPKPage *)self.managedObject;
@@ -73,7 +85,7 @@
 
 - (id)init {
 	if ((self = [super init])) {
-		self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Tasks" style:UIBarButtonItemStyleBordered target:nil action:nil];
+//		self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Tasks" style:UIBarButtonItemStyleBordered target:nil action:nil];
 	}
 	return self;
 }
@@ -90,33 +102,34 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
-	[self setEditing:NO animated:NO];
 	self.view.backgroundColor = [UIColor cheddarArchesColor];
 	self.tableView.hidden = self.page == nil;
+    [self.tableView setAllowsSelectionDuringEditing:YES];
 //	self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake([CDIAddTaskView height], 0.0f, 0.0f, 0.0f);
 	self.pullToRefreshView.bottomBorderColor = [UIColor colorWithWhite:0.8f alpha:1.0f];
-
+    [self.tableView setFrame:CGRectMake(0, 180, 320, 480-180)];
 //	self.noContentView = [[CDINoTasksView alloc] initWithFrame:CGRectZero];
+    self.headerView = [[IPIPageTableViewHeader alloc] initWithFrame:CGRectMake(0, 0, 320, 180)];
+    [self.headerView setDelegate:self];
+    [self.view addSubview:self.headerView];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+
+    [self setEditing:YES animated:YES];
+    [self.headerView setPage:self.page];
+}
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
 	
-	[SSRateLimit executeBlock:^{
-		[self refresh:nil];
-	} name:[NSString stringWithFormat:@"refresh-list-%@", self.page.remoteID] limit:30.0];
+	[SSRateLimit executeBlock:[self refresh] name:[NSString stringWithFormat:@"refresh-list-%@", self.page.remoteID] limit:30.0];
 }
 
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
 	[super setEditing:editing animated:animated];
-	
-	if (!self.navigationItem.rightBarButtonItem) {
-		self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStyleBordered target:self action:@selector(toggleEditMode:)];
-	}
-	self.navigationItem.rightBarButtonItem.title = editing ? @"Done" : @"Edit";
-//	[self.addTaskView setEditing:editing animated:animated];
 }
 
 
@@ -177,23 +190,42 @@
 
 #pragma mark - Actions
 
-- (void)refresh:(id)sender {
-	if (self.page == nil || self.loading) {
-		return;
-	}
-	
-	self.loading = YES;
-    NSString * pageIDString = [NSString stringWithFormat:@"%@", self.page.id];
-	[[IPKHTTPClient sharedClient] getProvidersForPageWithId:pageIDString success:^(AFJSONRequestOperation *operation, id responseObject) {
-		dispatch_async(dispatch_get_main_queue(), ^{
-			self.loading = NO;
-		});
-	} failure:^(AFJSONRequestOperation *operation, NSError *error) {
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[SSRateLimit resetLimitForName:[NSString stringWithFormat:@"refresh-list-%@", self.page.remoteID]];
-			self.loading = NO;
-		});
-	}];
+- (void (^)(void))refresh {
+    return ^(void){
+        if (self.page == nil || self.loading) {
+            return;
+        }
+        
+        if ([self.page.owner.id isEqualToNumber:@(0)]) {
+            self.loading = YES;
+
+            [self.page.owner updateWithSuccess:^(void){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.loading = NO;
+                    [self.headerView setPage:self.page];
+                });
+            } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [SSRateLimit resetLimitForName:[NSString stringWithFormat:@"refresh-list-%@", self.page.remoteID]];
+                    self.loading = NO;
+                });
+            }];
+        }
+        
+        self.loading = YES;
+
+        NSString * pageIDString = [NSString stringWithFormat:@"%@", self.page.id];
+        [[IPKHTTPClient sharedClient] getProvidersForPageWithId:pageIDString success:^(AFJSONRequestOperation *operation, id responseObject) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.loading = NO;
+            });
+        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SSRateLimit resetLimitForName:[NSString stringWithFormat:@"refresh-list-%@", self.page.remoteID]];
+                self.loading = NO;
+            });
+        }];
+    };
 }
 
 
@@ -253,14 +285,13 @@
 	IPIProviderTableViewCell *cell = (IPIProviderTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 	if (!cell) {
 		cell = [[IPIProviderTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.editing = NO;
 	}
 	
 	[self configureCell:cell atIndexPath:indexPath];
 	
 	return cell;
 }
-
 
 //- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 //	return self.addTaskView;
@@ -270,31 +301,35 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//	CDKTask *task = [self objectForViewIndexPath:indexPath];
-//	[task toggleCompleted];
     IPKProvider * provider = [self objectForViewIndexPath:indexPath];
-    IPIProviderViewController * providerViewController = [[IPIProviderViewController alloc] initWithStyle:UITableViewStylePlain];
+    IPIProviderViewController * providerViewController = [[IPIProviderViewController alloc] init];
     [providerViewController setProvider:provider];
     [self.navigationController pushViewController:providerViewController animated:YES];
 }
-
-
-- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return @"Archive";
-}
-
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
 	if (editingStyle != UITableViewCellEditingStyleDelete) {
 		return;
 	}
-	
-//	CDKTask *task = [self objectForViewIndexPath:indexPath];
-//	task.archivedAt = [NSDate date];
-//	[task save];
-//	[task update];
+}
+// Individual rows can opt out of having the -editing property set for them. If not implemented, all rows are assumed to be editable.
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    return YES;
 }
 
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath;{
+    return NO;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return UITableViewCellEditingStyleNone;
+}
+// Moving/reordering
+
+// Allows the reorder accessory view to optionally be shown for a particular row. By default, the reorder control will be shown only if the datasource implements -tableView:moveRowAtIndexPath:toIndexPath:
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath{
+    return YES;
+}
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
 	if (sourceIndexPath.row == destinationIndexPath.row) {
@@ -500,6 +535,75 @@
 			[self.navigationController popToRootViewControllerAnimated:YES];
 		}
 	}
+    if ([keyPath isEqualToString:@"owner"] || [keyPath isEqualToString:@"is_favorite"] || [keyPath isEqualToString:@"is_following"]) {
+        [self.headerView setPage:object];
+    }
+}
+
+#pragma mark - IPIPageTableViewHeaderDelegate
+
+-(void)followButtonPressed:(IPKPage*)page{
+    NSString * pageId = [NSString stringWithFormat:@"%@", page.id];
+    if ([page.is_following boolValue]) {
+        [[IPKHTTPClient sharedClient] unfollowPageWithId:pageId success:^(AFJSONRequestOperation *operation, id responseObject) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.loading = NO;
+                [self setManagedObject:[IPKPage objectWithRemoteID:page.id]];
+            });
+        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SSRateLimit resetLimitForName:[NSString stringWithFormat:@"refresh-list-%@", self.page.remoteID]];
+                self.loading = NO;
+            });
+        }];
+    } else {
+        [[IPKHTTPClient sharedClient] followPageWithId:pageId success:^(AFJSONRequestOperation *operation, id responseObject) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.loading = NO;
+                [self setManagedObject:[IPKPage objectWithRemoteID:page.id]];
+            });
+        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SSRateLimit resetLimitForName:[NSString stringWithFormat:@"refresh-list-%@", self.page.remoteID]];
+                self.loading = NO;
+            });
+        }];
+    }
+}
+
+-(void)favoriteButtonPressed:(IPKPage*)page{
+    NSString * pageId = [NSString stringWithFormat:@"%@", page.id];
+    if ([page.is_favorite boolValue]) {
+        [[IPKHTTPClient sharedClient] unfavoritePageWithId:pageId success:^(AFJSONRequestOperation *operation, id responseObject) {
+            NSLog(@"%@", page);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.loading = NO;
+                [self setManagedObject:[IPKPage objectWithRemoteID:page.id]];
+            });
+        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SSRateLimit resetLimitForName:[NSString stringWithFormat:@"refresh-list-%@", self.page.remoteID]];
+                self.loading = NO;
+            });
+        }];
+    }else{
+        [[IPKHTTPClient sharedClient] favoritePageWithId:pageId success:^(AFJSONRequestOperation *operation, id responseObject) {
+            NSLog(@"%@", page);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.loading = NO;
+                [self setManagedObject:[IPKPage objectWithRemoteID:page.id]];
+            });
+        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SSRateLimit resetLimitForName:[NSString stringWithFormat:@"refresh-list-%@", self.page.remoteID]];
+                self.loading = NO;
+            });
+        }];
+    }
+}
+
+-(void)shareButtonPressed:(IPKPage*)page{
+    [IPISocialShareHelper tweetPage:page fromViewController:self];
 }
 
 @end

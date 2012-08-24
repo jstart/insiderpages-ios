@@ -8,18 +8,10 @@
 #import "UIColor+CheddariOSAdditions.h"
 //#import "CDINoListsView.h"
 #import <SSToolkit/UIScrollView+SSToolkitAdditions.h>
-
-#define CHEDDAR_USE_PASSWORD_FLOW 1
-
-#ifdef CHEDDAR_USE_PASSWORD_FLOW
-	#import "CDISignUpViewController.h"
-#else
-	#import "CDIWebSignInViewController.h"
-#endif
+#import "SVPullToRefresh.h"
 
 @interface IPILeftPagesViewController ()
 - (void)_currentUserDidChange:(NSNotification *)notification;
-- (void)_checkUser;
 @end
 
 @implementation IPILeftPagesViewController 
@@ -29,13 +21,15 @@
 - (void)dealloc {
 
 }
+- (BOOL)viewDeckControllerWillOpenLeftView:(IIViewDeckController*)viewDeckController animated:(BOOL)animated{
+    [SSRateLimit executeBlock:[self refresh] name:@"refresh-mine-pages" limit:0.0];
+
+    return YES;
+}
 
 - (id)init {
 	if ((self = [super init])) {
-//        self.tableView = [[UIExpandableTableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 480.0f) style:UITableViewStylePlain];
-        self.tableView.delegate = self;
-        self.tableView.dataSource = self;
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(openCreatePageView)];
+//        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(openCreatePageView)];
 	}
 	return self;
 }
@@ -44,12 +38,8 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-
+    self.tableView.showsInfiniteScrolling = NO;
     //	self.noContentView = [[CDINoListsView alloc] initWithFrame:CGRectZero];
-
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_listUpdated:) name:kIPKListDidUpdateNotificationName object:nil];
-	}
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_currentUserDidChange:) name:kIPKCurrentUserChangedNotificationName object:nil];
 }
@@ -57,20 +47,12 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-		[self _checkUser];
-	}
 }
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-		[self _checkUser];
-	}
 	
-	[SSRateLimit executeBlock:^{
-		[self refresh:nil];
-	} name:@"refresh-mine-pages" limit:30.0];
+	[SSRateLimit executeBlock:[self refresh] name:@"refresh-mine-pages" limit:30.0];
 }
 
 
@@ -107,12 +89,8 @@
 	return [NSPredicate predicateWithFormat:@"name != %@ && section_header != %@", @"",@""];
 }
 
--(NSArray *)sortDescriptors{
-    return [NSArray arrayWithObjects:
-            [NSSortDescriptor sortDescriptorWithKey:@"section_header" ascending:NO],
-            [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO],
-            [NSSortDescriptor sortDescriptorWithKey:@"remoteID" ascending:NO],
-            nil];
+-(NSString *)sortDescriptors{
+    return @"section_header";
 }
 
 - (NSString *)sectionNameKeyPath {
@@ -148,45 +126,53 @@
 
 #pragma mark - Actions
 
-- (void)refresh:(id)sender {
-	if (self.loading || ![IPKUser currentUser]) {
-		return;
-	}
-	
-	self.loading = YES;
-    NSString * myUserId = [NSString stringWithFormat:@"%@", [IPKUser currentUser].id];
-	[[IPKHTTPClient sharedClient] getPagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
-		dispatch_async(dispatch_get_main_queue(), ^{
-			self.loading = NO;
-		});
-	} failure:^(AFJSONRequestOperation *operation, NSError *error) {
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[SSRateLimit resetLimitForName:@"refresh-mine-pages"];
-			self.loading = NO;
-		});
-	}];
-    
-    [[IPKHTTPClient sharedClient] getFavoritePagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
-		dispatch_async(dispatch_get_main_queue(), ^{
-			self.loading = NO;
-		});
-	} failure:^(AFJSONRequestOperation *operation, NSError *error) {
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[SSRateLimit resetLimitForName:@"refresh-mine-pages"];
-			self.loading = NO;
-		});
-	}];
-    
-    [[IPKHTTPClient sharedClient] getFollowingPagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
-		dispatch_async(dispatch_get_main_queue(), ^{
-			self.loading = NO;
-		});
-	} failure:^(AFJSONRequestOperation *operation, NSError *error) {
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[SSRateLimit resetLimitForName:@"refresh-mine-pages"];
-			self.loading = NO;
-		});
-	}];
+- (void(^)(void))refresh {
+    return ^(void){
+        if (self.loading || ![IPKUser currentUser]) {
+            return;
+        }
+        
+        self.loading = YES;
+        NSString * myUserId = [NSString stringWithFormat:@"%@", [IPKUser currentUser].id];
+        [[IPKHTTPClient sharedClient] getPagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.loading = NO;
+                [self.fetchedResultsController performFetch:nil];
+                [self.tableView reloadData];
+            });
+        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SSRateLimit resetLimitForName:@"refresh-mine-pages"];
+                self.loading = NO;
+            });
+        }];
+        
+        [[IPKHTTPClient sharedClient] getFavoritePagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.loading = NO;
+                [self.fetchedResultsController performFetch:nil];
+                [self.tableView reloadData];
+            });
+        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SSRateLimit resetLimitForName:@"refresh-mine-pages"];
+                self.loading = NO;
+            });
+        }];
+        
+        [[IPKHTTPClient sharedClient] getFollowingPagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.loading = NO;
+                [self.fetchedResultsController performFetch:nil];
+                [self.tableView reloadData];
+            });
+        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SSRateLimit resetLimitForName:@"refresh-mine-pages"];
+                self.loading = NO;
+            });
+        }];
+    };
 }
 
 #pragma mark - Private
@@ -194,25 +180,6 @@
 - (void)_currentUserDidChange:(NSNotification *)notification {
 	self.fetchedResultsController = nil;
 	[self.tableView reloadData];
-}
-
-- (void)_checkUser {
-	if (![IPKUser currentUser]) {
-#ifdef CHEDDAR_USE_PASSWORD_FLOW
-		UIViewController *viewController = [[CDISignUpViewController alloc] init];
-#else
-		UIViewController *viewController = [[CDIWebSignInViewController alloc] init];
-#endif
-		UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-		navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-		
-		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-			[self.splitViewController presentModalViewController:navigationController animated:YES];
-		} else {
-			[self.navigationController presentModalViewController:navigationController animated:NO];
-		}
-		return;
-	}
 }
 
 

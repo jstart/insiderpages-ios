@@ -14,9 +14,9 @@
 
 @interface IPIAccordionViewController : UIViewController <AccordionViewDelegate, IPIAccordionPagesViewControllerDelegate, IIViewDeckControllerDelegate, UISearchBarDelegate>
 
-@property (nonatomic, retain) AccordionView * accordionView;
-@property (nonatomic, retain) IPIAccordionPagesViewController * page1;
-@property (nonatomic, retain) IPIAccordionPagesViewController * page2;
-@property (nonatomic, retain) IPIAccordionPagesViewController * page3;
+@property (nonatomic, strong) AccordionView * accordionView;
+@property (nonatomic, strong) IPIAccordionPagesViewController * page1;
+@property (nonatomic, strong) IPIAccordionPagesViewController * page2;
+@property (nonatomic, strong) IPIAccordionPagesViewController * page3;
 
 @end

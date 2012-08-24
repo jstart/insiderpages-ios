@@ -14,8 +14,12 @@
 @property (nonatomic, strong, readonly) NSIndexPath *editingIndexPath;
 @property (nonatomic, assign, readonly) CGRect keyboardRect;
 @property (nonatomic, strong) UIView *coverView;
+@property (nonatomic, strong) NSNumber *perPage;
+@property (nonatomic, strong) NSNumber *currentPage;
 
-- (void)refresh:(id)sender;
+- (void (^)(void))refresh;
+- (void (^)(void))nextPage;
+
 - (void)toggleEditMode:(id)sender;
 - (void)endCellTextEditing;
 - (void)editRow:(UITapGestureRecognizer *)editingTapGestureRecognizer;

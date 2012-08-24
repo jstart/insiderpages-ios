@@ -27,7 +27,7 @@
         self.page1 = [[IPIAccordionPagesViewController alloc] initWithSectionHeader:@"Mine"];
         self.page1.delegate = self;
         self.page2 = [[IPIAccordionPagesViewController alloc] initWithSectionHeader:@"Following"];
-        self.page3.delegate = self;
+        self.page2.delegate = self;
         self.page3 = [[IPIAccordionPagesViewController alloc] initWithSectionHeader:@"Favorite"];
         self.page3.delegate = self;
         
@@ -49,9 +49,9 @@
         [self.accordionView addHeader:header2 withView:self.page2.tableView];
         [self.accordionView addHeader:header3 withView:self.page3.tableView];
         [self.accordionView setDelegate:self];
-        [self.accordionView setSelectedIndex:0];
         [[self view] addSubview:self.accordionView];
         [self.accordionView setNeedsLayout];
+        [self.accordionView setSelectedIndex:0];
 
     }
     return self;
@@ -68,24 +68,26 @@
 - (void)accordion:(AccordionView *)accordion didChangeSelection:(NSIndexSet *)selection{
     switch ([accordion selectedIndex]) {
         case 0:
-            [self.page1.fetchedResultsController performFetch:nil];
-            [self.page1 refresh:nil];
+            self.page1.fetchedResultsController = nil;
+            [SSRateLimit executeBlock:[self.page1 refresh] name:@"refresh-mine-pages" limit:30.0];
+            [self.page1.tableView setNeedsDisplay];
             break;
         case 1:
-            [self.page2 refresh:nil];
             self.page2.fetchedResultsController = nil;
+            [SSRateLimit executeBlock:[self.page2 refresh] name:@"refresh-following-pages" limit:30.0];
+            [self.page2.tableView setNeedsDisplay];
+
             break;
         case 2:
-            [self.page3 refresh:nil];
             self.page3.fetchedResultsController = nil;
+            [SSRateLimit executeBlock:[self.page3 refresh] name:@"refresh-favorite-pages" limit:30.0];
+            [self.page3.tableView setNeedsDisplay];
+
             break;
             
         default:
-            [self.page1 refresh:nil];
             self.page1.fetchedResultsController = nil;
-            [self.page2 refresh:nil];
             self.page2.fetchedResultsController = nil;
-            [self.page3 refresh:nil];
             self.page3.fetchedResultsController = nil;
             break;
     }

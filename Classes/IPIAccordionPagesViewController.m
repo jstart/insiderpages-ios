@@ -68,14 +68,13 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
+    [SSRateLimit executeBlock:[self refresh] name:@"refresh-mine-pages" limit:30.0];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
 	
-	[SSRateLimit executeBlock:^{
-		[self refresh:nil];
-	} name:@"refresh-mine-pages" limit:30.0];
+	[SSRateLimit executeBlock:[self refresh] name:@"refresh-mine-pages" limit:30.0];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
@@ -98,12 +97,12 @@
 	return [NSPredicate predicateWithFormat:@"name != %@ && section_header == %@", @"",self.section_header];
 }
 
--(NSArray *)sortDescriptors{
-    return [NSArray arrayWithObjects:
-            [NSSortDescriptor sortDescriptorWithKey:@"section_header" ascending:NO],
-            [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO],
-            [NSSortDescriptor sortDescriptorWithKey:@"remoteID" ascending:NO],
-            nil];
+-(NSString *)sortDescriptors{
+    return @"section_header,createdAt,remoteID";
+}
+
+-(NSString*)sectionNameKeyPath{
+    return @"section_header";
 }
 
 #pragma mark - SSManagedTableViewController
@@ -135,54 +134,59 @@
 
 #pragma mark - Actions
 
-- (void)refresh:(id)sender {
-	if (self.loading || ![IPKUser currentUser]) {
-		return;
-	}
-	
-	self.loading = YES;
-    
-    NSString * myUserId = [NSString stringWithFormat:@"%@", [IPKUser currentUser].id];
+- (void(^)(void))refresh {
+    return ^(void){
+        if (self.loading || ![IPKUser currentUser]) {
+            return;
+        }
+        
+        self.loading = YES;
+        
+        NSString * myUserId = [NSString stringWithFormat:@"%@", [IPKUser currentUser].id];
 
-    if ([self.section_header isEqualToString:@"Mine"]) {
-        [[IPKHTTPClient sharedClient] getPagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.loading = NO;
-                [self.tableView reloadData];
-            });
-        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [SSRateLimit resetLimitForName:@"refresh-mine-pages"];
-                self.loading = NO;
-            });
-        }];
-    }
-    else if ([self.section_header isEqualToString:@"Following"]){
-        [[IPKHTTPClient sharedClient] getFavoritePagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.loading = NO;
-                [self.tableView reloadData];
-            });
-        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [SSRateLimit resetLimitForName:@"refresh-mine-pages"];
-                self.loading = NO;
-            });
-        }];
-    }
-    else if ([self.section_header isEqualToString:@"Favorite"]){
-        [[IPKHTTPClient sharedClient] getFollowingPagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.loading = NO;
-                [self.tableView reloadData];
-            });
-        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [SSRateLimit resetLimitForName:@"refresh-mine-pages"];
-                self.loading = NO;
-            });
-        }];
-    }
+        if ([self.section_header isEqualToString:@"Mine"]) {
+            [[IPKHTTPClient sharedClient] getPagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
+                NSLog(@"%@", responseObject);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.loading = NO;
+                    [self.tableView reloadData];
+                });
+            } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [SSRateLimit resetLimitForName:@"refresh-mine-pages"];
+                    self.loading = NO;
+                });
+            }];
+        }
+        else if ([self.section_header isEqualToString:@"Following"]){
+            [[IPKHTTPClient sharedClient] getFollowingPagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
+                NSLog(@"%@", responseObject);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.loading = NO;
+                    [self.tableView reloadData];
+                });
+            } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [SSRateLimit resetLimitForName:@"refresh-following-pages"];
+                    self.loading = NO;
+                });
+            }];
+        }
+        else if ([self.section_header isEqualToString:@"Favorite"]){
+            [[IPKHTTPClient sharedClient] getFavoritePagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
+                NSLog(@"%@", responseObject);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.loading = NO;
+                    [self.tableView reloadData];
+                });
+            } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [SSRateLimit resetLimitForName:@"refresh-favorite-pages"];
+                    self.loading = NO;
+                });
+            }];
+        }
+    };
 }
 
 #pragma mark - Private
@@ -235,7 +239,7 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
 	[super controllerDidChangeContent:controller];
-	
+
 }
 
 @end

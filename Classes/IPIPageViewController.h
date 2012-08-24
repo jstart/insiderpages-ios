@@ -5,12 +5,14 @@
 //  Created by Christopher Truman.
 //
 
-#import "CDIManagedTableViewController.h"
+#import "IPIBaseNoNavManagedTableViewController.h"
 
 @class IPKPage;
+@class IPIPageTableViewHeader;
 
-@interface IPIPageViewController : CDIManagedTableViewController
+@interface IPIPageViewController : IPIBaseNoNavManagedTableViewController
 
 @property (nonatomic, strong, readonly) IPKPage *page;
+@property (nonatomic, strong) IPIPageTableViewHeader * headerView;
 
 @end

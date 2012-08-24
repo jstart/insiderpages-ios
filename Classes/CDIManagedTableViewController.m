@@ -10,6 +10,7 @@
 #import "CDITableViewCell.h"
 #import "UIColor+CheddariOSAdditions.h"
 #import "CDILoadingView.h"
+#import "SVPullToRefresh.h"
 
 @implementation CDIManagedTableViewController {
 	UITapGestureRecognizer *_tableViewTapGestureRecognizer;
@@ -43,10 +44,6 @@
 
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-
-	_pullToRefreshView.delegate = nil;
-	[_pullToRefreshView removeFromSuperview];
-	_pullToRefreshView = nil;
 }
 
 
@@ -57,7 +54,20 @@
 	
 	self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 	self.tableView.rowHeight = [CDITableViewCell cellHeight];
-	
+    
+    self.perPage = @10;
+    self.currentPage = @1;
+	void (^refreshBlock)(void)  = [self refresh];
+    [self.tableView addPullToRefreshWithActionHandler:^{
+        refreshBlock();
+    }];
+    
+    void (^nextPageBlock)(void)  = [self nextPage];
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+        nextPageBlock();
+    }];
+
+    
 	UIView *background = [[UIView alloc] initWithFrame:CGRectZero];
 	background.backgroundColor = [UIColor cheddarArchesColor];
 	self.tableView.backgroundView = background;
@@ -69,28 +79,20 @@
 //					 [UIColor colorWithWhite:0.937f alpha:0.0f],
 //					 nil];
 //	self.tableView.tableFooterView = footer;
-	
-	_tableViewTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(endCellTextEditing)];
-	_tableViewTapGestureRecognizer.enabled = NO;
-	_tableViewTapGestureRecognizer.cancelsTouchesInView = NO;
-	[self.tableView addGestureRecognizer:_tableViewTapGestureRecognizer];
-	
-	_pullToRefreshView = [[CDIPullToRefreshView alloc] initWithScrollView:self.tableView delegate:self];
 
 	self.loadingView = [[CDILoadingView alloc] initWithFrame:self.view.bounds];
 	self.loadingView.userInteractionEnabled = NO;
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh:) name:UIApplicationDidBecomeActiveNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh:) name:kIPKCurrentUserChangedNotificationName object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:UIApplicationDidBecomeActiveNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:kIPKCurrentUserChangedNotificationName object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
 }
 
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
 	[super setEditing:editing animated:animated];
-	_tableViewTapGestureRecognizer.enabled = editing;
 	if (!editing) {
 		[self endCellTextEditing];
 	}
@@ -98,7 +100,6 @@
 
 
 - (void)viewWillAppear:(BOOL)animated {
-	[self refresh:nil];
 	[super viewWillAppear:animated];
 }
 
@@ -116,12 +117,9 @@
 
 - (void)setLoading:(BOOL)loading animated:(BOOL)animated {
 	[super setLoading:loading animated:animated];
-	
-	if (self.loading) {
-		[self.pullToRefreshView startLoading];
-	} else {
-		[self.pullToRefreshView finishLoading];
-	}
+    if (!loading) {
+        [self.tableView.pullToRefreshView stopAnimating];
+    }
 }
 
 
@@ -171,10 +169,25 @@
 
 #pragma mark - Actions
 
-- (void)refresh:(id)sender {
+- (void (^)(void))refresh {
 	// Subclasses should override this
+    return ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.loading = NO;
+            [self.tableView.pullToRefreshView stopAnimating];
+        });
+    };
 }
 
+- (void (^)(void))nextPage {
+	// Subclasses should override this
+    return ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.loading = NO;
+            [self.tableView.pullToRefreshView stopAnimating];
+        });
+    };
+}
 
 #pragma mark - Editing
 
@@ -244,7 +257,7 @@
 
 - (void)reachabilityChanged:(NSNotification *)notification {
 	if ([notification.object isReachable]) {
-		[self refresh:nil];
+		[self refresh];
 	}
 }
 
@@ -290,7 +303,7 @@
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-	[self updateTableViewOffsets];
+//	[self updateTableViewOffsets];
 	
 	if (_allowScrolling) {
 		return;
@@ -298,14 +311,6 @@
 	
 	[self endCellTextEditing];
 }
-
-
-#pragma mark - SSPullToRefreshViewDelegate
-
-- (void)pullToRefreshViewDidStartLoading:(SSPullToRefreshView *)view {
-	[self refresh:view];
-}
-
 
 #pragma mark - UITextFieldDelegate
 
@@ -319,9 +324,6 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
 	[super controllerDidChangeContent:controller];
 	
-	if (self.editing && !self.hasContent) {
-		[self setEditing:NO animated:YES];
-	}
 }
 
 @end

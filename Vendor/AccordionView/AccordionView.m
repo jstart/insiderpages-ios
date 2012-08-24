@@ -79,9 +79,9 @@
             [aHeader addTarget:self action:@selector(touchDown:) forControlEvents:UIControlEventTouchUpInside];
         }
         
-        if ([selectionIndexes count] == 0) {
-            [self setSelectedIndex:0];
-        }
+//        if ([selectionIndexes count] == 0) {
+//            [self setSelectedIndex:0];
+//        }
     }
 }
 

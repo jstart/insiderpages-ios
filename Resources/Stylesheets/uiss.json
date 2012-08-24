@@ -52,8 +52,8 @@
     "@Controllers": {
         "IPILeftPagesViewController": {
             "UILabel": {
-                "textColor": "red",
-                "backgroundColor": "black"
+                "-textColor": "black",
+                "-backgroundColor": "black"
             },
             "IPIPageTableViewCell": {
                 "-debugBorderColor": "none",
