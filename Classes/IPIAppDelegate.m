@@ -177,7 +177,7 @@
             NSArray* cookieArray = [NSArray arrayWithObject:cookie];
             [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookies:cookieArray forURL:[NSURL URLWithString:@"http://qa.insiderpages.com"] mainDocumentURL:nil];
     }
-    NSLog(@"loaded auth cookie %@", [[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies] objectAtIndex:0]);
+    NSLog(@"loaded auth cookie %@", [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]);
 }
 
 -(void)login{
@@ -387,18 +387,18 @@
 
 - (void)locationManager:(RCLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
     #warning post notification to update location views
-    [self.geocoder reverseGeocodeLocation:self.locationManager.location completionHandler:
-     
-     ^(NSArray *placemarks, NSError *error) {
-         //Get nearby address
-         CLPlacemark *placemark = [placemarks objectAtIndex:0];
-
-         //String to hold address
-         NSString *locatedAt = [[placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@", "];
-
-         //Print the location to console
+//    [self.geocoder reverseGeocodeLocation:self.locationManager.location completionHandler:
+//     
+//     ^(NSArray *placemarks, NSError *error) {
+//         //Get nearby address
+//         CLPlacemark *placemark = [placemarks objectAtIndex:0];
+//
+//         //String to hold address
+//         NSString *locatedAt = [[placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@", "];
+//
+//         //Print the location to console
 //         NSLog(@"I am currently at %@",locatedAt);
-     }];
+//     }];
 }
 
 - (void)locationManager:(RCLocationManager *)manager didEnterRegion:(CLRegion *)region{

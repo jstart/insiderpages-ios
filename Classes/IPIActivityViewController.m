@@ -266,6 +266,13 @@
 }
 
 - (void)_checkUser {
+    NSLog(@"current user %@ boolean user has logged in %d", [IPKUser currentUser], [IPKUser userHasLoggedIn]);
+    if (![IPKUser currentUser] && [[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentUserDictionary"]) {
+        NSLog(@"no core data current user %@ but user has logged in %d and current user dictionary is stored", [IPKUser currentUser], [IPKUser userHasLoggedIn], [[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentUserDictionary"]);
+
+        IPKUser * user = [IPKUser objectWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentUserDictionary"]];
+        [IPKUser setCurrentUser:user];
+    }
 	if (![IPKUser userHasLoggedIn]) {
 #ifdef CHEDDAR_USE_PASSWORD_FLOW
 		UIViewController *viewController = [[CDISignUpViewController alloc] init];
