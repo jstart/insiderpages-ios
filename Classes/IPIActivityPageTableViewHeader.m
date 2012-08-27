@@ -26,6 +26,7 @@
         overlayFrame.origin.x = 0;
         overlayFrame.origin.y = frame.size.height - overlayFrame.size.height;
         self.overlayView = [[UIView alloc] initWithFrame:overlayFrame];
+        [self.overlayView setBackgroundColor:[UIColor blackColor]];
         self.overlayView.alpha = 0.6;
         [self.pageCoverImageView addSubview:self.overlayView];
         

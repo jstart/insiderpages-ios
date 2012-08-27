@@ -208,11 +208,12 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.fetchedResultsController = nil;
                 self.loading = NO;
-                
+                NSLog(@"retrieved %d activity items", ((NSArray*)responseObject[@"activities"]).count);
                 [[self tableView] reloadData];
             });
         } failure:^(AFJSONRequestOperation *operation, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
+                NSLog(@"failed to retrieve activity items");
                 [SSRateLimit resetLimitForName:@"refresh-activity"];
                 self.loading = NO;
             });

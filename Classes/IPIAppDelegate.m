@@ -9,7 +9,7 @@
 #import "IPIAppDelegate.h"
 #import "IPISplitViewController.h"
 #import "IPIActivityViewController.h"
-#import "IPILeftPagesViewController.h"
+#import "IPILeftSearchViewController.h"
 #import "IPIAccordionViewController.h"
 #import "CDISignUpViewController.h"
 #import "IIViewDeckController.h"
@@ -82,19 +82,20 @@
 
     IPIActivityViewController *viewController = [[IPIActivityViewController alloc] initWithStyle:UITableViewStyleGrouped];
     UINavigationController *activityNavigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-    IPILeftPagesViewController * leftPagesViewController = [[IPILeftPagesViewController alloc] init];
-    IPIAccordionViewController * accordionViewController = [[IPIAccordionViewController alloc] init];
+    IPILeftSearchViewController * leftSearchViewController = [[IPILeftSearchViewController alloc] initWithNibName:@"IPILeftSearchViewController" bundle:[NSBundle mainBundle]];
+//    IPIAccordionViewController * accordionViewController = [[IPIAccordionViewController alloc] init];
 //    UINavigationController *leftPagesNavigationController = [[UINavigationController alloc] initWithRootViewController:accordionViewController];
 
-    IIViewDeckController * viewDeckController = [[IIViewDeckController alloc] initWithCenterViewController:activityNavigationController leftViewController:leftPagesViewController];
-    [viewDeckController setPanningMode:IIViewDeckPanningViewPanning];
+    IIViewDeckController * viewDeckController = [[IIViewDeckController alloc] initWithCenterViewController:activityNavigationController leftViewController:leftSearchViewController];
+    [viewDeckController setPanningMode:IIViewDeckFullViewPanning];
+    [viewDeckController setCenterhiddenInteractivity:IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose];
     self.window.rootViewController = viewDeckController;
 	[self.window makeKeyAndVisible];
     
     #if TARGET_IPHONE_SIMULATOR
         [[DCIntrospect sharedIntrospector] start];
     #endif
-
+    
 	// Defer some stuff to make launching faster
 	dispatch_async(dispatch_get_main_queue(), ^{
 		// Setup status bar network indicator
@@ -157,6 +158,8 @@
 }
 
 -(void)storeCookies{
+    NSLog(@"saved auth cookie %@", [[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies] objectAtIndex:0]);
+
     NSHTTPCookie *cookie = [[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies] objectAtIndex:0];
     NSMutableDictionary* cookieDictionary = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"SavedCookies"]];
     [cookieDictionary setValue:cookie.properties forKey:@"http://qa.insiderpages.com"];
@@ -174,6 +177,7 @@
             NSArray* cookieArray = [NSArray arrayWithObject:cookie];
             [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookies:cookieArray forURL:[NSURL URLWithString:@"http://qa.insiderpages.com"] mainDocumentURL:nil];
     }
+    NSLog(@"loaded auth cookie %@", [[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies] objectAtIndex:0]);
 }
 
 -(void)login{
@@ -216,7 +220,9 @@
         case FBSessionStateOpen: {
             if (![IPKUser userHasLoggedIn]) {
                 [self registerOrLogin];
+                NSLog(@"Register because there is no user id and access token in user defaults.");
             }else{
+                NSLog(@"Enter activity screen because there is a user id and access token in user defaults.");
                 UIViewController *viewController = [[IPIActivityViewController alloc] initWithStyle:UITableViewStyleGrouped];
                 UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
                 self.window.rootViewController = navigationController;
@@ -296,18 +302,18 @@
 
 
 -(void)applyStylesheet {
-    self.uiss = [[UISS alloc] init];
+//    self.uiss = [[UISS alloc] init];
     
-    [self.uiss registerReloadGestureRecognizerInView:self.window];
+//    [self.uiss registerReloadGestureRecognizerInView:self.window];
     
 #if TARGET_IPHONE_SIMULATOR
-    self.uiss.statusWindowEnabled = YES;
+//    self.uiss.statusWindowEnabled = YES;
 
 //    self.uiss.style.url = [NSURL URLWithString:@"file://localhost/Users/trumanc/Desktop/insiderpages-ios/Resources/Stylesheets/style.json"];
 //    [self.uiss load];
 //    [self.uiss enableAutoReloadWithTimeInterval:3];
 #endif
-    [UISS configureWithDefaultJSONFile];
+//    [UISS configureWithDefaultJSONFile];
 
     
 	// Navigation bar
@@ -391,7 +397,7 @@
          NSString *locatedAt = [[placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@", "];
 
          //Print the location to console
-         NSLog(@"I am currently at %@",locatedAt);
+//         NSLog(@"I am currently at %@",locatedAt);
      }];
 }
 

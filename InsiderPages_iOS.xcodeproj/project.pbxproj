@@ -118,7 +118,6 @@
 		B26AE9BA15C5D0100008AB1F /* CDISettingsFontPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B26AE9B915C5D0100008AB1F /* CDISettingsFontPickerViewController.m */; };
 		B26AE9BD15C5D25E0008AB1F /* CDIGroupedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B26AE9BC15C5D25E0008AB1F /* CDIGroupedTableViewController.m */; };
 		B26AE9C015C5D52D0008AB1F /* CDIPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B26AE9BF15C5D52D0008AB1F /* CDIPickerViewController.m */; };
-		B28F84DB15C37E1D003E4595 /* SSToolkitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B208C1E315BF63E30080705D /* SSToolkitResources.bundle */; };
 		B28FD2BE15BF730100365CD6 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B28FD2BD15BF730100365CD6 /* CFNetwork.framework */; };
 		B28FD2C015BF731100365CD6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B28FD2BF15BF731000365CD6 /* CoreGraphics.framework */; };
 		B28FD2C215BF731B00365CD6 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B28FD2C115BF731B00365CD6 /* MessageUI.framework */; };
@@ -312,6 +311,9 @@
 		FDD9FDFD15DADC7F003E34EE /* AccordionView.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD9FDFC15DADC7F003E34EE /* AccordionView.m */; };
 		FDD9FE0015DADF50003E34EE /* IPIAccordionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD9FDFF15DADF50003E34EE /* IPIAccordionViewController.m */; };
 		FDD9FE0315DAE909003E34EE /* IPIAccordionPagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD9FE0215DAE909003E34EE /* IPIAccordionPagesViewController.m */; };
+		FDE97CB515E7F507002BC928 /* IPILeftSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDE97CB415E7F507002BC928 /* IPILeftSearchViewController.m */; };
+		FDE97CB815E8058D002BC928 /* IPIUserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDE97CB715E8058C002BC928 /* IPIUserTableViewCell.m */; };
+		FDE97CBA15E80CEF002BC928 /* IPILeftSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDE97CB915E80CEF002BC928 /* IPILeftSearchViewController.xib */; };
 		FDFAD30315D1E88B00ADFB73 /* InsiderPages.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FDFAD30115D1E88B00ADFB73 /* InsiderPages.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
@@ -879,6 +881,11 @@
 		FDD9FDFF15DADF50003E34EE /* IPIAccordionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIAccordionViewController.m; sourceTree = "<group>"; };
 		FDD9FE0115DAE909003E34EE /* IPIAccordionPagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIAccordionPagesViewController.h; sourceTree = "<group>"; };
 		FDD9FE0215DAE909003E34EE /* IPIAccordionPagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIAccordionPagesViewController.m; sourceTree = "<group>"; };
+		FDE97CB315E7F507002BC928 /* IPILeftSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPILeftSearchViewController.h; sourceTree = "<group>"; };
+		FDE97CB415E7F507002BC928 /* IPILeftSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPILeftSearchViewController.m; sourceTree = "<group>"; };
+		FDE97CB615E8058C002BC928 /* IPIUserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIUserTableViewCell.h; sourceTree = "<group>"; };
+		FDE97CB715E8058C002BC928 /* IPIUserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIUserTableViewCell.m; sourceTree = "<group>"; };
+		FDE97CB915E80CEF002BC928 /* IPILeftSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPILeftSearchViewController.xib; sourceTree = "<group>"; };
 		FDFAD30215D1E88B00ADFB73 /* InsiderPages.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = InsiderPages.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1182,6 +1189,8 @@
 				FD547A8515DE955500922D5A /* Activity */,
 				FD269F2115D9B64A0050BF46 /* IPIPageTableViewCell.h */,
 				FD269F2215D9B64B0050BF46 /* IPIPageTableViewCell.m */,
+				FDE97CB615E8058C002BC928 /* IPIUserTableViewCell.h */,
+				FDE97CB715E8058C002BC928 /* IPIUserTableViewCell.m */,
 				FD269F4C15DA15DD0050BF46 /* IPIExpandingPageHeaderTableViewCell.h */,
 				FD269F4D15DA15DE0050BF46 /* IPIExpandingPageHeaderTableViewCell.m */,
 				FDAA2E6A15D5887D00793375 /* IPIProviderTableViewCell.h */,
@@ -1359,6 +1368,7 @@
 		B2D1242115C1FC7000ED1218 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				FDE97CB215E7F4FF002BC928 /* Search */,
 				FD219CB815E5851A00F334D9 /* Base */,
 				FD00928C15E55E9500BD2626 /* Bookmark */,
 				FD7732B515D30EA000E857C8 /* Provider */,
@@ -1901,12 +1911,22 @@
 			name = AccordionView;
 			sourceTree = "<group>";
 		};
+		FDE97CB215E7F4FF002BC928 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				FDE97CB315E7F507002BC928 /* IPILeftSearchViewController.h */,
+				FDE97CB415E7F507002BC928 /* IPILeftSearchViewController.m */,
+				FDE97CB915E80CEF002BC928 /* IPILeftSearchViewController.xib */,
+			);
+			name = Search;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B23FA754151FE0710069A0D1 /* InsiderPages for iOS */ = {
+		B23FA754151FE0710069A0D1 /* InsiderPages_iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B23FA772151FE0710069A0D1 /* Build configuration list for PBXNativeTarget "InsiderPages for iOS" */;
+			buildConfigurationList = B23FA772151FE0710069A0D1 /* Build configuration list for PBXNativeTarget "InsiderPages_iOS" */;
 			buildPhases = (
 				B23FA751151FE0710069A0D1 /* Sources */,
 				B23FA752151FE0710069A0D1 /* Frameworks */,
@@ -1920,7 +1940,7 @@
 				B208C1E815BF64240080705D /* PBXTargetDependency */,
 				B208C1EA15BF64240080705D /* PBXTargetDependency */,
 			);
-			name = "InsiderPages for iOS";
+			name = InsiderPages_iOS;
 			productName = Cheddar;
 			productReference = B23FA755151FE0710069A0D1 /* InsiderPages-Dev.app */;
 			productType = "com.apple.product-type.application";
@@ -1935,7 +1955,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = InisderPages;
 			};
-			buildConfigurationList = B23FA74F151FE0710069A0D1 /* Build configuration list for PBXProject "InsiderPages for iOS" */;
+			buildConfigurationList = B23FA74F151FE0710069A0D1 /* Build configuration list for PBXProject "InsiderPages_iOS" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1973,7 +1993,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				B23FA754151FE0710069A0D1 /* InsiderPages for iOS */,
+				B23FA754151FE0710069A0D1 /* InsiderPages_iOS */,
 			);
 		};
 /* End PBXProject section */
@@ -2100,7 +2120,6 @@
 				B28FD2DC15BF742D00365CD6 /* Gotham-BoldItalic.otf in Resources */,
 				B28FD2DD15BF742D00365CD6 /* Gotham-Book.otf in Resources */,
 				B28FD2DE15BF742D00365CD6 /* Gotham-BookItalic.otf in Resources */,
-				B28F84DB15C37E1D003E4595 /* SSToolkitResources.bundle in Resources */,
 				B2AD02E315C46F7300D9B909 /* nav-back-mini-highlighted.png in Resources */,
 				B2AD02E415C46F7300D9B909 /* nav-back-mini.png in Resources */,
 				B2AD02E515C46F7300D9B909 /* nav-button-mini-highlighted.png in Resources */,
@@ -2154,6 +2173,7 @@
 				FD00929E15E55EB000BD2626 /* IPIBookmarkContainerViewController.xib in Resources */,
 				FD0092A115E55F0500BD2626 /* bookmark.png in Resources */,
 				FD0092A215E55F0500BD2626 /* bookmark@2x.png in Resources */,
+				FDE97CBA15E80CEF002BC928 /* IPILeftSearchViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2171,7 +2191,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#if [ \"${CONFIGURATION}\" = \"Release\" ]; then\n#    ./Vendor/Crashlytics.framework/run d719996ce2f7809259d6b116a1e5b1cf5d0f316d\n#fi";
+			shellScript = "";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2337,6 +2357,8 @@
 				FDCCBE2D15E6D58400A613D7 /* IPIBaseNoNavViewController.m in Sources */,
 				FDCCBE3015E6D84F00A613D7 /* IPIProviderViewHeader.m in Sources */,
 				FDCCBE3515E6E78F00A613D7 /* IPIAddToPageViewController.m in Sources */,
+				FDE97CB515E7F507002BC928 /* IPILeftSearchViewController.m in Sources */,
+				FDE97CB815E8058D002BC928 /* IPIUserTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2510,7 +2532,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B23FA74F151FE0710069A0D1 /* Build configuration list for PBXProject "InsiderPages for iOS" */ = {
+		B23FA74F151FE0710069A0D1 /* Build configuration list for PBXProject "InsiderPages_iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B23FA770151FE0710069A0D1 /* Debug */,
@@ -2519,7 +2541,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B23FA772151FE0710069A0D1 /* Build configuration list for PBXNativeTarget "InsiderPages for iOS" */ = {
+		B23FA772151FE0710069A0D1 /* Build configuration list for PBXNativeTarget "InsiderPages_iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B23FA773151FE0710069A0D1 /* Debug */,

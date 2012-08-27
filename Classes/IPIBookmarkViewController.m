@@ -50,7 +50,7 @@
     
     self.headerViewController = [[IPIBookmarkHeaderViewController alloc] initWithNibName:@"IPIBookmarkHeaderViewController" bundle:[NSBundle mainBundle]];
 
-    [self.bookmarkTableView setTableHeaderView:self.headerViewController.view];
+    [self.bookmarkTableView setTableFooterView:self.headerViewController.view];
 
     if ([IPKUser currentUser]) {
         self.headerViewController.usernameLabel.text = [[IPKUser currentUser] name];
