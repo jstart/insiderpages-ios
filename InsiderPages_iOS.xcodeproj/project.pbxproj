@@ -311,9 +311,13 @@
 		FDD9FDFD15DADC7F003E34EE /* AccordionView.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD9FDFC15DADC7F003E34EE /* AccordionView.m */; };
 		FDD9FE0015DADF50003E34EE /* IPIAccordionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD9FDFF15DADF50003E34EE /* IPIAccordionViewController.m */; };
 		FDD9FE0315DAE909003E34EE /* IPIAccordionPagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD9FE0215DAE909003E34EE /* IPIAccordionPagesViewController.m */; };
+		FDDD554D15EC24640020CFF1 /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = FDDD554C15EC24640020CFF1 /* iCarousel.m */; };
+		FDDD555215EC25470020CFF1 /* IPIProviderPagesCarouselViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDDD554F15EC25470020CFF1 /* IPIProviderPagesCarouselViewController.m */; };
+		FDDD555315EC25470020CFF1 /* IPIProviderScoopsCarouselViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDDD555115EC25470020CFF1 /* IPIProviderScoopsCarouselViewController.m */; };
 		FDE97CB515E7F507002BC928 /* IPILeftSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDE97CB415E7F507002BC928 /* IPILeftSearchViewController.m */; };
 		FDE97CB815E8058D002BC928 /* IPIUserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDE97CB715E8058C002BC928 /* IPIUserTableViewCell.m */; };
 		FDE97CBA15E80CEF002BC928 /* IPILeftSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDE97CB915E80CEF002BC928 /* IPILeftSearchViewController.xib */; };
+		FDEB0DDE15EC2F8A00FCDD3F /* IPIPageCarouselView.m in Sources */ = {isa = PBXBuildFile; fileRef = FDEB0DDD15EC2F8A00FCDD3F /* IPIPageCarouselView.m */; };
 		FDFAD30315D1E88B00ADFB73 /* InsiderPages.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FDFAD30115D1E88B00ADFB73 /* InsiderPages.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
@@ -881,11 +885,19 @@
 		FDD9FDFF15DADF50003E34EE /* IPIAccordionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIAccordionViewController.m; sourceTree = "<group>"; };
 		FDD9FE0115DAE909003E34EE /* IPIAccordionPagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIAccordionPagesViewController.h; sourceTree = "<group>"; };
 		FDD9FE0215DAE909003E34EE /* IPIAccordionPagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIAccordionPagesViewController.m; sourceTree = "<group>"; };
+		FDDD554B15EC24640020CFF1 /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
+		FDDD554C15EC24640020CFF1 /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
+		FDDD554E15EC25460020CFF1 /* IPIProviderPagesCarouselViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIProviderPagesCarouselViewController.h; sourceTree = "<group>"; };
+		FDDD554F15EC25470020CFF1 /* IPIProviderPagesCarouselViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIProviderPagesCarouselViewController.m; sourceTree = "<group>"; };
+		FDDD555015EC25470020CFF1 /* IPIProviderScoopsCarouselViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIProviderScoopsCarouselViewController.h; sourceTree = "<group>"; };
+		FDDD555115EC25470020CFF1 /* IPIProviderScoopsCarouselViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIProviderScoopsCarouselViewController.m; sourceTree = "<group>"; };
 		FDE97CB315E7F507002BC928 /* IPILeftSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPILeftSearchViewController.h; sourceTree = "<group>"; };
 		FDE97CB415E7F507002BC928 /* IPILeftSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPILeftSearchViewController.m; sourceTree = "<group>"; };
 		FDE97CB615E8058C002BC928 /* IPIUserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIUserTableViewCell.h; sourceTree = "<group>"; };
 		FDE97CB715E8058C002BC928 /* IPIUserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIUserTableViewCell.m; sourceTree = "<group>"; };
 		FDE97CB915E80CEF002BC928 /* IPILeftSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPILeftSearchViewController.xib; sourceTree = "<group>"; };
+		FDEB0DDC15EC2F8A00FCDD3F /* IPIPageCarouselView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIPageCarouselView.h; sourceTree = "<group>"; };
+		FDEB0DDD15EC2F8A00FCDD3F /* IPIPageCarouselView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIPageCarouselView.m; sourceTree = "<group>"; };
 		FDFAD30215D1E88B00ADFB73 /* InsiderPages.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = InsiderPages.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1336,6 +1348,7 @@
 		B2D1242015C1FC5D00ED1218 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FDEB0DDB15EC2F3300FCDD3F /* Carousel Views */,
 				FDCCBE3215E6D85800A613D7 /* Headers */,
 				FDAA2E7515D5B0FA00793375 /* Table Headers */,
 				FD3AD04615D5C7D9007699E8 /* Table Footers */,
@@ -1776,6 +1789,10 @@
 		FD7732B515D30EA000E857C8 /* Provider */ = {
 			isa = PBXGroup;
 			children = (
+				FDDD554E15EC25460020CFF1 /* IPIProviderPagesCarouselViewController.h */,
+				FDDD554F15EC25470020CFF1 /* IPIProviderPagesCarouselViewController.m */,
+				FDDD555015EC25470020CFF1 /* IPIProviderScoopsCarouselViewController.h */,
+				FDDD555115EC25470020CFF1 /* IPIProviderScoopsCarouselViewController.m */,
 				FD547A0215DC3CF000922D5A /* IPIProviderViewController.h */,
 				FD547A0315DC3CF000922D5A /* IPIProviderViewController.m */,
 			);
@@ -1849,6 +1866,7 @@
 		FDD99E3815D4CEBB003BB635 /* Production */ = {
 			isa = PBXGroup;
 			children = (
+				FDDD554A15EC24640020CFF1 /* iCarousel */,
 				FD00957E15E5611600BD2626 /* Bookmark Transition Category */,
 				FD547ABD15DF018B00922D5A /* SVPullToRefresh */,
 				FD547A9215DEB4AE00922D5A /* RCLocationManager */,
@@ -1911,6 +1929,16 @@
 			name = AccordionView;
 			sourceTree = "<group>";
 		};
+		FDDD554A15EC24640020CFF1 /* iCarousel */ = {
+			isa = PBXGroup;
+			children = (
+				FDDD554B15EC24640020CFF1 /* iCarousel.h */,
+				FDDD554C15EC24640020CFF1 /* iCarousel.m */,
+			);
+			name = iCarousel;
+			path = iCarousel/iCarousel;
+			sourceTree = "<group>";
+		};
 		FDE97CB215E7F4FF002BC928 /* Search */ = {
 			isa = PBXGroup;
 			children = (
@@ -1919,6 +1947,15 @@
 				FDE97CB915E80CEF002BC928 /* IPILeftSearchViewController.xib */,
 			);
 			name = Search;
+			sourceTree = "<group>";
+		};
+		FDEB0DDB15EC2F3300FCDD3F /* Carousel Views */ = {
+			isa = PBXGroup;
+			children = (
+				FDEB0DDC15EC2F8A00FCDD3F /* IPIPageCarouselView.h */,
+				FDEB0DDD15EC2F8A00FCDD3F /* IPIPageCarouselView.m */,
+			);
+			name = "Carousel Views";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2359,6 +2396,10 @@
 				FDCCBE3515E6E78F00A613D7 /* IPIAddToPageViewController.m in Sources */,
 				FDE97CB515E7F507002BC928 /* IPILeftSearchViewController.m in Sources */,
 				FDE97CB815E8058D002BC928 /* IPIUserTableViewCell.m in Sources */,
+				FDDD554D15EC24640020CFF1 /* iCarousel.m in Sources */,
+				FDDD555215EC25470020CFF1 /* IPIProviderPagesCarouselViewController.m in Sources */,
+				FDDD555315EC25470020CFF1 /* IPIProviderScoopsCarouselViewController.m in Sources */,
+				FDEB0DDE15EC2F8A00FCDD3F /* IPIPageCarouselView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2457,6 +2498,7 @@
 					"$(SRCROOT)/Vendor/UIResponder-KeyboardCache",
 					"$(SRCROOT)/Vendor/RCLocationManager/RCLocationManager",
 					"$(SRCROOT)/Vendor/SVPullToRefresh/SVPullToRefresh",
+					"$(SRCROOT)/Vendor/iCarousel/iCarousel",
 					"$(SRCROOT)/Vendor/InsiderPagesKit/Vendor/MagicalRecord/MagicalRecord/**",
 				);
 				INFOPLIST_FILE = "Resources/InsiderPages-Info.plist";
@@ -2507,6 +2549,7 @@
 					"$(SRCROOT)/Vendor/UIResponder-KeyboardCache",
 					"$(SRCROOT)/Vendor/RCLocationManager/RCLocationManager",
 					"$(SRCROOT)/Vendor/SVPullToRefresh/SVPullToRefresh",
+					"$(SRCROOT)/Vendor/iCarousel/iCarousel",
 					"$(SRCROOT)/Vendor/InsiderPagesKit/Vendor/MagicalRecord/MagicalRecord/**",
 				);
 				INFOPLIST_FILE = "Resources/InsiderPages-Info.plist";

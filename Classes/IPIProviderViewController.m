@@ -43,6 +43,18 @@
     self.headerView = [[IPIProviderViewHeader alloc] initWithFrame:CGRectMake(0, 0, 320, 180)];
     [self.headerView setDelegate:self];
     [self.view addSubview:self.headerView];
+    
+    self.pagesCarousel = [[IPIProviderPagesCarouselViewController alloc] init];
+    [self.pagesCarousel setProvider:self.provider];
+    [self addChildViewController:self.pagesCarousel];
+    self.pagesCarousel.view.frame = CGRectMake(0, 180, 320, 115);
+    [[self view] addSubview:self.pagesCarousel.view];
+    
+    self.scoopsCarousel = [[IPIProviderScoopsCarouselViewController alloc] init];
+    [self.scoopsCarousel setProvider:self.provider];
+    [self addChildViewController:self.scoopsCarousel];
+    self.scoopsCarousel.view.frame = CGRectMake(0, 295, 320, 165);
+    [[self view] addSubview:self.scoopsCarousel.view];
 }
 
 -(void)viewWillAppear:(BOOL)animated{

@@ -49,3 +49,9 @@
 [submodule "Vendor/SVPullToRefresh"]
 	path = Vendor/SVPullToRefresh
 	url = git://github.com/samvermette/SVPullToRefresh.git
+[submodule "Vendor/JSInfiniteScrollView"]
+	path = Vendor/JSInfiniteScrollView
+	url = git@github.com:jstart/JSInfiniteScrollView.git
+[submodule "Vendor/iCarousel"]
+	path = Vendor/iCarousel
+	url = git@github.com:jstart/iCarousel.git

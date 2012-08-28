@@ -218,7 +218,7 @@
 {
     switch (state) {
         case FBSessionStateOpen: {
-            if (![IPKUser userHasLoggedIn]) {
+            if (![IPKUser currentUser]) {
                 [self registerOrLogin];
                 NSLog(@"Register because there is no user id and access token in user defaults.");
             }else{

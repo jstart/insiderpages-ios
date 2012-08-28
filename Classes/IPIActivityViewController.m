@@ -213,7 +213,7 @@
             });
         } failure:^(AFJSONRequestOperation *operation, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                NSLog(@"failed to retrieve activity items");
+                NSLog(@"failed to retrieve activity items, %@", [error debugDescription]);
                 [SSRateLimit resetLimitForName:@"refresh-activity"];
                 self.loading = NO;
             });
@@ -267,28 +267,31 @@
 
 - (void)_checkUser {
     NSLog(@"current user %@ boolean user has logged in %d", [IPKUser currentUser], [IPKUser userHasLoggedIn]);
+
+    if ([IPKUser currentUser])
+        return;
     if (![IPKUser currentUser] && [[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentUserDictionary"]) {
         NSLog(@"no core data current user %@ but user has logged in %d and current user dictionary is stored", [IPKUser currentUser], [IPKUser userHasLoggedIn], [[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentUserDictionary"]);
 
         IPKUser * user = [IPKUser objectWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentUserDictionary"]];
         [IPKUser setCurrentUser:user];
     }
-	if (![IPKUser userHasLoggedIn]) {
-#ifdef CHEDDAR_USE_PASSWORD_FLOW
-		UIViewController *viewController = [[CDISignUpViewController alloc] init];
-#else
-		UIViewController *viewController = [[CDIWebSignInViewController alloc] init];
-#endif
+    if ([IPKUser userHasLoggedIn] && ![IPKUser currentUser]) {
+        NSLog(@"current user %@ boolean user has logged in %d, and current user dictionary %@", [IPKUser currentUser], [IPKUser userHasLoggedIn], [[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentUserDictionary"]);
+        [[IPIAppDelegate sharedAppDelegate].session close];
+        UIViewController *viewController = [[CDISignUpViewController alloc] init];
 		UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
 		navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-		
-		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-			[self.splitViewController presentModalViewController:navigationController animated:YES];
-		} else {
-			[self.navigationController presentModalViewController:navigationController animated:NO];
-		}
+        [self.navigationController presentModalViewController:navigationController animated:NO];
 		return;
-	}
+    }
+    NSLog(@"current user %@ boolean user has logged in %d, and current user dictionary %@", [IPKUser currentUser], [IPKUser userHasLoggedIn], [[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentUserDictionary"]);
+    [[IPIAppDelegate sharedAppDelegate].session close];
+    UIViewController *viewController = [[CDISignUpViewController alloc] init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self.navigationController presentModalViewController:navigationController animated:NO];
+    return;
 }
 
 #pragma mark - UITableViewDataSource
