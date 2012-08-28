@@ -5,8 +5,9 @@
 #import "IPIProviderPagesCarouselViewController.h"
 #import "TTTAttributedLabel.h"
 #import "IPIPageCarouselView.h"
+#import "IPIPageViewController.h"
 
-@interface IPIProviderPagesCarouselViewController () <iCarouselDataSource, iCarouselDelegate>
+@interface IPIProviderPagesCarouselViewController () <iCarouselDataSource, iCarouselDelegate, NSFetchedResultsControllerDelegate>
 @end
 
 @implementation IPIProviderPagesCarouselViewController
@@ -16,6 +17,8 @@
 - (id)init {
 	if ((self = [super init])) {
         self.carousel = [[iCarousel alloc] initWithFrame:CGRectMake(0, 0, 320, 115)];
+        [self.carousel setBounces:NO];
+        [self.carousel setStopAtItemBoundary:YES];
         [self.carousel setDataSource:self];
         [self.carousel setDelegate:self];
         [[self view] addSubview:self.carousel];
@@ -66,7 +69,7 @@
 -(void)setProvider:(IPKProvider *)provider{
     _provider = provider;
     
-    
+    [self.fetchedResultsController performFetch:nil];
     [self refresh];
     [self.carousel reloadData];
 }
@@ -80,7 +83,7 @@
         _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest managedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread] sectionNameKeyPath:nil cacheName:nil];
 ;
 		_fetchedResultsController.delegate = self;
-		[_fetchedResultsController performFetch:nil];
+        [_fetchedResultsController performFetch:nil];
 	}
 	return _fetchedResultsController;
 }
@@ -159,7 +162,8 @@
 #pragma mark - iCarouselDataSource
 
 - (NSUInteger)numberOfItemsInCarousel:(iCarousel *)carousel{
-    return self.fetchedResultsController.fetchedObjects.count;
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:0];
+    return [sectionInfo numberOfObjects];
 }
 
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIView *)view{
@@ -229,7 +233,10 @@
 
 
 - (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index{
-    
+    IPKPage * page = [self.fetchedResultsController.fetchedObjects objectAtIndex:index];
+    IPIPageViewController * pageVC = [[IPIPageViewController alloc] init];
+    pageVC.managedObject = page;
+    [self.navigationController pushViewController:pageVC animated:YES];
 }
 
 
@@ -247,5 +254,24 @@
 //- (CGFloat)carousel:(iCarousel *)carousel valueForOption:(iCarouselOption)option withDefault:(CGFloat)value{
 //    
 //}
+
+#pragma mark - NSFetchedResultsControllerDelegate
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath{
+    
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type{
+    
+}
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller{
+    
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller{
+    [self.carousel reloadData];
+}
 
 @end

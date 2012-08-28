@@ -55,8 +55,7 @@
 	#endif
 #endif
 	
-    [MagicalRecord setDefaultModelFromClass:[self class]];
-    [MagicalRecord setupCoreDataStack];
+    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"InsiderPages.sqlite"];
 
 	// Optionally enable development mode
 	// If you don't work at Nothing Magical, you shouldn't turn this on.
@@ -277,18 +276,13 @@
     return [self.session handleOpenURL:url];
 }
 
-#if ANALYTICS_ENABLED
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    [[LocalyticsSession sharedLocalyticsSession] resume];
-    [[LocalyticsSession sharedLocalyticsSession] upload];
 }
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    [[LocalyticsSession sharedLocalyticsSession] close];
-    [[LocalyticsSession sharedLocalyticsSession] upload];
+    [[NSManagedObjectContext MR_rootSavingContext] MR_save];
 }
-#endif
 
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -297,6 +291,7 @@
 	#endif
     // if the app is going away, we close the session object
     [self.session close];
+    [[NSManagedObjectContext MR_rootSavingContext] MR_save];
     [MagicalRecord cleanUp];
 }
 

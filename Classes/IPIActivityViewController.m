@@ -75,18 +75,13 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-		[self _checkUser];
-	}
+    [self _checkUser];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [_fullScreenDelegate layoutTabBarController];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-		[self _checkUser];
-	}
 	
 }
 
@@ -270,12 +265,6 @@
 
     if ([IPKUser currentUser])
         return;
-    if (![IPKUser currentUser] && [[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentUserDictionary"]) {
-        NSLog(@"no core data current user %@ but user has logged in %d and current user dictionary is stored", [IPKUser currentUser], [IPKUser userHasLoggedIn], [[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentUserDictionary"]);
-
-        IPKUser * user = [IPKUser objectWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentUserDictionary"]];
-        [IPKUser setCurrentUser:user];
-    }
     if ([IPKUser userHasLoggedIn] && ![IPKUser currentUser]) {
         NSLog(@"current user %@ boolean user has logged in %d, and current user dictionary %@", [IPKUser currentUser], [IPKUser userHasLoggedIn], [[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentUserDictionary"]);
         [[IPIAppDelegate sharedAppDelegate].session close];
