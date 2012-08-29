@@ -3,7 +3,7 @@
 //  InsiderPages for iOS
 //
 //  Created by Truman, Christopher on 8/10/12.
-//  Copyright (c) 2012 InisderPages. All rights reserved.
+//  Copyright (c) 2012 InsiderPages. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

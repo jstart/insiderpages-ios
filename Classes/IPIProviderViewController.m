@@ -53,7 +53,7 @@
     self.scoopsCarousel = [[IPIProviderScoopsCarouselViewController alloc] init];
     [self.scoopsCarousel setProvider:self.provider];
     [self addChildViewController:self.scoopsCarousel];
-    self.scoopsCarousel.view.frame = CGRectMake(0, 295, 320, 165);
+    self.scoopsCarousel.view.frame = CGRectMake(0, 295, 320, 160);
     [[self view] addSubview:self.scoopsCarousel.view];
 }
 

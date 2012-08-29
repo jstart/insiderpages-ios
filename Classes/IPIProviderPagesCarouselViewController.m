@@ -1,4 +1,4 @@
-//
+ //
 //  IPIProviderPagesCarouselViewController
 //
 
@@ -7,21 +7,13 @@
 #import "IPIPageCarouselView.h"
 #import "IPIPageViewController.h"
 
-@interface IPIProviderPagesCarouselViewController () <iCarouselDataSource, iCarouselDelegate, NSFetchedResultsControllerDelegate>
-@end
-
 @implementation IPIProviderPagesCarouselViewController
 
 #pragma mark - NSObject
 
 - (id)init {
 	if ((self = [super init])) {
-        self.carousel = [[iCarousel alloc] initWithFrame:CGRectMake(0, 0, 320, 115)];
-        [self.carousel setBounces:NO];
-        [self.carousel setStopAtItemBoundary:YES];
-        [self.carousel setDataSource:self];
-        [self.carousel setDelegate:self];
-        [[self view] addSubview:self.carousel];
+         self.carousel.frame = CGRectMake(0, 0, 320, 115);
     }
 	return self;
 }
@@ -39,68 +31,56 @@
 }
 
 -(void)refresh{
-    for (IPKPage* page in self.fetchedResultsController.fetchedObjects) {
-        if ([page.owner.id isEqualToNumber:@(0)]) {            
-            [page.owner updateWithSuccess:^(void){
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.carousel reloadData];
-                });
-            } failure:^(AFJSONRequestOperation *operation, NSError *error) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [SSRateLimit resetLimitForName:[NSString stringWithFormat:@"refresh-provider-pages-owners-%@", self.provider.remoteID]];
-                });
-            }];
-        }
+    self.currentPage = @1;
+    if (self.loading) {
+        return;
     }
-    
+    self.loading = YES;
     NSString * providerIDString = [NSString stringWithFormat:@"%@", self.provider.id];
-    [[IPKHTTPClient sharedClient] getPagesForProviderWithId:providerIDString withCurrentPage:@1 perPage:@10 success:^(AFJSONRequestOperation *operation, id responseObject) {
+    [[IPKHTTPClient sharedClient] getPagesForProviderWithId:providerIDString withCurrentPage:self.currentPage perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
         dispatch_async(dispatch_get_main_queue(), ^{
             self.fetchedResultsController = nil;
             [self.carousel reloadData];
+             self.loading = NO;
         });
     } failure:^(AFJSONRequestOperation *operation, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [SSRateLimit resetLimitForName:[NSString stringWithFormat:@"refresh-provider-pages-%@", self.provider.remoteID]];
+             self.loading = NO;
+        });
+    }];
+}
+
+-(void)nextPage{
+    if (self.loading) {
+        return;
+    }
+    self.currentPage = @([self.currentPage intValue] + 1);
+    self.loading = YES;
+    NSString * providerIDString = [NSString stringWithFormat:@"%@", self.provider.id];
+    [[IPKHTTPClient sharedClient] getPagesForProviderWithId:providerIDString withCurrentPage:self.currentPage perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.fetchedResultsController = nil;
+            [self.carousel reloadData];
+            self.loading = NO;
+        });
+    } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [SSRateLimit resetLimitForName:[NSString stringWithFormat:@"refresh-provider-pages-%@", self.provider.remoteID]];
+            self.loading = NO;
         });
     }];
 }
 
 -(void)setProvider:(IPKProvider *)provider{
     _provider = provider;
-    
-    [self.fetchedResultsController performFetch:nil];
+    self.fetchedResultsController = nil;
     [self refresh];
     [self.carousel reloadData];
 }
 
 -(NSString*)entityName{
     return @"IPKPage";
-}
-
-- (NSFetchedResultsController *)fetchedResultsController {
-	if (!_fetchedResultsController){
-        _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest managedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread] sectionNameKeyPath:nil cacheName:nil];
-;
-		_fetchedResultsController.delegate = self;
-        [_fetchedResultsController performFetch:nil];
-	}
-	return _fetchedResultsController;
-}
-
--(NSFetchRequest *)fetchRequest{
-    NSFetchRequest * fetchRequest = [[NSFetchRequest alloc] initWithEntityName:self.entityName];
-    NSMutableArray* sortDescriptors = [[NSMutableArray alloc] init];
-    NSArray* sortKeys = [self.sortDescriptors componentsSeparatedByString:@","];
-    for (NSString* sortKey in sortKeys) 
-    {
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sortKey ascending:YES];
-        [sortDescriptors addObject:sortDescriptor];
-    }
-    
-	fetchRequest.sortDescriptors = sortDescriptors;
-	fetchRequest.predicate = self.predicate;
-    return fetchRequest;
 }
 
 - (NSPredicate *)predicate {
@@ -118,28 +98,11 @@
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-	
-//	[SSRateLimit executeBlock:^{
-//		[self refresh:nil];
-//	} name:[NSString stringWithFormat:@"refresh-list-%@", self.provider.remoteID] limit:30.0];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-		return YES;
-	}
 	
-	return toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
-}
-
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//	if ([self showingCoverView]) {
-//		[self.addTaskView.textField resignFirstResponder];
-//	}
-	
-//	[super scrollViewDidScroll:scrollView];
+	return toInterfaceOrientation == UIInterfaceOrientationPortrait;
 }
 
 #pragma mark - NSKeyValueObserving
@@ -161,28 +124,16 @@
 
 #pragma mark - iCarouselDataSource
 
-- (NSUInteger)numberOfItemsInCarousel:(iCarousel *)carousel{
-    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:0];
-    return [sectionInfo numberOfObjects];
-}
-
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIView *)view{
+    if (self.fetchedResultsController.fetchedObjects.count == 0 || carousel.numberOfItems > self.fetchedResultsController.fetchedObjects.count){
+        return [self loadingViewWithFrame:CGRectMake(0, 5, 300, 90)];
+    }
     if (view == nil) {
-        IPIPageCarouselView * view = [[IPIPageCarouselView alloc] initWithFrame:CGRectMake(0, 5, 300, 110)];
-        [view setPage:[self.fetchedResultsController.fetchedObjects objectAtIndex:index]];
-        return view;
+        IPIPageCarouselView * newView = [[IPIPageCarouselView alloc] initWithFrame:CGRectMake(0, 5, 300, 90)];
+        [newView setPage:[self.fetchedResultsController.fetchedObjects objectAtIndex:index]];
+        return newView;
     }
     return view;
-}
-
-- (NSUInteger)numberOfPlaceholdersInCarousel:(iCarousel *)carousel{
-    return 0;
-}
-
-- (UIView *)carousel:(iCarousel *)carousel placeholderViewAtIndex:(NSUInteger)index reusingView:(UIView *)view{
-    UIView * newView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-    newView.backgroundColor = [UIColor whiteColor];
-    return newView;
 }
 
 #pragma mark - iCarouselDelegate
@@ -201,9 +152,9 @@
 }
 
 
-- (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel{
-    
-}
+//- (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel{
+//    
+//}
 
 
 - (void)carouselWillBeginDragging:(iCarousel *)carousel{
@@ -239,8 +190,6 @@
     [self.navigationController pushViewController:pageVC animated:YES];
 }
 
-
-
 - (CGFloat)carouselItemWidth:(iCarousel *)carousel{
     return 320;
 }
@@ -271,6 +220,19 @@
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller{
+    for (IPKPage* page in self.fetchedResultsController.fetchedObjects) {
+        if (!page.owner.image_profile_path) {
+            [page.owner updateWithSuccess:^(void){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.carousel reloadData];
+                });
+            } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [SSRateLimit resetLimitForName:[NSString stringWithFormat:@"refresh-provider-pages-owners-%@", self.provider.remoteID]];
+                });
+            }];
+        }
+    }
     [self.carousel reloadData];
 }
 

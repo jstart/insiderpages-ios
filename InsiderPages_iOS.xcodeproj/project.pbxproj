@@ -319,6 +319,8 @@
 		FDE97CBA15E80CEF002BC928 /* IPILeftSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDE97CB915E80CEF002BC928 /* IPILeftSearchViewController.xib */; };
 		FDEB0DDE15EC2F8A00FCDD3F /* IPIPageCarouselView.m in Sources */ = {isa = PBXBuildFile; fileRef = FDEB0DDD15EC2F8A00FCDD3F /* IPIPageCarouselView.m */; };
 		FDFAD30315D1E88B00ADFB73 /* InsiderPages.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FDFAD30115D1E88B00ADFB73 /* InsiderPages.xcdatamodeld */; };
+		FDFC6AF815ED84B00071299D /* IPIReviewCarouselView.m in Sources */ = {isa = PBXBuildFile; fileRef = FDFC6AF715ED84B00071299D /* IPIReviewCarouselView.m */; };
+		FDFC6AFF15EE8BB70071299D /* IPIAbstractCarouselViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDFC6AFE15EE8BB70071299D /* IPIAbstractCarouselViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -349,13 +351,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = SSToolkit;
-		};
-		B208C1E915BF64240080705D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B208BF6715BF63E00080705D /* SSToolkit.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = B2C507E9151BA64400E94614;
-			remoteInfo = SSToolkitResources;
 		};
 		FDAEF9CB15D1DB4E009FAD52 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -899,6 +894,10 @@
 		FDEB0DDC15EC2F8A00FCDD3F /* IPIPageCarouselView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIPageCarouselView.h; sourceTree = "<group>"; };
 		FDEB0DDD15EC2F8A00FCDD3F /* IPIPageCarouselView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIPageCarouselView.m; sourceTree = "<group>"; };
 		FDFAD30215D1E88B00ADFB73 /* InsiderPages.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = InsiderPages.xcdatamodel; sourceTree = "<group>"; };
+		FDFC6AF615ED84B00071299D /* IPIReviewCarouselView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIReviewCarouselView.h; sourceTree = "<group>"; };
+		FDFC6AF715ED84B00071299D /* IPIReviewCarouselView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIReviewCarouselView.m; sourceTree = "<group>"; };
+		FDFC6AFD15EE8BB70071299D /* IPIAbstractCarouselViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIAbstractCarouselViewController.h; sourceTree = "<group>"; };
+		FDFC6AFE15EE8BB70071299D /* IPIAbstractCarouselViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIAbstractCarouselViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1285,6 +1284,8 @@
 		B23261A615C2070D00D455EF /* Abstract */ = {
 			isa = PBXGroup;
 			children = (
+				FDFC6AFD15EE8BB70071299D /* IPIAbstractCarouselViewController.h */,
+				FDFC6AFE15EE8BB70071299D /* IPIAbstractCarouselViewController.m */,
 				B208BBA615BF63A80080705D /* CDIManagedTableViewController.h */,
 				B208BBA715BF63A80080705D /* CDIManagedTableViewController.m */,
 				B26AE9BB15C5D25E0008AB1F /* CDIGroupedTableViewController.h */,
@@ -1952,6 +1953,8 @@
 		FDEB0DDB15EC2F3300FCDD3F /* Carousel Views */ = {
 			isa = PBXGroup;
 			children = (
+				FDFC6AF615ED84B00071299D /* IPIReviewCarouselView.h */,
+				FDFC6AF715ED84B00071299D /* IPIReviewCarouselView.m */,
 				FDEB0DDC15EC2F8A00FCDD3F /* IPIPageCarouselView.h */,
 				FDEB0DDD15EC2F8A00FCDD3F /* IPIPageCarouselView.m */,
 			);
@@ -1975,7 +1978,6 @@
 			dependencies = (
 				FDAEF9DB15D1DE7D009FAD52 /* PBXTargetDependency */,
 				B208C1E815BF64240080705D /* PBXTargetDependency */,
-				B208C1EA15BF64240080705D /* PBXTargetDependency */,
 			);
 			name = InsiderPages_iOS;
 			productName = Cheddar;
@@ -2400,6 +2402,8 @@
 				FDDD555215EC25470020CFF1 /* IPIProviderPagesCarouselViewController.m in Sources */,
 				FDDD555315EC25470020CFF1 /* IPIProviderScoopsCarouselViewController.m in Sources */,
 				FDEB0DDE15EC2F8A00FCDD3F /* IPIPageCarouselView.m in Sources */,
+				FDFC6AF815ED84B00071299D /* IPIReviewCarouselView.m in Sources */,
+				FDFC6AFF15EE8BB70071299D /* IPIAbstractCarouselViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2410,11 +2414,6 @@
 			isa = PBXTargetDependency;
 			name = SSToolkit;
 			targetProxy = B208C1E715BF64240080705D /* PBXContainerItemProxy */;
-		};
-		B208C1EA15BF64240080705D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SSToolkitResources;
-			targetProxy = B208C1E915BF64240080705D /* PBXContainerItemProxy */;
 		};
 		FDAEF9DB15D1DE7D009FAD52 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2474,6 +2473,7 @@
 		B23FA773151FE0710069A0D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALTERNATE_GROUP = "";
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COMBINE_HIDPI_IMAGES = NO;
@@ -2502,6 +2502,7 @@
 					"$(SRCROOT)/Vendor/InsiderPagesKit/Vendor/MagicalRecord/MagicalRecord/**",
 				);
 				INFOPLIST_FILE = "Resources/InsiderPages-Info.plist";
+				INSTALL_GROUP = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2524,6 +2525,7 @@
 		B23FA774151FE0710069A0D1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALTERNATE_GROUP = "";
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -2553,6 +2555,7 @@
 					"$(SRCROOT)/Vendor/InsiderPagesKit/Vendor/MagicalRecord/MagicalRecord/**",
 				);
 				INFOPLIST_FILE = "Resources/InsiderPages-Info.plist";
+				INSTALL_GROUP = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

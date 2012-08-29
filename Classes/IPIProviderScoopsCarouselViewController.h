@@ -4,14 +4,12 @@
 //
 //  Created by Christopher Truman.
 //
-#import "iCarousel.h"
+#import "IPIAbstractCarouselViewController.h"
 
 @class IPKProvider;
 
-@interface IPIProviderScoopsCarouselViewController : UIViewController
+@interface IPIProviderScoopsCarouselViewController : IPIAbstractCarouselViewController
 
 @property (nonatomic, strong) IPKProvider *provider;
-@property (nonatomic, strong) iCarousel * carousel;
-@property (nonatomic, strong) NSFetchedResultsController* fetchedResultsController;
 
 @end

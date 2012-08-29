@@ -209,7 +209,11 @@
         } failure:^(AFJSONRequestOperation *operation, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSLog(@"failed to retrieve activity items, %@", [error debugDescription]);
+                if ([[operation.error.userInfo objectForKey:@"NSLocalizedRecoverySuggestion"] isEqualToString:@"{\"message\":\"you are not logged in\"}"]) {
+                    [[IPIAppDelegate sharedAppDelegate] login];
+                }
                 [SSRateLimit resetLimitForName:@"refresh-activity"];
+                [SSRateLimit executeBlock:[self refresh] name:@"refresh-activity" limit:0];
                 self.loading = NO;
             });
         }];
@@ -261,7 +265,7 @@
 }
 
 - (void)_checkUser {
-    NSLog(@"current user %@ boolean user has logged in %d", [IPKUser currentUser], [IPKUser userHasLoggedIn]);
+    NSLog(@"current user %@ boolean user has logged in %d", [IPKUser currentUser].name, [IPKUser userHasLoggedIn]);
 
     if ([IPKUser currentUser])
         return;

@@ -49,7 +49,7 @@
         self.queryModel.queryString = @"";
         self.queryModel.city = [[IPKUser currentUser].city_id stringValue];
         self.queryModel.currentPage = @"1";
-        self.queryModel.perPageNumber = @"20";
+        self.queryModel.perPageNumber = @"10";
 	}
 	return self;
 }
@@ -330,19 +330,16 @@
         case 0: {
 
             [((SSFilterableFetchedResultsController*)self.fetchedResultsController) addFilterPredicate:^BOOL(id obj) {
-                NSLog(@"%@ %@", [((IPKPage *)obj) name], self.queryModel.queryString);
                 return ([[((IPKPage *)obj) name] rangeOfString:self.queryModel.queryString].location != NSNotFound);} forKey:queryKey];
         }
             break;
         case 1: {
             [((SSFilterableFetchedResultsController*)self.fetchedResultsController) addFilterPredicate:^BOOL(id obj) {
-                NSLog(@"%@ %@", [((IPKProvider *)obj) full_name], self.queryModel.queryString);
                 return ([[((IPKProvider *)obj) full_name] rangeOfString:self.queryModel.queryString].location != NSNotFound);} forKey:queryKey];
         }
             break;
         case 2: {
             [((SSFilterableFetchedResultsController*)self.fetchedResultsController) addFilterPredicate:^BOOL(id obj) {
-                NSLog(@"%@ %@", [((IPKUser *)obj) name], self.queryModel.queryString);
                 return ([[((IPKUser *)obj) name] rangeOfString:self.queryModel.queryString].location != NSNotFound);} forKey:queryKey];
         }
             break;
@@ -413,6 +410,7 @@
 } // called before text changes
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    NSLog(@"searched for %@", self.queryModel.queryString);
     [self.queryModel setQueryString:searchBar.text];
     switch (searchBar.selectedScopeButtonIndex) {
         case 0: {

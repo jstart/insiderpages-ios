@@ -1,5 +1,5 @@
 //
-//  IPIPageCarouselView,m
+//  IPIPageCarouselView.m
 //  InsiderPages for iOS
 //
 //  Created by Truman, Christopher on 8/10/12.
@@ -57,7 +57,12 @@
         [self.nameLabel setText:page.name];
         //load image view with URL
         [self.pageCoverImageView setPathToNetworkImage:@"http://gentlemint.com/media/images/2012/04/26/3f31ab05.jpg.650x650_q85.jpg" forDisplaySize:self.pageCoverImageView.frame.size contentMode:UIViewContentModeCenter];
+    if (self.page.owner.image_profile_path) {
         [self.creatorProfileImageView setPathToNetworkImage:[self.page.owner imageProfilePathForSize:IPKUserProfileImageSizeMedium] forDisplaySize:self.creatorProfileImageView.frame.size contentMode:UIViewContentModeCenter];
+    }else{
+        [self.creatorProfileImageView setImage:nil];
+    }
+        
 }
 
 -(void)dealloc{

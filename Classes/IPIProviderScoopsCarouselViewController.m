@@ -1,13 +1,10 @@
 //
-//  IPIProviderScoopsCarouselViewController
+//  IPIProviderScoopsCarouselViewController.m
 //
 
 #import "IPIProviderScoopsCarouselViewController.h"
 #import "TTTAttributedLabel.h"
-
-
-@interface IPIProviderScoopsCarouselViewController () <iCarouselDelegate, iCarouselDataSource>
-@end
+#import "IPIReviewCarouselView.h"
 
 @implementation IPIProviderScoopsCarouselViewController
 
@@ -15,19 +12,14 @@
 
 - (id)init {
 	if ((self = [super init])) {
-        self.carousel = [[iCarousel alloc] initWithFrame:CGRectMake(0, 0, 320, 160)];
-        [self.carousel setDataSource:self];
-        [self.carousel setDelegate:self];
-        [[self view] addSubview:self.carousel];
+        self.carousel.frame = CGRectMake(0, 0, 320, 160);
     }
 	return self;
 }
 
-
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
 
 #pragma mark - UIViewController
 
@@ -36,35 +28,81 @@
 	
 }
 
+-(void)refresh{
+    self.currentPage = @1;
+    if (self.loading) {
+        return;
+    }
+    self.loading = YES;
+    NSString * providerIDString = [NSString stringWithFormat:@"%@", self.provider.id];
+    [[IPKHTTPClient sharedClient] getScoopsForProviderWithId:providerIDString withCurrentPage:self.currentPage perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"retrieved %d reviews", [[responseObject objectForKey:@"scoops"] count]);
+            self.fetchedResultsController = nil;
+            [self.carousel reloadData];
+            self.loading = NO;
+        });
+    } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [SSRateLimit resetLimitForName:[NSString stringWithFormat:@"refresh-provider-reviews-%@", self.provider.remoteID]];
+            self.loading = NO;
+        });
+    }];
+}
+
+-(void)nextPage{
+    if (self.loading) {
+        return;
+    }
+    self.currentPage = @([self.currentPage intValue] + 1);
+    self.loading = YES;
+    NSString * providerIDString = [NSString stringWithFormat:@"%@", self.provider.id];
+    [[IPKHTTPClient sharedClient] getScoopsForProviderWithId:providerIDString withCurrentPage:self.currentPage perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"retrieved %d reviews on page %@", [[responseObject objectForKey:@"scoops"] count], self.currentPage);
+            self.fetchedResultsController = nil;
+            [self.carousel reloadData];
+            self.loading = NO;
+        });
+    } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [SSRateLimit resetLimitForName:[NSString stringWithFormat:@"refresh-provider-reviews-%@", self.provider.remoteID]];
+            self.loading = NO;
+        });
+    }];
+}
+
+-(void)setProvider:(IPKProvider *)provider{
+    _provider = provider;
+    
+    [self.fetchedResultsController performFetch:nil];
+    [self refresh];
+    [self.carousel reloadData];
+}
+
+-(NSString*)entityName{
+    return @"IPKReview";
+}
+
+- (NSPredicate *)predicate {
+	return [NSPredicate predicateWithFormat:@"listing_id = %@", self.provider.id];
+}
+
+-(NSString *)sortDescriptors{
+    return @"createdAt,remoteID";
+}
+
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
 }
 
-
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-	
-//	[SSRateLimit executeBlock:^{
-//		[self refresh:nil];
-//	} name:[NSString stringWithFormat:@"refresh-list-%@", self.provider.remoteID] limit:30.0];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-		return YES;
-	}
 	
-	return toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
-}
-
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//	if ([self showingCoverView]) {
-//		[self.addTaskView.textField resignFirstResponder];
-//	}
-	
-//	[super scrollViewDidScroll:scrollView];
+	return toInterfaceOrientation == UIInterfaceOrientationPortrait;
 }
 
 #pragma mark - NSKeyValueObserving
@@ -86,30 +124,17 @@
 
 #pragma mark - iCarouselDataSource
 
-- (NSUInteger)numberOfItemsInCarousel:(iCarousel *)carousel{
-    return 50;
-}
-
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIView *)view{
+    if (self.fetchedResultsController.fetchedObjects.count == 0 || carousel.numberOfItems > self.fetchedResultsController.fetchedObjects.count){
+        return [self loadingViewWithFrame:CGRectMake(0, 0, 250, 150)];
+    }
     if (view == nil) {
-        UIView * newView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-        newView.backgroundColor = [UIColor whiteColor];
-        newView.layer.borderColor = [UIColor blackColor].CGColor;
+        IPIReviewCarouselView * newView = [[IPIReviewCarouselView alloc] initWithFrame:CGRectMake(0, 0, 250, 150)];
+        [newView setReview:[self.fetchedResultsController.fetchedObjects objectAtIndex:index]];
         return newView;
     }
     return view;
 }
-
-- (NSUInteger)numberOfPlaceholdersInCarousel:(iCarousel *)carousel{
-    return 3;
-}
-
-- (UIView *)carousel:(iCarousel *)carousel placeholderViewAtIndex:(NSUInteger)index reusingView:(UIView *)view{
-    UIView * newView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-    newView.backgroundColor = [UIColor whiteColor];
-    return newView;
-}
-
 
 #pragma mark - iCarouselDelegate
 
@@ -126,7 +151,10 @@
 }
 
 - (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel{
-    
+    if (carousel.currentItemIndex == self.fetchedResultsController.fetchedObjects.count - 1) {
+        [carousel insertItemAtIndex:carousel.currentItemIndex+1 animated:YES];
+        [self nextPage];
+    }
 }
 
 - (void)carouselWillBeginDragging:(iCarousel *)carousel{
@@ -154,7 +182,7 @@
 }
 
 - (CGFloat)carouselItemWidth:(iCarousel *)carousel{
-    return 60;
+    return 260;
 }
 
 
@@ -164,7 +192,50 @@
 
 
 //- (CGFloat)carousel:(iCarousel *)carousel valueForOption:(iCarouselOption)option withDefault:(CGFloat)value{
-//    
+//    switch (option)
+//    {
+//        case iCarouselOptionWrap:
+//        {
+//            return NO;
+//        }
+//        default:
+//        {
+//            return value;
+//        }
+//    }
+//
 //}
+
+#pragma mark - NSFetchedResultsControllerDelegate
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath{
+    
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type{
+    
+}
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller{
+    
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller{
+    for (IPKReview* review in self.fetchedResultsController.fetchedObjects) {
+        if (!review.reviewer.image_profile_path) {
+            [review.reviewer updateWithSuccess:^(void){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.carousel reloadData];
+                });
+            } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [SSRateLimit resetLimitForName:[NSString stringWithFormat:@"refresh-provider-review-owners-%@", self.provider.remoteID]];
+                });
+            }];
+        }
+    }
+    [self.carousel reloadData];
+}
 
 @end

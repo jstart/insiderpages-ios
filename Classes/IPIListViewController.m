@@ -73,11 +73,6 @@
 }
 
 
-- (IPKList *)list {
-	return (IPKList *)self.managedObject;
-}
-
-
 //- (CDIAddTaskView *)addTaskView {
 //	if (!_addTaskView) {
 //		_addTaskView = [[CDIAddTaskView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.tableView.bounds.size.width, [CDIAddTaskView height])];
