@@ -81,13 +81,17 @@
     NSArray* sortKeys = [self.sortDescriptors componentsSeparatedByString:@","];
     for (NSString* sortKey in sortKeys) 
     {
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sortKey ascending:YES];
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sortKey ascending:self.ascending];
         [sortDescriptors addObject:sortDescriptor];
     }
     
 	fetchRequest.sortDescriptors = sortDescriptors;
 	fetchRequest.predicate = self.predicate;
     return fetchRequest;
+}
+
+- (BOOL)ascending {
+	return YES;
 }
 
 - (NSPredicate *)predicate {

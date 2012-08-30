@@ -7,7 +7,7 @@
 //
 
 #import "IPIBookmarkBaseViewController.h"
-//#import "IPWelcomeViewController.h"
+#import "IPIAppDelegate.h"
 #import "UIViewController+KNSemiModal.h"
 
 @interface IPIBookmarkBaseViewController ()
@@ -83,21 +83,11 @@
     [self showBookmark];
 }
 
-- (void)presentWelcomeViewController;
-{
-	// Go to the welcome screen and have them log in or create an account.
-//	IPWelcomeViewController *welcomeViewController = [[IPWelcomeViewController alloc] initWithNibName:@"IPWelcomeViewController" bundle:[NSBundle mainBundle]];
-//    UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:welcomeViewController];
-    
-//	[self presentModalViewController:navController animated:NO];
-}
-
 - (void)presentBookmarkViewController;
 {
 	// Go to the welcome screen and have them log in or create an account.
-    if (bookmarkNavigationController == nil) {
-        IPIBookmarkContainerViewController *bookmarkContainerViewController = [[IPIBookmarkContainerViewController alloc] initWithNibName:@"IPIBookmarkContainerViewController" bundle:[NSBundle mainBundle]];
-        bookmarkNavigationController = [[UINavigationController alloc] initWithRootViewController:bookmarkContainerViewController];
+    if ([IPIAppDelegate sharedAppDelegate].bookmarkNavigationController == nil) {
+        IPIBookmarkContainerViewController * bookmarkContainerViewController = [[IPIAppDelegate sharedAppDelegate].bookmarkNavigationController.viewControllers objectAtIndex:0];
         bookmarkContainerViewController.delegate = self;
     }
     if ([[self.navigationItem.rightBarButtonItem customView] isHidden]) {

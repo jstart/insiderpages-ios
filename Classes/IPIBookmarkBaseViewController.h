@@ -17,7 +17,6 @@
 
 -(void)hideBookmark;
 -(void)showBookmark;
--(void)presentWelcomeViewController;
 -(void)presentBookmarkViewController;
 
 @end

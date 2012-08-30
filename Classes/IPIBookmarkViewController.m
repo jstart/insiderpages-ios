@@ -7,9 +7,11 @@
 //
 
 #import "IPIBookmarkViewController.h"
-//#import "IPIViewController.h"
 #import "IPIBookmarkContainerViewController.h"
-//#import "IPIBookmarkSearchViewController.h"
+#import "IPIPageTableViewCell.h"
+#import "IPIAppDelegate.h"
+#import "IIViewDeckController.h"
+#import "IPIPageViewController.h"
 
 @interface IPIBookmarkViewController ()
 
@@ -18,13 +20,11 @@
 @implementation IPIBookmarkViewController
 
 @synthesize searchBar;
-@synthesize bookmarkTableView;
 @synthesize headerViewController;
-//@synthesize notificationViewController;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)init
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super init];
     if (self) {
         // Custom initialization
     }
@@ -34,13 +34,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    self.wantsFullScreenLayout = YES;
-    CGRect frame = self.navigationController.view.frame;
-    frame.size.height = 308;
-    self.navigationController.view.frame = frame;
-    // Do any additional setup after loading the view from its nib.
-//    self.notificationViewController = [[IPNotificationListViewController alloc] initWithNibName:@"IPINotificationListViewController" bundle:[NSBundle mainBundle]];
-//    [self.notificationViewController.navigationController setNavigationBarHidden:NO];
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     self.searchBar.delegate = self;
     self.searchBar.barStyle = UIBarStyleDefault;
@@ -50,7 +43,7 @@
     
     self.headerViewController = [[IPIBookmarkHeaderViewController alloc] initWithNibName:@"IPIBookmarkHeaderViewController" bundle:[NSBundle mainBundle]];
 
-    [self.bookmarkTableView setTableFooterView:self.headerViewController.view];
+    [self.tableView setTableFooterView:self.headerViewController.view];
 
     if ([IPKUser currentUser]) {
         self.headerViewController.usernameLabel.text = [[IPKUser currentUser] name];
@@ -70,11 +63,51 @@
 
 - (void)viewDidUnload
 {
-  [self setBookmarkTableView:nil];
     [self setSearchBar:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+- (void(^)(void))refresh {
+    return ^(void){
+        if (self.loading || ![IPKUser currentUser]) {
+            return;
+        }
+        
+        self.loading = YES;
+        NSString * myUserId = [NSString stringWithFormat:@"%@", [IPKUser currentUser].id];
+        [[IPKHTTPClient sharedClient] getPagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.loading = NO;
+                [self.fetchedResultsController performFetch:nil];
+                [self.tableView reloadData];
+            });
+        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SSRateLimit resetLimitForName:@"refresh-mine-pages"];
+                self.loading = NO;
+            });
+        }];
+    };
+}
+
+#pragma mark - SSManagedViewController
+
+- (Class)entityClass {
+	return [IPKPage class];
+}
+
+- (NSPredicate *)predicate {
+	return [NSPredicate predicateWithFormat:@"user_id == %@", [IPKUser currentUser].id];
+}
+
+-(NSString *)sortDescriptors{
+    return @"updatedAt,remoteID";
+}
+
+- (NSString *)sectionNameKeyPath {
+	return nil;
 }
 
 -(void)didMoveToParentViewController:(UIViewController *)parent{
@@ -85,122 +118,29 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-  return 1;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-  NSString* CellIdentifier = @"Cell";
-  switch (indexPath.row) {
-    case 0:{
-      CellIdentifier = @"Search";
-    }
-      break;
-    default:
-      CellIdentifier = @"Cell";
-      break;
-  }
-
-  UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
-  if (cell == nil) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
-    switch (indexPath.row) {
-      case 0:{
-        [cell addSubview:self.searchBar];
-        cell.backgroundColor = UIColor.grayColor;
-        break;
-      }
-      case 1:{
-        cell.textLabel.text = @"Create New Page";
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        break;
-      }
-      case 2:{
-        cell.textLabel.text = @"My Pages";
-        break;
-      }
-      case 3:{
-        cell.textLabel.text = @"Following";
-        break;
-      }
-      case 4:{
-        cell.textLabel.text = @"Popular";
-        break;
-      }
-      case 5:{
-        cell.textLabel.text = @"Notifications";
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        break;
-      }
-      default:
-        cell.textLabel.text = @"Hi";
-        break;
-    }
-  }
-   return cell;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-  return 6;
-}
-
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    switch (indexPath.row) {
-        //Search
-      case 0:{
-        break;
-      }
-        //Create New Page
-      case 1:{
-        if (((IPIBookmarkContainerViewController*)self.navigationController.parentViewController).delegate) {
-          [((IPIBookmarkContainerViewController*)self.navigationController.parentViewController).delegate bookmarkViewWasDismissed:-1];
-        }
-        else{
-          NSLog(@"No delegate for bookmarkview");
-        }
-        break;
-      }
-        //My Pages
-      case 2:{
-        if (((IPIBookmarkContainerViewController*)self.navigationController.parentViewController).delegate) {
-          [((IPIBookmarkContainerViewController*)self.navigationController.parentViewController).delegate bookmarkViewWasDismissed:1];
-        }
-        else{
-          NSLog(@"No delegate for bookmarkview");
-        }
-        break;
-      }
-        //Following
-      case 3:{
-        if (((IPIBookmarkContainerViewController*)self.navigationController.parentViewController).delegate) {
-          [((IPIBookmarkContainerViewController*)self.navigationController.parentViewController).delegate bookmarkViewWasDismissed:2];
-        }
-        else{
-          NSLog(@"No delegate for bookmarkview");
-        }
-        break;
-      }
-        //Popular
-      case 4:{
-        if (((IPIBookmarkContainerViewController*)self.navigationController.parentViewController).delegate) {
-          [((IPIBookmarkContainerViewController*)self.navigationController.parentViewController).delegate bookmarkViewWasDismissed:0];
-        }
-        else{
-          NSLog(@"No delegate for bookmarkview");
-        }
-        break;
-      }
-        //Notifications
-      case 5:{
-//          [self.navigationController pushViewController:notificationViewController animated:YES];
-        break;
-      }
-      default:
-        break;
-    }
+    IPKPage * page = ((IPKPage*)[self objectForViewIndexPath:indexPath]);
+    IPIPageViewController * pageVC = [[IPIPageViewController alloc] init];
+    pageVC.managedObject = page;
+    NSLog(@"%@", [((IIViewDeckController*)[IPIAppDelegate sharedAppDelegate].window.rootViewController) centerController]);
+    NSLog(@"%@", ((IIViewDeckController*)[IPIAppDelegate sharedAppDelegate].window.rootViewController));
+    UINavigationController * centerNavigationController = (UINavigationController*)[((IIViewDeckController*)[IPIAppDelegate sharedAppDelegate].window.rootViewController) centerController];
+    [centerNavigationController pushViewController:pageVC animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [[self containerViewController].delegate bookmarkViewWasDismissed:-2];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	static NSString *const cellIdentifier = @"cellIdentifier";
+    
+	IPIPageTableViewCell *cell = (IPIPageTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+	if (!cell) {
+		cell = [[IPIPageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+	}
+	
+	cell.page = [self objectForViewIndexPath:indexPath];
+	
+	return cell;
 }
 
 #pragma mark
@@ -211,9 +151,7 @@
 }
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
-//  [self.searchBar setShowsCancelButton:YES animated:YES];
-//    IPIBookmarkSearchViewController * bookmarkSearchViewController = [[IPIBookmarkSearchViewController alloc] initWithNibName:@"IPIBookmarkSearchViewController" bundle:[NSBundle mainBundle]];
-//    [self.navigationController pushViewController:bookmarkSearchViewController animated:YES];
+
   return NO;
 }
 
@@ -227,4 +165,5 @@
   [self.searchBar setShowsCancelButton:NO animated:YES];
   [self.searchBar resignFirstResponder];
 }
+
 @end

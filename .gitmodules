@@ -33,7 +33,7 @@
 	url = git://github.com/OliverLetterer/UIExpandableTableView.git
 [submodule "Vendor/YIFullScreenScroll"]
 	path = Vendor/YIFullScreenScroll
-	url = git://github.com/inamiy/YIFullScreenScroll.git
+	url = git@github.com:jstart/YIFullScreenScroll.git
 [submodule "Vendor/ViewDeck"]
 	path = Vendor/ViewDeck
 	url = git://github.com/Inferis/ViewDeck.git

@@ -84,6 +84,10 @@
     return @"IPKReview";
 }
 
+-(BOOL)ascending{
+    return NO;
+}
+
 - (NSPredicate *)predicate {
 	return [NSPredicate predicateWithFormat:@"listing_id = %@", self.provider.id];
 }
@@ -133,6 +137,9 @@
         [newView setReview:[self.fetchedResultsController.fetchedObjects objectAtIndex:index]];
         return newView;
     }
+    else{
+        [((IPIReviewCarouselView *)view) setReview:[self.fetchedResultsController.fetchedObjects objectAtIndex:index]];
+    }
     return view;
 }
 
@@ -148,13 +155,6 @@
 
 - (void)carouselDidScroll:(iCarousel *)carousel{
     
-}
-
-- (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel{
-    if (carousel.currentItemIndex == self.fetchedResultsController.fetchedObjects.count - 1) {
-        [carousel insertItemAtIndex:carousel.currentItemIndex+1 animated:YES];
-        [self nextPage];
-    }
 }
 
 - (void)carouselWillBeginDragging:(iCarousel *)carousel{

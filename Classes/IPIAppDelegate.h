@@ -6,6 +6,7 @@
 //
 #import <FacebookSDK/FacebookSDK.h>
 #import "RCLocationManager.h"
+#import "IPIBookmarkContainerViewController.h"
 
 @interface IPIAppDelegate : UIResponder <UIApplicationDelegate, RCLocationManagerDelegate>
 
@@ -13,6 +14,7 @@
 @property (strong, nonatomic) FBSession *session;
 @property (strong, nonatomic) RCLocationManager * locationManager;
 @property (strong, nonatomic) CLGeocoder * geocoder;
+@property (strong, nonatomic) UINavigationController * bookmarkNavigationController;
 
 - (void)applyStylesheet;
 + (IPIAppDelegate *)sharedAppDelegate;

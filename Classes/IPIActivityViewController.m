@@ -61,10 +61,6 @@
     [[self view] addSubview:tabBar];
 //	self.noContentView = [[CDINoListsView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundView.backgroundColor = [UIColor grayColor];
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_listUpdated:) name:kIPKListDidUpdateNotificationName object:nil];
-	}
-
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_currentUserDidChange:) name:kIPKCurrentUserChangedNotificationName object:nil];
     
 	_fullScreenDelegate = [[YIFullScreenScroll alloc] initWithViewController:self];

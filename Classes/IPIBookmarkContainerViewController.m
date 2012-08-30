@@ -36,7 +36,7 @@
     self.navigationController.view.frame = frame;
     // Do any additional setup after loading the view from its nib.
     
-    IPIBookmarkViewController *bookmarkViewController = [[IPIBookmarkViewController alloc] initWithNibName:@"IPIBookmarkViewController" bundle:[NSBundle mainBundle]];
+    IPIBookmarkViewController *bookmarkViewController = [[IPIBookmarkViewController alloc] init];
     UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:bookmarkViewController];
     [self addChildViewController:navController];
     [[self view] addSubview:navController.view];
@@ -50,7 +50,6 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
 //    CGRect frame = self.navigationController.view.frame;
 //    frame.origin.y = 20;
 //    self.navigationController.view.frame = frame;

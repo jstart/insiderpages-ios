@@ -100,6 +100,8 @@
 		// Setup status bar network indicator
 		[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
 				
+        IPIBookmarkContainerViewController *bookmarkContainerViewController = [[IPIBookmarkContainerViewController alloc] initWithNibName:@"IPIBookmarkContainerViewController" bundle:[NSBundle mainBundle]];
+        self.bookmarkNavigationController = [[UINavigationController alloc] initWithRootViewController:bookmarkContainerViewController];
 		// Initialize the connection to Pusher		
 //		[CDKPushController sharedController];
 		
@@ -187,10 +189,14 @@
             [self storeCookies];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [hud completeAndDismissWithTitle:@"Successfully Logged In"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"Logged In" object:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"IPCurrentUserChangedNotification" object:nil];
             });
         }else{
             dispatch_async(dispatch_get_main_queue(), ^{
                 [hud completeAndDismissWithTitle:@"Successfully Registered"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"Logged In" object:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"IPCurrentUserChangedNotification" object:nil];
             });
         }
     } failure:^(AFJSONRequestOperation *operation, NSError *error) {

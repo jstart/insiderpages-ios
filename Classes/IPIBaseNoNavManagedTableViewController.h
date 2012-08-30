@@ -7,7 +7,9 @@
 //
 
 #import "CDIManagedTableViewController.h"
-
+#import "UIViewController+KNSemiModal.h"
+#import "IPIBookmarkContainerViewController.h"
 @interface IPIBaseNoNavManagedTableViewController : CDIManagedTableViewController
 @property UIButton * backButton;
+@property UIButton * bookmarkButton;
 @end

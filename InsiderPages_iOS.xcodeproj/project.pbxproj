@@ -172,8 +172,6 @@
 		B2AD031915C4896E00D9B909 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2AD031815C4896E00D9B909 /* AudioToolbox.framework */; };
 		B2AD032115C493C200D9B909 /* CDIWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2AD032015C493C100D9B909 /* CDIWebViewController.m */; };
 		FD00928F15E55EA100BD2626 /* IPIBookmarkBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD00928E15E55EA100BD2626 /* IPIBookmarkBaseViewController.m */; };
-		FD00929915E55EB000BD2626 /* IPIBookmarkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD00929115E55EB000BD2626 /* IPIBookmarkViewController.m */; };
-		FD00929A15E55EB000BD2626 /* IPIBookmarkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD00929215E55EB000BD2626 /* IPIBookmarkViewController.xib */; };
 		FD00929B15E55EB000BD2626 /* IPIBookmarkHeaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD00929415E55EB000BD2626 /* IPIBookmarkHeaderViewController.m */; };
 		FD00929C15E55EB000BD2626 /* IPIBookmarkHeaderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD00929515E55EB000BD2626 /* IPIBookmarkHeaderViewController.xib */; };
 		FD00929D15E55EB000BD2626 /* IPIBookmarkContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD00929715E55EB000BD2626 /* IPIBookmarkContainerViewController.m */; };
@@ -321,6 +319,10 @@
 		FDFAD30315D1E88B00ADFB73 /* InsiderPages.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FDFAD30115D1E88B00ADFB73 /* InsiderPages.xcdatamodeld */; };
 		FDFC6AF815ED84B00071299D /* IPIReviewCarouselView.m in Sources */ = {isa = PBXBuildFile; fileRef = FDFC6AF715ED84B00071299D /* IPIReviewCarouselView.m */; };
 		FDFC6AFF15EE8BB70071299D /* IPIAbstractCarouselViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDFC6AFE15EE8BB70071299D /* IPIAbstractCarouselViewController.m */; };
+		FDFC6B3015EECDD00071299D /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDFC6B2F15EECDD00071299D /* AddressBook.framework */; };
+		FDFC6B3415EEEC320071299D /* IPIBookmarkNotificationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDFC6B3315EEEC320071299D /* IPIBookmarkNotificationsViewController.m */; };
+		FDFC6B3615EEFF9C0071299D /* IPIBookmarkBaseModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDFC6B3515EEFF9A0071299D /* IPIBookmarkBaseModalViewController.m */; };
+		FDFC6B3F15EF017D0071299D /* IPIBookmarkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDFC6B3E15EF017D0071299D /* IPIBookmarkViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -612,9 +614,7 @@
 		B2AD032015C493C100D9B909 /* CDIWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIWebViewController.m; sourceTree = "<group>"; };
 		FD00928D15E55EA100BD2626 /* IPIBookmarkBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIBookmarkBaseViewController.h; sourceTree = "<group>"; };
 		FD00928E15E55EA100BD2626 /* IPIBookmarkBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIBookmarkBaseViewController.m; sourceTree = "<group>"; };
-		FD00929015E55EB000BD2626 /* IPIBookmarkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIBookmarkViewController.h; sourceTree = "<group>"; };
-		FD00929115E55EB000BD2626 /* IPIBookmarkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIBookmarkViewController.m; sourceTree = "<group>"; };
-		FD00929215E55EB000BD2626 /* IPIBookmarkViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPIBookmarkViewController.xib; sourceTree = "<group>"; };
+		FD00929015E55EB000BD2626 /* IPIBookmarkBaseModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIBookmarkBaseModalViewController.h; sourceTree = "<group>"; };
 		FD00929315E55EB000BD2626 /* IPIBookmarkHeaderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIBookmarkHeaderViewController.h; sourceTree = "<group>"; };
 		FD00929415E55EB000BD2626 /* IPIBookmarkHeaderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIBookmarkHeaderViewController.m; sourceTree = "<group>"; };
 		FD00929515E55EB000BD2626 /* IPIBookmarkHeaderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPIBookmarkHeaderViewController.xib; sourceTree = "<group>"; };
@@ -898,6 +898,12 @@
 		FDFC6AF715ED84B00071299D /* IPIReviewCarouselView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIReviewCarouselView.m; sourceTree = "<group>"; };
 		FDFC6AFD15EE8BB70071299D /* IPIAbstractCarouselViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIAbstractCarouselViewController.h; sourceTree = "<group>"; };
 		FDFC6AFE15EE8BB70071299D /* IPIAbstractCarouselViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIAbstractCarouselViewController.m; sourceTree = "<group>"; };
+		FDFC6B2F15EECDD00071299D /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		FDFC6B3215EEEC320071299D /* IPIBookmarkNotificationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIBookmarkNotificationsViewController.h; sourceTree = "<group>"; };
+		FDFC6B3315EEEC320071299D /* IPIBookmarkNotificationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIBookmarkNotificationsViewController.m; sourceTree = "<group>"; };
+		FDFC6B3515EEFF9A0071299D /* IPIBookmarkBaseModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIBookmarkBaseModalViewController.m; sourceTree = "<group>"; };
+		FDFC6B3D15EF017C0071299D /* IPIBookmarkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIBookmarkViewController.h; sourceTree = "<group>"; };
+		FDFC6B3E15EF017D0071299D /* IPIBookmarkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIBookmarkViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -905,6 +911,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDFC6B3015EECDD00071299D /* AddressBook.framework in Frameworks */,
 				FDD954C215E24C2100F38150 /* Twitter.framework in Frameworks */,
 				FD547A9715DEB78B00922D5A /* CoreLocation.framework in Frameworks */,
 				FD547A0615DC400100922D5A /* MapKit.framework in Frameworks */,
@@ -1308,6 +1315,7 @@
 		B23FA74A151FE0710069A0D1 = {
 			isa = PBXGroup;
 			children = (
+				FDFC6B2F15EECDD00071299D /* AddressBook.framework */,
 				FDFAD30115D1E88B00ADFB73 /* InsiderPages.xcdatamodeld */,
 				B208BB9115BF63A80080705D /* Classes */,
 				B208BBD015BF63A80080705D /* Other Sources */,
@@ -1417,11 +1425,10 @@
 		FD00928C15E55E9500BD2626 /* Bookmark */ = {
 			isa = PBXGroup;
 			children = (
-				FD00928D15E55EA100BD2626 /* IPIBookmarkBaseViewController.h */,
-				FD00928E15E55EA100BD2626 /* IPIBookmarkBaseViewController.m */,
-				FD00929015E55EB000BD2626 /* IPIBookmarkViewController.h */,
-				FD00929115E55EB000BD2626 /* IPIBookmarkViewController.m */,
-				FD00929215E55EB000BD2626 /* IPIBookmarkViewController.xib */,
+				FDFC6B3115EEEBBC0071299D /* Notifications */,
+				FD00929015E55EB000BD2626 /* IPIBookmarkBaseModalViewController.h */,
+				FDFC6B3515EEFF9A0071299D /* IPIBookmarkBaseModalViewController.m */,
+				FDFC6B4015EF01850071299D /* modal bookmark views */,
 				FD00929315E55EB000BD2626 /* IPIBookmarkHeaderViewController.h */,
 				FD00929415E55EB000BD2626 /* IPIBookmarkHeaderViewController.m */,
 				FD00929515E55EB000BD2626 /* IPIBookmarkHeaderViewController.xib */,
@@ -1444,6 +1451,8 @@
 		FD219CB815E5851A00F334D9 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				FD00928D15E55EA100BD2626 /* IPIBookmarkBaseViewController.h */,
+				FD00928E15E55EA100BD2626 /* IPIBookmarkBaseViewController.m */,
 				FDCCBE2B15E6D58400A613D7 /* IPIBaseNoNavViewController.h */,
 				FDCCBE2C15E6D58400A613D7 /* IPIBaseNoNavViewController.m */,
 				FD219CB915E5853B00F334D9 /* IPIBaseNoNavManagedTableViewController.h */,
@@ -1961,6 +1970,24 @@
 			name = "Carousel Views";
 			sourceTree = "<group>";
 		};
+		FDFC6B3115EEEBBC0071299D /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				FDFC6B3215EEEC320071299D /* IPIBookmarkNotificationsViewController.h */,
+				FDFC6B3315EEEC320071299D /* IPIBookmarkNotificationsViewController.m */,
+			);
+			name = Notifications;
+			sourceTree = "<group>";
+		};
+		FDFC6B4015EF01850071299D /* modal bookmark views */ = {
+			isa = PBXGroup;
+			children = (
+				FDFC6B3D15EF017C0071299D /* IPIBookmarkViewController.h */,
+				FDFC6B3E15EF017D0071299D /* IPIBookmarkViewController.m */,
+			);
+			name = "modal bookmark views";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2207,7 +2234,6 @@
 				FD547A8215DE1FE300922D5A /* README.md in Resources */,
 				FD547A8415DE1FE300922D5A /* UIResponder+KeyboardCache.podspec in Resources */,
 				FD9AB96815E4375A0049B2C0 /* uiss.json in Resources */,
-				FD00929A15E55EB000BD2626 /* IPIBookmarkViewController.xib in Resources */,
 				FD00929C15E55EB000BD2626 /* IPIBookmarkHeaderViewController.xib in Resources */,
 				FD00929E15E55EB000BD2626 /* IPIBookmarkContainerViewController.xib in Resources */,
 				FD0092A115E55F0500BD2626 /* bookmark.png in Resources */,
@@ -2387,7 +2413,6 @@
 				FD547AC015DF018B00922D5A /* SVPullToRefresh.m in Sources */,
 				FDD954C015E24B2E00F38150 /* IPISocialShareHelper.m in Sources */,
 				FD00928F15E55EA100BD2626 /* IPIBookmarkBaseViewController.m in Sources */,
-				FD00929915E55EB000BD2626 /* IPIBookmarkViewController.m in Sources */,
 				FD00929B15E55EB000BD2626 /* IPIBookmarkHeaderViewController.m in Sources */,
 				FD00929D15E55EB000BD2626 /* IPIBookmarkContainerViewController.m in Sources */,
 				FD00957C15E5610B00BD2626 /* UIViewController+KNSemiModal.m in Sources */,
@@ -2404,6 +2429,9 @@
 				FDEB0DDE15EC2F8A00FCDD3F /* IPIPageCarouselView.m in Sources */,
 				FDFC6AF815ED84B00071299D /* IPIReviewCarouselView.m in Sources */,
 				FDFC6AFF15EE8BB70071299D /* IPIAbstractCarouselViewController.m in Sources */,
+				FDFC6B3415EEEC320071299D /* IPIBookmarkNotificationsViewController.m in Sources */,
+				FDFC6B3615EEFF9C0071299D /* IPIBookmarkBaseModalViewController.m in Sources */,
+				FDFC6B3F15EF017D0071299D /* IPIBookmarkViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

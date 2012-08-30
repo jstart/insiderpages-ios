@@ -36,7 +36,7 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	
+	self.view.backgroundColor = [UIColor grayColor];
     self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 320, 180)];
     [[self view] addSubview:self.mapView];
 
@@ -61,6 +61,10 @@
     [super viewWillAppear:animated];
     self.title = self.provider.full_name;
     [self.headerView setProvider:self.provider];
+    MKPointAnnotation * point = [[MKPointAnnotation alloc] init];
+    [point setCoordinate:CLLocationCoordinate2DMake([self.provider.address.lat doubleValue], [self.provider.address.lng doubleValue])];
+    [self.mapView addAnnotation:point];
+    [self.mapView setCenterCoordinate:CLLocationCoordinate2DMake([self.provider.address.lat doubleValue], [self.provider.address.lng doubleValue]) animated:YES];
 }
 
 
@@ -111,9 +115,8 @@
 -(void)callButtonPressed:(IPKProvider*)provider{
     UIDevice *device = [UIDevice currentDevice];
     if ([[device model] isEqualToString:@"iPhone"] ) {
-        NSString * phoneNumberFormatted = [NSString stringWithFormat:@"tel:%@",self.provider];
-#warning don't have access to phone number right now
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:130-032-2837"]]];
+        NSString * phoneNumberFormatted = [NSString stringWithFormat:@"tel:%@",self.provider.address.phone];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumberFormatted]];
     } else {
         UIAlertView *notPermitted=[[UIAlertView alloc] initWithTitle:@"Alert" message:@"Your device doesn't support this feature." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [notPermitted show];
@@ -121,7 +124,17 @@
 }
 
 -(void)directionButtonPressed:(IPKProvider*)provider{
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://maps.google.com/maps?q=London"]];
+    NSString * locationFormatted = [NSString stringWithFormat:@"%@ %@",self.provider.address.address_1, self.provider.address.zip_code];
+    CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([self.provider.address.lat doubleValue], [self.provider.address.lng doubleValue]);
+    NSString * mapsURLFormatted = [NSString stringWithFormat:@"http://maps.google.com/maps?saddr=%f,%f&daddr=%@",coord.latitude, coord.longitude, locationFormatted];
+    if ([NSClassFromString(@"MKMapItem") instancesRespondToSelector:@selector(isCurrentLocation)]){
+        NSDictionary * addressDictionary = [NSDictionary dictionaryWithObjectsAndKeys:self.provider.address.address_1, kABPersonAddressStreetKey, self.provider.address.zip_code, kABPersonAddressZIPKey, nil];
+        MKPlacemark * placemark = [[MKPlacemark alloc] initWithCoordinate:coord addressDictionary:addressDictionary];
+        MKMapItem * mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
+        [MKMapItem openMapsWithItems:@[ mapItem ] launchOptions:nil];
+    }else{
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:mapsURLFormatted]];
+    }
 }
 
 -(void)shareButtonPressed:(IPKProvider*)provider{

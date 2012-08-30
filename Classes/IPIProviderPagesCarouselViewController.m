@@ -83,6 +83,10 @@
     return @"IPKPage";
 }
 
+-(BOOL)ascending{
+    return NO;
+}
+
 - (NSPredicate *)predicate {
 	return [NSPredicate predicateWithFormat:@"ANY providers.remoteID = %@", self.provider.remoteID];
 }
@@ -132,6 +136,9 @@
         IPIPageCarouselView * newView = [[IPIPageCarouselView alloc] initWithFrame:CGRectMake(0, 5, 300, 90)];
         [newView setPage:[self.fetchedResultsController.fetchedObjects objectAtIndex:index]];
         return newView;
+    }
+    else{
+        [((IPIPageCarouselView *)view) setPage:[self.fetchedResultsController.fetchedObjects objectAtIndex:index]];
     }
     return view;
 }

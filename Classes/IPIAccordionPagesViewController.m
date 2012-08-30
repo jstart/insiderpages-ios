@@ -58,10 +58,6 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
     //	self.noContentView = [[CDINoListsView alloc] initWithFrame:CGRectZero];
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_listUpdated:) name:kIPKListDidUpdateNotificationName object:nil];
-	}
-
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_currentUserDidChange:) name:kIPKCurrentUserChangedNotificationName object:nil];
 }
 
