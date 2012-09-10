@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 InisderPages. All rights reserved.
 //
 
-#import "IPIExpandingPageHeaderTableViewCell.h"
 #import "IPIPageViewController.h"
 #import "IPIAccordionViewController.h"
 

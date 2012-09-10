@@ -3,7 +3,6 @@
 //
 
 #import "CDIManagedTableViewController.h"
-#import "UIExpandableTableView.h"
 #import "IIViewDeckController.h"
 #import "SVPullToRefresh.h"
 

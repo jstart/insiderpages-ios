@@ -7,7 +7,6 @@
 #import "IPIPageTableViewCell.h"
 #import "IPIProviderTableViewCell.h"
 #import "IPIUserTableViewCell.h"
-#import "IPIExpandingPageHeaderTableViewCell.h"
 #import "UIColor+CheddariOSAdditions.h"
 //#import "CDINoListsView.h"
 #import <SSToolkit/UIScrollView+SSToolkitAdditions.h>
@@ -250,7 +249,7 @@
             [self.viewDeckController closeLeftViewAnimated:YES completion:^(IIViewDeckController *controller) {
                 IPKPage * page = ((IPKPage*)[self objectForViewIndexPath:indexPath]);
                 IPIPageViewController * pageVC = [[IPIPageViewController alloc] init];
-                pageVC.managedObject = page;
+                pageVC.page = page;
                 [((UINavigationController*)controller.centerController) pushViewController:pageVC animated:NO];
             }];
         }

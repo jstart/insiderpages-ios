@@ -4,7 +4,6 @@
 
 #import "IPILeftPagesViewController.h"
 #import "IPIPageTableViewCell.h"
-#import "IPIExpandingPageHeaderTableViewCell.h"
 #import "UIColor+CheddariOSAdditions.h"
 //#import "CDINoListsView.h"
 #import <SSToolkit/UIScrollView+SSToolkitAdditions.h>
@@ -249,32 +248,6 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
 	[super controllerDidChangeContent:controller];
 	
-}
-
-
-#pragma mark - UIExpandableTableView
-- (BOOL)tableView:(UIExpandableTableView *)tableView canExpandSection:(NSInteger)section{
-    return YES;
-}
-
-- (BOOL)tableView:(UIExpandableTableView *)tableView needsToDownloadDataForExpandableSection:(NSInteger)section{
-    return NO;
-}
-
-- (UITableViewCell<UIExpandingTableViewCell> *)tableView:(UIExpandableTableView *)tableView expandingCellForSection:(NSInteger)section{
-    IPIExpandingPageHeaderTableViewCell *cell = (IPIExpandingPageHeaderTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"sectionIdentifier"];
-	if (!cell) {
-		cell = [[IPIExpandingPageHeaderTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"sectionIdentifier"];
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
-	}
-	
-	[cell.textLabel setText:((id <NSFetchedResultsSectionInfo>)[[self.fetchedResultsController sections] objectAtIndex:section]).name];
-	
-	return cell;
-}
-
-- (void)tableView:(UIExpandableTableView *)tableView downloadDataForExpandableSection:(NSInteger)section{
-    
 }
 
 @end

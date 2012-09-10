@@ -5,7 +5,6 @@
 #import "IPIAccordionPagesViewController.h"
 #import "IPIPageTableViewCell.h"
 #import "IPIPageViewController.h"
-#import "IPIExpandingPageHeaderTableViewCell.h"
 #import "UIColor+CheddariOSAdditions.h"
 //#import "CDINoListsView.h"
 #import <SSToolkit/UIScrollView+SSToolkitAdditions.h>

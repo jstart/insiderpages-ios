@@ -181,14 +181,11 @@
 		FD00957C15E5610B00BD2626 /* UIViewController+KNSemiModal.m in Sources */ = {isa = PBXBuildFile; fileRef = FD00957B15E5610B00BD2626 /* UIViewController+KNSemiModal.m */; };
 		FD219CB715E5796500F334D9 /* IPIPageTableViewHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = FD219CB615E5796500F334D9 /* IPIPageTableViewHeader.m */; };
 		FD219CBB15E5853B00F334D9 /* IPIBaseNoNavManagedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD219CBA15E5853B00F334D9 /* IPIBaseNoNavManagedTableViewController.m */; };
-		FD269E7215D6FF480050BF46 /* UIExpandableTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269E7115D6FF480050BF46 /* UIExpandableTableView.m */; };
-		FD269E7515D6FF6E0050BF46 /* GHCollapsingAndSpinningTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269E7415D6FF6E0050BF46 /* GHCollapsingAndSpinningTableViewCell.m */; };
 		FD269EA715D77B580050BF46 /* UIView+YIFullScreenScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269EA415D77B580050BF46 /* UIView+YIFullScreenScroll.m */; };
 		FD269EA815D77B580050BF46 /* YIFullScreenScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269EA615D77B580050BF46 /* YIFullScreenScroll.m */; };
 		FD269F1F15D9B31F0050BF46 /* IIViewDeckController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F1C15D9B31F0050BF46 /* IIViewDeckController.m */; };
 		FD269F2015D9B31F0050BF46 /* WrapController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F1E15D9B31F0050BF46 /* WrapController.m */; };
 		FD269F2315D9B64B0050BF46 /* IPIPageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F2215D9B64B0050BF46 /* IPIPageTableViewCell.m */; };
-		FD269F4E15DA15DE0050BF46 /* IPIExpandingPageHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F4D15DA15DE0050BF46 /* IPIExpandingPageHeaderTableViewCell.m */; };
 		FD269FF215DAB71D0050BF46 /* NSString+UISS.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F9D15DAB71D0050BF46 /* NSString+UISS.m */; };
 		FD269FF315DAB71D0050BF46 /* UILabel+UISS.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F9F15DAB71D0050BF46 /* UILabel+UISS.m */; };
 		FD269FF415DAB71D0050BF46 /* UISS.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FA215DAB71D0050BF46 /* UISS.m */; };
@@ -652,10 +649,6 @@
 		FD219CB615E5796500F334D9 /* IPIPageTableViewHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIPageTableViewHeader.m; sourceTree = "<group>"; };
 		FD219CB915E5853B00F334D9 /* IPIBaseNoNavManagedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIBaseNoNavManagedTableViewController.h; sourceTree = "<group>"; };
 		FD219CBA15E5853B00F334D9 /* IPIBaseNoNavManagedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIBaseNoNavManagedTableViewController.m; sourceTree = "<group>"; };
-		FD269E7015D6FF480050BF46 /* UIExpandableTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIExpandableTableView.h; path = UIExpandableTableView/UIExpandableTableView.h; sourceTree = "<group>"; };
-		FD269E7115D6FF480050BF46 /* UIExpandableTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIExpandableTableView.m; path = UIExpandableTableView/UIExpandableTableView.m; sourceTree = "<group>"; };
-		FD269E7315D6FF6E0050BF46 /* GHCollapsingAndSpinningTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHCollapsingAndSpinningTableViewCell.h; path = UIExpandableTableView/UIExpandableTableViewSample/UIExpandableTableViewSample/GHCollapsingAndSpinningTableViewCell.h; sourceTree = "<group>"; };
-		FD269E7415D6FF6E0050BF46 /* GHCollapsingAndSpinningTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHCollapsingAndSpinningTableViewCell.m; path = UIExpandableTableView/UIExpandableTableViewSample/UIExpandableTableViewSample/GHCollapsingAndSpinningTableViewCell.m; sourceTree = "<group>"; };
 		FD269EA315D77B580050BF46 /* UIView+YIFullScreenScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+YIFullScreenScroll.h"; sourceTree = "<group>"; };
 		FD269EA415D77B580050BF46 /* UIView+YIFullScreenScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+YIFullScreenScroll.m"; sourceTree = "<group>"; };
 		FD269EA515D77B580050BF46 /* YIFullScreenScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YIFullScreenScroll.h; sourceTree = "<group>"; };
@@ -666,8 +659,6 @@
 		FD269F1E15D9B31F0050BF46 /* WrapController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WrapController.m; sourceTree = "<group>"; };
 		FD269F2115D9B64A0050BF46 /* IPIPageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIPageTableViewCell.h; sourceTree = "<group>"; };
 		FD269F2215D9B64B0050BF46 /* IPIPageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIPageTableViewCell.m; sourceTree = "<group>"; };
-		FD269F4C15DA15DD0050BF46 /* IPIExpandingPageHeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIExpandingPageHeaderTableViewCell.h; sourceTree = "<group>"; };
-		FD269F4D15DA15DE0050BF46 /* IPIExpandingPageHeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIExpandingPageHeaderTableViewCell.m; sourceTree = "<group>"; };
 		FD269F9C15DAB71D0050BF46 /* NSString+UISS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+UISS.h"; path = "UISS/Project/UISS/NSString+UISS.h"; sourceTree = "<group>"; };
 		FD269F9D15DAB71D0050BF46 /* NSString+UISS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+UISS.m"; path = "UISS/Project/UISS/NSString+UISS.m"; sourceTree = "<group>"; };
 		FD269F9E15DAB71D0050BF46 /* UILabel+UISS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UILabel+UISS.h"; path = "UISS/Project/UISS/UILabel+UISS.h"; sourceTree = "<group>"; };
@@ -1277,8 +1268,6 @@
 				FDB300C215F977020003CC60 /* IPIDisqusTableViewCell.m */,
 				FDE97CB615E8058C002BC928 /* IPIUserTableViewCell.h */,
 				FDE97CB715E8058C002BC928 /* IPIUserTableViewCell.m */,
-				FD269F4C15DA15DD0050BF46 /* IPIExpandingPageHeaderTableViewCell.h */,
-				FD269F4D15DA15DE0050BF46 /* IPIExpandingPageHeaderTableViewCell.m */,
 				FDAA2E6A15D5887D00793375 /* IPIProviderTableViewCell.h */,
 				FDAA2E6B15D5887D00793375 /* IPIProviderTableViewCell.m */,
 				B208BBA015BF63A80080705D /* CDIListTableViewCell.h */,
@@ -1528,17 +1517,6 @@
 				FD219CBA15E5853B00F334D9 /* IPIBaseNoNavManagedTableViewController.m */,
 			);
 			name = Base;
-			sourceTree = "<group>";
-		};
-		FD269E6F15D6FF350050BF46 /* UIExpandableTableView */ = {
-			isa = PBXGroup;
-			children = (
-				FD269E7315D6FF6E0050BF46 /* GHCollapsingAndSpinningTableViewCell.h */,
-				FD269E7415D6FF6E0050BF46 /* GHCollapsingAndSpinningTableViewCell.m */,
-				FD269E7015D6FF480050BF46 /* UIExpandableTableView.h */,
-				FD269E7115D6FF480050BF46 /* UIExpandableTableView.m */,
-			);
-			name = UIExpandableTableView;
 			sourceTree = "<group>";
 		};
 		FD269EA215D77B580050BF46 /* YIFullScreenScroll */ = {
@@ -2034,7 +2012,6 @@
 				FD269F8515DAB5800050BF46 /* UISS */,
 				FD269F1A15D9B31E0050BF46 /* ViewDeck */,
 				FD269EA215D77B580050BF46 /* YIFullScreenScroll */,
-				FD269E6F15D6FF350050BF46 /* UIExpandableTableView */,
 				FD6F943115D45AAA00FF686B /* Nimbus */,
 				FDAEF96B15D1DB4E009FAD52 /* InsiderPagesKit */,
 				B208BE5E15BF63E00080705D /* Localytics */,
@@ -2518,14 +2495,11 @@
 				FDAA2E6C15D5887D00793375 /* IPIProviderTableViewCell.m in Sources */,
 				FDAA2E7815D5B1A100793375 /* IPIActivityPageTableViewHeader.m in Sources */,
 				FD91BFE415D5C888008158A6 /* IPIActivityPageTableViewFooter.m in Sources */,
-				FD269E7215D6FF480050BF46 /* UIExpandableTableView.m in Sources */,
-				FD269E7515D6FF6E0050BF46 /* GHCollapsingAndSpinningTableViewCell.m in Sources */,
 				FD269EA715D77B580050BF46 /* UIView+YIFullScreenScroll.m in Sources */,
 				FD269EA815D77B580050BF46 /* YIFullScreenScroll.m in Sources */,
 				FD269F1F15D9B31F0050BF46 /* IIViewDeckController.m in Sources */,
 				FD269F2015D9B31F0050BF46 /* WrapController.m in Sources */,
 				FD269F2315D9B64B0050BF46 /* IPIPageTableViewCell.m in Sources */,
-				FD269F4E15DA15DE0050BF46 /* IPIExpandingPageHeaderTableViewCell.m in Sources */,
 				FD269FF215DAB71D0050BF46 /* NSString+UISS.m in Sources */,
 				FD269FF315DAB71D0050BF46 /* UILabel+UISS.m in Sources */,
 				FD269FF415DAB71D0050BF46 /* UISS.m in Sources */,

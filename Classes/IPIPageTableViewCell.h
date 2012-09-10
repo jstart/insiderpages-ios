@@ -5,7 +5,6 @@
 
 #import "CDITableViewCell.h"
 #import "NINetworkImageView.h"
-#import "UIExpandableTableView.h"
 
 @interface IPIPageTableViewCell : CDITableViewCell
 
