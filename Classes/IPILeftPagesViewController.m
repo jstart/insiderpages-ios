@@ -70,11 +70,7 @@
 
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-		return YES;
-	}
-	
-	return toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
+	return toInterfaceOrientation == UIInterfaceOrientationPortrait;
 }
 
 
@@ -212,7 +208,7 @@
     [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
         IPKPage * page = ((IPKPage*)[self objectForViewIndexPath:indexPath]);
         IPIPageViewController * pageVC = [[IPIPageViewController alloc] init];
-        pageVC.managedObject = page;
+        pageVC.page = page;
         [((UINavigationController*)controller.centerController) pushViewController:pageVC animated:YES];
     }];
 }

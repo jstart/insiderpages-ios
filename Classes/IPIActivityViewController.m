@@ -9,9 +9,9 @@
 #import "IPIActivityViewController.h"
 #import "IPISplitViewController.h"
 #import "IPIPageViewController.h"
+#import "IPISegmentContainerViewController.h"
 #import "IPIActivityTableViewCell.h"
 #import "IPIActivityPageTableViewFooter.h"
-#import "IPITabBar.h"
 #import "CDINoListsView.h"
 #import "UIColor+CheddariOSAdditions.h"
 #import <SSToolkit/UIScrollView+SSToolkitAdditions.h>
@@ -56,15 +56,17 @@
     
     _adding = NO;
     
-    IPITabBar * tabBar = [[IPITabBar alloc] initWithFrame:CGRectMake(0, 410, 320, 50)];
-    [tabBar setDelegate:self];
-    [[self view] addSubview:tabBar];
+    self.tabBar = [[IPITabBar alloc] initWithFrame:CGRectMake(0, 366, 320, 50)];
+    [self.tabBar setDelegate:self];
+    [self.tabBar setSelectedItem:[self.tabBar.items objectAtIndex:1]];
+    [[self view] addSubview:self.tabBar];
 //	self.noContentView = [[CDINoListsView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundView.backgroundColor = [UIColor grayColor];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_currentUserDidChange:) name:kIPKCurrentUserChangedNotificationName object:nil];
     
 	_fullScreenDelegate = [[YIFullScreenScroll alloc] initWithViewController:self];
     _fullScreenDelegate.shouldShowUIBarsOnScrollUp = YES;
+    self.filterType = IPKActivityFilterTypeFollowers;
     [SSRateLimit executeBlock:[self refresh] name:@"refresh-activity" limit:0];
 }
 
@@ -83,13 +85,9 @@
 
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-		return YES;
-	}
 	
-	return toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
+	return toInterfaceOrientation == UIInterfaceOrientationPortrait;
 }
-
 
 #pragma mark - SSManagedViewController
 
@@ -98,7 +96,20 @@
 }
 
 - (NSPredicate *)predicate {
-	return [NSPredicate predicateWithFormat:@"page.name != %@ && page.name != nil", @""];
+    switch (self.filterType) {
+        case IPKActivityFilterTypeYou:
+            return [NSPredicate predicateWithFormat:@"page.name != %@ && page.name != nil && user.id == %@", @"", [IPKUser currentUser].id];
+            break;
+        case IPKActivityFilterTypeFollowers:
+            return [NSPredicate predicateWithFormat:@"page.name != %@ && page.name != nil", @""];
+            break;
+        case IPKActivityFilterTypePopular:
+            return [NSPredicate predicateWithFormat:@"page.name != %@ && page.name != nil && user.id != %@", @"", [IPKUser currentUser].id];
+            break;
+            
+        default:
+            break;
+    }
 }
 
 -(NSString *)sortDescriptors{
@@ -191,11 +202,27 @@
             return;
         }
         
-        [IPKActivity deleteAllLocal];
+//        [IPKActivity deleteAllLocal];
         
+        BOOL following = NO;
+        
+        switch (self.filterType) {
+            case IPKActivityFilterTypeYou:
+                following = NO;
+                break;
+            case IPKActivityFilterTypeFollowers:
+                following = YES;
+                break;
+            case IPKActivityFilterTypePopular:
+                following = YES;
+                break;
+                
+            default:
+                break;
+        }
         self.loading = YES;
         self.currentPage = @(1);
-        [[IPKHTTPClient sharedClient] getActivititesOfType:IPKTrackableTypeAll includeFollowing:YES currentPage:@1 perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
+        [[IPKHTTPClient sharedClient] getActivititesOfType:IPKTrackableTypeAll includeFollowing:following currentPage:@1 perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.fetchedResultsController = nil;
                 self.loading = NO;
@@ -206,7 +233,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSLog(@"failed to retrieve activity items, %@", [error debugDescription]);
                 if ([[operation.error.userInfo objectForKey:@"NSLocalizedRecoverySuggestion"] isEqualToString:@"{\"message\":\"you are not logged in\"}"]) {
-                    [[IPIAppDelegate sharedAppDelegate] login];
+                    [[IPIAppDelegate sharedAppDelegate] registerOrLogin];
                 }
                 [SSRateLimit resetLimitForName:@"refresh-activity"];
                 [SSRateLimit executeBlock:[self refresh] name:@"refresh-activity" limit:0];
@@ -225,7 +252,23 @@
         
         self.loading = YES;
         self.currentPage = @([self.currentPage intValue]+1);
-        [[IPKHTTPClient sharedClient] getActivititesOfType:IPKTrackableTypeAll includeFollowing:YES currentPage:self.currentPage perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
+        BOOL following = NO;
+        
+        switch (self.filterType) {
+            case IPKActivityFilterTypeYou:
+                following = NO;
+                break;
+            case IPKActivityFilterTypeFollowers:
+                following = YES;
+                break;
+            case IPKActivityFilterTypePopular:
+                following = YES;
+                break;
+                
+            default:
+                break;
+        }
+        [[IPKHTTPClient sharedClient] getActivititesOfType:IPKTrackableTypeAll includeFollowing:following currentPage:self.currentPage perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
             self.fetchedResultsController = nil;
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.loading = NO;
@@ -262,11 +305,10 @@
 
 - (void)_checkUser {
     NSLog(@"current user %@ boolean user has logged in %d", [IPKUser currentUser].name, [IPKUser userHasLoggedIn]);
-
     if ([IPKUser currentUser])
         return;
     if ([IPKUser userHasLoggedIn] && ![IPKUser currentUser]) {
-        NSLog(@"current user %@ boolean user has logged in %d, and current user dictionary %@", [IPKUser currentUser], [IPKUser userHasLoggedIn], [[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentUserDictionary"]);
+        NSLog(@"current user %@ boolean user has logged in %d", [IPKUser currentUser], [IPKUser userHasLoggedIn]);
         [[IPIAppDelegate sharedAppDelegate].session close];
         UIViewController *viewController = [[CDISignUpViewController alloc] init];
 		UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
@@ -274,7 +316,7 @@
         [self.navigationController presentModalViewController:navigationController animated:NO];
 		return;
     }
-    NSLog(@"current user %@ boolean user has logged in %d, and current user dictionary %@", [IPKUser currentUser], [IPKUser userHasLoggedIn], [[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentUserDictionary"]);
+    NSLog(@"current user %@ boolean user has logged in %d", [IPKUser currentUser], [IPKUser userHasLoggedIn]);
     [[IPIAppDelegate sharedAppDelegate].session close];
     UIViewController *viewController = [[CDISignUpViewController alloc] init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
@@ -340,29 +382,29 @@
     switch (activity.trackableType) {
         case IPKTrackableTypeProvider:{
             // Display BPP with approriate action
-            IPIPageViewController * pageVC = [[IPIPageViewController alloc] init];
-            pageVC.managedObject = activity.page;
+            IPISegmentContainerViewController * pageVC = [[IPISegmentContainerViewController alloc] init];
+            pageVC.page = activity.page;
             [self.navigationController pushViewController:pageVC animated:YES];
         }
             break;
         case IPKTrackableTypeReview:{
             //Display Review with approriate action
-            IPIPageViewController * pageVC = [[IPIPageViewController alloc] init];
-            pageVC.managedObject = activity.page;
+            IPISegmentContainerViewController * pageVC = [[IPISegmentContainerViewController alloc] init];
+            pageVC.page = activity.page;
             [self.navigationController pushViewController:pageVC animated:YES];
         }
             break;
         case IPKTrackableTypeUser:{
             //UPP
-            IPIPageViewController * pageVC = [[IPIPageViewController alloc] init];
-            pageVC.managedObject = activity.page;
+            IPISegmentContainerViewController * pageVC = [[IPISegmentContainerViewController alloc] init];
+            pageVC.page = activity.page;
             [self.navigationController pushViewController:pageVC animated:YES];
         }
             break;
         case IPKTrackableTypeAll:{
             //Generic Activity
-            IPIPageViewController * pageVC = [[IPIPageViewController alloc] init];
-            pageVC.managedObject = activity.page;
+            IPISegmentContainerViewController * pageVC = [[IPISegmentContainerViewController alloc] init];
+            pageVC.page = activity.page;
             [self.navigationController pushViewController:pageVC animated:YES];
         }
             break;
@@ -402,17 +444,29 @@
 #pragma mark - UITabBarDelegate
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{
-//    SSFilterableFetchedResultsController *controller = (SSFilterableFetchedResultsController *)self.fetchedResultsController;
-//    
-//	NSString *filterName = @"section_header";
-//    [controller removeCurrentFilter];
-//    [NSFetchedResultsController deleteCacheWithName:@"activity"];
-//
-//	[controller addFilterPredicate:^BOOL(id obj) {
-//		return arc4random()%2;
-//	} forKey:filterName];
-//	[controller setActiveFilterByKey:filterName];
-//    [self.tableView reloadData];
+    switch (item.tag) {
+        case 0:
+            self.filterType = IPKActivityFilterTypeYou;
+            [SSRateLimit executeBlock:[self refresh] name:@"refresh-activity" limit:0];
+            self.fetchedResultsController = nil;
+            [self.tableView reloadData];
+            break;
+        case 1:
+            self.filterType = IPKActivityFilterTypeFollowers;
+            [SSRateLimit executeBlock:[self refresh] name:@"refresh-activity" limit:0];
+            self.fetchedResultsController = nil;
+            [self.tableView reloadData];
+            break;
+        case 2:
+            self.filterType = IPKActivityFilterTypePopular;
+            [SSRateLimit executeBlock:[self refresh] name:@"refresh-activity" limit:0];
+            self.fetchedResultsController = nil;
+            [self.tableView reloadData];
+            break;
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark - UIScrollViewDelegate

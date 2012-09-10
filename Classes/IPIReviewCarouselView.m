@@ -62,7 +62,7 @@
     if (self.review.reviewer.image_profile_path) {
         [self.creatorProfileImageView setPathToNetworkImage:[self.review.reviewer imageProfilePathForSize:IPKUserProfileImageSizeMedium] forDisplaySize:self.creatorProfileImageView.frame.size contentMode:UIViewContentModeCenter];
     }else{
-        [self.creatorProfileImageView setImage:nil];
+        [self.creatorProfileImageView setInitialImage:[UIImage imageNamed:@"reload-button"]];
     }
         
 }

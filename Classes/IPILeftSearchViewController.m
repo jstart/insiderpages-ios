@@ -96,11 +96,7 @@
 
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-		return YES;
-	}
-	
-	return toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
+	return toInterfaceOrientation == UIInterfaceOrientationPortrait;
 }
 
 
@@ -132,7 +128,7 @@
         }
             break;
         case 1: {
-            return [NSPredicate predicateWithFormat:@"business_name contains[cd] %@", self.queryModel.queryString];
+            return [NSPredicate predicateWithFormat:@"(business_name contains[cd] %@) OR (first_name contains[cd] %@) OR (last_name contains[cd] %@)", self.queryModel.queryString, self.queryModel.queryString, self.queryModel.queryString];
         }
             break;
         case 2: {

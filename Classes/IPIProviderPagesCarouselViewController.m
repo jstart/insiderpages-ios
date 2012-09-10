@@ -193,7 +193,7 @@
 - (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index{
     IPKPage * page = [self.fetchedResultsController.fetchedObjects objectAtIndex:index];
     IPIPageViewController * pageVC = [[IPIPageViewController alloc] init];
-    pageVC.managedObject = page;
+    pageVC.page = page;
     [self.navigationController pushViewController:pageVC animated:YES];
 }
 

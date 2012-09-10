@@ -4,15 +4,14 @@
 //
 //  Created by Christopher Truman.
 //
-
-#import "IPIBaseNoNavManagedTableViewController.h"
+#import "IPIBaseManagedPageSegmentViewController.h"
+#import "IPIPageTableViewHeader.h"
 
 @class IPKPage;
-@class IPIPageTableViewHeader;
 
-@interface IPIPageViewController : IPIBaseNoNavManagedTableViewController
+@interface IPIPageViewController : IPIBaseManagedPageSegmentViewController <IPIPageTableViewHeaderDelegate>
 
-@property (nonatomic, strong, readonly) IPKPage *page;
+@property (nonatomic, strong) IPKPage *page;
 @property (nonatomic, strong) IPIPageTableViewHeader * headerView;
 
 @end

@@ -9,4 +9,5 @@
 
 @property (nonatomic, strong) IPKUser *user;
 @property (nonatomic, strong) NINetworkImageView * profileImageView;
+
 @end

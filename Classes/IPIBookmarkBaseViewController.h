@@ -11,7 +11,7 @@
 #import "IPIBookmarkContainerViewController.h"
 #import "CDIManagedTableViewController.h"
 
-@interface IPIBookmarkBaseViewController : CDIManagedTableViewController <IPIBookmarkViewDelegate>
+@interface IPIBookmarkBaseViewController : UIViewController <IPIBookmarkViewDelegate>
 
 @property (strong, nonatomic) UINavigationController* bookmarkNavigationController;
 

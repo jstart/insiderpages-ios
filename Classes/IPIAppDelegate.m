@@ -15,15 +15,17 @@
 #import "IIViewDeckController.h"
 #import "CDIDefines.h"
 
+#import "SDURLCache.h"
 #import "UIResponder+KeyboardCache.h"
 #import "UIFont+CheddariOSAdditions.h"
 #import "LocalyticsUtilities.h"
 #import "UISS.h"
 #import "UISSStatusWindow.h"
 
-//#import <Crashlytics/Crashlytics.h>
-#ifdef INSIDER_PAGES_API_DEVELOPMENT_MODE
+#import <Crashlytics/Crashlytics.h>
+ #if TARGET_IPHONE_SIMULATOR
     #import "DCIntrospect.h"
+//    #import <PonyDebugger/PonyDebugger.h>
 #endif
 
 @interface IPIAppDelegate ()
@@ -45,27 +47,20 @@
     
 	// Configure analytics
 	// If you don't work at Nothing Magical, you shouldn't turn these on.
-#if INSIDER_PAGES_PRODUCTION_MODE
-	#ifdef INSIDER_PAGES_CRASHLYTICS_KEY
-	[Crashlytics startWithAPIKey:CHEDDAR_CRASHLYTICS_KEY];
-	#endif
+	[Crashlytics startWithAPIKey:@"ff6f76d45da103570f8070443d1760ea5199fc81"];
 
 	#ifdef INSIDER_PAGES_LOCALYTICS_KEY
 	LLStartSession(CHEDDAR_LOCALYTICS_KEY);
 	#endif
-#endif
-	
-    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"InsiderPages.sqlite"];
+    [IPKHTTPClient setDevelopmentModeEnabled:YES];
 
-	// Optionally enable development mode
-	// If you don't work at Nothing Magical, you shouldn't turn this on.
-#ifdef INSIDER_PAGES_API_DEVELOPMENT_MODE
-	[IPKHTTPClient setDevelopmentModeEnabled:YES];
-//	[CDKPushController setDevelopmentModeEnabled:YES];
-#endif
-    
+    [MagicalRecord  setupCoreDataStackWithStoreNamed:@"InsiderPages.sqlite"];
+	NSLog(@"%@", [MagicalRecord currentStack]);
+    NSLog(@"%@",[IPKUser MR_findAll]);
+
 #define TESTING 0
 #ifdef TESTING
+    
     [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
 #endif
     
@@ -93,10 +88,19 @@
     
     #if TARGET_IPHONE_SIMULATOR
         [[DCIntrospect sharedIntrospector] start];
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            PDDebugger *debugger = [PDDebugger defaultInstance];
+//            [debugger enableNetworkTrafficDebugging];
+//            [debugger forwardAllNetworkTraffic];
+//            [debugger enableCoreDataDebugging];
+//            [debugger addManagedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread]];
+//            [debugger connectToURL:[NSURL URLWithString:@"ws://localhost:9000/device"]];
+//        });
     #endif
     
 	// Defer some stuff to make launching faster
 	dispatch_async(dispatch_get_main_queue(), ^{
+        
 		// Setup status bar network indicator
 		[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
 				
@@ -114,9 +118,16 @@
 #endif
     
     [UIResponder cacheKeyboard:YES];
+    static const NSUInteger kMemoryCapacity = 0;
+    static const NSUInteger kDiskCapacity = 1024*1024*5; // 5MB disk cache
+    SDURLCache *urlCache = [[SDURLCache alloc] initWithMemoryCapacity:kMemoryCapacity
+                                                          diskCapacity:kDiskCapacity
+                                                              diskPath:[SDURLCache defaultCachePath]];
+    [NSURLCache setSharedURLCache:urlCache];
     [self requestLocation];
 	return YES;
 }
+
 
 -(void)showLoginView{
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[CDISignUpViewController alloc] init]];
@@ -130,6 +141,7 @@
     [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error){
         if (error) {
             dispatch_async(dispatch_get_main_queue(), ^{
+                [hud failAndDismissWithTitle:@"Contacting Facebook Failed"];
                 [self registerOrLogin];
             });
             return;
@@ -159,24 +171,32 @@
 }
 
 -(void)storeCookies{
-    NSLog(@"saved auth cookie %@", [[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies] objectAtIndex:0]);
+    NSString * currentAPIHost = [[[[[[IPKHTTPClient sharedClient].baseURL URLByDeletingLastPathComponent] URLByDeletingLastPathComponent] absoluteString] stringByReplacingOccurrencesOfString:@".com/" withString:@".com"] stringByReplacingOccurrencesOfString:@"http://" withString:@""];
+    NSString * currentAPIKey = [[[[IPKHTTPClient sharedClient].baseURL URLByDeletingLastPathComponent] URLByDeletingLastPathComponent] absoluteString];
 
-    NSHTTPCookie *cookie = [[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies] objectAtIndex:0];
-    NSMutableDictionary* cookieDictionary = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"SavedCookies"]];
-    [cookieDictionary setValue:cookie.properties forKey:@"http://qa.insiderpages.com"];
-    [[NSUserDefaults standardUserDefaults] setObject:cookieDictionary forKey:@"SavedCookies"];
+    NSLog(@"saved auth cookie %@", [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]);
+    NSLog(@"saved auth cookie for URL %@ %@", currentAPIKey, [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:currentAPIKey]]);
+
+    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:currentAPIKey]];
+    if (cookies.count > 0) {
+        NSDictionary* cookieDictionary = [[cookies objectAtIndex:0] properties];
+        NSDictionary * userDefaultsDictionary = [NSDictionary dictionaryWithObjectsAndKeys:cookieDictionary, currentAPIHost, nil];
+        
+        [[NSUserDefaults standardUserDefaults] setObject:userDefaultsDictionary forKey:@"SavedCookies"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+
 }
 
 -(void)reloadCookies{
     NSDictionary* cookieDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"SavedCookies"];
-    NSDictionary* cookieProperties = [cookieDictionary valueForKey:@"http://qa.insiderpages.com"];
-        if (cookieProperties != nil) {
+    NSString * currentAPIHost = [[[[[[IPKHTTPClient sharedClient].baseURL URLByDeletingLastPathComponent] URLByDeletingLastPathComponent] absoluteString] stringByReplacingOccurrencesOfString:@".com/" withString:@".com"] stringByReplacingOccurrencesOfString:@"http://" withString:@""];
+    NSDictionary* cookieProperties = [cookieDictionary valueForKey:currentAPIHost];
+    if (cookieProperties != nil) {
             NSMutableDictionary* mutableCookieProperties = [cookieProperties mutableCopy];
-            [mutableCookieProperties setObject:@"qa.insiderpages.com" forKey:@"Domain"];
-
             NSHTTPCookie* cookie = [NSHTTPCookie cookieWithProperties:mutableCookieProperties];
             NSArray* cookieArray = [NSArray arrayWithObject:cookie];
-            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookies:cookieArray forURL:[NSURL URLWithString:@"http://qa.insiderpages.com"] mainDocumentURL:nil];
+            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookies:cookieArray forURL:[[[IPKHTTPClient sharedClient].baseURL URLByDeletingLastPathComponent] URLByDeletingLastPathComponent] mainDocumentURL:nil];
     }
     NSLog(@"loaded auth cookie %@", [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]);
 }
@@ -287,18 +307,16 @@
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    [[NSManagedObjectContext MR_rootSavingContext] MR_save];
 }
 
 
 - (void)applicationWillTerminate:(UIApplication *)application {
+    [MagicalRecord cleanUp];
 	#if ANALYTICS_ENABLED
     [[LocalyticsSession sharedLocalyticsSession] close];
 	#endif
     // if the app is going away, we close the session object
     [self.session close];
-    [[NSManagedObjectContext MR_rootSavingContext] MR_save];
-    [MagicalRecord cleanUp];
 }
 
 

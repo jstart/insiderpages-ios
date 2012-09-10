@@ -48,7 +48,7 @@
 #pragma mark - UIViewController
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-	return YES;
+	return toInterfaceOrientation == UIInterfaceOrientationPortrait;
 }
 
 

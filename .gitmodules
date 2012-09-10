@@ -18,7 +18,7 @@
 	url = git://github.com/facebook/facebook-ios-sdk.git
 [submodule "Vendor/nimbus"]
 	path = Vendor/nimbus
-	url = https://github.com/jverkoey/nimbus.git
+	url = git://github.com/jverkoey/nimbus.git
 [submodule "Vendor/Development"]
 	path = Vendor/Development
 	url = git://github.com/domesticcatsoftware/DCIntrospect.git
@@ -55,3 +55,15 @@
 [submodule "Vendor/iCarousel"]
 	path = Vendor/iCarousel
 	url = git@github.com:jstart/iCarousel.git
+[submodule "Vendor/Development/PonyDebugger"]
+	path = Vendor/Development/PonyDebugger
+	url = git://github.com/square/PonyDebugger.git
+[submodule "Vendor/Production/SDURLCache"]
+	path = Vendor/Production/SDURLCache
+	url = git://github.com/rs/SDURLCache.git
+[submodule "Vendor/Production/FireUIPagedScrollView"]
+	path = Vendor/Production/FireUIPagedScrollView
+	url = git://github.com/firebaseco/FireUIPagedScrollView.git
+[submodule "Vendor/Production/IADisquser"]
+	path = Vendor/Production/IADisquser
+	url = git@github.com:jstart/IADisquser.git

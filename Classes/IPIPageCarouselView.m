@@ -60,7 +60,7 @@
     if (self.page.owner.image_profile_path) {
         [self.creatorProfileImageView setPathToNetworkImage:[self.page.owner imageProfilePathForSize:IPKUserProfileImageSizeMedium] forDisplaySize:self.creatorProfileImageView.frame.size contentMode:UIViewContentModeCenter];
     }else{
-        [self.creatorProfileImageView setImage:nil];
+        [self.creatorProfileImageView setInitialImage:[UIImage imageNamed:@"reload-button"]];
     }
         
 }

@@ -1,0 +1,11 @@
+app: /Users/trumanc/Library/Application\ Support/iPhone\ Simulator/6.0/Applications/6E5A2D59-146C-468E-B0CB-E7C7CD88020E/InsiderPages-Dev.app
+
+devices:
+  iOS Simulator:
+    screen: low_ios5
+
+
+servers:
+  backend:
+    host: 192.168.1.2
+    port: 8080

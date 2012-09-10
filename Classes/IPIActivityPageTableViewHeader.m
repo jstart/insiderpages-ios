@@ -95,6 +95,8 @@
         [self.nameLabel setText:page.name];
         //load image view with URL
         [self.pageCoverImageView setPathToNetworkImage:@"http://gentlemint.com/media/images/2012/04/26/3f31ab05.jpg.650x650_q85.jpg" forDisplaySize:self.pageCoverImageView.frame.size contentMode:UIViewContentModeCenter];
+        [self.pageCoverImageView setInitialImage:[UIImage imageNamed:@"reload-button"]];
+
         if ([page.is_favorite boolValue]) {
             [self.favoriteButton setSelected:YES];
         }else{

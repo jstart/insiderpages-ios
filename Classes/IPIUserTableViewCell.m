@@ -17,6 +17,7 @@
         
         self.textLabel.text = [user name];
         self.detailTextLabel.text = [user email];
+        [self.profileImageView setInitialImage:[UIImage imageNamed:@"reload-button"]];
         [self.profileImageView setPathToNetworkImage:[user imageProfilePathForSize:IPKUserProfileImageSizeMedium]];
         [self setNeedsLayout];
     }
@@ -53,10 +54,12 @@
     [super layoutSubviews];
     CGRect textLabelFrame = self.textLabel.frame;
     textLabelFrame.origin.x = 60;
+    textLabelFrame.size.width = textLabelFrame.size.width - 100;
     self.textLabel.frame = textLabelFrame;
     
     CGRect detailTextLabelFrame = self.detailTextLabel.frame;
     detailTextLabelFrame.origin.x = 60;
+    detailTextLabelFrame.size.width = detailTextLabelFrame.size.width - 100;
     self.detailTextLabel.frame = detailTextLabelFrame;
 }
 

@@ -16,7 +16,7 @@
 //#import "CDIAddTaskAnimationView.h"
 //#import "CDIAttributedLabel.h"
 //#import "CDICreateListViewController.h"
-//#import "CDINoTasksView.h"
+#import "CDINoTasksView.h"
 //#import "CDIRenameTaskViewController.h"
 //#import "CDIWebViewController.h"
 #import "UIColor+CheddariOSAdditions.h"
@@ -30,23 +30,14 @@
 @end
 
 @implementation IPIPageViewController
+@synthesize page = _page;
 
-- (void)setManagedObject:(IPKRemoteManagedObject *)managedObject {
-	IPKPage *page = (IPKPage *)self.managedObject;
+- (void)setPage:(IPKPage *)page {
 
 	void *context = (__bridge void *)self;
-	if (page) {
-		[page removeObserver:self forKeyPath:@"name" context:context];
-        [page removeObserver:self forKeyPath:@"owner" context:context];
-        [page removeObserver:self forKeyPath:@"is_favorite" context:context];
-        [page removeObserver:self forKeyPath:@"is_following" context:context];
-	}
-	
-	[super setManagedObject:managedObject];
-	page = (IPKPage *)self.managedObject;
-	
+	_page = page;
 	self.title = self.page.name;
-	self.tableView.hidden = self.page == nil;
+//	self.tableView.hidden = self.page == nil;
 	
 	if (page == nil) {
 		return;
@@ -58,13 +49,13 @@
     [page addObserver:self forKeyPath:@"is_following" options:NSKeyValueObservingOptionNew context:context];
     
 //	self.ignoreChange = YES;
-	
-	self.fetchedResultsController.fetchRequest.predicate = self.predicate;
+	[self.headerView setPage:page];
+	self.fetchedResultsController = nil;
 	[self.tableView reloadData];
 	self.ignoreChange = NO;
 	
 	[SSRateLimit executeBlock:[self refresh]
-	 name:[NSString stringWithFormat:@"refresh-list-%@", self.page.remoteID] limit:30.0];
+	 name:[NSString stringWithFormat:@"refresh-list-%@", self.page.remoteID] limit:0.0];
 }
 
 //-(UITableView*)tableView{
@@ -76,10 +67,6 @@
 //    tableView.delegate = self;
 //    return tableView;
 //}
-
-- (IPKPage *)page {
-	return (IPKPage *)self.managedObject;
-}
 
 #pragma mark - NSObject
 
@@ -93,7 +80,6 @@
 
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	self.managedObject = nil;
 }
 
 
@@ -103,7 +89,7 @@
 	[super viewDidLoad];
 	
 	self.view.backgroundColor = [UIColor cheddarArchesColor];
-	self.tableView.hidden = self.page == nil;
+//	self.tableView.hidden = self.page == nil;
     [self.tableView setAllowsSelectionDuringEditing:YES];
 //	self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake([CDIAddTaskView height], 0.0f, 0.0f, 0.0f);
 	self.pullToRefreshView.bottomBorderColor = [UIColor colorWithWhite:0.8f alpha:1.0f];
@@ -112,19 +98,19 @@
     self.headerView = [[IPIPageTableViewHeader alloc] initWithFrame:CGRectMake(0, 0, 320, 180)];
     [self.headerView setDelegate:self];
     [self.view addSubview:self.headerView];
+    
+
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-
     [self setEditing:YES animated:YES];
-    [self.headerView setPage:self.page];
+    [SSRateLimit executeBlock:[self refresh] name:[NSString stringWithFormat:@"refresh-list-%@", self.page.remoteID] limit:0.0];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-	
-	[SSRateLimit executeBlock:[self refresh] name:[NSString stringWithFormat:@"refresh-list-%@", self.page.remoteID] limit:30.0];
+    [self.headerView setPage:self.page];
 }
 
 
@@ -134,11 +120,7 @@
 
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-		return YES;
-	}
-	
-	return toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
+	return toInterfaceOrientation == UIInterfaceOrientationPortrait;
 }
 
 
@@ -202,7 +184,6 @@
             [self.page.owner updateWithSuccess:^(void){
                 dispatch_async(dispatch_get_main_queue(), ^{
                     self.loading = NO;
-                    [self.headerView setPage:self.page];
                 });
             } failure:^(AFJSONRequestOperation *operation, NSError *error) {
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -218,6 +199,8 @@
         [[IPKHTTPClient sharedClient] getProvidersForPageWithId:pageIDString success:^(AFJSONRequestOperation *operation, id responseObject) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.loading = NO;
+                self.fetchedResultsController = nil;
+                [self.tableView reloadData];
             });
         } failure:^(AFJSONRequestOperation *operation, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -302,9 +285,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     IPKProvider * provider = [self objectForViewIndexPath:indexPath];
-    IPIProviderViewController * providerViewController = [[IPIProviderViewController alloc] init];
-    [providerViewController setProvider:provider];
-    [self.navigationController pushViewController:providerViewController animated:YES];
+    [self.delegate didSelectProvider:provider];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -536,7 +517,6 @@
 		}
 	}
     if ([keyPath isEqualToString:@"owner"] || [keyPath isEqualToString:@"is_favorite"] || [keyPath isEqualToString:@"is_following"]) {
-        [self.headerView setPage:object];
     }
 }
 

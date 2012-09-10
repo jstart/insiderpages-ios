@@ -50,6 +50,7 @@
         [self.headerViewController.profileImageView setPathToNetworkImage:[[IPKUser currentUser] imageProfilePathForSize:IPKUserProfileImageSizeMedium]];
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_currentUserDidChange:) name:kIPKCurrentUserChangedNotificationName object:nil];
+    [SSRateLimit executeBlock:[self refresh] name:@"refresh-my-pages" limit:0];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -76,7 +77,7 @@
         }
         
         self.loading = YES;
-        NSString * myUserId = [NSString stringWithFormat:@"%@", [IPKUser currentUser].id];
+        NSString * myUserId = [NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"IPKUserID"]];
         [[IPKHTTPClient sharedClient] getPagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.loading = NO;
@@ -121,7 +122,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     IPKPage * page = ((IPKPage*)[self objectForViewIndexPath:indexPath]);
     IPIPageViewController * pageVC = [[IPIPageViewController alloc] init];
-    pageVC.managedObject = page;
+    pageVC.page = page;
     NSLog(@"%@", [((IIViewDeckController*)[IPIAppDelegate sharedAppDelegate].window.rootViewController) centerController]);
     NSLog(@"%@", ((IIViewDeckController*)[IPIAppDelegate sharedAppDelegate].window.rootViewController));
     UINavigationController * centerNavigationController = (UINavigationController*)[((IIViewDeckController*)[IPIAppDelegate sharedAppDelegate].window.rootViewController) centerController];

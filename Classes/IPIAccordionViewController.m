@@ -60,7 +60,7 @@
 -(void)didChoosePage:(IPKPage*)page{
     [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
         IPIPageViewController * pageVC = [[IPIPageViewController alloc] init];
-        pageVC.managedObject = page;
+        pageVC.page = page;
         [((UINavigationController*)controller.centerController) pushViewController:pageVC animated:YES];
     }];
 }

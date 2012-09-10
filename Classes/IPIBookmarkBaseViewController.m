@@ -36,6 +36,7 @@
     self.bookmarkNavigationController = [[UINavigationController alloc] initWithRootViewController:bookmarkContainerViewController];
     
     bookmarkContainerViewController.delegate = self;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back-button.png"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
 }
 
 - (void)viewDidUnload
@@ -76,6 +77,10 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+-(void)back{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void) bookmarkViewWasDismissed:(int)homePageIndex{

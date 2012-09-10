@@ -62,8 +62,12 @@
     self.title = self.provider.full_name;
     [self.headerView setProvider:self.provider];
     MKPointAnnotation * point = [[MKPointAnnotation alloc] init];
-    [point setCoordinate:CLLocationCoordinate2DMake([self.provider.address.lat doubleValue], [self.provider.address.lng doubleValue])];
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([self.provider.address.lat doubleValue], [self.provider.address.lng doubleValue]);
+    [point setCoordinate:coordinate];
     [self.mapView addAnnotation:point];
+
+    MKMapRect mapRect = MKMapRectMake(coordinate.latitude, coordinate.longitude, 100, 100);
+    [self.mapView setVisibleMapRect:mapRect animated:YES];
     [self.mapView setCenterCoordinate:CLLocationCoordinate2DMake([self.provider.address.lat doubleValue], [self.provider.address.lng doubleValue]) animated:YES];
 }
 
@@ -77,11 +81,7 @@
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-		return YES;
-	}
-	
-	return toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
+	return toInterfaceOrientation == UIInterfaceOrientationPortrait;
 }
 
 #pragma mark - UIScrollViewDelegate
