@@ -400,6 +400,18 @@
             pageVC.page = activity.page;
             [self.navigationController pushViewController:pageVC animated:YES];
         }
+        case IPKTrackableTypeCgListing:{
+            //UPP
+            IPISegmentContainerViewController * pageVC = [[IPISegmentContainerViewController alloc] init];
+            pageVC.page = activity.page;
+            [self.navigationController pushViewController:pageVC animated:YES];
+        }
+        case IPKTrackableTypeTeam:{
+            //UPP
+            IPISegmentContainerViewController * pageVC = [[IPISegmentContainerViewController alloc] init];
+            pageVC.page = activity.page;
+            [self.navigationController pushViewController:pageVC animated:YES];
+        }
             break;
         case IPKTrackableTypeAll:{
             //Generic Activity

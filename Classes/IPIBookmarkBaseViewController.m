@@ -31,12 +31,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-//    IPBookmarkViewController *bookmarkViewController = [[IPBookmarkViewController alloc] initWithNibName:@"IPBookmarkViewController" bundle:[NSBundle mainBundle]];
-    IPIBookmarkContainerViewController *bookmarkContainerViewController = [[IPIBookmarkContainerViewController alloc] initWithNibName:@"IPIBookmarkContainerViewController" bundle:[NSBundle mainBundle]];
-    self.bookmarkNavigationController = [[UINavigationController alloc] initWithRootViewController:bookmarkContainerViewController];
     
-    bookmarkContainerViewController.delegate = self;
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back-button.png"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"back-button.png"]]];
 }
 
 - (void)viewDidUnload
@@ -48,6 +44,14 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    if ( [IPIAppDelegate sharedAppDelegate].bookmarkNavigationController == nil) {
+        IPIBookmarkContainerViewController *bookmarkContainerViewController = [[IPIBookmarkContainerViewController alloc] initWithNibName:@"IPIBookmarkContainerViewController" bundle:[NSBundle mainBundle]];
+        [IPIAppDelegate sharedAppDelegate].bookmarkNavigationController = [[UINavigationController alloc] initWithRootViewController:bookmarkContainerViewController];
+    }
+    IPIBookmarkContainerViewController * bookmarkContainerViewController = [IPIAppDelegate sharedAppDelegate].bookmarkNavigationController.topViewController;
+    bookmarkContainerViewController.delegate = self;
+    
     UIImage * image = [UIImage imageNamed:@"bookmark.png"];
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -92,13 +96,13 @@
 {
 	// Go to the welcome screen and have them log in or create an account.
     if ([IPIAppDelegate sharedAppDelegate].bookmarkNavigationController == nil) {
-        IPIBookmarkContainerViewController * bookmarkContainerViewController = [[IPIAppDelegate sharedAppDelegate].bookmarkNavigationController.viewControllers objectAtIndex:0];
+        IPIBookmarkContainerViewController * bookmarkContainerViewController = [IPIAppDelegate sharedAppDelegate].bookmarkNavigationController.topViewController;
         bookmarkContainerViewController.delegate = self;
     }
     if ([[self.navigationItem.rightBarButtonItem customView] isHidden]) {
         
     }else{
-        [self.navigationController presentSemiViewController:bookmarkNavigationController];
+        [self.navigationController presentSemiViewController:[IPIAppDelegate sharedAppDelegate].bookmarkNavigationController];
         [self hideBookmark];
     }
 }

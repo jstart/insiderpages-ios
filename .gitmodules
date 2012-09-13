@@ -67,3 +67,6 @@
 [submodule "Vendor/Production/IADisquser"]
 	path = Vendor/Production/IADisquser
 	url = git@github.com:jstart/IADisquser.git
+[submodule "Vendor/Production/JCGridMenu"]
+	path = Vendor/Production/JCGridMenu
+	url = git://github.com/joecarney/JCGridMenu.git

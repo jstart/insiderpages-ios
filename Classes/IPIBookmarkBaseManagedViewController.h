@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "IPIBookmarkViewController.h"
+#import "IPIBookmarkWrapperMainViewController.h"
 #import "IPIBookmarkContainerViewController.h"
 #import "CDIManagedTableViewController.h"
 
@@ -18,5 +18,6 @@
 -(void)hideBookmark;
 -(void)showBookmark;
 -(void)presentBookmarkViewController;
+-(void)presentBookmarkHiddenViewController;
 
 @end

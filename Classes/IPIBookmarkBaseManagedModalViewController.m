@@ -1,20 +1,18 @@
 //
-//  IPIBookmarkBaseModalViewController.h
+//  IPIBookmarkBaseManagedModalViewController.,
 //  IPTest
 //
 //  Created by Truman, Christopher on 7/3/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "IPIBookmarkBaseModalViewController.h"
+#import "IPIBookmarkBaseManagedModalViewController.h"
 
-@interface IPIBookmarkBaseModalViewController ()
+@interface IPIBookmarkBaseManagedModalViewController ()
 
 @end
 
-@implementation IPIBookmarkBaseModalViewController
-
-
+@implementation IPIBookmarkBaseManagedModalViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -30,7 +28,7 @@
     [super viewDidLoad];
 //    self.wantsFullScreenLayout = YES;
     CGRect frame = self.navigationController.view.frame;
-    frame.size.height = 308;
+    frame.size.height = 372;
     self.navigationController.view.frame = frame;
 }
 

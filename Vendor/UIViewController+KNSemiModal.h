@@ -11,8 +11,11 @@
 @interface UIViewController (KNSemiModal)
 
 -(void)presentSemiViewController:(UIViewController*)vc;
+-(void)presentSemiHiddenViewController:(UIViewController*)vc;
 -(void)presentSemiView:(UIView*)vc;
+-(void)presentSemiHiddenView:(UIView*)vc;
 -(void)dismissSemiModalView;
+-(void)dismissSemiModalViewHidden;
 
 @end
 

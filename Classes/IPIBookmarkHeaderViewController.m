@@ -23,7 +23,7 @@
     if (self) {
         // Custom initialization
         self.profileImageView = [[NINetworkImageView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-        [self.profileImageView setImage:[UIImage imageNamed:@"bookmark.png"]];
+        [self.profileImageView setImage:[UIImage imageNamed:@"nil"]];
         [[self view] addSubview:self.profileImageView];
     }
     return self;

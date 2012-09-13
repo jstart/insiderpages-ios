@@ -29,13 +29,14 @@
 	[super viewDidLoad];
 }
 
-
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-    UIBarButtonItem * closeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonItemStylePlain target:self action:@selector(close)];
-    [closeButton setTitle:@"Done"];
+    UIBarButtonItem * closeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(close)];
+    UIBarButtonItem * addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(new)];
+
     self.navigationItem.leftBarButtonItem = closeButton;
+    self.navigationItem.rightBarButtonItem = addButton;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -47,6 +48,10 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
 	return toInterfaceOrientation == UIInterfaceOrientationPortrait;
+}
+
+-(void)new{
+    
 }
 
 -(void)close{

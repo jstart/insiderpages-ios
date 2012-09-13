@@ -84,7 +84,7 @@
 }
 
 -(void)pageChanged{
-    [self fetchComments];
+//    [self fetchComments];
 }
 
 -(void)fetchComments{

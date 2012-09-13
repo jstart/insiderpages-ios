@@ -14,6 +14,7 @@
 #import "CDISignUpViewController.h"
 #import "IIViewDeckController.h"
 #import "CDIDefines.h"
+#import "UIViewController+KNSemiModal.h"
 
 #import "SDURLCache.h"
 #import "UIResponder+KeyboardCache.h"
@@ -25,7 +26,7 @@
 #import <Crashlytics/Crashlytics.h>
  #if TARGET_IPHONE_SIMULATOR
     #import "DCIntrospect.h"
-//    #import <PonyDebugger/PonyDebugger.h>
+    #import <PonyDebugger/PonyDebugger.h>
 #endif
 
 @interface IPIAppDelegate ()
@@ -55,9 +56,7 @@
     [IPKHTTPClient setDevelopmentModeEnabled:YES];
 
     [MagicalRecord  setupCoreDataStackWithStoreNamed:@"InsiderPages.sqlite"];
-	NSLog(@"%@", [MagicalRecord currentStack]);
-    NSLog(@"%@",[IPKUser MR_findAll]);
-
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDataModelChange:) name:NSManagedObjectContextObjectsDidChangeNotification object:[NSManagedObjectContext MR_contextForCurrentThread]];
 #define TESTING 0
 #ifdef TESTING
     
@@ -83,18 +82,20 @@
     IIViewDeckController * viewDeckController = [[IIViewDeckController alloc] initWithCenterViewController:activityNavigationController leftViewController:leftSearchViewController];
     [viewDeckController setPanningMode:IIViewDeckFullViewPanning];
     [viewDeckController setCenterhiddenInteractivity:IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose];
-    self.window.rootViewController = viewDeckController;
+    UINavigationController * navControllerWrapper = [[UINavigationController alloc] initWithRootViewController:viewDeckController];
+    [navControllerWrapper setNavigationBarHidden:YES];
+    self.window.rootViewController = navControllerWrapper;
 	[self.window makeKeyAndVisible];
     
     #if TARGET_IPHONE_SIMULATOR
         [[DCIntrospect sharedIntrospector] start];
 //        dispatch_async(dispatch_get_main_queue(), ^{
-//            PDDebugger *debugger = [PDDebugger defaultInstance];
-//            [debugger enableNetworkTrafficDebugging];
-//            [debugger forwardAllNetworkTraffic];
-//            [debugger enableCoreDataDebugging];
-//            [debugger addManagedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread]];
-//            [debugger connectToURL:[NSURL URLWithString:@"ws://localhost:9000/device"]];
+            PDDebugger *debugger = [PDDebugger defaultInstance];
+            [debugger enableNetworkTrafficDebugging];
+            [debugger forwardAllNetworkTraffic];
+            [debugger enableCoreDataDebugging];
+            [debugger addManagedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread]];
+            [debugger connectToURL:[NSURL URLWithString:@"ws://localhost:9000/device"]];
 //        });
     #endif
     
@@ -103,11 +104,6 @@
         
 		// Setup status bar network indicator
 		[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
-				
-        IPIBookmarkContainerViewController *bookmarkContainerViewController = [[IPIBookmarkContainerViewController alloc] initWithNibName:@"IPIBookmarkContainerViewController" bundle:[NSBundle mainBundle]];
-        self.bookmarkNavigationController = [[UINavigationController alloc] initWithRootViewController:bookmarkContainerViewController];
-		// Initialize the connection to Pusher		
-//		[CDKPushController sharedController];
 		
 		// Add the transaction observer
 //		[[SKPaymentQueue defaultQueue] addTransactionObserver:[CDITransactionObserver defaultObserver]];
@@ -126,6 +122,21 @@
     [NSURLCache setSharedURLCache:urlCache];
     [self requestLocation];
 	return YES;
+}
+
+- (void)handleDataModelChange:(NSNotification *)note
+{
+    NSSet *updatedObjects = [[note userInfo] objectForKey:NSUpdatedObjectsKey];
+    NSSet *deletedObjects = [[note userInfo] objectForKey:NSDeletedObjectsKey];
+    NSSet *insertedObjects = [[note userInfo] objectForKey:NSInsertedObjectsKey];
+    
+    // Do something in response to this
+    if (updatedObjects)
+        NSLog(@"Updated: %d", updatedObjects.count);
+    if (deletedObjects)
+        NSLog(@"Deleted: %d Objects: %@", deletedObjects.count, deletedObjects);
+    if (insertedObjects)
+        NSLog(@"Inserted: %d", insertedObjects.count);
 }
 
 
@@ -150,6 +161,7 @@
         [[IPKHTTPClient sharedClient] signInWithFacebookUserID:[result objectForKey:@"id"] accessToken:self.session.accessToken facebookMeResponse:result success:^(AFJSONRequestOperation *operation, id responseObject) {
             if ([[responseObject objectForKey:@"message"] isEqualToString:@"logged in"]) {
                 [self storeCookies];
+
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [hud completeAndDismissWithTitle:@"Successfully Logged In"];
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"Logged In" object:nil];

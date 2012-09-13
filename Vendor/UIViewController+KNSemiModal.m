@@ -34,7 +34,7 @@
 
   CATransform3D t2 = CATransform3DIdentity;
   t2.m34 = t1.m34;
-  t2 = CATransform3DTranslate(t2, 0, [self parentTarget].frame.size.height*-0.08, 0);
+//  t2 = CATransform3DTranslate(t2, 0, [self parentTarget].frame.size.height*-0.08, 0);
   t2 = CATransform3DScale(t2, 0.95, 0.95, 1);
 
   CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
@@ -65,6 +65,10 @@
 
 -(void)presentSemiViewController:(UIViewController*)vc {
   [self presentSemiView:vc.view];
+}
+
+-(void)presentSemiHiddenViewController:(UIViewController*)vc {
+    [self presentSemiHiddenView:vc.view];
 }
 
 -(void)presentSemiView:(UIView*)view {
@@ -117,6 +121,35 @@
     }];
   }
 }
+
+-(void)presentSemiHiddenView:(UIView*)view {
+    // Determine target
+    UIView * target = [self parentTarget];
+    
+    if (![target.subviews containsObject:view]) {
+        // Calulate all frames
+        CGRect sf = view.frame;
+        CGRect vf = target.frame;
+        CGRect f  = CGRectMake(0, 0, vf.size.width, sf.size.height);
+        CGRect of = CGRectMake(0, sf.size.height, vf.size.width, vf.size.height-sf.size.height);
+        
+        // Present view animated
+        view.frame = CGRectMake(0, -vf.size.height, vf.size.width, sf.size.height);
+        [target addSubview:view];
+
+        [UIView animateWithDuration:0.1 animations:^{
+            view.frame = f;
+        }];
+    }
+}
+
+-(void)dismissSemiModalViewHidden {
+    UIView * target = [self parentTarget];
+    UIView * modal = [target.subviews objectAtIndex:target.subviews.count-1];
+
+    [modal removeFromSuperview];
+}
+
 
 -(void)dismissSemiModalView {
   UIView * target = [self parentTarget];

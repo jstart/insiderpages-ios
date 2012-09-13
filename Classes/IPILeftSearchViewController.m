@@ -57,7 +57,6 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-    self.tableView.showsInfiniteScrolling = NO;
     //	self.noContentView = [[CDINoListsView alloc] initWithFrame:CGRectZero];
     self.tableView.showsPullToRefresh = NO;
     self.tableView.showsInfiniteScrolling = NO;

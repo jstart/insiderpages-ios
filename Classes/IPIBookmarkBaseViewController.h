@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "IPIBookmarkViewController.h"
+#import "IPIBookmarkWrapperMainViewController.h"
 #import "IPIBookmarkContainerViewController.h"
 #import "CDIManagedTableViewController.h"
 

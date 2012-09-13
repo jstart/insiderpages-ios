@@ -7,7 +7,7 @@
 //
 
 #import "IPIBookmarkContainerViewController.h"
-#import "IPiBookmarkViewController.h"
+#import "IPIBookmarkWrapperMainViewController.h"
 
 @interface IPIBookmarkContainerViewController ()
 
@@ -22,6 +22,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+
     }
     return self;
 }
@@ -29,17 +30,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
-    CGRect frame = self.navigationController.view.frame;
-//    frame.origin.y = 20;
-    frame.size.height = 345;
-    self.navigationController.view.frame = frame;
-    // Do any additional setup after loading the view from its nib.
-    
-    IPIBookmarkViewController *bookmarkViewController = [[IPIBookmarkViewController alloc] init];
-    UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:bookmarkViewController];
+    IPIBookmarkWrapperMainViewController *bookmarkWrapperViewController = [[IPIBookmarkWrapperMainViewController alloc] init];
+    UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:bookmarkWrapperViewController];
     [self addChildViewController:navController];
     [[self view] addSubview:navController.view];
+//    [self.navigationController setNavigationBarHidden:YES animated:NO];
+//    CGRect frame = self.navigationController.navigationBar.frame;
+//    frame.origin.y = 0;
+//    frame.size.height = 436;
+//    self.navigationController.view.frame = frame;
 }
 
 - (void)viewDidUnload
@@ -49,10 +48,22 @@
     // e.g. self.myOutlet = nil;
 }
 
+- (BOOL)shouldAutomaticallyForwardAppearanceMethods{
+    return YES;
+}
+
 -(void)viewWillAppear:(BOOL)animated{
-//    CGRect frame = self.navigationController.view.frame;
-//    frame.origin.y = 20;
-//    self.navigationController.view.frame = frame;
+    [super viewWillAppear:animated];
+//    CGRect frame = self.navigationController.navigationBar.frame;
+//    if (frame.origin.y != 0) {
+//        frame.origin.y = 0;
+//        frame.size.height = 400;
+//        self.navigationController.view.frame = frame;
+//    }
+//    if (frame.origin.y != 0) {
+//        frame.size.height = 400;
+//        self.navigationController.view.frame = frame;
+//    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
