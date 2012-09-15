@@ -56,7 +56,9 @@
     [IPKHTTPClient setDevelopmentModeEnabled:YES];
 
     [MagicalRecord  setupCoreDataStackWithStoreNamed:@"InsiderPages.sqlite"];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDataModelChange:) name:NSManagedObjectContextObjectsDidChangeNotification object:[NSManagedObjectContext MR_contextForCurrentThread]];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDataModelChange:) name:NSManagedObjectContextObjectsDidChangeNotification object:[NSManagedObjectContext MR_contextForCurrentThread]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDataModelChange:) name:NSManagedObjectContextDidSaveNotification object:[NSManagedObjectContext MR_contextForCurrentThread]];
+    
 #define TESTING 0
 #ifdef TESTING
     
@@ -64,35 +66,40 @@
 #endif
     
     [self reloadCookies];
+	[[self class] applyStylesheet];
 
 	// Initialize the window
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	self.window.backgroundColor = [UIColor blackColor];
 	
-	[self applyStylesheet];
     [self openSessionCheckCache:YES];
-    // To-do, show logged in view
 
     IPIActivityViewController *viewController = [[IPIActivityViewController alloc] initWithStyle:UITableViewStyleGrouped];
     UINavigationController *activityNavigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    
     IPILeftSearchViewController * leftSearchViewController = [[IPILeftSearchViewController alloc] initWithNibName:@"IPILeftSearchViewController" bundle:[NSBundle mainBundle]];
+    UINavigationController *leftSearchNavigationController = [[UINavigationController alloc] initWithRootViewController:leftSearchViewController];
 //    IPIAccordionViewController * accordionViewController = [[IPIAccordionViewController alloc] init];
 //    UINavigationController *leftPagesNavigationController = [[UINavigationController alloc] initWithRootViewController:accordionViewController];
 
-    IIViewDeckController * viewDeckController = [[IIViewDeckController alloc] initWithCenterViewController:activityNavigationController leftViewController:leftSearchViewController];
+    IIViewDeckController * viewDeckController = [[IIViewDeckController alloc] initWithCenterViewController:activityNavigationController leftViewController:leftSearchNavigationController];
+    [viewDeckController setNavigationControllerBehavior:IIViewDeckNavigationControllerContained];
+    [viewDeckController setWantsFullScreenLayout:YES];
     [viewDeckController setPanningMode:IIViewDeckFullViewPanning];
     [viewDeckController setCenterhiddenInteractivity:IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose];
     UINavigationController * navControllerWrapper = [[UINavigationController alloc] initWithRootViewController:viewDeckController];
     [navControllerWrapper setNavigationBarHidden:YES];
+    [navControllerWrapper setWantsFullScreenLayout:YES];
     self.window.rootViewController = navControllerWrapper;
+    [self.window addSubview:[navControllerWrapper view]];
 	[self.window makeKeyAndVisible];
     
     #if TARGET_IPHONE_SIMULATOR
         [[DCIntrospect sharedIntrospector] start];
 //        dispatch_async(dispatch_get_main_queue(), ^{
             PDDebugger *debugger = [PDDebugger defaultInstance];
-            [debugger enableNetworkTrafficDebugging];
-            [debugger forwardAllNetworkTraffic];
+//            [debugger enableNetworkTrafficDebugging];
+//            [debugger forwardAllNetworkTraffic];
             [debugger enableCoreDataDebugging];
             [debugger addManagedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread]];
             [debugger connectToURL:[NSURL URLWithString:@"ws://localhost:9000/device"]];
@@ -110,16 +117,13 @@
 	});
     
 #if INSIDER_PAGES_TESTING_MODE
-    [TestFlight takeOff:@"30d92a896df4ab4b4873886ea58f8b06_NzE0NzIyMDEyLTAzLTE0IDEzOjQ0OjU4Ljk3MDAxOQ"];
+//    Citysearch
+    [TestFlight takeOff:@"e8882c2e107b66d09560e69a3ec1f588_MzY4MzIyMDEyLTAyLTA4IDE3OjQzOjU4Ljg5OTYxNA"];
+//    Focus Fox
+//    [TestFlight takeOff:@"30d92a896df4ab4b4873886ea58f8b06_NzE0NzIyMDEyLTAzLTE0IDEzOjQ0OjU4Ljk3MDAxOQ"];
 #endif
     
     [UIResponder cacheKeyboard:YES];
-    static const NSUInteger kMemoryCapacity = 0;
-    static const NSUInteger kDiskCapacity = 1024*1024*5; // 5MB disk cache
-    SDURLCache *urlCache = [[SDURLCache alloc] initWithMemoryCapacity:kMemoryCapacity
-                                                          diskCapacity:kDiskCapacity
-                                                              diskPath:[SDURLCache defaultCachePath]];
-    [NSURLCache setSharedURLCache:urlCache];
     [self requestLocation];
 	return YES;
 }
@@ -137,6 +141,19 @@
         NSLog(@"Deleted: %d Objects: %@", deletedObjects.count, deletedObjects);
     if (insertedObjects)
         NSLog(@"Inserted: %d", insertedObjects.count);
+    // This ensures no updated object is fault, which would cause the NSFetchedResultsController updates to fail.
+    // http://www.mlsite.net/blog/?p=518
+    
+    NSArray* updates = [[note.userInfo objectForKey:@"updated"] allObjects];
+    
+    for (NSInteger i = [updates count]-1; i >= 0; i--) {
+        [[[NSManagedObjectContext MR_contextForCurrentThread] objectWithID:[[updates objectAtIndex:i] objectID]] willAccessValueForKey:nil];
+    }
+    
+    [[NSManagedObjectContext MR_contextForCurrentThread] mergeChangesFromContextDidSaveNotification:note];
+    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveErrorHandler:^(NSError *error){
+        NSLog(@"Error %@", error);
+    }];
 }
 
 
@@ -255,7 +272,7 @@
 {
     switch (state) {
         case FBSessionStateOpen: {
-            if (![IPKUser currentUser]) {
+            if (![IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]]) {
                 [self registerOrLogin];
                 NSLog(@"Register because there is no user id and access token in user defaults.");
             }else{
@@ -311,7 +328,12 @@
   sourceApplication:(NSString *)sourceApplication 
          annotation:(id)annotation 
 {
-    return [self.session handleOpenURL:url];
+    if (![self.session isOpen]) {
+        return [self.session handleOpenURL:url];
+    }else{
+        [self openSessionCheckCache:YES];
+        return YES;
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -319,10 +341,12 @@
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+
 }
 
 
 - (void)applicationWillTerminate:(UIApplication *)application {
+
     [MagicalRecord cleanUp];
 	#if ANALYTICS_ENABLED
     [[LocalyticsSession sharedLocalyticsSession] close];
@@ -332,7 +356,7 @@
 }
 
 
--(void)applyStylesheet {
++(void)applyStylesheet {
 //    self.uiss = [[UISS alloc] init];
     
 //    [self.uiss registerReloadGestureRecognizerInView:self.window];
@@ -349,18 +373,17 @@
     
 	// Navigation bar
 	UINavigationBar *navigationBar = [UINavigationBar appearance];
-//	[navigationBar setBackgroundColor:[UIColor grayColor]];
-	[navigationBar setTitleVerticalPositionAdjustment:-1.0f forBarMetrics:UIBarMetricsDefault];
-	[navigationBar setTitleTextAttributes:[[NSDictionary alloc] initWithObjectsAndKeys:
-										   [UIFont cheddarFontOfSize:20.0f], UITextAttributeFont,
-										   [UIColor colorWithWhite:0.0f alpha:0.2f], UITextAttributeTextShadowColor,
-										   [NSValue valueWithUIOffset:UIOffsetMake(0.0f, 1.0f)], UITextAttributeTextShadowOffset,
-										   [UIColor whiteColor], UITextAttributeTextColor,
-										   nil]];
+//	[navigationBar setTitleVerticalPositionAdjustment:-1.0f forBarMetrics:UIBarMetricsDefault];
+//	[navigationBar setTitleTextAttributes:[[NSDictionary alloc] initWithObjectsAndKeys:
+//										   [UIFont cheddarFontOfSize:20.0f], UITextAttributeFont,
+//										   [UIColor colorWithWhite:0.0f alpha:0.2f], UITextAttributeTextShadowColor,
+//										   [NSValue valueWithUIOffset:UIOffsetMake(0.0f, 1.0f)], UITextAttributeTextShadowOffset,
+//										   [UIColor whiteColor], UITextAttributeTextColor,
+//										   nil]];
 	
 	// Navigation bar mini
-	[navigationBar setTitleVerticalPositionAdjustment:-2.0f forBarMetrics:UIBarMetricsLandscapePhone];
-//	[navigationBar setBackgroundImage:[UIImage imageNamed:@"nav-background-mini.png"] forBarMetrics:UIBarMetricsLandscapePhone];
+//	[navigationBar setTitleVerticalPositionAdjustment:-2.0f forBarMetrics:UIBarMetricsLandscapePhone];
+	[navigationBar setBackgroundImage:[UIImage imageNamed:@"header_background.png"] forBarMetrics:UIBarMetricsDefault];
 	
 	// Navigation button
 	NSDictionary *barButtonTitleTextAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
@@ -368,25 +391,25 @@
 												  [UIColor colorWithWhite:0.0f alpha:0.2f], UITextAttributeTextShadowColor,
 												  [NSValue valueWithUIOffset:UIOffsetMake(0.0f, 1.0f)], UITextAttributeTextShadowOffset,
 												  nil];
-	UIBarButtonItem *barButton = [UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil];
-	[barButton setTitlePositionAdjustment:UIOffsetMake(0.0f, 1.0f) forBarMetrics:UIBarMetricsDefault];
-	[barButton setTitleTextAttributes:barButtonTitleTextAttributes forState:UIControlStateNormal];
-	[barButton setTitleTextAttributes:barButtonTitleTextAttributes forState:UIControlStateHighlighted];
+//	UIBarButtonItem *barButton = [UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil];
+//	[barButton setTitlePositionAdjustment:UIOffsetMake(10.0f, 10.0f) forBarMetrics:UIBarMetricsDefault];
+//	[barButton setTitleTextAttributes:barButtonTitleTextAttributes forState:UIControlStateNormal];
+//	[barButton setTitleTextAttributes:barButtonTitleTextAttributes forState:UIControlStateHighlighted];
 //	[barButton setBackgroundImage:[[UIImage imageNamed:@"nav-button.png"] stretchableImageWithLeftCapWidth:6 topCapHeight:0] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
 //	[barButton setBackgroundImage:[[UIImage imageNamed:@"nav-button-highlighted.png"] stretchableImageWithLeftCapWidth:6 topCapHeight:0] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
 	
 	// Navigation back button
-	[barButton setBackButtonTitlePositionAdjustment:UIOffsetMake(1.0f, -2.0f) forBarMetrics:UIBarMetricsDefault];
-//	[barButton setBackButtonBackgroundImage:[[UIImage imageNamed:@"nav-back.png"] stretchableImageWithLeftCapWidth:13 topCapHeight:0] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+//	[barButton setBackButtonTitlePositionAdjustment:UIOffsetMake(-1.0f, -5.0f) forBarMetrics:UIBarMetricsDefault];
+//	[barButton setBackButtonBackgroundImage:[UIImage imageNamed:@"backbutton.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
 //	[barButton setBackButtonBackgroundImage:[[UIImage imageNamed:@"nav-back-highlighted.png"] stretchableImageWithLeftCapWidth:13 topCapHeight:0] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
 
 	// Navigation button mini
-	[barButton setTitlePositionAdjustment:UIOffsetMake(0.0f, 1.0f) forBarMetrics:UIBarMetricsLandscapePhone];
+//	[barButton setTitlePositionAdjustment:UIOffsetMake(0.0f, 1.0f) forBarMetrics:UIBarMetricsLandscapePhone];
 //	[barButton setBackgroundImage:[[UIImage imageNamed:@"nav-button-mini.png"] stretchableImageWithLeftCapWidth:6 topCapHeight:0] forState:UIControlStateNormal barMetrics:UIBarMetricsLandscapePhone];
 //	[barButton setBackgroundImage:[[UIImage imageNamed:@"nav-button-mini-highlighted.png"] stretchableImageWithLeftCapWidth:6 topCapHeight:0] forState:UIControlStateHighlighted barMetrics:UIBarMetricsLandscapePhone];
 	
 	// Navigation back button mini
-	[barButton setBackButtonTitlePositionAdjustment:UIOffsetMake(1.0f, -2.0f) forBarMetrics:UIBarMetricsLandscapePhone];
+//	[barButton setBackButtonTitlePositionAdjustment:UIOffsetMake(1.0f, -2.0f) forBarMetrics:UIBarMetricsLandscapePhone];
 //	[barButton setBackButtonBackgroundImage:[[UIImage imageNamed:@"nav-back-mini.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:0] forState:UIControlStateNormal barMetrics:UIBarMetricsLandscapePhone];
 //	[barButton setBackButtonBackgroundImage:[[UIImage imageNamed:@"nav-back-mini-highlighted.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:0] forState:UIControlStateHighlighted barMetrics:UIBarMetricsLandscapePhone];
 	

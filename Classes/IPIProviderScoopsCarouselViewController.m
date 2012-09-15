@@ -34,7 +34,7 @@
         return;
     }
     self.loading = YES;
-    NSString * providerIDString = [NSString stringWithFormat:@"%@", self.provider.id];
+    NSString * providerIDString = [NSString stringWithFormat:@"%@", self.provider.remoteID];
     [[IPKHTTPClient sharedClient] getScoopsForProviderWithId:providerIDString withCurrentPage:self.currentPage perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"retrieved %d reviews", [[responseObject objectForKey:@"scoops"] count]);
@@ -56,7 +56,7 @@
     }
     self.currentPage = @([self.currentPage intValue] + 1);
     self.loading = YES;
-    NSString * providerIDString = [NSString stringWithFormat:@"%@", self.provider.id];
+    NSString * providerIDString = [NSString stringWithFormat:@"%@", self.provider.remoteID];
     [[IPKHTTPClient sharedClient] getScoopsForProviderWithId:providerIDString withCurrentPage:self.currentPage perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"retrieved %d reviews on page %@", [[responseObject objectForKey:@"scoops"] count], self.currentPage);
@@ -89,7 +89,7 @@
 }
 
 - (NSPredicate *)predicate {
-	return [NSPredicate predicateWithFormat:@"listing_id = %@", self.provider.id];
+	return [NSPredicate predicateWithFormat:@"listing_id = %@", self.provider.remoteID];
 }
 
 -(NSString *)sortDescriptors{

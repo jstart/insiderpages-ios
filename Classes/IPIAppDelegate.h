@@ -16,7 +16,7 @@
 @property (strong, nonatomic) CLGeocoder * geocoder;
 @property (strong, nonatomic) UINavigationController * bookmarkNavigationController;
 
-- (void)applyStylesheet;
++ (void)applyStylesheet;
 + (IPIAppDelegate *)sharedAppDelegate;
 - (void) openSessionCheckCache:(BOOL)check;
 

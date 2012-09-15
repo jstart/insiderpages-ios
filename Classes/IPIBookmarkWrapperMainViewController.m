@@ -48,9 +48,9 @@
     [self.headerViewController.view setFrame:headerFrame];
     [[self view] addSubview:self.headerViewController.view];
     
-    if ([IPKUser currentUser]) {
-        self.headerViewController.usernameLabel.text = [[IPKUser currentUser] name];
-        [self.headerViewController.profileImageView setPathToNetworkImage:[[IPKUser currentUser] imageProfilePathForSize:IPKUserProfileImageSizeMedium]];
+    if ([IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]]) {
+        self.headerViewController.usernameLabel.text = [[IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]] name];
+        [self.headerViewController.profileImageView setPathToNetworkImage:[[IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]] imageProfilePathForSize:IPKUserProfileImageSizeMedium]];
     }
 }
 

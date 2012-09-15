@@ -93,7 +93,7 @@
     [self.tableView setAllowsSelectionDuringEditing:YES];
 //	self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake([CDIAddTaskView height], 0.0f, 0.0f, 0.0f);
 	self.pullToRefreshView.bottomBorderColor = [UIColor colorWithWhite:0.8f alpha:1.0f];
-    [self.tableView setFrame:CGRectMake(0, 180, 320, 480-180)];
+    [self.tableView setFrame:CGRectMake(0, 180, 320, [UIScreen mainScreen].bounds.size.height-180)];
 //	self.noContentView = [[CDINoTasksView alloc] initWithFrame:CGRectZero];
     self.headerView = [[IPIPageTableViewHeader alloc] initWithFrame:CGRectMake(0, 0, 320, 180)];
     [self.headerView setDelegate:self];
@@ -178,7 +178,7 @@
             return;
         }
         
-        if ([self.page.owner.id isEqualToNumber:@(0)]) {
+        if ([self.page.owner.remoteID isEqualToNumber:@(0)]) {
             self.loading = YES;
 
             [self.page.owner updateWithSuccess:^(void){
@@ -195,7 +195,7 @@
         
         self.loading = YES;
 
-        NSString * pageIDString = [NSString stringWithFormat:@"%@", self.page.id];
+        NSString * pageIDString = [NSString stringWithFormat:@"%@", self.page.remoteID];
         [[IPKHTTPClient sharedClient] getProvidersForPageWithId:pageIDString success:^(AFJSONRequestOperation *operation, id responseObject) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.loading = NO;
@@ -523,12 +523,12 @@
 #pragma mark - IPIPageTableViewHeaderDelegate
 
 -(void)followButtonPressed:(IPKPage*)page{
-    NSString * pageId = [NSString stringWithFormat:@"%@", page.id];
+    NSString * pageId = [NSString stringWithFormat:@"%@", page.remoteID];
     if ([page.is_following boolValue]) {
         [[IPKHTTPClient sharedClient] unfollowPageWithId:pageId success:^(AFJSONRequestOperation *operation, id responseObject) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.loading = NO;
-                [self setManagedObject:[IPKPage objectWithRemoteID:page.id]];
+                [self setManagedObject:[IPKPage objectWithRemoteID:page.remoteID]];
             });
         } failure:^(AFJSONRequestOperation *operation, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -540,7 +540,7 @@
         [[IPKHTTPClient sharedClient] followPageWithId:pageId success:^(AFJSONRequestOperation *operation, id responseObject) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.loading = NO;
-                [self setManagedObject:[IPKPage objectWithRemoteID:page.id]];
+                [self setManagedObject:[IPKPage objectWithRemoteID:page.remoteID]];
             });
         } failure:^(AFJSONRequestOperation *operation, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -552,13 +552,13 @@
 }
 
 -(void)favoriteButtonPressed:(IPKPage*)page{
-    NSString * pageId = [NSString stringWithFormat:@"%@", page.id];
+    NSString * pageId = [NSString stringWithFormat:@"%@", page.remoteID];
     if ([page.is_favorite boolValue]) {
         [[IPKHTTPClient sharedClient] unfavoritePageWithId:pageId success:^(AFJSONRequestOperation *operation, id responseObject) {
             NSLog(@"%@", page);
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.loading = NO;
-                [self setManagedObject:[IPKPage objectWithRemoteID:page.id]];
+                [self setManagedObject:[IPKPage objectWithRemoteID:page.remoteID]];
             });
         } failure:^(AFJSONRequestOperation *operation, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -571,7 +571,7 @@
             NSLog(@"%@", page);
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.loading = NO;
-                [self setManagedObject:[IPKPage objectWithRemoteID:page.id]];
+                [self setManagedObject:[IPKPage objectWithRemoteID:page.remoteID]];
             });
         } failure:^(AFJSONRequestOperation *operation, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{

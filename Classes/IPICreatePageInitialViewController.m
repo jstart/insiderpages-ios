@@ -69,7 +69,7 @@
     IPKPage * page = [IPKPage MR_createEntity];
     page.name = self.titleTextField.text;
     page.description_text = self.descriptionTextField.text;
-    page.owner = [IPKUser currentUser];
+    page.owner = [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]];
     page.privacy_setting = self.privacyNumber;
     SSHUDView *hud = [[SSHUDView alloc] initWithTitle:@"Creating Page..." loading:YES];
 	[hud show];

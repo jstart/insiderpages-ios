@@ -36,7 +36,7 @@
         return;
     }
     self.loading = YES;
-    NSString * pageIDString = [NSString stringWithFormat:@"%@", self.page.id];
+    NSString * pageIDString = [NSString stringWithFormat:@"%@", self.page.remoteID];
     [[IPKHTTPClient sharedClient] getProvidersForPageWithId:pageIDString success:^(AFJSONRequestOperation *operation, id responseObject) {
         dispatch_async(dispatch_get_main_queue(), ^{
             self.fetchedResultsController = nil;

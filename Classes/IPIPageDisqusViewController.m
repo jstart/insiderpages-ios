@@ -96,7 +96,7 @@
         NSString * pageName = [self.page.name stringByAddingPercentEscapesUsingEncoding:
                                NSUTF8StringEncoding];
     
-        NSString * threadIdentifier = [NSString stringWithFormat:@"http://qa.insiderpages.com/providers/c/%@/detail?page_id=%@&page_name=%@", provider.cached_slug, self.page.id, pageName];
+        NSString * threadIdentifier = [NSString stringWithFormat:@"http://qa.insiderpages.com/providers/c/%@/detail?page_id=%@&page_name=%@", provider.cached_slug, self.page.remoteID, pageName];
         [IADisquser getCommentsFromThreadLink:threadIdentifier
                                       success:^(NSArray *newComments) {
                                           // get the array of comments, reverse it (oldest comment on top) 

@@ -103,12 +103,12 @@
 
 - (void(^)(void))refresh {
     return ^(void){
-        if (self.loading || ![IPKUser currentUser]) {
+        if (self.loading || ![IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]]) {
             return;
         }
         
         self.loading = YES;
-        NSString * myUserId = [NSString stringWithFormat:@"%@", [IPKUser currentUser].id];
+        NSString * myUserId = [NSString stringWithFormat:@"%@", [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]].remoteID];
         [[IPKHTTPClient sharedClient] getPagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.loading = NO;
@@ -179,8 +179,8 @@
     SSHUDView * hudView = [[SSHUDView alloc] initWithTitle:@"Adding Provider" loading:YES];
     [hudView show];
     IPKPage * page = [self objectForViewIndexPath:indexPath];
-    NSString * pageIDString = [NSString stringWithFormat:@"%@", page.id];
-    NSString * providerIDString = [NSString stringWithFormat:@"%@", self.provider.id];
+    NSString * pageIDString = [NSString stringWithFormat:@"%@", page.remoteID];
+    NSString * providerIDString = [NSString stringWithFormat:@"%@", self.provider.remoteID];
     [[IPKHTTPClient sharedClient] addProvidersToPageWithId:pageIDString providerId:providerIDString success:^(AFJSONRequestOperation *operation, id responseObject) {
         dispatch_async(dispatch_get_main_queue(), ^{
             self.loading = NO;

@@ -11,7 +11,7 @@
 #import "IPIPageTableViewCell.h"
 #import "IPIAppDelegate.h"
 #import "IIViewDeckController.h"
-#import "IPIPageViewController.h"
+#import "IPISegmentContainerViewController.h"
 #import "SVPullToRefresh.h"
 
 @interface IPIBookmarkMyPagesTableViewController ()
@@ -70,7 +70,7 @@
 
 - (void(^)(void))refresh {
     return ^(void){
-        if (self.loading || ![IPKUser currentUser]) {
+        if (self.loading || ![IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]]) {
             return;
         }
         
@@ -99,9 +99,9 @@
 
 - (NSPredicate *)predicate {
     if (self.searchDisplayController.searchBar.text != nil && ![self.searchDisplayController.searchBar.text isEqualToString:@""]) {
-        return [NSPredicate predicateWithFormat:@"user_id == %@ AND name CONTAINS [cd] %@", [IPKUser currentUser].id, self.searchDisplayController.searchBar.text];
+        return [NSPredicate predicateWithFormat:@"user_id == %@ AND name CONTAINS [cd] %@", [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]].remoteID, self.searchDisplayController.searchBar.text];
     }
-	return [NSPredicate predicateWithFormat:@"user_id == %@", [IPKUser currentUser].id];
+	return [NSPredicate predicateWithFormat:@"user_id == %@", [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]].remoteID];
 }
 
 -(NSString *)sortDescriptors{
@@ -130,7 +130,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     IPKPage * page = ((IPKPage*)[self objectForViewIndexPath:indexPath]);
-    IPIPageViewController * pageVC = [[IPIPageViewController alloc] init];
+    IPISegmentContainerViewController * pageVC = [[IPISegmentContainerViewController alloc] init];
     pageVC.page = page;
     UINavigationController * wrapperNavigationController = (UINavigationController*)((IIViewDeckController*)[IPIAppDelegate sharedAppDelegate].window.rootViewController);
     UINavigationController * centerNavigationController = [((IIViewDeckController*)[wrapperNavigationController topViewController]) centerController];

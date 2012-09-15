@@ -6,6 +6,7 @@
 #import "IPIProviderViewController.h"
 #import "IPIPageTableViewCell.h"
 #import "IPIProviderTableViewCell.h"
+#import "IPISegmentContainerViewController.h"
 #import "IPIUserTableViewCell.h"
 #import "UIColor+CheddariOSAdditions.h"
 //#import "CDINoListsView.h"
@@ -26,7 +27,6 @@
 
 - (BOOL)viewDeckControllerWillOpenLeftView:(IIViewDeckController*)viewDeckController animated:(BOOL)animated{
     [SSRateLimit executeBlock:[self refresh] name:@"refresh-mine-pages" limit:0.0];
-
     return YES;
 }
 
@@ -46,9 +46,10 @@
         self.queryModel = [IPKQueryModel MR_createEntity];
         [self.queryModel setFilterType:@(kIPKQueryModelFilterAll)];
         self.queryModel.queryString = @"";
-        self.queryModel.city = [[IPKUser currentUser].city_id stringValue];
+        self.queryModel.city = [[IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]].city_id stringValue];
         self.queryModel.currentPage = @"1";
         self.queryModel.perPageNumber = @"10";
+        [[NSManagedObjectContext MR_rootSavingContext] MR_save];
 	}
 	return self;
 }
@@ -65,17 +66,20 @@
     self.searchDisplayController.searchBar.showsCancelButton = YES;
     self.searchDisplayController.searchBar.scopeButtonTitles = @[@"Pages", @"Places", @"Users"];
     [self.searchDisplayController.searchBar setShowsScopeBar:YES];
-
+    [self setWantsFullScreenLayout:YES];
+    [[self view] setAutoresizesSubviews:YES];
 }
 
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
+    [self setWantsFullScreenLayout:NO];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-	
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+
 	[SSRateLimit executeBlock:[self refresh] name:@"refresh-mine-pages" limit:30.0];
 }
 
@@ -247,7 +251,7 @@
         case 0: {
             [self.viewDeckController closeLeftViewAnimated:YES completion:^(IIViewDeckController *controller) {
                 IPKPage * page = ((IPKPage*)[self objectForViewIndexPath:indexPath]);
-                IPIPageViewController * pageVC = [[IPIPageViewController alloc] init];
+                IPISegmentContainerViewController * pageVC = [[IPISegmentContainerViewController alloc] init];
                 pageVC.page = page;
                 [((UINavigationController*)controller.centerController) pushViewController:pageVC animated:NO];
             }];

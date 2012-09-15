@@ -15,7 +15,7 @@
     #import <Foundation/Foundation.h>
     #import <CoreData/CoreData.h>
 	#import <InsiderPagesKit/InsiderPagesKit.h>
-#define MR_SHORTHAND 0
+    #define MR_SHORTHAND 0
     #import "CoreData+MagicalRecord.h"
 	#import <SSToolkit/SSToolkit.h>
     #import <QuartzCore/QuartzCore.h>

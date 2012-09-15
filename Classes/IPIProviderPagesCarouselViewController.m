@@ -5,7 +5,7 @@
 #import "IPIProviderPagesCarouselViewController.h"
 #import "TTTAttributedLabel.h"
 #import "IPIPageCarouselView.h"
-#import "IPIPageViewController.h"
+#import "IPISegmentContainerViewController.h"
 
 @implementation IPIProviderPagesCarouselViewController
 
@@ -36,7 +36,7 @@
         return;
     }
     self.loading = YES;
-    NSString * providerIDString = [NSString stringWithFormat:@"%@", self.provider.id];
+    NSString * providerIDString = [NSString stringWithFormat:@"%@", self.provider.remoteID];
     [[IPKHTTPClient sharedClient] getPagesForProviderWithId:providerIDString withCurrentPage:self.currentPage perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
         dispatch_async(dispatch_get_main_queue(), ^{
             self.fetchedResultsController = nil;
@@ -57,7 +57,7 @@
     }
     self.currentPage = @([self.currentPage intValue] + 1);
     self.loading = YES;
-    NSString * providerIDString = [NSString stringWithFormat:@"%@", self.provider.id];
+    NSString * providerIDString = [NSString stringWithFormat:@"%@", self.provider.remoteID];
     [[IPKHTTPClient sharedClient] getPagesForProviderWithId:providerIDString withCurrentPage:self.currentPage perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
         dispatch_async(dispatch_get_main_queue(), ^{
             self.fetchedResultsController = nil;
@@ -192,7 +192,7 @@
 
 - (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index{
     IPKPage * page = [self.fetchedResultsController.fetchedObjects objectAtIndex:index];
-    IPIPageViewController * pageVC = [[IPIPageViewController alloc] init];
+    IPISegmentContainerViewController * pageVC = [[IPISegmentContainerViewController alloc] init];
     pageVC.page = page;
     [self.navigationController pushViewController:pageVC animated:YES];
 }

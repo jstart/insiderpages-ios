@@ -20,7 +20,7 @@
         self.textLabel.text = activity.trackable_type;
         self.detailTextLabel.text = [activity actionText];
         [self.profileImageView setInitialImage:[UIImage imageNamed:@"reload-button"]];
-        [self.profileImageView setPathToNetworkImage:[activity.user imageProfilePathForSize:IPKUserProfileImageSizeMedium]];
+        [self.profileImageView setPathToNetworkImage:[activity.user imageProfilePathForSize:IPKUserProfileImageSizeMedium] forDisplaySize:self.profileImageView.frame.size contentMode:UIViewContentModeCenter];
         self.timeLabel.text = [activity formattedTimeElapsedSinceUpdated];
         [self setNeedsLayout];
     }

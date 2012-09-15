@@ -131,13 +131,13 @@
 
 - (void(^)(void))refresh {
     return ^(void){
-        if (self.loading || ![IPKUser currentUser]) {
+        if (self.loading || ![IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]]) {
             return;
         }
         
         self.loading = YES;
         
-        NSString * myUserId = [NSString stringWithFormat:@"%@", [IPKUser currentUser].id];
+        NSString * myUserId = [NSString stringWithFormat:@"%@", [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]].remoteID];
 
         if ([self.section_header isEqualToString:@"Mine"]) {
             [[IPKHTTPClient sharedClient] getPagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {

@@ -77,7 +77,7 @@
 #pragma mark - Actions
 
 -(void)login{
-    [[IPIAppDelegate sharedAppDelegate] openSessionCheckCache:NO];
+    [[IPIAppDelegate sharedAppDelegate] openSessionCheckCache:YES];
 }
 
 -(void)loggedIn{

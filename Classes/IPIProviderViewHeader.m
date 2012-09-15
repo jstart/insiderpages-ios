@@ -122,7 +122,7 @@
 //        }else{
 //            [self.favoriteButton setSelected:NO];
 //        }
-//        if (page.owner == [IPKUser currentUser]) {
+//        if (page.owner == [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]]) {
 //            [self.followButton setHidden:YES];
 //            [self.favoriteButton setHidden:YES];
 //        }

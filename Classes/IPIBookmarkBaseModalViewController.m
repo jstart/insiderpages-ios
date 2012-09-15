@@ -6,13 +6,13 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "IPIBookmarkBaseManagedModalViewController.h"
+#import "IPIBookmarkBaseModalViewController.h"
 
-@interface IPIBookmarkBaseManagedModalViewController ()
+@interface IPIBookmarkBaseModalViewController ()
 
 @end
 
-@implementation IPIBookmarkBaseManagedModalViewController
+@implementation IPIBookmarkBaseModalViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

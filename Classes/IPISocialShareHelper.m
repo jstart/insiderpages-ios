@@ -18,7 +18,7 @@
     [tweetComposeViewController addImage:[UIImage imageNamed:@"bookmark.png"]];
     [tweetComposeViewController addURL:[NSURL URLWithString:@"http://qa.insiderpages.com/"]];
     
-    NSString * formattedTweet = [NSString stringWithFormat:@"%@ just found %@ on @insiderpages", [IPKUser currentUser].name, page.name];
+    NSString * formattedTweet = [NSString stringWithFormat:@"%@ just found %@ on @insiderpages", [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]].name, page.name];
     [tweetComposeViewController setInitialText:formattedTweet];
     [IPISocialShareHelper presentTweetComposeViewController:tweetComposeViewController fromViewController:viewController];
 }
@@ -29,7 +29,7 @@
     [tweetComposeViewController addImage:[UIImage imageNamed:@"bookmark.png"]];
     [tweetComposeViewController addURL:[NSURL URLWithString:@"http://qa.insiderpages.com/"]];
     
-    NSString * formattedTweet = [NSString stringWithFormat:@"%@ just found %@ on @insiderpages", [IPKUser currentUser].name, provider.full_name];
+    NSString * formattedTweet = [NSString stringWithFormat:@"%@ just found %@ on @insiderpages", [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]].name, provider.full_name];
     [tweetComposeViewController setInitialText:formattedTweet];
     [IPISocialShareHelper presentTweetComposeViewController:tweetComposeViewController fromViewController:viewController];
 }

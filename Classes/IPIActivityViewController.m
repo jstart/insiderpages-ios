@@ -45,6 +45,7 @@
 #pragma mark - UIViewController
 
 - (void)viewDidLoad {
+    self.loadingView = nil;
 	[super viewDidLoad];
 //	UIImageView *title = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nav-title.png"]];
 //	title.frame = CGRectMake(0.0f, 0.0f, 116.0f, 21.0f);	
@@ -56,7 +57,7 @@
     
     _adding = NO;
     
-    self.tabBar = [[IPITabBar alloc] initWithFrame:CGRectMake(0, 366, 320, 50)];
+    self.tabBar = [[IPITabBar alloc] initWithFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 114, 320, 50)];
     [self.tabBar setDelegate:self];
     [self.tabBar setSelectedItem:[self.tabBar.items objectAtIndex:1]];
     [[self view] addSubview:self.tabBar];
@@ -98,13 +99,13 @@
 - (NSPredicate *)predicate {
     switch (self.filterType) {
         case IPKActivityFilterTypeYou:
-            return [NSPredicate predicateWithFormat:@"page.name != %@ && page.name != nil && user.id == %@", @"", [IPKUser currentUser].id];
+            return [NSPredicate predicateWithFormat:@"page.name != %@ && page.name != nil && user.remoteID == %@", @"", [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]].remoteID];
             break;
         case IPKActivityFilterTypeFollowers:
             return [NSPredicate predicateWithFormat:@"page.name != %@ && page.name != nil", @""];
             break;
         case IPKActivityFilterTypePopular:
-            return [NSPredicate predicateWithFormat:@"page.name != %@ && page.name != nil && user.id != %@", @"", [IPKUser currentUser].id];
+            return [NSPredicate predicateWithFormat:@"page.name != %@ && page.name != nil && user.remoteID != %@", @"", [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]].remoteID];
             break;
             
         default:
@@ -113,7 +114,7 @@
 }
 
 -(NSString *)sortDescriptors{
-    return @"page.name,createdAt,remoteID";
+    return @"page.name,createdAt";
 }
 
 - (NSString *)sectionNameKeyPath {
@@ -158,7 +159,7 @@
 
 #pragma mark IPIActivityTableViewHeaderDelegate
 -(void)favoriteButtonPressed:(IPKPage*)page{
-    NSString * pageID = [NSString stringWithFormat:@"%@", page.id];
+    NSString * pageID = [NSString stringWithFormat:@"%@", page.remoteID];
 
     if ([page.is_favorite boolValue]) {
         self.loading = YES;
@@ -196,14 +197,12 @@
 - (void(^)(void))refresh {
 
     return ^(void){
-        if (self.loading || ![IPKUser currentUser]) {
+        if (self.loading || ![IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]]) {
             self.loading = NO;
             [SSRateLimit resetLimitForName:@"refresh-activity"];
             return;
         }
-        
-//        [IPKActivity deleteAllLocal];
-        
+                
         BOOL following = NO;
         
         switch (self.filterType) {
@@ -222,30 +221,35 @@
         }
         self.loading = YES;
         self.currentPage = @(1);
-        [[IPKHTTPClient sharedClient] getActivititesOfType:IPKTrackableTypeAll includeFollowing:following currentPage:@1 perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.fetchedResultsController = nil;
-                self.loading = NO;
-                NSLog(@"retrieved %d activity items", ((NSArray*)responseObject[@"activities"]).count);
-                [[self tableView] reloadData];
-            });
-        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSLog(@"failed to retrieve activity items, %@", [error debugDescription]);
-                if ([[operation.error.userInfo objectForKey:@"NSLocalizedRecoverySuggestion"] isEqualToString:@"{\"message\":\"you are not logged in\"}"]) {
-                    [[IPIAppDelegate sharedAppDelegate] registerOrLogin];
-                }
-                [SSRateLimit resetLimitForName:@"refresh-activity"];
-                [SSRateLimit executeBlock:[self refresh] name:@"refresh-activity" limit:0];
-                self.loading = NO;
-            });
-        }];
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            [IPKActivity deleteAllLocal];
+            self.ignoreChange = YES;
+            [[IPKHTTPClient sharedClient] getActivititesOfType:IPKTrackableTypeAll includeFollowing:following currentPage:@1 perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.fetchedResultsController = nil;
+                    self.loading = NO;
+                    self.ignoreChange = NO;
+                    NSLog(@"retrieved %d activity items", ((NSArray*)responseObject[@"activities"]).count);
+                    [[self tableView] reloadData];
+                });
+            } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    NSLog(@"failed to retrieve activity items, %@", [error debugDescription]);
+                    if ([[operation.error.userInfo objectForKey:@"NSLocalizedRecoverySuggestion"] isEqualToString:@"{\"message\":\"you are not logged in\"}"]) {
+                        [[IPIAppDelegate sharedAppDelegate] registerOrLogin];
+                    }
+                    [SSRateLimit resetLimitForName:@"refresh-activity"];
+                    [SSRateLimit executeBlock:[self refresh] name:@"refresh-activity" limit:0];
+                    self.loading = NO;
+                });
+            }];
+        });
     };
 }
 
 - (void(^)(void))nextPage {
     return ^(void){
-        if (self.loading || ![IPKUser currentUser]) {
+        if (self.loading || ![IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]]) {
             self.loading = NO;
             return;
         }
@@ -268,11 +272,13 @@
             default:
                 break;
         }
+        self.ignoreChange = YES;
+
         [[IPKHTTPClient sharedClient] getActivititesOfType:IPKTrackableTypeAll includeFollowing:following currentPage:self.currentPage perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
             self.fetchedResultsController = nil;
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.loading = NO;
-                
+                self.ignoreChange = NO;
                 [[self tableView] reloadData];
             });
         } failure:^(AFJSONRequestOperation *operation, NSError *error) {
@@ -304,11 +310,11 @@
 }
 
 - (void)_checkUser {
-    NSLog(@"current user %@ boolean user has logged in %d", [IPKUser currentUser].name, [IPKUser userHasLoggedIn]);
-    if ([IPKUser currentUser])
+    NSLog(@"current user %@ boolean user has logged in %d", [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]].name, [IPKUser userHasLoggedIn]);
+    if ([IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]])
         return;
-    if ([IPKUser userHasLoggedIn] && ![IPKUser currentUser]) {
-        NSLog(@"current user %@ boolean user has logged in %d", [IPKUser currentUser], [IPKUser userHasLoggedIn]);
+    if ([IPKUser userHasLoggedIn] && ![IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]]) {
+        NSLog(@"current user %@ boolean user has logged in %d", [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]], [IPKUser userHasLoggedIn]);
         [[IPIAppDelegate sharedAppDelegate].session close];
         UIViewController *viewController = [[CDISignUpViewController alloc] init];
 		UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
@@ -316,7 +322,7 @@
         [self.navigationController presentModalViewController:navigationController animated:NO];
 		return;
     }
-    NSLog(@"current user %@ boolean user has logged in %d", [IPKUser currentUser], [IPKUser userHasLoggedIn]);
+    NSLog(@"current user %@ boolean user has logged in %d", [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]], [IPKUser userHasLoggedIn]);
     [[IPIAppDelegate sharedAppDelegate].session close];
     UIViewController *viewController = [[CDISignUpViewController alloc] init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
@@ -360,8 +366,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     IPKActivity * activity = ((IPKActivity*)[self objectForViewIndexPath:indexPath]);
-    if (activity.page.id == @0) {
-        if (self.loading || ![IPKUser currentUser]) {
+    if (activity.page.remoteID == @0) {
+        if (self.loading || ![IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]]) {
             return;
         }
         
@@ -400,12 +406,14 @@
             pageVC.page = activity.page;
             [self.navigationController pushViewController:pageVC animated:YES];
         }
+            break;
         case IPKTrackableTypeCgListing:{
             //UPP
             IPISegmentContainerViewController * pageVC = [[IPISegmentContainerViewController alloc] init];
             pageVC.page = activity.page;
             [self.navigationController pushViewController:pageVC animated:YES];
         }
+            break;
         case IPKTrackableTypeTeam:{
             //UPP
             IPISegmentContainerViewController * pageVC = [[IPISegmentContainerViewController alloc] init];

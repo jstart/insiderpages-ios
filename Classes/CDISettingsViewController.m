@@ -127,7 +127,7 @@
 #pragma mark - Private
 
 - (void)_updateUI {
-	IPKUser *user = [IPKUser currentUser];
+	IPKUser *user = [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]];
 	if (user.hasPlus.boolValue) {
 		NSString *text = @"You currently have a Plus account. You're awesome! You can create unlimited lists!";
 		[_label setText:text afterInheritingLabelAttributesAndConfiguringWithBlock:^NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
