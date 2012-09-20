@@ -13,6 +13,8 @@
 
 @interface IPISocialShareHelper : NSObject
 
++(void)preloadTweetComposeViewController;
+
 +(void)tweetPage:(IPKPage*)page fromViewController:(UIViewController*)viewController;
 +(void)tweetProvider:(IPKProvider*)provider fromViewController:(UIViewController*)viewController;
 

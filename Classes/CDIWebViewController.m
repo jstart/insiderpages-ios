@@ -7,7 +7,7 @@
 //
 
 #import "CDIWebViewController.h"
-#import "UIColor+CheddariOSAdditions.h"
+#import "UIColor+InsiderPagesiOSAdditions.h"
 
 @interface CDIWebViewController ()
 - (void)_updateBrowserUI;

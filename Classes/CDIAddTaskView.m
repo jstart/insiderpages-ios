@@ -9,9 +9,9 @@
 #import "CDIAddTaskView.h"
 #import "CDITableViewCell.h"
 #import "CDITagView.h"
-#import "UIColor+CheddariOSAdditions.h"
-#import "UIFont+CheddariOSAdditions.h"
-#import "UIButton+CheddariOSAdditions.h"
+#import "UIColor+InsiderPagesiOSAdditions.h"
+#import "UIFont+InsiderPagesiOSAdditions.h"
+#import "UIButton+InsiderPagesiOSAdditions.h"
 
 @interface CDIAddTaskView () <UITextFieldDelegate>
 @property (nonatomic, strong) SMTEDelegateController *textExpander;

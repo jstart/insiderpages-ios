@@ -13,9 +13,11 @@
 #import "IPIActivityTableViewCell.h"
 #import "IPIActivityPageTableViewFooter.h"
 #import "CDINoListsView.h"
-#import "UIColor+CheddariOSAdditions.h"
+#import "UIColor+InsiderPagesiOSAdditions.h"
 #import <SSToolkit/UIScrollView+SSToolkitAdditions.h>
 #import "IIViewDeckController.h"
+#import "IPKActivity+Formatting.h"
+#import "NSAttributedString+Attributes.h"
 
 #define CHEDDAR_USE_PASSWORD_FLOW 1
 
@@ -47,13 +49,23 @@
 - (void)viewDidLoad {
     self.loadingView = nil;
 	[super viewDidLoad];
-//	UIImageView *title = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nav-title.png"]];
-//	title.frame = CGRectMake(0.0f, 0.0f, 116.0f, 21.0f);	
-//	self.navigationItem.titleView = title;
+	UIImageView *title = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"IP_logo_home.png"]];
+	title.frame = CGRectMake(0.0f, 0.0f, 111.0f, 32.0f + 3.0f);
+    [title setContentMode:UIViewContentModeBottom];
+	self.navigationItem.titleView = title;
     self.title = @"InsiderPages";
 	[self setEditing:NO animated:NO];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self.viewDeckController action:@selector(toggleLeftView)];
+    UIImage * pulloutImage = [UIImage imageNamed:@"pullout_button"];
+    UIButton * leftViewButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [leftViewButton setImage:pulloutImage forState:UIControlStateNormal];
+    [leftViewButton setFrame:CGRectMake(10, 0, pulloutImage.size.width, pulloutImage.size.height)];
+    [leftViewButton addTarget:self.viewDeckController action:@selector(toggleLeftView) forControlEvents:UIControlEventTouchUpInside];
+    UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, pulloutImage.size.width+10, pulloutImage.size.height) ];
+    
+    [v addSubview:leftViewButton];
+    UIBarButtonItem * leftViewBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:v];
+    self.navigationItem.leftBarButtonItem = leftViewBarButtonItem;
     
     _adding = NO;
     
@@ -62,7 +74,7 @@
     [self.tabBar setSelectedItem:[self.tabBar.items objectAtIndex:1]];
     [[self view] addSubview:self.tabBar];
 //	self.noContentView = [[CDINoListsView alloc] initWithFrame:CGRectZero];
-    self.tableView.backgroundView.backgroundColor = [UIColor grayColor];
+    self.tableView.backgroundView.backgroundColor = [UIColor standardBackgroundColor];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_currentUserDidChange:) name:kIPKCurrentUserChangedNotificationName object:nil];
     
 	_fullScreenDelegate = [[YIFullScreenScroll alloc] initWithViewController:self];
@@ -114,11 +126,15 @@
 }
 
 -(NSString *)sortDescriptors{
-    return @"page.name,createdAt";
+    return @"updatedAt";
+}
+
+-(BOOL)ascending{
+    return NO;
 }
 
 - (NSString *)sectionNameKeyPath {
-	return @"page.name";
+	return @"remoteID";
 }
 
 //+ (Class)fetchedResultsControllerClass {
@@ -221,14 +237,14 @@
         }
         self.loading = YES;
         self.currentPage = @(1);
-        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        self.ignoreChange = YES;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             [IPKActivity deleteAllLocal];
-            self.ignoreChange = YES;
-            [[IPKHTTPClient sharedClient] getActivititesOfType:IPKTrackableTypeAll includeFollowing:following currentPage:@1 perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
+            [[IPKHTTPClient sharedClient] getPageActivititesWithCurrentPage:@1 perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    self.fetchedResultsController = nil;
-                    self.loading = NO;
                     self.ignoreChange = NO;
+                    self.loading = NO;
+                    self.fetchedResultsController = nil;
                     NSLog(@"retrieved %d activity items", ((NSArray*)responseObject[@"activities"]).count);
                     [[self tableView] reloadData];
                 });
@@ -274,8 +290,9 @@
         }
         self.ignoreChange = YES;
 
-        [[IPKHTTPClient sharedClient] getActivititesOfType:IPKTrackableTypeAll includeFollowing:following currentPage:self.currentPage perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
+        [[IPKHTTPClient sharedClient] getPageActivititesWithCurrentPage:self.currentPage perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
             self.fetchedResultsController = nil;
+            NSLog(@"retrieved %d activity items", ((NSArray*)responseObject[@"activities"]).count);
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.loading = NO;
                 self.ignoreChange = NO;
@@ -433,32 +450,57 @@
             break;
     }
 }
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    IPKActivity * activity = [self objectForViewIndexPath:indexPath];
+    if (activity) {
+        CGFloat fontHeight = [IPIActivityTableViewCell heightForCellWithText:activity.attributedActionText.string];
+        return fontHeight;
+    }
+    return 0;
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 92.5 + 10;
+//    return 92.5 + 10;
+    CGFloat fontHeight = [IPIActivityTableViewCell heightForCellWithText:@""];
+    return fontHeight;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 30;
+//    return 30;
+    return 5;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    static NSString *const cellIdentifier = @"cellIdentifier";
     NSIndexPath * sectionIndexPath = [NSIndexPath indexPathForRow:0 inSection:section];
-    IPKPage * page = ((IPKActivity *)[self objectForViewIndexPath:sectionIndexPath]).page;
-    IPIActivityPageTableViewHeader * headerView = [[IPIActivityPageTableViewHeader alloc] initWithFrame:CGRectMake(10, 0, 300, 92.5)];
-    [headerView setDelegate:self];
-    [headerView setPage:page];
-
-    return headerView;
+//    IPKPage * page = ((IPKActivity *)[self objectForViewIndexPath:sectionIndexPath]).page;
+//    IPIActivityPageTableViewHeader * headerView = [[IPIActivityPageTableViewHeader alloc] initWithFrame:CGRectMake(10, 0, 300, 92.5)];
+//    [headerView setDelegate:self];
+//    [headerView setPage:page];
+//
+//    return headerView;
+    
+//    UIView * paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 15)];
+//    return paddingView;
+    
+    IPIActivityTableViewCell *cell = (IPIActivityTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+	if (!cell) {
+		cell = [[IPIActivityTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+	}
+	
+	cell.activity = [self objectForViewIndexPath:sectionIndexPath];
+    return cell;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    NSIndexPath * sectionIndexPath = [NSIndexPath indexPathForRow:0 inSection:section];
-    IPKPage * page = ((IPKActivity *)[self objectForViewIndexPath:sectionIndexPath]).page;
-    IPIActivityPageTableViewFooter * footerView = [[IPIActivityPageTableViewFooter alloc] initWithFrame:CGRectMake(10, 0, 300, 30)];
-    [footerView setPage:page];
-    
-    return footerView;
+//    NSIndexPath * sectionIndexPath = [NSIndexPath indexPathForRow:0 inSection:section];
+//    IPKPage * page = ((IPKActivity *)[self objectForViewIndexPath:sectionIndexPath]).page;
+//    IPIActivityPageTableViewFooter * footerView = [[IPIActivityPageTableViewFooter alloc] initWithFrame:CGRectMake(10, 0, 300, 30)];
+//    [footerView setPage:page];
+//    
+//    return footerView;
+    UIView * paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 15)];
+    return paddingView;
 }
 
 #pragma mark - UITabBarDelegate

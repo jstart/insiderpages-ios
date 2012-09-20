@@ -7,8 +7,8 @@
 //
 
 #import "CDILoadingView.h"
-#import "UIFont+CheddariOSAdditions.h"
-#import "UIColor+CheddariOSAdditions.h"
+#import "UIFont+InsiderPagesiOSAdditions.h"
+#import "UIColor+InsiderPagesiOSAdditions.h"
 
 @implementation CDILoadingView
 

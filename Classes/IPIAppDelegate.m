@@ -15,13 +15,15 @@
 #import "IIViewDeckController.h"
 #import "CDIDefines.h"
 #import "UIViewController+KNSemiModal.h"
+#import "IPISocialShareHelper.h"
 
 #import "SDURLCache.h"
 #import "UIResponder+KeyboardCache.h"
-#import "UIFont+CheddariOSAdditions.h"
+#import "UIFont+InsiderPagesiOSAdditions.h"
 #import "LocalyticsUtilities.h"
 #import "UISS.h"
 #import "UISSStatusWindow.h"
+#import "AFHTTPRequestOperationLogger.h"
 
 #import <Crashlytics/Crashlytics.h>
  #if TARGET_IPHONE_SIMULATOR
@@ -49,15 +51,15 @@
 	// Configure analytics
 	// If you don't work at Nothing Magical, you shouldn't turn these on.
 	[Crashlytics startWithAPIKey:@"ff6f76d45da103570f8070443d1760ea5199fc81"];
-
 	#ifdef INSIDER_PAGES_LOCALYTICS_KEY
 	LLStartSession(CHEDDAR_LOCALYTICS_KEY);
 	#endif
     [IPKHTTPClient setDevelopmentModeEnabled:YES];
 
     [MagicalRecord  setupCoreDataStackWithStoreNamed:@"InsiderPages.sqlite"];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDataModelChange:) name:NSManagedObjectContextObjectsDidChangeNotification object:[NSManagedObjectContext MR_contextForCurrentThread]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDataModelChange:) name:NSManagedObjectContextObjectsDidChangeNotification object:[NSManagedObjectContext MR_contextForCurrentThread]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDataModelChange:) name:NSManagedObjectContextDidSaveNotification object:[NSManagedObjectContext MR_contextForCurrentThread]];
+    [[NSManagedObjectContext MR_contextForCurrentThread] setMergePolicy:NSOverwriteMergePolicy];
     
 #define TESTING 0
 #ifdef TESTING
@@ -96,25 +98,26 @@
     
     #if TARGET_IPHONE_SIMULATOR
         [[DCIntrospect sharedIntrospector] start];
-//        dispatch_async(dispatch_get_main_queue(), ^{
-            PDDebugger *debugger = [PDDebugger defaultInstance];
-//            [debugger enableNetworkTrafficDebugging];
-//            [debugger forwardAllNetworkTraffic];
-            [debugger enableCoreDataDebugging];
-            [debugger addManagedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread]];
-            [debugger connectToURL:[NSURL URLWithString:@"ws://localhost:9000/device"]];
-//        });
+        PDDebugger *debugger = [PDDebugger defaultInstance];
+        [debugger enableNetworkTrafficDebugging];
+        [debugger forwardAllNetworkTraffic];
+        [debugger enableCoreDataDebugging];
+        [debugger addManagedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread]];
+        [debugger connectToURL:[NSURL URLWithString:@"ws://localhost:9000/device"]];
     #endif
     
 	// Defer some stuff to make launching faster
-	dispatch_async(dispatch_get_main_queue(), ^{
-        
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+//        [IPISocialShareHelper preloadTweetComposeViewController];
 		// Setup status bar network indicator
 		[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
-		
+        [[AFHTTPRequestOperationLogger sharedLogger] startLogging];
+        [[AFHTTPRequestOperationLogger sharedLogger] setLevel:AFLoggerLevelError];
 		// Add the transaction observer
 //		[[SKPaymentQueue defaultQueue] addTransactionObserver:[CDITransactionObserver defaultObserver]];
+        [UIResponder cacheKeyboard:YES];
 	});
+    [self requestLocation];
     
 #if INSIDER_PAGES_TESTING_MODE
 //    Citysearch
@@ -123,24 +126,22 @@
 //    [TestFlight takeOff:@"30d92a896df4ab4b4873886ea58f8b06_NzE0NzIyMDEyLTAzLTE0IDEzOjQ0OjU4Ljk3MDAxOQ"];
 #endif
     
-    [UIResponder cacheKeyboard:YES];
-    [self requestLocation];
 	return YES;
 }
 
 - (void)handleDataModelChange:(NSNotification *)note
 {
-    NSSet *updatedObjects = [[note userInfo] objectForKey:NSUpdatedObjectsKey];
-    NSSet *deletedObjects = [[note userInfo] objectForKey:NSDeletedObjectsKey];
-    NSSet *insertedObjects = [[note userInfo] objectForKey:NSInsertedObjectsKey];
+//    NSSet *updatedObjects = [[note userInfo] objectForKey:NSUpdatedObjectsKey];
+//    NSSet *deletedObjects = [[note userInfo] objectForKey:NSDeletedObjectsKey];
+//    NSSet *insertedObjects = [[note userInfo] objectForKey:NSInsertedObjectsKey];
     
     // Do something in response to this
-    if (updatedObjects)
-        NSLog(@"Updated: %d", updatedObjects.count);
-    if (deletedObjects)
-        NSLog(@"Deleted: %d Objects: %@", deletedObjects.count, deletedObjects);
-    if (insertedObjects)
-        NSLog(@"Inserted: %d", insertedObjects.count);
+//    if (updatedObjects)
+//        NSLog(@"Updated: %d", updatedObjects.count);
+//    if (deletedObjects)
+//        NSLog(@"Deleted: %d Objects: %@", deletedObjects.count, deletedObjects);
+//    if (insertedObjects)
+//        NSLog(@"Inserted: %d", insertedObjects.count);
     // This ensures no updated object is fault, which would cause the NSFetchedResultsController updates to fail.
     // http://www.mlsite.net/blog/?p=518
     
@@ -149,10 +150,21 @@
     for (NSInteger i = [updates count]-1; i >= 0; i--) {
         [[[NSManagedObjectContext MR_contextForCurrentThread] objectWithID:[[updates objectAtIndex:i] objectID]] willAccessValueForKey:nil];
     }
+    [[NSManagedObjectContext MR_contextForCurrentThread] mergeChangesFromContextDidSaveNotification:note];
+
     
     [[NSManagedObjectContext MR_contextForCurrentThread] mergeChangesFromContextDidSaveNotification:note];
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveErrorHandler:^(NSError *error){
-        NSLog(@"Error %@", error);
+        NSLog(@"Failed to save to data store: %@", [error localizedDescription]);
+        NSArray* detailedErrors = [[error userInfo] objectForKey:NSDetailedErrorsKey];
+        if(detailedErrors != nil && [detailedErrors count] > 0) {
+            for(NSError* detailedError in detailedErrors) {
+                NSLog(@"  DetailedError: %@", [detailedError userInfo]);
+            }
+        }
+        else {
+            NSLog(@"  %@", [error userInfo]);
+        }
     }];
 }
 
@@ -169,8 +181,10 @@
     [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error){
         if (error) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [hud failAndDismissWithTitle:@"Contacting Facebook Failed"];
-                [self registerOrLogin];
+                NSLog(@"%@ %@", @"Contacting Facebook Failed", error);
+//                [hud failAndDismissWithTitle:@"Contacting Facebook Failed"];
+                UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Contacting Facebook Failed" message:@"Would you like to try again?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Ok", nil];
+                [alertView show];
             });
             return;
         }
@@ -178,7 +192,7 @@
         [[IPKHTTPClient sharedClient] signInWithFacebookUserID:[result objectForKey:@"id"] accessToken:self.session.accessToken facebookMeResponse:result success:^(AFJSONRequestOperation *operation, id responseObject) {
             if ([[responseObject objectForKey:@"message"] isEqualToString:@"logged in"]) {
                 [self storeCookies];
-
+                
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [hud completeAndDismissWithTitle:@"Successfully Logged In"];
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"Logged In" object:nil];
@@ -188,12 +202,15 @@
                 [self storeCookies];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [hud completeAndDismissWithTitle:@"Successfully Registered"];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"Logged In" object:nil];
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"IPCurrentUserChangedNotification" object:nil];
                 });
             }
         } failure:^(AFJSONRequestOperation *operation, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self registerOrLogin];
+                NSLog(@"%@ %@", @"Contacting QA.InsiderPages Failed", error);
+                UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Contacting Facebook Failed" message:@"Would you like to try again?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Ok", nil];
+                [alertView show];
             });
         }];
     }];
@@ -254,6 +271,13 @@
     }];
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        [self openSessionCheckCache:YES];
+        [self registerOrLogin];
+    }
+}
+
 #pragma mark - Facebook
 
 - (FBSession *)createNewSession
@@ -284,6 +308,7 @@
         }
             break;
         case FBSessionStateClosed:
+            break;
         case FBSessionStateClosedLoginFailed:
 
             [self openSessionCheckCache:NO];
@@ -307,6 +332,7 @@
 - (void) openSessionCheckCache:(BOOL)check {
     // Create a new session object
     if (!self.session.isOpen) {
+        NSLog(@"Create new session: %@", self.session);
         [self createNewSession];
     }
     // Open the session in two scenarios:
@@ -316,6 +342,7 @@
     //   e.g. when we need to show a logged vs. logged out display.
     if (!check ||
         (self.session.state == FBSessionStateCreatedTokenLoaded)) {
+        NSLog(@"!check new session: %@ ", self.session);
         [self.session openWithCompletionHandler:
          ^(FBSession *session, FBSessionState state, NSError *error) {
              [self sessionStateChanged:session state:state error:error];
@@ -328,6 +355,7 @@
   sourceApplication:(NSString *)sourceApplication 
          annotation:(id)annotation 
 {
+    NSLog(@"OpenURL %@ Session %@", self.session, url);
     if (![self.session isOpen]) {
         return [self.session handleOpenURL:url];
     }else{
@@ -337,11 +365,12 @@
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    
 }
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-
+    
 }
 
 
@@ -386,11 +415,11 @@
 	[navigationBar setBackgroundImage:[UIImage imageNamed:@"header_background.png"] forBarMetrics:UIBarMetricsDefault];
 	
 	// Navigation button
-	NSDictionary *barButtonTitleTextAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
-												  [UIFont cheddarFontOfSize:14.0f], UITextAttributeFont,
-												  [UIColor colorWithWhite:0.0f alpha:0.2f], UITextAttributeTextShadowColor,
-												  [NSValue valueWithUIOffset:UIOffsetMake(0.0f, 1.0f)], UITextAttributeTextShadowOffset,
-												  nil];
+//	NSDictionary *barButtonTitleTextAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
+//												  [UIFont cheddarFontOfSize:14.0f], UITextAttributeFont,
+//												  [UIColor colorWithWhite:0.0f alpha:0.2f], UITextAttributeTextShadowColor,
+//												  [NSValue valueWithUIOffset:UIOffsetMake(0.0f, 1.0f)], UITextAttributeTextShadowOffset,
+//												  nil];
 //	UIBarButtonItem *barButton = [UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil];
 //	[barButton setTitlePositionAdjustment:UIOffsetMake(10.0f, 10.0f) forBarMetrics:UIBarMetricsDefault];
 //	[barButton setTitleTextAttributes:barButtonTitleTextAttributes forState:UIControlStateNormal];

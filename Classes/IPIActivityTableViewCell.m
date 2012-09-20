@@ -1,13 +1,13 @@
 //
-//  CDIListTableViewCell.m
-//  Cheddar for iOS
+//  IPIActivityTableViewCell.m
+//  InsiderPages_iOS
 //
-//  Created by Sam Soffes on 4/24/12.
-//  Copyright (c) 2012 Nothing Magical. All rights reserved.
+//  Created by Truman, Christopher on 9/20/12.
+//  Copyright (c) 2012 InisderPages. All rights reserved.
 //
 
 #import "IPIActivityTableViewCell.h"
-#import "UIColor+CheddariOSAdditions.h"
+#import "IPKActivity+Formatting.h"
 
 @implementation IPIActivityTableViewCell
 
@@ -17,11 +17,10 @@
     if (_activity != activity) {
         _activity = activity;
         
-        self.textLabel.text = activity.trackable_type;
-        self.detailTextLabel.text = [activity actionText];
-        [self.profileImageView setInitialImage:[UIImage imageNamed:@"reload-button"]];
+        self.activityLabel.text = [activity attributedActionText];
+        [self.profileImageView setImage:[UIImage imageNamed:@"reload-button"]];
         [self.profileImageView setPathToNetworkImage:[activity.user imageProfilePathForSize:IPKUserProfileImageSizeMedium] forDisplaySize:self.profileImageView.frame.size contentMode:UIViewContentModeCenter];
-        self.timeLabel.text = [activity formattedTimeElapsedSinceUpdated];
+//        self.timeLabel.text = [activity formattedTimeElapsedSinceUpdated];
         [self setNeedsLayout];
     }
 }
@@ -30,42 +29,41 @@
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
 	if ((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) {
-//		UIImageView *disclosureImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 10.0f, 15.0f)];
-//		disclosureImageView.image = [UIImage imageNamed:@"disclosure.png"];
-//		self.accessoryView = disclosureImageView;
-		
-//		disclosureImageView.highlightedImage = [UIImage imageNamed:@"disclosure-highlighted.png"];
-		SSGradientView *selectedBackground = [[SSGradientView alloc] initWithFrame:CGRectZero];
-		selectedBackground.colors = [[NSArray alloc] initWithObjects:
-									 [UIColor colorWithRed:0.0f green:0.722f blue:0.918f alpha:1.0f],
-									 [UIColor colorWithRed:0.0f green:0.631f blue:0.835f alpha:1.0f],
-									 nil];
-		selectedBackground.bottomBorderColor = [UIColor colorWithRed:0.0f green:0.502f blue:0.725f alpha:1.0f];
-		selectedBackground.contentMode = UIViewContentModeRedraw;
-		self.selectedBackgroundView = selectedBackground;
-        
-        UIImage * image = nil;
-        self.profileImageView = [[NINetworkImageView alloc] initWithImage:image];
-        [self.profileImageView setFrame:CGRectMake(15, 6, 40, 40)];
+        self.backgroundColor = [UIColor clearColor];
+        self.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
+        self.profileImageView = [[NINetworkImageView alloc] initWithImage:[UIImage imageNamed:@"reload-button"]];
+        self.profileImageView.layer.borderWidth = 1;
+        self.profileImageView.layer.borderColor = [UIColor whiteColor].CGColor;
+        [self.profileImageView setFrame:CGRectMake(15, 7.5, 40, 40)];
+        [self.profileImageView setInitialImage:[UIImage imageNamed:@"reload-button"]];
         [self addSubview:self.profileImageView];
         
-        self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width-80, 5, 80, 20)];
-        self.timeLabel.backgroundColor = [UIColor clearColor];
-        [self.timeLabel setFont:[UIFont systemFontOfSize:[UIFont smallSystemFontSize]]];
-        [self addSubview:self.timeLabel];
+        self.activityLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(60, 15, 240, 50)];
+        self.activityLabel.backgroundColor = [UIColor clearColor];
+        self.activityLabel.numberOfLines = 3;
+        self.activityLabel.verticalAlignment = TTTAttributedLabelVerticalAlignmentCenter;
+        self.activityLabel.contentMode = UIViewContentModeCenter;
+        [self addSubview:self.activityLabel];
+//        self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width-80, 5, 80, 20)];
+//        self.timeLabel.backgroundColor = [UIColor clearColor];
+//        [self.timeLabel setFont:[UIFont systemFontOfSize:[UIFont smallSystemFontSize]]];
+//        [self addSubview:self.timeLabel];
 	}
 	return self;
 }
 
 - (void) layoutSubviews {
     [super layoutSubviews];
-    CGRect textLabelFrame = self.textLabel.frame;
-    textLabelFrame.origin.x = 50;
-    self.textLabel.frame = textLabelFrame;
-    
-    CGRect detailTextLabelFrame = self.detailTextLabel.frame;
-    detailTextLabelFrame.origin.x = 50;
-    self.detailTextLabel.frame = detailTextLabelFrame;
+    self.activityLabel.center = CGPointMake(0, self.profileImageView.center.y);
+    CGRect textLabelFrame = self.activityLabel.frame;
+    textLabelFrame.origin.x = 60;
+    self.activityLabel.frame = textLabelFrame;
+
 }
+
++(CGFloat)heightForCellWithText:(NSString *)text{
+    return 55;
+}
+
 
 @end

@@ -19,8 +19,8 @@
 #import "CDINoTasksView.h"
 //#import "CDIRenameTaskViewController.h"
 //#import "CDIWebViewController.h"
-#import "UIColor+CheddariOSAdditions.h"
-#import "UIFont+CheddariOSAdditions.h"
+#import "UIColor+InsiderPagesiOSAdditions.h"
+#import "UIFont+InsiderPagesiOSAdditions.h"
 
 @interface IPIPageViewController () <IPIPageTableViewHeaderDelegate, TTTAttributedLabelDelegate, UITextFieldDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
 - (void)_renameList:(id)sender;

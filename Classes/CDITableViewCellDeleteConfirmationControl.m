@@ -7,7 +7,7 @@
 //
 
 #import "CDITableViewCellDeleteConfirmationControl.h"
-#import "UIFont+CheddariOSAdditions.h"
+#import "UIFont+InsiderPagesiOSAdditions.h"
 #import <objc/runtime.h>
 
 @implementation CDITableViewCellDeleteConfirmationControl

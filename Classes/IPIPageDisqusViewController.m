@@ -9,8 +9,8 @@
 #import "IPIProviderViewHeader.h"
 #import "IPIAddToPageViewController.h"
 #import "IPISocialShareHelper.h"
-#import "UIColor+CheddariOSAdditions.h"
-#import "UIFont+CheddariOSAdditions.h"
+#import "UIColor+InsiderPagesiOSAdditions.h"
+#import "UIFont+InsiderPagesiOSAdditions.h"
 #import "IPIDisqusTableViewCell.h"
 #import "IADisquser.h"
 

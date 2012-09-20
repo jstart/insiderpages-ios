@@ -8,7 +8,7 @@
 
 #import "CDIWebSignInViewController.h"
 #import "CDILoadingView.h"
-#import "UIColor+CheddariOSAdditions.h"
+#import "UIColor+InsiderPagesiOSAdditions.h"
 #import <SSToolkit/SSCategories.h>
 
 @interface CDIWebSignInViewController ()

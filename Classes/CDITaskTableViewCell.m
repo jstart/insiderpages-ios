@@ -8,9 +8,9 @@
 
 #import "CDITaskTableViewCell.h"
 #import "CDIAttributedLabel.h"
-#import "UIColor+CheddariOSAdditions.h"
-#import "UIFont+CheddariOSAdditions.h"
-#import "CDKTask+CheddariOSAdditions.h"
+#import "UIColor+InsiderPagesiOSAdditions.h"
+#import "UIFont+InsiderPagesiOSAdditions.h"
+#import "CDKTask+InsiderPagesiOSAdditions.h"
 
 @implementation CDITaskTableViewCell {
 	UIImageView *_checkbox;

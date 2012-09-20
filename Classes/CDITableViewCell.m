@@ -7,8 +7,8 @@
 //
 
 #import "CDITableViewCell.h"
-#import "UIColor+CheddariOSAdditions.h"
-#import "UIFont+CheddariOSAdditions.h"
+#import "UIColor+InsiderPagesiOSAdditions.h"
+#import "UIFont+InsiderPagesiOSAdditions.h"
 #import <objc/runtime.h>
 
 @interface CDITableViewCell () <UIGestureRecognizerDelegate>

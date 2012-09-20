@@ -70,3 +70,12 @@
 [submodule "Vendor/Production/JCGridMenu"]
 	path = Vendor/Production/JCGridMenu
 	url = git://github.com/joecarney/JCGridMenu.git
+[submodule "Vendor/Production/OHAttributedLabel"]
+	path = Vendor/Production/OHAttributedLabel
+	url = git://github.com/AliSoftware/OHAttributedLabel.git
+[submodule "Vendor/Development/AFHTTPRequetOperationLogger"]
+	path = Vendor/Development/AFHTTPRequetOperationLogger
+	url = git://github.com/AFNetworking/AFHTTPRequestOperationLogger.git
+[submodule "Vendor/Production/JMStaticContentTableViewController"]
+	path = Vendor/Production/JMStaticContentTableViewController
+	url = git://github.com/jakemarsh/JMStaticContentTableViewController.git

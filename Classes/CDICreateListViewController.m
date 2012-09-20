@@ -7,8 +7,8 @@
 //
 
 #import "CDICreateListViewController.h"
-#import "UIColor+CheddariOSAdditions.h"
-#import "UIFont+CheddariOSAdditions.h"
+#import "UIColor+InsiderPagesiOSAdditions.h"
+#import "UIFont+InsiderPagesiOSAdditions.h"
 
 @interface CDICreateListViewController () <UITextFieldDelegate, UIAlertViewDelegate>
 @property (nonatomic, strong) UITextField *titleTextField;

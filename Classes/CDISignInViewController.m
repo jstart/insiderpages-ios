@@ -8,8 +8,8 @@
 
 #import "CDISignInViewController.h"
 #import "CDISignUpViewController.h"
-#import "UIColor+CheddariOSAdditions.h"
-#import "UIFont+CheddariOSAdditions.h"
+#import "UIColor+InsiderPagesiOSAdditions.h"
+#import "UIFont+InsiderPagesiOSAdditions.h"
 
 @implementation CDISignInViewController
 

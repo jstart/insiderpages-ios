@@ -7,7 +7,7 @@
 //
 
 #import "CDINoTasksView.h"
-#import "UIFont+CheddariOSAdditions.h"
+#import "UIFont+InsiderPagesiOSAdditions.h"
 
 @implementation CDINoTasksView
 

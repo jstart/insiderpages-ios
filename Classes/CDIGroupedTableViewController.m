@@ -7,8 +7,8 @@
 //
 
 #import "CDIGroupedTableViewController.h"
-#import "UIColor+CheddariOSAdditions.h"
-#import "UIFont+CheddariOSAdditions.h"
+#import "UIColor+InsiderPagesiOSAdditions.h"
+#import "UIFont+InsiderPagesiOSAdditions.h"
 
 @implementation CDIGroupedTableViewController {
 	NSCache *_headerCache;

@@ -8,8 +8,8 @@
 
 #import "CDIAddTaskAnimationView.h"
 #import "CDITableViewCell.h"
-#import "UIFont+CheddariOSAdditions.h"
-#import "UIColor+CheddariOSAdditions.h"
+#import "UIFont+InsiderPagesiOSAdditions.h"
+#import "UIColor+InsiderPagesiOSAdditions.h"
 #import <QuartzCore/QuartzCore.h>
 
 @implementation CDIAddTaskAnimationView

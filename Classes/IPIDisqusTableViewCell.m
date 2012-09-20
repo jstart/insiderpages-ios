@@ -3,8 +3,8 @@
 //
 
 #import "IPIDisqusTableViewCell.h"
-#import "UIColor+CheddariOSAdditions.h"
-
+#import "UIColor+InsiderPagesiOSAdditions.h"
+#import "IPKActivity+Formatting.h"
 @implementation IPIDisqusTableViewCell
 
 @synthesize activity = _activity;

@@ -7,8 +7,8 @@
 //
 
 #import "CDISignUpViewController.h"
-#import "UIColor+CheddariOSAdditions.h"
-#import "UIFont+CheddariOSAdditions.h"
+#import "UIColor+InsiderPagesiOSAdditions.h"
+#import "UIFont+InsiderPagesiOSAdditions.h"
 #import "CDISignInViewController.h"
 
 @interface CDISignUpViewController ()
@@ -77,7 +77,7 @@
 #pragma mark - Actions
 
 -(void)login{
-    [[IPIAppDelegate sharedAppDelegate] openSessionCheckCache:YES];
+    [[IPIAppDelegate sharedAppDelegate] openSessionCheckCache:NO];
 }
 
 -(void)loggedIn{

@@ -1,18 +1,19 @@
 //
-//  CDIListTableViewCell.h
-//  Cheddar for iOS
+//  IPIActivityTableViewCell.h
+//  InsiderPages_iOS
 //
-//  Created by Sam Soffes on 4/24/12.
-//  Copyright (c) 2012 Nothing Magical. All rights reserved.
+//  Created by Truman, Christopher on 9/20/12.
+//  Copyright (c) 2012 InisderPages. All rights reserved.
 //
 
-#import "CDITableViewCell.h"
-#import "NINetworkImageView.h"
+#import "TTTAttributedLabel.h"
 
-@interface IPIActivityTableViewCell : CDITableViewCell
-
+@interface IPIActivityTableViewCell : UITableViewCell
 @property (nonatomic, strong) IPKActivity *activity;
+@property (nonatomic, strong) TTTAttributedLabel *activityLabel;
 @property (nonatomic, strong) NINetworkImageView * profileImageView;
-@property (nonatomic, strong) UILabel * timeLabel;
+//@property (nonatomic, strong) UILabel * timeLabel;
+
++(CGFloat)heightForCellWithText:(NSString *)text;
 
 @end

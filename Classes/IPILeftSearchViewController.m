@@ -8,8 +8,8 @@
 #import "IPIProviderTableViewCell.h"
 #import "IPISegmentContainerViewController.h"
 #import "IPIUserTableViewCell.h"
-#import "UIColor+CheddariOSAdditions.h"
-//#import "CDINoListsView.h"
+#import "UIColor+InsiderPagesiOSAdditions.h"
+#import "CDINoListsView.h"
 #import <SSToolkit/UIScrollView+SSToolkitAdditions.h>
 #import "SVPullToRefresh.h"
 
@@ -26,17 +26,42 @@
 }
 
 - (BOOL)viewDeckControllerWillOpenLeftView:(IIViewDeckController*)viewDeckController animated:(BOOL)animated{
-    [SSRateLimit executeBlock:[self refresh] name:@"refresh-mine-pages" limit:0.0];
+    self.tableView.hidden = YES;
+    [self.view bringSubviewToFront:self.coverView];
+    [self showCoverView];
+
     return YES;
+}
+
+-(UITableView *)tableView{
+    return self.searchDisplayController.searchResultsTableView;
+}
+
+- (void)customizeSearchBar {
+    [self.searchDisplayController.searchBar setBackgroundImage:[UIImage imageNamed:@"bar_background.png"]];
+    
+    UITextField *searchField;
+    
+    NSUInteger numViews = [self.searchDisplayController.searchBar.subviews count];
+    for(int i = 0; i < numViews; i++) {
+        if([[self.searchDisplayController.searchBar.subviews objectAtIndex:i] isKindOfClass:[UITextField class]]) { //?
+            searchField = [self.searchDisplayController.searchBar.subviews  objectAtIndex:i];
+        }
+    }
+    if(!(searchField == nil)) {
+        searchField.textColor = [UIColor whiteColor];
+        [searchField setBackground: [UIImage imageNamed:@"field.png"] ];
+        [searchField setBorderStyle:UITextBorderStyleNone];
+    }
 }
 
 - (void)viewDeckControllerDidOpenLeftView:(IIViewDeckController*)viewDeckController animated:(BOOL)animated{
     
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:.3];
-    CGRect frame = [self view].frame;
+    CGRect frame = [[self searchDisplayController] searchBar].frame;
     frame.size.width = 320 - 44;
-    [[self view] setFrame:frame];
+    [[[self searchDisplayController] searchBar] setFrame:frame];
     [UIView commitAnimations];
 }
 
@@ -49,31 +74,50 @@
         self.queryModel.city = [[IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]].city_id stringValue];
         self.queryModel.currentPage = @"1";
         self.queryModel.perPageNumber = @"10";
-        [[NSManagedObjectContext MR_rootSavingContext] MR_save];
 	}
 	return self;
+}
+
+- (UIView *)coverView {
+    if (![[self.view subviews] containsObject:self.pullOutTableViewController.tableView]) {
+        
+        self.pullOutTableViewController = [[IPIPullOutTableViewController alloc] initWithStyle:UITableViewStylePlain];
+        [self.pullOutTableViewController.tableView setFrame:CGRectMake(0, 44, 320, 480-44)];
+        [self.pullOutTableViewController.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(coverViewTapped:)]];
+        [self.view addSubview:self.pullOutTableViewController.tableView];
+    }
+
+    return self.pullOutTableViewController.tableView;
 }
 
 #pragma mark - UIViewController
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-    //	self.noContentView = [[CDINoListsView alloc] initWithFrame:CGRectZero];
+//    self.noContentView = [[CDINoListsView alloc] initWithFrame:CGRectZero];
     self.tableView.showsPullToRefresh = NO;
     self.tableView.showsInfiniteScrolling = NO;
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_currentUserDidChange:) name:kIPKCurrentUserChangedNotificationName object:nil];
 
-    self.searchDisplayController.searchBar.showsCancelButton = YES;
     self.searchDisplayController.searchBar.scopeButtonTitles = @[@"Pages", @"Places", @"Users"];
     [self.searchDisplayController.searchBar setShowsScopeBar:YES];
     [self setWantsFullScreenLayout:YES];
     [[self view] setAutoresizesSubviews:YES];
+    
+    UIView * backgroundView = [[UIView alloc] initWithFrame:self.tableView.frame];
+    backgroundView.backgroundColor = [UIColor pulloutBackgroundColor];
+    ((UITableView*)self.view).backgroundView = backgroundView;
+    [((UITableView*)self.view) setBounces:NO];
 }
 
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
     [self setWantsFullScreenLayout:NO];
+    [self customizeSearchBar];
+//    [self showCoverView];
+//    [self.view bringSubviewToFront:self.coverView];
+//    self.tableView.hidden = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -297,6 +341,10 @@
 }// return NO to not become first responder
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.1];
+    self.pullOutTableViewController.view.hidden = YES;
+    [UIView commitAnimations];
     [self.viewDeckController setLeftLedge:0];
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:.3];
@@ -304,12 +352,14 @@
     frame.size.width = 320;
     [self.view setFrame:frame];
     [UIView commitAnimations];
+    [self hideCoverView];
+    self.tableView.hidden = NO;
 }                     // called when text starts editing
 
 - (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar{
     [self.viewDeckController setLeftLedge:44];
     [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:.3];
+    [UIView setAnimationDuration:0.1];
     CGRect frame = [self view].frame;
     frame.size.width = 320 - 44;
     [[self view] setFrame:frame];
@@ -343,8 +393,7 @@
             break;
     }
 
-    
-    [((SSFilterableFetchedResultsController*)self.fetchedResultsController) setActiveFilterByKey:queryKey];
+//    [((SSFilterableFetchedResultsController*)self.fetchedResultsController) setActiveFilterByKey:queryKey];
     [self.searchDisplayController.searchResultsTableView reloadData];
 //    [self.queryModel setQueryString:searchText];
 //    switch (searchBar.selectedScopeButtonIndex) {
@@ -481,7 +530,12 @@
     
 }                   // called when bookmark button pressed
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar{
-    
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.3];
+    self.pullOutTableViewController.view.hidden = NO;
+    [UIView commitAnimations];
+    [self.view bringSubviewToFront:self.coverView];
+    [self showCoverView];
 }                    // called when cancel button pressed
 - (void)searchBarResultsListButtonClicked:(UISearchBar *)searchBar {
     

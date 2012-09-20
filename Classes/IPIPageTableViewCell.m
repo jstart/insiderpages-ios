@@ -4,7 +4,7 @@
 //
 
 #import "IPIPageTableViewCell.h"
-#import "UIColor+CheddariOSAdditions.h"
+#import "UIColor+InsiderPagesiOSAdditions.h"
 
 @implementation IPIPageTableViewCell
 

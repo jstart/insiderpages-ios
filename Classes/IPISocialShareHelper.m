@@ -12,8 +12,18 @@
 
 @implementation IPISocialShareHelper
 
+static TWTweetComposeViewController *tweetComposeViewController;
+
++(void)preloadTweetComposeViewController{
+    if (tweetComposeViewController == nil) {
+        tweetComposeViewController = [[TWTweetComposeViewController alloc] init];
+    }
+}
+
 +(void)tweetPage:(IPKPage*)page fromViewController:(UIViewController*)viewController{
-    TWTweetComposeViewController *tweetComposeViewController = [[TWTweetComposeViewController alloc] init];
+    if (tweetComposeViewController == nil) {
+        tweetComposeViewController = [[TWTweetComposeViewController alloc] init];
+    }
     // Optional: set an image, url and initial text
     [tweetComposeViewController addImage:[UIImage imageNamed:@"bookmark.png"]];
     [tweetComposeViewController addURL:[NSURL URLWithString:@"http://qa.insiderpages.com/"]];
@@ -24,7 +34,9 @@
 }
 
 +(void)tweetProvider:(IPKProvider*)provider fromViewController:(UIViewController*)viewController{
-    TWTweetComposeViewController *tweetComposeViewController = [[TWTweetComposeViewController alloc] init];
+    if (tweetComposeViewController == nil) {
+        tweetComposeViewController = [[TWTweetComposeViewController alloc] init];
+    }
     // Optional: set an image, url and initial text
     [tweetComposeViewController addImage:[UIImage imageNamed:@"bookmark.png"]];
     [tweetComposeViewController addURL:[NSURL URLWithString:@"http://qa.insiderpages.com/"]];

@@ -8,7 +8,7 @@
 
 #import "CDIManagedTableViewController.h"
 #import "CDITableViewCell.h"
-#import "UIColor+CheddariOSAdditions.h"
+#import "UIColor+InsiderPagesiOSAdditions.h"
 #import "CDILoadingView.h"
 #import "SVPullToRefresh.h"
 
@@ -274,6 +274,7 @@
 
 - (void)showCoverView {
 	UIView *coverView = self.coverView;
+    _coverView = coverView;
 	[UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionAllowUserInteraction animations:^{
 		coverView.alpha = 1.0f;
 	} completion:nil];

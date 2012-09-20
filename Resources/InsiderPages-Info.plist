@@ -45,10 +45,8 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Gotham-Bold.otf</string>
-		<string>Gotham-BoldItalic.otf</string>
-		<string>Gotham-Book.otf</string>
-		<string>Gotham-BookItalic.otf</string>
+		<string>myriad-web-pro.ttf</string>
+		<string>myriadwebpro-bold.ttf</string>
 	</array>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleBlackOpaque</string>

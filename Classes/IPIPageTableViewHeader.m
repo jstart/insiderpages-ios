@@ -111,10 +111,22 @@
 
 -(void)followButtonPressed{
     [self.delegate followButtonPressed:self.page];
+    if (!self.followButton.selected) {
+        [self.followButton setSelected:YES];
+    }
+    else if (self.followButton.selected) {
+        [self.followButton setSelected:NO];
+    }
 }
 
 -(void)favoriteButtonPressed{
     [self.delegate favoriteButtonPressed:self.page];
+    if (!self.favoriteButton.selected) {
+        [self.favoriteButton setSelected:YES];
+    }
+    else if (self.favoriteButton.selected) {
+        [self.favoriteButton setSelected:NO];
+    }
 }
 
 -(void)shareButtonPressed{
@@ -130,7 +142,7 @@
         [self.creatorProfileImageView setInitialImage:[UIImage imageNamed:@"reload-button"]];
 
         [self.creatorProfileImageView setPathToNetworkImage:[self.page.owner imageProfilePathForSize:IPKUserProfileImageSizeMedium] forDisplaySize:self.creatorProfileImageView.frame.size contentMode:UIViewContentModeCenter];
-
+    dispatch_async(dispatch_get_main_queue(), ^{
         if ([page.is_following boolValue]) {
             [self.followButton setSelected:YES];
         }else{
@@ -145,6 +157,9 @@
             [self.followButton setHidden:YES];
             [self.favoriteButton setHidden:YES];
         }
+        [self.followButton setNeedsDisplay];
+        [self.favoriteButton setNeedsDisplay];
+    });
 //    }
 }
 

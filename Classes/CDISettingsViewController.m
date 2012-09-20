@@ -10,9 +10,9 @@
 #import "CDIUpgradeViewController.h"
 #import "CDISettingsTableViewCell.h"
 #import "TTTAttributedLabel.h"
-#import "UIColor+CheddariOSAdditions.h"
-#import "UIButton+CheddariOSAdditions.h"
-#import "UIFont+CheddariOSAdditions.h"
+#import "UIColor+InsiderPagesiOSAdditions.h"
+#import "UIButton+InsiderPagesiOSAdditions.h"
+#import "UIFont+InsiderPagesiOSAdditions.h"
 #import <MessageUI/MessageUI.h>
 #import "CDIAppDelegate.h"
 #import "CDISplitViewController.h"
