@@ -10,12 +10,13 @@
 #import "IPISplitViewController.h"
 #import "IPIActivityViewController.h"
 #import "IPILeftSearchViewController.h"
-#import "IPIAccordionViewController.h"
+#import "IPICreatePageInitialViewController.h"
 #import "CDISignUpViewController.h"
 #import "IIViewDeckController.h"
 #import "CDIDefines.h"
 #import "UIViewController+KNSemiModal.h"
 #import "IPISocialShareHelper.h"
+#import "UIColor-Expanded.h"
 
 #import "SDURLCache.h"
 #import "UIResponder+KeyboardCache.h"
@@ -88,6 +89,7 @@
     [viewDeckController setNavigationControllerBehavior:IIViewDeckNavigationControllerContained];
     [viewDeckController setWantsFullScreenLayout:YES];
     [viewDeckController setPanningMode:IIViewDeckFullViewPanning];
+    [viewDeckController setElastic:NO];
     [viewDeckController setCenterhiddenInteractivity:IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose];
     UINavigationController * navControllerWrapper = [[UINavigationController alloc] initWithRootViewController:viewDeckController];
     [navControllerWrapper setNavigationBarHidden:YES];
@@ -402,18 +404,18 @@
     
 	// Navigation bar
 	UINavigationBar *navigationBar = [UINavigationBar appearance];
-//	[navigationBar setTitleVerticalPositionAdjustment:-1.0f forBarMetrics:UIBarMetricsDefault];
-//	[navigationBar setTitleTextAttributes:[[NSDictionary alloc] initWithObjectsAndKeys:
-//										   [UIFont cheddarFontOfSize:20.0f], UITextAttributeFont,
-//										   [UIColor colorWithWhite:0.0f alpha:0.2f], UITextAttributeTextShadowColor,
-//										   [NSValue valueWithUIOffset:UIOffsetMake(0.0f, 1.0f)], UITextAttributeTextShadowOffset,
-//										   [UIColor whiteColor], UITextAttributeTextColor,
-//										   nil]];
-	
+	[navigationBar setTitleTextAttributes:[[NSDictionary alloc] initWithObjectsAndKeys:
+										   [UIFont fontWithName:@"Comfortaa" size:17.5f], UITextAttributeFont,
+										   [UIColor colorWithWhite:0.0f alpha:1.0f], UITextAttributeTextShadowColor,
+										   [NSValue valueWithUIOffset:UIOffsetMake(0.0f, 1.0f)], UITextAttributeTextShadowOffset,
+										   [UIColor colorWithHexString:@"666666"], UITextAttributeTextColor,
+										   nil]];
+    [navigationBar setBackgroundImage:[UIImage imageNamed:@"header_background.png"] forBarMetrics:UIBarMetricsDefault];
+
 	// Navigation bar mini
-//	[navigationBar setTitleVerticalPositionAdjustment:-2.0f forBarMetrics:UIBarMetricsLandscapePhone];
-	[navigationBar setBackgroundImage:[UIImage imageNamed:@"header_background.png"] forBarMetrics:UIBarMetricsDefault];
-	
+    UINavigationBar *navigationBarActivityFeed = [UINavigationBar appearanceWhenContainedIn:[IPIActivityViewController class], nil];
+	[navigationBarActivityFeed setBackgroundImage:[UIImage imageNamed:@"header_background.png"] forBarMetrics:UIBarMetricsDefault];
+
 	// Navigation button
 //	NSDictionary *barButtonTitleTextAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
 //												  [UIFont cheddarFontOfSize:14.0f], UITextAttributeFont,

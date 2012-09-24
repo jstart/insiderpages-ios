@@ -17,7 +17,7 @@ enum IPKActivityFilterType{
     IPKActivityFilterTypePopular = 2
 };
 
-@interface IPIActivityViewController : IPIBookmarkBaseManagedViewController <IPIActivityTableViewHeaderDelegate, UITabBarDelegate>
+@interface IPIActivityViewController : IPIBookmarkBaseManagedViewController <IPIActivityTableViewHeaderDelegate, UIGestureRecognizerDelegate, UITabBarDelegate>
 
 @property (nonatomic, readwrite) enum IPKActivityFilterType filterType;
 @property (nonatomic, strong) IPITabBar * tabBar;

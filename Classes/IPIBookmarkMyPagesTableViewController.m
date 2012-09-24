@@ -75,10 +75,12 @@
         }
         
         self.loading = YES;
+        self.ignoreChange = YES;
         NSString * myUserId = [NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"IPKUserID"]];
         [[IPKHTTPClient sharedClient] getPagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.loading = NO;
+                self.ignoreChange = NO;
                 self.fetchedResultsController = nil;                
                 [self.tableView reloadData];
             });

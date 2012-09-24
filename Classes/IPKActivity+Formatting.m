@@ -26,7 +26,7 @@
         if ([[self user] name]){
             NSRange usernameRange = [fullActionText rangeOfString:[[self user] name]];
             [fullActionTextAttributedString setFont:[UIFont fontWithName:@"MyriadWebPro-Bold" size:13] range:usernameRange];
-            [fullActionTextAttributedString setTextColor:[UIColor colorWithHexString:@"000000"] range:usernameRange];
+            [fullActionTextAttributedString setTextColor:[UIColor colorWithHexString:@"333333"] range:usernameRange];
         }
         
         if ([self actionText]) {
@@ -38,7 +38,7 @@
         if ([self nounText]) {
             NSRange nounRange = [fullActionText rangeOfString:[self nounText]];
             [fullActionTextAttributedString setFont:[UIFont fontWithName:@"MyriadWebPro-Bold" size:13] range:nounRange];
-            [fullActionTextAttributedString setTextColor:[UIColor colorWithHexString:@"000000"] range:nounRange];
+            [fullActionTextAttributedString setTextColor:[UIColor colorWithHexString:@"333333"] range:nounRange];
         }
     }
     

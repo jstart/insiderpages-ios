@@ -36,4 +36,8 @@
     [self.textLabel setFrame:frame];
 }
 
++(CGFloat)cellHeight{
+    return 44;
+}
+
 @end

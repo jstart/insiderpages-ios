@@ -10,4 +10,8 @@
 
 +(UITableViewCell*)cellForActivity:(IPKActivity*)activity;
 
++(CGFloat)heightForActivity:(IPKActivity*)activity;
+
++(Class)headerViewClassForActivity:(IPKActivity*)activity;
+
 @end

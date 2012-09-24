@@ -10,4 +10,6 @@
 
 @interface IPIIconCell : UITableViewCell
 
++(CGFloat)cellHeight;
+
 @end

@@ -47,6 +47,9 @@
 	<array>
 		<string>myriad-web-pro.ttf</string>
 		<string>myriadwebpro-bold.ttf</string>
+		<string>Comfortaa-Regular.ttf</string>
+		<string>Comfortaa-Bold.ttf</string>
+		<string>Comfortaa-Light.ttf</string>
 	</array>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleBlackOpaque</string>

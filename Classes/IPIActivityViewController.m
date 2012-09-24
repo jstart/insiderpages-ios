@@ -11,6 +11,8 @@
 #import "IPIPageViewController.h"
 #import "IPISegmentContainerViewController.h"
 #import "IPIActivityTableViewCell.h"
+#import "IPIAbstractActivityCell.h"
+#import "IPIActivityCellHelper.h"
 #import "IPIActivityPageTableViewFooter.h"
 #import "CDINoListsView.h"
 #import "UIColor+InsiderPagesiOSAdditions.h"
@@ -59,7 +61,8 @@
     UIImage * pulloutImage = [UIImage imageNamed:@"pullout_button"];
     UIButton * leftViewButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [leftViewButton setImage:pulloutImage forState:UIControlStateNormal];
-    [leftViewButton setFrame:CGRectMake(10, 0, pulloutImage.size.width, pulloutImage.size.height)];
+    [leftViewButton setFrame:CGRectMake(0, 0, pulloutImage.size.width+15, pulloutImage.size.height+15)];
+    [leftViewButton setImageEdgeInsets:UIEdgeInsetsMake(-10, 0, 0, 0)];
     [leftViewButton addTarget:self.viewDeckController action:@selector(toggleLeftView) forControlEvents:UIControlEventTouchUpInside];
     UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, pulloutImage.size.width+10, pulloutImage.size.height) ];
     
@@ -69,7 +72,7 @@
     
     _adding = NO;
     
-    self.tabBar = [[IPITabBar alloc] initWithFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 114, 320, 50)];
+    self.tabBar = [[IPITabBar alloc] initWithFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 104, 320, 46)];
     [self.tabBar setDelegate:self];
     [self.tabBar setSelectedItem:[self.tabBar.items objectAtIndex:1]];
     [[self view] addSubview:self.tabBar];
@@ -214,7 +217,6 @@
 
     return ^(void){
         if (self.loading || ![IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]]) {
-            self.loading = NO;
             [SSRateLimit resetLimitForName:@"refresh-activity"];
             return;
         }
@@ -361,15 +363,19 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	static NSString *const cellIdentifier = @"cellIdentifier";
 
-	IPIActivityTableViewCell *cell = (IPIActivityTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    IPKActivity * activity = [self objectForViewIndexPath:indexPath];
+    
+    NSString * cellIdentifier = NSStringFromClass(activity.class);
+
+	IPIAbstractActivityCell *cell = (IPIAbstractActivityCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 	if (!cell) {
-		cell = [[IPIActivityTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+		cell = [IPIActivityCellHelper cellForActivity:activity];
 	}
-	
-	cell.activity = [self objectForViewIndexPath:indexPath];
-	
+    if ([cell isKindOfClass:[IPIAbstractActivityCell class]]) {
+        [cell setActivity:activity];
+    }
+    
 	return cell;
 }
 
@@ -452,27 +458,32 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     IPKActivity * activity = [self objectForViewIndexPath:indexPath];
-    if (activity) {
-        CGFloat fontHeight = [IPIActivityTableViewCell heightForCellWithText:activity.attributedActionText.string];
-        return fontHeight;
+    if ([IPIActivityCellHelper heightForActivity:activity] != 0) {
+        return [IPIActivityCellHelper heightForActivity:activity] + 17;
     }
     return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-//    return 92.5 + 10;
+    NSIndexPath * sectionIndexPath = [NSIndexPath indexPathForRow:0 inSection:section];
+    IPKActivity * activity = [self objectForViewIndexPath:sectionIndexPath];
     CGFloat fontHeight = [IPIActivityTableViewCell heightForCellWithText:@""];
+    if ([IPIActivityCellHelper heightForActivity:activity] != 0) {
+        return fontHeight + 11;
+    }
     return fontHeight;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
 //    return 30;
-    return 5;
+    return 0;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    static NSString *const cellIdentifier = @"cellIdentifier";
     NSIndexPath * sectionIndexPath = [NSIndexPath indexPathForRow:0 inSection:section];
+    IPKActivity * activity = [self objectForViewIndexPath:sectionIndexPath];
+    Class cellClass = [IPIActivityCellHelper headerViewClassForActivity:activity];
+    NSString *cellIdentifier = NSStringFromClass(cellClass);
 //    IPKPage * page = ((IPKActivity *)[self objectForViewIndexPath:sectionIndexPath]).page;
 //    IPIActivityPageTableViewHeader * headerView = [[IPIActivityPageTableViewHeader alloc] initWithFrame:CGRectMake(10, 0, 300, 92.5)];
 //    [headerView setDelegate:self];
@@ -483,12 +494,19 @@
 //    UIView * paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 15)];
 //    return paddingView;
     
-    IPIActivityTableViewCell *cell = (IPIActivityTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 	if (!cell) {
-		cell = [[IPIActivityTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+		cell = [[cellClass alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
 	}
 	
-	cell.activity = [self objectForViewIndexPath:sectionIndexPath];
+	((IPIActivityTableViewCell*)cell).activity = activity;
+    
+    UITapGestureRecognizer *singleTapRecogniser = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapSectionHeader:)] autorelease];
+    [singleTapRecogniser setDelegate:self];
+    singleTapRecogniser.numberOfTouchesRequired = 1;
+    singleTapRecogniser.numberOfTapsRequired = 1;
+    [cell addGestureRecognizer:singleTapRecogniser];
+    
     return cell;
 }
 
@@ -499,8 +517,19 @@
 //    [footerView setPage:page];
 //    
 //    return footerView;
-    UIView * paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 15)];
+    UIView * paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 0)];
     return paddingView;
+}
+
+-(void)tapSectionHeader:(UITapGestureRecognizer*)sender{
+    IPKActivity * activity = ((IPIActivityTableViewCell*)sender.view).activity;
+    IPISegmentContainerViewController * pageVC = [[IPISegmentContainerViewController alloc] init];
+    pageVC.page = activity.page;
+    [self.navigationController pushViewController:pageVC animated:YES];
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
+    return YES;
 }
 
 #pragma mark - UITabBarDelegate
