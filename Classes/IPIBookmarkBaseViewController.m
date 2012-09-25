@@ -33,11 +33,12 @@
 	// Do any additional setup after loading the view.
     UIImageView * customBackImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"backbutton.png"]];
     
-    UIView * customBackButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, customBackImageView.frame.size.width + 10, customBackImageView.frame.size.height)];
+    UIView * customBackButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, customBackImageView.frame.size.width + 14, customBackImageView.frame.size.height + 16)];
     
     UIButton * customBackButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [customBackButton setImage:[UIImage imageNamed:@"backbutton.png"] forState:UIControlStateNormal];
-    customBackButton.frame = CGRectMake(10, 0, customBackImageView.frame.size.width, customBackImageView.frame.size.height);
+    [customBackButton setImageEdgeInsets:UIEdgeInsetsMake(2, 8, 0, 0)];
+    customBackButton.frame = CGRectMake(0, 0, customBackButtonView.frame.size.width, customBackButtonView.frame.size.height);
     [customBackButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     
     [customBackButtonView addSubview:customBackButton];

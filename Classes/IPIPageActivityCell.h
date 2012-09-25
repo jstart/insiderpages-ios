@@ -7,6 +7,7 @@
 //
 
 #import "IPIAbstractActivityCell.h"
+#import "NINetworkImageView.h"
 
 @interface IPIPageActivityCell : IPIAbstractActivityCell
 

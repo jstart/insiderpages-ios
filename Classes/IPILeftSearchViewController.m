@@ -71,7 +71,8 @@
         self.queryModel = [IPKQueryModel MR_createEntity];
         [self.queryModel setFilterType:@(kIPKQueryModelFilterAll)];
         self.queryModel.queryString = @"";
-        self.queryModel.city = [[IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]].city_id stringValue];
+        self.queryModel.city = @"Los Angeles";
+        self.queryModel.state = @"CA";
         self.queryModel.currentPage = @"1";
         self.queryModel.perPageNumber = @"10";
 	}

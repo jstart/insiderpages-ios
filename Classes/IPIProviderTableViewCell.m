@@ -16,7 +16,7 @@
         _provider = provider;
         
         self.textLabel.text = [provider full_name];
-        self.detailTextLabel.text = provider.url;
+        self.detailTextLabel.text = provider.address.address_1;
 //        [self.profileImageView setPathToNetworkImage:[activity.user imageProfilePathForSize:IPKUserProfileImageSizeMedium]];
         [self setNeedsLayout];
     }
@@ -41,10 +41,10 @@
 		selectedBackground.contentMode = UIViewContentModeRedraw;
 		self.selectedBackgroundView = selectedBackground;
         
-        UIImage * image = nil;
-        self.providerImageView = [[NINetworkImageView alloc] initWithImage:image];
-        [self.providerImageView setFrame:CGRectMake(self.center.x, 0, 50, 50)];
-        [self addSubview:self.providerImageView];
+//        UIImage * image = nil;
+//        self.providerImageView = [[NINetworkImageView alloc] initWithImage:image];
+//        [self.providerImageView setFrame:CGRectMake(self.center.x, 0, 50, 50)];
+//        [self addSubview:self.providerImageView];
 	}
 	return self;
 }

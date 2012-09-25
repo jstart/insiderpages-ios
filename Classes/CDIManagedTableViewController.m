@@ -80,8 +80,8 @@
 //					 nil];
 //	self.tableView.tableFooterView = footer;
 
-	self.loadingView = [[CDILoadingView alloc] initWithFrame:self.view.bounds];
-	self.loadingView.userInteractionEnabled = NO;
+//	self.loadingView = [[CDILoadingView alloc] initWithFrame:self.view.bounds];
+//	self.loadingView.userInteractionEnabled = NO;
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];

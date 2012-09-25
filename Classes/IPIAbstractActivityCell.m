@@ -17,7 +17,7 @@
     self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
-        self.backgroundColor = [UIColor clearColor];
+//        self.backgroundColor = [UIColor clearColor];
         self.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.activity = activity;

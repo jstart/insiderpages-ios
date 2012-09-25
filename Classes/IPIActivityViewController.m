@@ -20,6 +20,7 @@
 #import "IIViewDeckController.h"
 #import "IPKActivity+Formatting.h"
 #import "NSAttributedString+Attributes.h"
+#import "SVPullToRefresh.h"
 
 #define CHEDDAR_USE_PASSWORD_FLOW 1
 
@@ -49,7 +50,6 @@
 #pragma mark - UIViewController
 
 - (void)viewDidLoad {
-    self.loadingView = nil;
 	[super viewDidLoad];
 	UIImageView *title = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"IP_logo_home.png"]];
 	title.frame = CGRectMake(0.0f, 0.0f, 111.0f, 32.0f + 3.0f);
@@ -61,10 +61,10 @@
     UIImage * pulloutImage = [UIImage imageNamed:@"pullout_button"];
     UIButton * leftViewButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [leftViewButton setImage:pulloutImage forState:UIControlStateNormal];
-    [leftViewButton setFrame:CGRectMake(0, 0, pulloutImage.size.width+15, pulloutImage.size.height+15)];
-    [leftViewButton setImageEdgeInsets:UIEdgeInsetsMake(-10, 0, 0, 0)];
+    [leftViewButton setFrame:CGRectMake(0, 0, pulloutImage.size.width+25, pulloutImage.size.height+25)];
+    [leftViewButton setImageEdgeInsets:UIEdgeInsetsMake(3, -2, 0, 0)];
     [leftViewButton addTarget:self.viewDeckController action:@selector(toggleLeftView) forControlEvents:UIControlEventTouchUpInside];
-    UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, pulloutImage.size.width+10, pulloutImage.size.height) ];
+    UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, leftViewButton.frame.size.width, leftViewButton.frame.size.height) ];
     
     [v addSubview:leftViewButton];
     UIBarButtonItem * leftViewBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:v];
@@ -83,7 +83,9 @@
 	_fullScreenDelegate = [[YIFullScreenScroll alloc] initWithViewController:self];
     _fullScreenDelegate.shouldShowUIBarsOnScrollUp = YES;
     self.filterType = IPKActivityFilterTypeFollowers;
-    [SSRateLimit executeBlock:[self refresh] name:@"refresh-activity" limit:0];
+    
+    self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
+    [self.tableView.pullToRefreshView triggerRefresh];
 }
 
 
@@ -257,7 +259,7 @@
                         [[IPIAppDelegate sharedAppDelegate] registerOrLogin];
                     }
                     [SSRateLimit resetLimitForName:@"refresh-activity"];
-                    [SSRateLimit executeBlock:[self refresh] name:@"refresh-activity" limit:0];
+                    [self.tableView.pullToRefreshView triggerRefresh];
                     self.loading = NO;
                 });
             }];
@@ -324,7 +326,7 @@
 
 
 - (void)_currentUserDidChange:(NSNotification *)notification {
-    [SSRateLimit executeBlock:[self refresh] name:@"refresh-activity" limit:0];
+    [self.tableView.pullToRefreshView triggerRefresh];
 	[self.tableView reloadData];
 }
 
@@ -538,19 +540,19 @@
     switch (item.tag) {
         case 0:
             self.filterType = IPKActivityFilterTypeYou;
-            [SSRateLimit executeBlock:[self refresh] name:@"refresh-activity" limit:0];
+            [self.tableView.pullToRefreshView triggerRefresh];
             self.fetchedResultsController = nil;
             [self.tableView reloadData];
             break;
         case 1:
             self.filterType = IPKActivityFilterTypeFollowers;
-            [SSRateLimit executeBlock:[self refresh] name:@"refresh-activity" limit:0];
+            [self.tableView.pullToRefreshView triggerRefresh];
             self.fetchedResultsController = nil;
             [self.tableView reloadData];
             break;
         case 2:
             self.filterType = IPKActivityFilterTypePopular;
-            [SSRateLimit executeBlock:[self refresh] name:@"refresh-activity" limit:0];
+            [self.tableView.pullToRefreshView triggerRefresh];
             self.fetchedResultsController = nil;
             [self.tableView reloadData];
             break;

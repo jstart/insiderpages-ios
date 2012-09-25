@@ -56,8 +56,7 @@
 	LLStartSession(CHEDDAR_LOCALYTICS_KEY);
 	#endif
     [IPKHTTPClient setDevelopmentModeEnabled:YES];
-
-    [MagicalRecord  setupCoreDataStackWithStoreNamed:@"InsiderPages.sqlite"];
+    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"InsiderPages.sqlite"];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDataModelChange:) name:NSManagedObjectContextObjectsDidChangeNotification object:[NSManagedObjectContext MR_contextForCurrentThread]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDataModelChange:) name:NSManagedObjectContextDidSaveNotification object:[NSManagedObjectContext MR_contextForCurrentThread]];
     [[NSManagedObjectContext MR_contextForCurrentThread] setMergePolicy:NSOverwriteMergePolicy];
@@ -210,6 +209,7 @@
             }
         } failure:^(AFJSONRequestOperation *operation, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
+                [hud failAndDismissWithTitle:@"Contacting QA.InsiderPages Failed"];
                 NSLog(@"%@ %@", @"Contacting QA.InsiderPages Failed", error);
                 UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Contacting Facebook Failed" message:@"Would you like to try again?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Ok", nil];
                 [alertView show];
