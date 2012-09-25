@@ -27,16 +27,17 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
+    self.title = @"Add a Place";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     UIBarButtonItem * closeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(close)];
-    UIBarButtonItem * addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(new)];
+//    UIBarButtonItem * addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(new)];
 
     self.navigationItem.leftBarButtonItem = closeButton;
-    self.navigationItem.rightBarButtonItem = addButton;
+//    self.navigationItem.rightBarButtonItem = addButton;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -66,16 +67,16 @@
 
 
 - (NSPredicate *)predicate {
-	return [NSPredicate predicateWithFormat:@"name != %@ && section_header != %@", @"",@""];
+	return [NSPredicate predicateWithFormat:@"name != %@ && section_header != %@ && user_id == %@", @"",@"", [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]].remoteID];
 }
 
--(NSString *)sortDescriptors{
-    return @"section_header";
-}
-
-- (NSString *)sectionNameKeyPath {
-	return @"section_header";
-}
+//-(NSString *)sortDescriptors{
+//    return @"section_header";
+//}
+//
+//- (NSString *)sectionNameKeyPath {
+//	return @"section_header";
+//}
 
 #pragma mark - SSManagedTableViewController
 
@@ -127,31 +128,31 @@
             });
         }];
         
-        [[IPKHTTPClient sharedClient] getFavoritePagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.loading = NO;
-                [self.fetchedResultsController performFetch:nil];
-                [self.tableView reloadData];
-            });
-        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [SSRateLimit resetLimitForName:@"refresh-mine-pages"];
-                self.loading = NO;
-            });
-        }];
-        
-        [[IPKHTTPClient sharedClient] getFollowingPagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.loading = NO;
-                [self.fetchedResultsController performFetch:nil];
-                [self.tableView reloadData];
-            });
-        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [SSRateLimit resetLimitForName:@"refresh-mine-pages"];
-                self.loading = NO;
-            });
-        }];
+//        [[IPKHTTPClient sharedClient] getFavoritePagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                self.loading = NO;
+//                [self.fetchedResultsController performFetch:nil];
+//                [self.tableView reloadData];
+//            });
+//        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [SSRateLimit resetLimitForName:@"refresh-mine-pages"];
+//                self.loading = NO;
+//            });
+//        }];
+//        
+//        [[IPKHTTPClient sharedClient] getFollowingPagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                self.loading = NO;
+//                [self.fetchedResultsController performFetch:nil];
+//                [self.tableView reloadData];
+//            });
+//        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [SSRateLimit resetLimitForName:@"refresh-mine-pages"];
+//                self.loading = NO;
+//            });
+//        }];
     };
 }
 
@@ -185,7 +186,7 @@
     [hudView show];
     IPKPage * page = [self objectForViewIndexPath:indexPath];
     NSString * pageIDString = [NSString stringWithFormat:@"%@", page.remoteID];
-    NSString * providerIDString = [NSString stringWithFormat:@"%@", self.provider.remoteID];
+    NSString * providerIDString = [NSString stringWithFormat:@"%@", [self.provider listing_id]];
     [[IPKHTTPClient sharedClient] addProvidersToPageWithId:pageIDString providerId:providerIDString success:^(AFJSONRequestOperation *operation, id responseObject) {
         dispatch_async(dispatch_get_main_queue(), ^{
             self.loading = NO;

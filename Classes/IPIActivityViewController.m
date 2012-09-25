@@ -85,7 +85,7 @@
     self.filterType = IPKActivityFilterTypeFollowers;
     
     self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
-    [self.tableView.pullToRefreshView triggerRefresh];
+    [SSRateLimit executeBlock:[self refresh] name:NSStringFromClass([self class]) limit:20];
 }
 
 

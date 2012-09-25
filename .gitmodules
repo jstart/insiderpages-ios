@@ -79,3 +79,6 @@
 [submodule "Vendor/Production/JMStaticContentTableViewController"]
 	path = Vendor/Production/JMStaticContentTableViewController
 	url = git://github.com/jakemarsh/JMStaticContentTableViewController.git
+[submodule "Vendor/Development/iOS-HierarchyViewer"]
+	path = Vendor/Development/iOS-HierarchyViewer
+	url = git://github.com/glock45/iOS-Hierarchy-Viewer.git

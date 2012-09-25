@@ -17,6 +17,7 @@
 #import "UIViewController+KNSemiModal.h"
 #import "IPISocialShareHelper.h"
 #import "UIColor-Expanded.h"
+#import "iOSHierarchyViewer.h"
 
 #import "SDURLCache.h"
 #import "UIResponder+KeyboardCache.h"
@@ -99,6 +100,7 @@
     
     #if TARGET_IPHONE_SIMULATOR
         [[DCIntrospect sharedIntrospector] start];
+ 
         PDDebugger *debugger = [PDDebugger defaultInstance];
         [debugger enableNetworkTrafficDebugging];
         [debugger forwardAllNetworkTraffic];
@@ -106,7 +108,8 @@
         [debugger addManagedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread]];
         [debugger connectToURL:[NSURL URLWithString:@"ws://localhost:9000/device"]];
     #endif
-    
+    [iOSHierarchyViewer start];
+    [iOSHierarchyViewer addContext:[NSManagedObjectContext MR_contextForCurrentThread] name:@"Root managed context"];
 	// Defer some stuff to make launching faster
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
 //        [IPISocialShareHelper preloadTweetComposeViewController];
@@ -152,7 +155,6 @@
         [[[NSManagedObjectContext MR_contextForCurrentThread] objectWithID:[[updates objectAtIndex:i] objectID]] willAccessValueForKey:nil];
     }
     [[NSManagedObjectContext MR_contextForCurrentThread] mergeChangesFromContextDidSaveNotification:note];
-
     
     [[NSManagedObjectContext MR_contextForCurrentThread] mergeChangesFromContextDidSaveNotification:note];
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveErrorHandler:^(NSError *error){

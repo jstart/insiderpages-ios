@@ -28,7 +28,6 @@
 
 @implementation IPIListViewController {
 	NSIndexPath *_textEditingIndexPath;
-	dispatch_semaphore_t _createTaskSemaphore;
 }
 
 @synthesize currentTag = _currentTag;
@@ -116,9 +115,6 @@
 
 - (id)init {
 	if ((self = [super init])) {
-		_createTaskSemaphore = dispatch_semaphore_create(0);
-		dispatch_semaphore_signal(_createTaskSemaphore);
-		
 		self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Tasks" style:UIBarButtonItemStyleBordered target:nil action:nil];
 	}
 	return self;
@@ -128,9 +124,6 @@
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	self.managedObject = nil;
-	
-	dispatch_semaphore_wait(_createTaskSemaphore, DISPATCH_TIME_FOREVER);
-	dispatch_release(_createTaskSemaphore);
 }
 
 

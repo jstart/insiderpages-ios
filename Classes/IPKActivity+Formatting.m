@@ -76,6 +76,9 @@
         case IPKActivityTypeRank:
             actionText = [NSString stringWithFormat:@" reranked "];
             break;
+        case IPKActivityTypeAccept:
+            actionText = [NSString stringWithFormat:@" accepted invite from "];
+            break;
         case IPKActivityTypeAll:
             actionText = [NSString stringWithFormat:@" activity "];
             break;
@@ -113,6 +116,9 @@
         nounText = self.page.name;
     }
     else if ([self activityType] == IPKActivityTypeCollaborate && [self trackableType] == IPKTrackableTypeUser){
+        nounText = self.user2.name;
+    }
+    else if ([self activityType] == IPKActivityTypeAccept && [self trackableType] == IPKTrackableTypeUser){
         nounText = self.user2.name;
     }
     else if ([self activityType] == IPKActivityTypeTeam && [self trackableType] == IPKTrackableTypeReview){
