@@ -17,7 +17,7 @@
 #import "UIViewController+KNSemiModal.h"
 #import "IPISocialShareHelper.h"
 #import "UIColor-Expanded.h"
-#import "iOSHierarchyViewer.h"
+//#import "iOSHierarchyViewer.h"
 
 #import "SDURLCache.h"
 #import "UIResponder+KeyboardCache.h"
@@ -108,8 +108,8 @@
         [debugger addManagedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread]];
         [debugger connectToURL:[NSURL URLWithString:@"ws://localhost:9000/device"]];
     #endif
-    [iOSHierarchyViewer start];
-    [iOSHierarchyViewer addContext:[NSManagedObjectContext MR_contextForCurrentThread] name:@"Root managed context"];
+//    [iOSHierarchyViewer start];
+//    [iOSHierarchyViewer addContext:[NSManagedObjectContext MR_contextForCurrentThread] name:@"Root managed context"];
 	// Defer some stuff to make launching faster
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
 //        [IPISocialShareHelper preloadTweetComposeViewController];
@@ -406,17 +406,20 @@
     
 	// Navigation bar
 	UINavigationBar *navigationBar = [UINavigationBar appearance];
+    
+    [navigationBar setTitleVerticalPositionAdjustment:7 forBarMetrics:UIBarMetricsDefault];
 	[navigationBar setTitleTextAttributes:[[NSDictionary alloc] initWithObjectsAndKeys:
 										   [UIFont fontWithName:@"Comfortaa" size:17.5f], UITextAttributeFont,
 										   [UIColor colorWithWhite:0.0f alpha:1.0f], UITextAttributeTextShadowColor,
 										   [NSValue valueWithUIOffset:UIOffsetMake(0.0f, 1.0f)], UITextAttributeTextShadowOffset,
-										   [UIColor colorWithHexString:@"666666"], UITextAttributeTextColor,
+										   [UIColor colorWithHexString:@"a2a2a2"], UITextAttributeTextColor,
 										   nil]];
     [navigationBar setBackgroundImage:[UIImage imageNamed:@"header_background.png"] forBarMetrics:UIBarMetricsDefault];
 
 	// Navigation bar mini
-    UINavigationBar *navigationBarActivityFeed = [UINavigationBar appearanceWhenContainedIn:[IPIActivityViewController class], nil];
+    UINavigationBar *navigationBarActivityFeed = [UINavigationBar appearanceWhenContainedIn:[IIViewDeckController class], nil];
 	[navigationBarActivityFeed setBackgroundImage:[UIImage imageNamed:@"header_background.png"] forBarMetrics:UIBarMetricsDefault];
+    [navigationBarActivityFeed setTitleVerticalPositionAdjustment:4 forBarMetrics:UIBarMetricsDefault];
 
 	// Navigation button
 //	NSDictionary *barButtonTitleTextAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:

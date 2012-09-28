@@ -55,6 +55,7 @@
 	title.frame = CGRectMake(0.0f, 0.0f, 111.0f, 32.0f + 3.0f);
     [title setContentMode:UIViewContentModeBottom];
 	self.navigationItem.titleView = title;
+    
     self.title = @"InsiderPages";
 	[self setEditing:NO animated:NO];
     
@@ -88,19 +89,19 @@
     [SSRateLimit executeBlock:[self refresh] name:NSStringFromClass([self class]) limit:20];
 }
 
-
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
     [self _checkUser];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [_fullScreenDelegate layoutTabBarController];
+    [self.navigationController.navigationBar setTitleVerticalPositionAdjustment:2 forBarMetrics:UIBarMetricsDefault];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
 	
 }
-
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
 	
@@ -512,16 +513,16 @@
     return cell;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-//    NSIndexPath * sectionIndexPath = [NSIndexPath indexPathForRow:0 inSection:section];
-//    IPKPage * page = ((IPKActivity *)[self objectForViewIndexPath:sectionIndexPath]).page;
-//    IPIActivityPageTableViewFooter * footerView = [[IPIActivityPageTableViewFooter alloc] initWithFrame:CGRectMake(10, 0, 300, 30)];
-//    [footerView setPage:page];
-//    
-//    return footerView;
-    UIView * paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 0)];
-    return paddingView;
-}
+//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+////    NSIndexPath * sectionIndexPath = [NSIndexPath indexPathForRow:0 inSection:section];
+////    IPKPage * page = ((IPKActivity *)[self objectForViewIndexPath:sectionIndexPath]).page;
+////    IPIActivityPageTableViewFooter * footerView = [[IPIActivityPageTableViewFooter alloc] initWithFrame:CGRectMake(10, 0, 300, 30)];
+////    [footerView setPage:page];
+////    
+////    return footerView;
+//    UIView * paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 0)];
+//    return paddingView;
+//}
 
 -(void)tapSectionHeader:(UITapGestureRecognizer*)sender{
     IPKActivity * activity = ((IPIActivityTableViewCell*)sender.view).activity;

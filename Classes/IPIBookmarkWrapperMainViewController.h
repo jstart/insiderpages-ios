@@ -7,13 +7,13 @@
 //
 
 #import "IPIBookmarkBaseModalViewController.h"
-#import "IPIBookmarkHeaderViewController.h"
+#import "IPIBookmarkNotificationBarViewController.h"
 #import "IPIBookmarkMyPagesTableViewController.h"
 
 @interface IPIBookmarkWrapperMainViewController : IPIBookmarkBaseModalViewController
 
 @property (strong, nonatomic) IPIBookmarkMyPagesTableViewController * myPagesTableViewController;
 
-@property (strong, nonatomic) IPIBookmarkHeaderViewController * headerViewController;
+@property (strong, nonatomic) IPIBookmarkNotificationBarViewController * headerViewController;
 
 @end

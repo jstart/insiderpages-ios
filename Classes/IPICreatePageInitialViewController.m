@@ -7,6 +7,7 @@
 //
 
 #import "IPICreatePageInitialViewController.h"
+#import "UIColor-Expanded.h"
 
 @interface IPICreatePageInitialViewController ()
 
@@ -16,8 +17,8 @@
 @synthesize titleTextField;
 @synthesize descriptionTextField;
 @synthesize privacyButton;
-@synthesize pageOrPollSegmentedControl;
-@synthesize thereCanOnlyBeOneImage;
+//@synthesize pageOrPollSegmentedControl;
+//@synthesize thereCanOnlyBeOneImage;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -25,8 +26,25 @@
     if (self) {
         // Custom initialization
         self.title = @"Create a Page";
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(close)];
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
+        self.view.backgroundColor = [UIColor colorWithHexString:@"eeeeee"];
+        UIView * cancelView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 32, 22)];
+        UIButton * cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 0, 22, 22)];
+        [cancelButton setImage:[UIImage imageNamed:@"cancel_button"] forState:UIControlStateNormal];
+        [cancelButton addTarget:self action:@selector(close) forControlEvents:UIControlEventTouchUpInside];
+        [cancelView addSubview:cancelButton];
+        UIBarButtonItem * cancelButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelView];
+        self.navigationItem.leftBarButtonItem = cancelButtonItem;
+        
+        UIView * checkmarkView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 23, 21)];
+        UIButton * checkmarkButton = [[UIButton alloc] initWithFrame:CGRectMake(-9, 0, 23, 21)];
+        [checkmarkButton setImage:[UIImage imageNamed:@"checkmark_inactive"] forState:UIControlStateNormal];
+        [checkmarkButton setImage:[UIImage imageNamed:@"checkmark_active"] forState:UIControlStateSelected];
+        [checkmarkButton addTarget:self action:@selector(done) forControlEvents:UIControlEventTouchUpInside];
+        [checkmarkButton setEnabled:NO];
+        [checkmarkView addSubview:checkmarkButton];
+        UIBarButtonItem * checkmarkButtonItem = [[UIBarButtonItem alloc] initWithCustomView:checkmarkView];
+        
+        self.navigationItem.rightBarButtonItem = checkmarkButtonItem;
         self.privacyTableView = [[UITableView alloc] initWithFrame:CGRectMake(320, 0, 300, 44*3) style:UITableViewStylePlain];
         self.privacyTableView.delegate = self;
         self.privacyTableView.dataSource = self;
@@ -37,7 +55,16 @@
         
         self.privacyTopMessageArray = [NSArray arrayWithObjects:@"Everyone can view.", @"Everyone can view.", @"Viewers are invited.", nil];
         self.privacyBottomMessageArray = [NSArray arrayWithObjects:@"Everyone can collaborate.", @"Collaborators are invited.", @"Collaborators are invited.", nil];
-
+        [self.titleTextField setFont:[UIFont fontWithName:@"Myriad Web Pro" size:17]];
+        [self.titleTextField addTarget:self action:@selector(titleTextFieldChanged) forControlEvents:UIControlEventEditingChanged];
+        [self.titleTextField setTextEdgeInsets:UIEdgeInsetsMake(15, 15, 0, 52)];
+        [self.titleTextField setClearButtonEdgeInsets:UIEdgeInsetsMake(0, 0, 0, -52)];
+        self.titleTextField.layer.borderColor = [UIColor colorWithHexString:@"cccccc"].CGColor;
+        self.titleTextField.layer.borderWidth = 1;
+        [self.descriptionTextField setFont:[UIFont fontWithName:@"Myriad Web Pro" size:14]];
+        [self.descriptionTextField setTextEdgeInsets:UIEdgeInsetsMake(15, 15, 0, 0)];
+        self.descriptionTextField.layer.borderColor = [UIColor colorWithHexString:@"cccccc"].CGColor;
+        self.descriptionTextField.layer.borderWidth = 1;
     }
     return self;
 }
@@ -59,6 +86,16 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+-(void)titleTextFieldChanged{
+    if (!((UIButton*)[self.navigationItem.rightBarButtonItem.customView.subviews objectAtIndex:0]).isSelected && self.titleTextField.text.length > 0) {
+        [((UIButton*)[self.navigationItem.rightBarButtonItem.customView.subviews objectAtIndex:0]) setEnabled:YES];
+        [((UIButton*)[self.navigationItem.rightBarButtonItem.customView.subviews objectAtIndex:0]) setSelected:YES];
+    } else if(((UIButton*)[self.navigationItem.rightBarButtonItem.customView.subviews objectAtIndex:0]).isSelected && self.titleTextField.text.length < 1){
+        [((UIButton*)[self.navigationItem.rightBarButtonItem.customView.subviews objectAtIndex:0]) setEnabled:NO];
+        [((UIButton*)[self.navigationItem.rightBarButtonItem.customView.subviews objectAtIndex:0]) setSelected:NO];
+    }
 }
 
 -(void)close{
@@ -91,8 +128,8 @@
     [self setTitleTextField:nil];
     [self setDescriptionTextField:nil];
     [self setPrivacyButton:nil];
-    [self setPageOrPollSegmentedControl:nil];
-    [self setThereCanOnlyBeOneImage:nil];
+//    [self setPageOrPollSegmentedControl:nil];
+//    [self setThereCanOnlyBeOneImage:nil];
     [super viewDidUnload];
 }
 
@@ -137,7 +174,6 @@
         [self.privacyTableView setFrame:frame];
         [UIView commitAnimations];
     }
-
 }
 
 @end

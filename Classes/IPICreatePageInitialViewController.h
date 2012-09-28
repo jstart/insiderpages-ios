@@ -8,15 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface IPICreatePageInitialViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface IPICreatePageInitialViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
-@property (strong, nonatomic) IBOutlet UITextField *titleTextField;
-@property (strong, nonatomic) IBOutlet UITextField *descriptionTextField;
+@property (strong, nonatomic) IBOutlet SSTextField *titleTextField;
+@property (strong, nonatomic) IBOutlet SSTextField *descriptionTextField;
 
 @property (strong, nonatomic) IBOutlet UIButton *privacyButton;
-@property (strong, nonatomic) IBOutlet UISegmentedControl *pageOrPollSegmentedControl;
+//@property (strong, nonatomic) IBOutlet UISegmentedControl *pageOrPollSegmentedControl;
 
-@property (strong, nonatomic) IBOutlet UIImageView *thereCanOnlyBeOneImage;
+//@property (strong, nonatomic) IBOutlet UIImageView *thereCanOnlyBeOneImage;
 
 @property (strong, nonatomic) NSNumber * privacyNumber;
 

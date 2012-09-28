@@ -39,14 +39,48 @@
     self.searchDisplayController.searchBar.contentMode = UIViewContentModeScaleToFill;
 //    searchBar.scopeButtonTitles = [NSArray arrayWithObjects:@"One", @"Two", nil];
     self.searchDisplayController.searchBar.showsScopeBar = YES;
+    [self customizeSearchBar];
+    
+    UIView * footerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.searchDisplayController.searchBar.frame.size.height-1, 320, 1)];
+    footerView.backgroundColor = [UIColor lightGrayColor];
+    footerView.alpha = 0.3;
+    [self.searchDisplayController.searchBar addSubview:footerView];
     
     self.tableView.showsInfiniteScrolling = NO;
     self.fetchedResultsController = nil;
     [SSRateLimit executeBlock:[self refresh] name:@"refresh-my-pages" limit:0];
 }
 
+- (void)customizeSearchBar {
+    [self.searchDisplayController.searchBar setBackgroundColor:[UIColor whiteColor]];
+    [self.searchDisplayController.searchBar setBackgroundImage:nil];
+    UITextField *searchField;
+    
+    NSUInteger numViews = [self.searchDisplayController.searchBar.subviews count];
+    for(int i = 0; i < numViews; i++) {
+        UIView * subview = [self.searchDisplayController.searchBar.subviews objectAtIndex:i];
+        if ([subview isKindOfClass:NSClassFromString(@"UISearchBarBackground")] || [subview isKindOfClass:NSClassFromString(@"UITextFieldBorderView")] ) {
+            //[searchSubview removeFromSuperview];
+            [[self.searchDisplayController.searchBar.subviews objectAtIndex:i] setAlpha:0.0];
+            //[searchSubview setBackgroundColor:[UIColor clearColor]];
+            //break;
+        }
+        
+        if([[self.searchDisplayController.searchBar.subviews objectAtIndex:i] isKindOfClass:[UITextField class]]) { //?
+            searchField = [self.searchDisplayController.searchBar.subviews  objectAtIndex:i];
+        }
+    }
+    if(!(searchField == nil)) {
+        searchField.placeholder = @"Search Your Pages";
+        [searchField setBackgroundColor:[UIColor whiteColor]];
+        [searchField setBorderStyle:UITextBorderStyleNone];
+        [searchField setBackground:nil];
+        [searchField setFont:[UIFont fontWithName:@"Myriad Web Pro" size:14]];
+    }
+}
+
 -(UITableView *)tableView{
-    return self.view;
+    return (UITableView *) self.view;
 }
 
 -(void)viewWillAppear:(BOOL)animated{

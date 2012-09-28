@@ -9,6 +9,7 @@
 #import "CDITableViewCell.h"
 #import "UIColor+InsiderPagesiOSAdditions.h"
 #import "UIFont+InsiderPagesiOSAdditions.h"
+#import "UIColor-Expanded.h"
 #import <objc/runtime.h>
 
 @interface CDITableViewCell () <UIGestureRecognizerDelegate>
@@ -43,7 +44,7 @@
 #pragma mark - Class Methods
 
 + (CGFloat)cellHeight {
-	return 51.0f;
+	return 44.0f;
 }
 
 #pragma mark - UITableViewCell
@@ -60,7 +61,11 @@
 		self.backgroundView = background;		
 		self.contentView.clipsToBounds = YES;
         [self.textLabel setBackgroundColor:[UIColor clearColor]];
+        self.textLabel.font = [UIFont fontWithName:@"Myriad Web Pro" size:17];
+        self.textLabel.textColor = [UIColor colorWithHexString:@"333333"];
         [self.detailTextLabel setBackgroundColor:[UIColor clearColor]];
+        self.detailTextLabel.font = [UIFont fontWithName:@"Myriad Web Pro" size:13];
+        self.detailTextLabel.textColor = [UIColor colorWithHexString:@"b4b3b4"];
 
 	}
 	return self;

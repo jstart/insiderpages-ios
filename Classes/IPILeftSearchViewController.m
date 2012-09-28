@@ -102,23 +102,19 @@
 
     self.searchDisplayController.searchBar.scopeButtonTitles = @[@"Pages", @"Places", @"Users"];
     [self.searchDisplayController.searchBar setShowsScopeBar:YES];
-    [self setWantsFullScreenLayout:YES];
-    [[self view] setAutoresizesSubviews:YES];
     
     UIView * backgroundView = [[UIView alloc] initWithFrame:self.tableView.frame];
     backgroundView.backgroundColor = [UIColor pulloutBackgroundColor];
     ((UITableView*)self.view).backgroundView = backgroundView;
     [((UITableView*)self.view) setBounces:NO];
+    [self customizeSearchBar];
 }
 
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
     [self setWantsFullScreenLayout:NO];
-    [self customizeSearchBar];
 //    [self showCoverView];
-//    [self.view bringSubviewToFront:self.coverView];
-//    self.tableView.hidden = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -243,9 +239,6 @@
 	[self.tableView reloadData];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 50;
-}
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

@@ -49,12 +49,13 @@
     [self addChildViewController:self.pagesCarousel];
     self.pagesCarousel.view.frame = CGRectMake(0, 180, 320, 115);
     [[self view] addSubview:self.pagesCarousel.view];
-    
-    self.scoopsCarousel = [[IPIProviderScoopsCarouselViewController alloc] init];
-    [self.scoopsCarousel setProvider:self.provider];
-    [self addChildViewController:self.scoopsCarousel];
-    self.scoopsCarousel.view.frame = CGRectMake(0, 295, 320, 160);
-    [[self view] addSubview:self.scoopsCarousel.view];
+    [self.navigationController.navigationBar setTitleVerticalPositionAdjustment:7 forBarMetrics:UIBarMetricsDefault];
+
+//    self.scoopsCarousel = [[IPIProviderScoopsCarouselViewController alloc] init];
+//    [self.scoopsCarousel setProvider:self.provider];
+//    [self addChildViewController:self.scoopsCarousel];
+//    self.scoopsCarousel.view.frame = CGRectMake(0, 295, 320, 160);
+//    [[self view] addSubview:self.scoopsCarousel.view];
 }
 
 -(void)viewWillAppear:(BOOL)animated{

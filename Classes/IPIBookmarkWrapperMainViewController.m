@@ -35,7 +35,7 @@
     
     self.parentViewController.parentViewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createPage)];
 
-    self.headerViewController = [[IPIBookmarkHeaderViewController alloc] initWithNibName:@"IPIBookmarkHeaderViewController" bundle:[NSBundle mainBundle]];
+    self.headerViewController = [[IPIBookmarkNotificationBarViewController alloc] initWithNibName:@"IPIBookmarkNotificationBarViewController" bundle:[NSBundle mainBundle]];
     CGRect headerFrame = self.headerViewController.view.frame;
     
     self.myPagesTableViewController = [[IPIBookmarkMyPagesTableViewController alloc] initWithNibName:@"IPIBookmarkMyPagesTableViewController" bundle:[NSBundle mainBundle]];
@@ -47,10 +47,10 @@
     headerFrame.origin.y = self.parentViewController.view.frame.size.height - headerFrame.size.height;
     [self.headerViewController.view setFrame:headerFrame];
     [[self view] addSubview:self.headerViewController.view];
-    
-    if ([IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]]) {
-        self.headerViewController.usernameLabel.text = [[IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]] name];
-        [self.headerViewController.profileImageView setPathToNetworkImage:[[IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]] imageProfilePathForSize:IPKUserProfileImageSizeMedium]];
+    IPKUser * currentUser = [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]];
+    if (currentUser) {
+        [self.headerViewController.notificationsButton setTitle:(currentUser.notifications.count > 1 || currentUser.notifications.count == 0) ? [NSString stringWithFormat:@"%d Notifications", currentUser.notifications.count] : [NSString stringWithFormat:@"%d Notification", currentUser.notifications.count] forState:UIControlStateNormal];
+        [self.headerViewController.notificationsButton setTitle:(currentUser.notifications.count > 1 || currentUser.notifications.count == 0) ? [NSString stringWithFormat:@"%d Notifications", currentUser.notifications.count] : [NSString stringWithFormat:@"%d Notification", currentUser.notifications.count] forState:UIControlStateSelected];
     }
 }
 
