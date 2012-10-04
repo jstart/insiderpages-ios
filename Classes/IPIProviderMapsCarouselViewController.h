@@ -17,6 +17,7 @@
 @interface IPIProviderMapsCarouselViewController : IPIAbstractCarouselViewController
 
 @property (nonatomic, strong) IPKPage *page;
+@property (nonatomic, strong) IPKUser *sortUser;
 @property (nonatomic, assign) id <IPIProviderMapsCarouselDelegate> delegate;
 
 @end

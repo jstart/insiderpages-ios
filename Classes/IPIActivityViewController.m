@@ -47,9 +47,21 @@
 
 }
 
+-(id)initWithStyle:(UITableViewStyle)style{
+    if (self = [super initWithStyle:style]) {
+        //Kill the ghost separators that show up.
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        self.tableView.separatorColor = [UIColor clearColor];
+    }
+    return self;
+}
+
 #pragma mark - UIViewController
 
 - (void)viewDidLoad {
+    //set fliter type before fetchedresultscontroller is initiliazed by super class
+    self.filterType = IPKActivityFilterTypeFollowers;
+
 	[super viewDidLoad];
 	UIImageView *title = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"IP_logo_home.png"]];
 	title.frame = CGRectMake(0.0f, 0.0f, 111.0f, 32.0f + 3.0f);
@@ -83,10 +95,10 @@
     
 	_fullScreenDelegate = [[YIFullScreenScroll alloc] initWithViewController:self];
     _fullScreenDelegate.shouldShowUIBarsOnScrollUp = YES;
-    self.filterType = IPKActivityFilterTypeFollowers;
     
     self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
     [SSRateLimit executeBlock:[self refresh] name:NSStringFromClass([self class]) limit:20];
+    [self.tableView.pullToRefreshView startAnimating];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -95,7 +107,6 @@
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [_fullScreenDelegate layoutTabBarController];
     [self.navigationController.navigationBar setTitleVerticalPositionAdjustment:2 forBarMetrics:UIBarMetricsDefault];
-
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -242,9 +253,10 @@
         }
         self.loading = YES;
         self.currentPage = @(1);
-        self.ignoreChange = YES;
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             [IPKActivity deleteAllLocal];
+            self.fetchedResultsController = nil;
+            self.ignoreChange = YES;
             [[IPKHTTPClient sharedClient] getPageActivititesWithCurrentPage:@1 perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     self.ignoreChange = NO;

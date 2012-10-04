@@ -23,6 +23,7 @@
         [self.smallPageCoverImageView setPathToNetworkImage:@"http://gentlemint.com/media/images/2012/04/26/3f31ab05.jpg.650x650_q85.jpg" forDisplaySize:self.smallPageCoverImageView.frame.size contentMode:UIViewContentModeScaleToFill];
         //        self.timeLabel.text = [activity formattedTimeElapsedSinceUpdated];
         [self setNeedsLayout];
+        [self setNeedsDisplay];
     }
 }
 
@@ -30,9 +31,6 @@
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
 	if ((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) {
-        
-        self.layer.shouldRasterize = YES;
-        self.layer.rasterizationScale = [UIScreen mainScreen].scale;
         
         self.backgroundColor = [UIColor clearColor];
         self.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -95,21 +93,22 @@
 	return self;
 }
 
-- (void) layoutSubviews {
-    [super layoutSubviews];
-//    self.activityLabel.center = CGPointMake(0, self.profileImageView.center.y);
-//    CGRect textLabelFrame = self.activityLabel.frame;
-//    textLabelFrame.origin.x = 64;
-//    self.activityLabel.frame = textLabelFrame;
-//    
-//    [self.smallPageCoverImageView setCenter:CGPointMake(0, self.profileImageView.center.y)];
-//    CGRect smallPageCoverFrame = self.smallPageCoverImageView.frame;
-//    smallPageCoverFrame.origin.x = 235;
-//    self.smallPageCoverImageView.frame = smallPageCoverFrame;
-}
+//- (void) layoutSubviews {
+//    [super layoutSubviews];
+////    self.activityLabel.center = CGPointMake(0, self.profileImageView.center.y);
+////    CGRect textLabelFrame = self.activityLabel.frame;
+////    textLabelFrame.origin.x = 64;
+////    self.activityLabel.frame = textLabelFrame;
+////    
+////    [self.smallPageCoverImageView setCenter:CGPointMake(0, self.profileImageView.center.y)];
+////    CGRect smallPageCoverFrame = self.smallPageCoverImageView.frame;
+////    smallPageCoverFrame.origin.x = 235;
+////    self.smallPageCoverImageView.frame = smallPageCoverFrame;
+//}
 
 +(CGFloat)heightForCellWithText:(NSString *)text{
     return 55;
 }
+
 
 @end

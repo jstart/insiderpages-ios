@@ -14,8 +14,9 @@
 
 -(id)init{
     if (self = [super init]) {
-        self.segmentControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:[UIImage imageNamed:@"list_icon.png"], [UIImage imageNamed:@"grid_icon.png"], nil]];
+        self.segmentControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Rankings", @"Debate", nil]];
         [self.segmentControl setSegmentedControlStyle:UISegmentedControlStyleBar];
+
         self.pageViewController = [[IPIPageViewController alloc] init];
         self.pageDisqusViewController = [[IPIPageDisqusViewController alloc] init];
     }
@@ -26,7 +27,7 @@
     [super viewDidLoad];
     [self.navigationItem setTitleView:self.segmentControl];
     
-    self.pagedScrollView = [[FireUIPagedScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+    self.pagedScrollView = [[FireUIPagedScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, [UIScreen mainScreen].bounds.size.height)];
     [self.pagedScrollView setScrollEnabled:NO];
     self.pagedScrollView.segmentedControl = self.segmentControl;
     self.pagedScrollView.pagerDelegate = self;
@@ -42,8 +43,12 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setTitleVerticalPositionAdjustment:2 forBarMetrics:UIBarMetricsDefault];
+
     [self.pageViewController setPage:self.page];
-    [self.pageDisqusViewController setPage: self.page];
+    [self.pageViewController setSortUser:self.sortUser];
+    [self.pageDisqusViewController setPage:self.page];
+    [self.pageDisqusViewController setSortUser:self.sortUser];
 }
 
 #pragma mark - IPIBasePageSegmentDelegate
@@ -58,7 +63,7 @@
 
 // Occurs when the current page is changed or a new page is added. Use this callback to update your visual control(in case you dont want to use pageControl or segmentedControl properties)
 -(void)firePagerChanged:(FireUIPagedScrollView*)pager pagesCount:(NSInteger)pagesCount currentPageIndex:(NSInteger)currentPageIndex{
-    
+    [self.pageDisqusViewController viewWillAppear:YES];
 }
 
 @end

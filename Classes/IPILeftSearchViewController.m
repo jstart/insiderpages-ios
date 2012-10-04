@@ -4,14 +4,15 @@
 
 #import "IPILeftSearchViewController.h"
 #import "IPIProviderViewController.h"
-#import "IPIPageTableViewCell.h"
-#import "IPIProviderTableViewCell.h"
+#import "IPIPageSearchTableViewCell.h"
+#import "IPIProviderSearchTableViewCell.h"
 #import "IPISegmentContainerViewController.h"
-#import "IPIUserTableViewCell.h"
+#import "IPIUserSearchTableViewCell.h"
 #import "UIColor+InsiderPagesiOSAdditions.h"
 #import "CDINoListsView.h"
 #import <SSToolkit/UIScrollView+SSToolkitAdditions.h>
 #import "SVPullToRefresh.h"
+#import "IPISearchBar.h"
 
 @interface IPILeftSearchViewController ()
 - (void)_currentUserDidChange:(NSNotification *)notification;
@@ -26,7 +27,7 @@
 }
 
 - (BOOL)viewDeckControllerWillOpenLeftView:(IIViewDeckController*)viewDeckController animated:(BOOL)animated{
-    self.tableView.hidden = YES;
+//    self.tableView.hidden = YES;
     [self.view bringSubviewToFront:self.coverView];
     [self showCoverView];
 
@@ -39,7 +40,6 @@
 
 - (void)customizeSearchBar {
     [self.searchDisplayController.searchBar setBackgroundImage:[UIImage imageNamed:@"bar_background.png"]];
-    
     UITextField *searchField;
     
     NSUInteger numViews = [self.searchDisplayController.searchBar.subviews count];
@@ -83,7 +83,7 @@
     if (![[self.view subviews] containsObject:self.pullOutTableViewController.tableView]) {
         
         self.pullOutTableViewController = [[IPIPullOutTableViewController alloc] initWithStyle:UITableViewStylePlain];
-        [self.pullOutTableViewController.tableView setFrame:CGRectMake(0, 44, 320, 480-44)];
+        [self.pullOutTableViewController.tableView setFrame:CGRectMake(0, 44, 320, [UIScreen mainScreen].bounds.size.height-44)];
         [self.pullOutTableViewController.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(coverViewTapped:)]];
         [self.view addSubview:self.pullOutTableViewController.tableView];
     }
@@ -95,6 +95,20 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
+//    [[NSClassFromString(@"UINavigationButton") appearanceWhenContainedIn:[UISearchBar class], nil] setContentEdgeInsets:UIEdgeInsetsMake(15, 15, 15, 15)];
+//    [[NSClassFromString(@"UINavigationButton") appearanceWhenContainedIn:[UISearchBar class], nil] setImage:[UIImage imageNamed:@"cancel_icon"] forState:UIControlStateNormal];
+//    [[NSClassFromString(@"UINavigationButton") appearanceWhenContainedIn:[UISearchBar class], nil] setImage:[UIImage imageNamed:@"cancel_icon"] forState:UIControlStateDisabled];
+//    [[NSClassFromString(@"UINavigationButton") appearanceWhenContainedIn:[UISearchBar class], nil] setImage:[UIImage imageNamed:@"cancel_icon"] forState:UIControlStateSelected];
+//    [[NSClassFromString(@"UINavigationButton") appearanceWhenContainedIn:[UISearchBar class], nil] setImage:[UIImage imageNamed:@"cancel_icon"] forState:UIControlStateHighlighted];
+//    [[NSClassFromString(@"UINavigationButton") appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundImage:nil forState:UIControlStateNormal];
+//    [[NSClassFromString(@"UINavigationButton") appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundImage:nil forState:UIControlStateSelected];
+//    [[NSClassFromString(@"UINavigationButton") appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundImage:nil forState:UIControlStateHighlighted];
+//    [[NSClassFromString(@"UINavigationButton") appearanceWhenContainedIn:[UISearchBar class], nil] setTitle:@"" forState:UIControlStateNormal];
+//    [[NSClassFromString(@"UINavigationButton") appearanceWhenContainedIn:[UISearchBar class], nil] setTitle:@"" forState:UIControlStateSelected];
+//    [[NSClassFromString(@"UINavigationButton") appearanceWhenContainedIn:[UISearchBar class], nil] setTitle:@"" forState:UIControlStateHighlighted];
+//    [[NSClassFromString(@"UINavigationButton") appearanceWhenContainedIn:[UISearchBar class], nil] setTitle:@"" forState:UIControlStateDisabled];
+//    [[NSClassFromString(@"UINavigationButton") appearanceWhenContainedIn:[UISearchBar class], nil] setTitle:@"" forState:UIControlStateApplication];
+
 //    self.noContentView = [[CDINoListsView alloc] initWithFrame:CGRectZero];
     self.tableView.showsPullToRefresh = NO;
     self.tableView.showsInfiniteScrolling = NO;
@@ -103,9 +117,7 @@
     self.searchDisplayController.searchBar.scopeButtonTitles = @[@"Pages", @"Places", @"Users"];
     [self.searchDisplayController.searchBar setShowsScopeBar:YES];
     
-    UIView * backgroundView = [[UIView alloc] initWithFrame:self.tableView.frame];
-    backgroundView.backgroundColor = [UIColor pulloutBackgroundColor];
-    ((UITableView*)self.view).backgroundView = backgroundView;
+
     [((UITableView*)self.view) setBounces:NO];
     [self customizeSearchBar];
 }
@@ -115,6 +127,10 @@
 	[super viewWillAppear:animated];
     [self setWantsFullScreenLayout:NO];
 //    [self showCoverView];
+    UIView * backgroundView = [[UIView alloc] initWithFrame:self.tableView.frame];
+    backgroundView.backgroundColor = [UIColor pulloutBackgroundColor];
+    ((UITableView*)self.tableView).backgroundView = backgroundView;
+    self.view.backgroundColor = [UIColor pulloutBackgroundColor];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -199,15 +215,15 @@
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     switch (self.searchDisplayController.searchBar.selectedScopeButtonIndex) {
         case 0: {
-            ((IPIPageTableViewCell*)cell).page = (IPKPage*)[self objectForViewIndexPath:indexPath];
+            ((IPIPageSearchTableViewCell*)cell).page = (IPKPage*)[self objectForViewIndexPath:indexPath];
         }
             break;
         case 1: {
-            ((IPIProviderTableViewCell*)cell).provider = (IPKProvider*)[self objectForViewIndexPath:indexPath];
+            ((IPIProviderSearchTableViewCell*)cell).provider = (IPKProvider*)[self objectForViewIndexPath:indexPath];
         }
             break;
         case 2: {
-            ((IPIUserTableViewCell*)cell).user = (IPKUser*)[self objectForViewIndexPath:indexPath];
+            ((IPIUserSearchTableViewCell*)cell).user = (IPKUser*)[self objectForViewIndexPath:indexPath];
         }
             break;
     }
@@ -242,8 +258,11 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	NSInteger rows = [super tableView:tableView numberOfRowsInSection:section];
-	return rows;
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        NSInteger rows = [super tableView:tableView numberOfRowsInSection:section];
+        return rows;
+    }
+    return 0;
 }
 
 
@@ -256,21 +275,21 @@
         case 0: {
             cell = [tableView dequeueReusableCellWithIdentifier:pageIdentifier];
             if (cell == nil) {
-                cell = [[IPIPageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:pageIdentifier];
+                cell = [[IPIPageSearchTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:pageIdentifier];
             }
         }
             break;
         case 1: {
             cell = [tableView dequeueReusableCellWithIdentifier:providerIdentifier];
             if (cell == nil) {
-                cell = [[IPIProviderTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:providerIdentifier];
+                cell = [[IPIProviderSearchTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:providerIdentifier];
             }
         }
             break;
         case 2: {
             cell = [tableView dequeueReusableCellWithIdentifier:userIdentifier];
             if (cell == nil) {
-                cell = [[IPIUserTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:userIdentifier];
+                cell = [[IPIUserSearchTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:userIdentifier];
             }
         }
             break;
@@ -331,13 +350,14 @@
 }
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
+
     return YES;
 }// return NO to not become first responder
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
+    [self hideCoverView];
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.1];
-    self.pullOutTableViewController.view.hidden = YES;
     [UIView commitAnimations];
     [self.viewDeckController setLeftLedge:0];
     [UIView beginAnimations:nil context:nil];
@@ -346,8 +366,6 @@
     frame.size.width = 320;
     [self.view setFrame:frame];
     [UIView commitAnimations];
-    [self hideCoverView];
-    self.tableView.hidden = NO;
 }                     // called when text starts editing
 
 - (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar{
@@ -366,6 +384,13 @@
 }                       // called when text ends editing
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    
+    for (UIView * view in searchBar.subviews) {
+        if ([view isKindOfClass:NSClassFromString(@"UINavigationButton")]) {
+            [((UIButton*)view) setImageEdgeInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
+        }
+    }
+    
     self.queryModel.queryString = searchText;
     NSString * queryKey = [NSString stringWithFormat:@"%@-%d", self.queryModel.queryString, self.searchDisplayController.searchBar.selectedScopeButtonIndex];
     switch (self.searchDisplayController.searchBar.selectedScopeButtonIndex) {
@@ -520,17 +545,15 @@
     }
 
 }                     // called when keyboard search button pressed
+
 - (void)searchBarBookmarkButtonClicked:(UISearchBar *)searchBar{
     
 }                   // called when bookmark button pressed
+
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar{
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.3];
-    self.pullOutTableViewController.view.hidden = NO;
-    [UIView commitAnimations];
-    [self.view bringSubviewToFront:self.coverView];
     [self showCoverView];
 }                    // called when cancel button pressed
+
 - (void)searchBarResultsListButtonClicked:(UISearchBar *)searchBar {
     
 } // called when search results button pressed
@@ -559,14 +582,27 @@
 
 // when we start/end showing the search UI
 - (void) searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller{
-    
+
 }
+
 - (void) searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller{
-    
+    Class navButtonClass = NSClassFromString(@"UINavigationButton");
+    id navButton;
+    NSUInteger numViews = [self.searchDisplayController.searchBar.subviews count];
+    for(int i = 0; i < numViews; i++) {
+        if([[self.searchDisplayController.searchBar.subviews objectAtIndex:i] isKindOfClass:navButtonClass]) { //?
+            navButton = [self.searchDisplayController.searchBar.subviews  objectAtIndex:i];
+        }
+    }
+    if(!(navButton == nil)) {
+        [navButton setImage:[UIImage imageNamed:@"back.png"]];
+    }
 }
+
 - (void) searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller{
     
 }
+
 - (void) searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller{
     
 }
@@ -575,6 +611,7 @@
 - (void)searchDisplayController:(UISearchDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView{
     
 }
+
 - (void)searchDisplayController:(UISearchDisplayController *)controller willUnloadSearchResultsTableView:(UITableView *)tableView{
     
 }

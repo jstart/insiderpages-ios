@@ -19,13 +19,14 @@
 @interface IPIPageTableViewHeader : UIView
 
 @property (nonatomic, strong) NINetworkImageView * pageCoverImageView;
-@property (nonatomic, strong) NINetworkImageView * creatorProfileImageView;
+//@property (nonatomic, strong) NINetworkImageView * creatorProfileImageView;
 
 @property (nonatomic, strong) UIView * overlayView;
 @property (nonatomic, strong) UILabel * nameLabel;
+@property (nonatomic, strong) UILabel * creatorLabel;
 @property (nonatomic, strong) UIButton * followButton;
-@property (nonatomic, strong) UIButton * favoriteButton;
-@property (nonatomic, strong) UIButton * shareButton;
+//@property (nonatomic, strong) UIButton * favoriteButton;
+//@property (nonatomic, strong) UIButton * shareButton;
 @property (nonatomic, weak) id<IPIPageTableViewHeaderDelegate> delegate;
 
 @property (nonatomic, strong) IPKPage * page;

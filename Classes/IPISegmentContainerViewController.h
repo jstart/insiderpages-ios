@@ -11,7 +11,7 @@
 #import "IPIPageViewController.h"
 #import "IPIPageDisqusViewController.h"
 
-@class IPKPage;
+@class IPKPage, IPKUser;
 
 @interface IPISegmentContainerViewController : IPIBookmarkBaseViewController <FireUIPagedScrollViewDelegate, IPIBasePageSegmentDelegate>
 
@@ -21,5 +21,6 @@
 @property (strong, nonatomic) IPIPageDisqusViewController * pageDisqusViewController;
 
 @property (strong, nonatomic) IPKPage * page;
+@property (strong, nonatomic) IPKUser * sortUser;
 
 @end

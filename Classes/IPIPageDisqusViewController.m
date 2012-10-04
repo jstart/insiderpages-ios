@@ -24,7 +24,7 @@
 - (id)init {
 	if ((self = [super init])) {
 //		self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Tasks" style:UIBarButtonItemStyleBordered target:nil action:nil];
-        self.comments = [NSMutableArray array];
+        self.commentDictionary = [NSMutableDictionary dictionary];
     }
 	return self;
 }
@@ -53,7 +53,7 @@
     headerView.backgroundColor = [UIColor grayColor];
     self.providerMapsCarousel = [[IPIProviderMapsCarouselViewController alloc] init];
     self.providerMapsCarousel.delegate = self;
-    [self addChildViewController:self.providerMapsCarousel];
+//    [self addChildViewControlxler:self.providerMapsCarousel];
     self.providerMapsCarousel.view.frame = CGRectMake(0, 10, 320, 115);
     [self.providerMapsCarousel.carousel setUserInteractionEnabled:YES];
     [self.view addSubview:self.providerMapsCarousel.view];
@@ -62,7 +62,6 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-
 }
 
 
@@ -81,26 +80,35 @@
 -(void)setPage:(IPKPage *)page{
     _page = page;
     [self.providerMapsCarousel setPage:page];
+    [self fetchComments];
+}
+- (void)setSortUser:(IPKUser *)sortUser{
+    _sortUser = sortUser;
+	[self.providerMapsCarousel setSortUser:sortUser];
 }
 
 -(void)pageChanged{
-//    [self fetchComments];
+    [self.tableView reloadData];
+    [self fetchComments];
 }
 
 -(void)fetchComments{
-    NSIndexPath * indexPath = [NSIndexPath indexPathForItem:[self.providerMapsCarousel.currentPage integerValue] inSection:1];
+    NSIndexPath * indexPath = [NSIndexPath indexPathForItem:self.providerMapsCarousel.carousel.currentItemIndex  inSection:1];
     IPKProvider * provider = nil;
 
     if (self.providerMapsCarousel.fetchedResultsController.fetchedObjects.count > indexPath.row) {
-        provider = [self.providerMapsCarousel.fetchedResultsController.fetchedObjects objectAtIndex:indexPath.row];
-        NSString * pageName = [self.page.name stringByAddingPercentEscapesUsingEncoding:
-                               NSUTF8StringEncoding];
-    
-        NSString * threadIdentifier = [NSString stringWithFormat:@"http://qa.insiderpages.com/providers/c/%@/detail?page_id=%@&page_name=%@", provider.cached_slug, self.page.remoteID, pageName];
-        [IADisquser getCommentsFromThreadLink:threadIdentifier
+        provider = ((IPKTeamMembership*)[self.providerMapsCarousel.fetchedResultsController.fetchedObjects objectAtIndex:indexPath.row]).listing;
+//        NSString * pageName = [self.page.name stringByAddingPercentEscapesUsingEncoding:
+//                               NSUTF8StringEncoding];
+        NSString * providerType = [provider.listing_type isEqualToString:@"CgListing"] ? @"c": @"p";
+        NSString * threadIdentifier = [NSString stringWithFormat:@"/providers/%@/%@/detail/page_id=%@/page_name=%@",providerType, provider.cached_slug, self.page.remoteID, self.page.name];
+        [IADisquser getCommentsFromThreadIdentifier:threadIdentifier
                                       success:^(NSArray *newComments) {
-                                          // get the array of comments, reverse it (oldest comment on top) 
-                                          self.comments = [[[newComments reverseObjectEnumerator] allObjects] mutableCopy];
+                                          // get the array of comments, reverse it (oldest comment on top)
+                                          if (newComments) {
+                                              [self.commentDictionary setObject:[[[newComments reverseObjectEnumerator] allObjects] mutableCopy] forKey:threadIdentifier];
+                                          }
+
                                           
                                           // start activity indicator
                                           [self.tableView setAlpha:1.0];
@@ -110,14 +118,14 @@
                                       } fail:^(NSError *error) {
                                           // start activity indicator
                                           [self.tableView setAlpha:1.0];
-                                          
+                                          [self.tableView reloadData];
                                           // alert the error
-                                          UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Occured" 
-                                                                                          message:[error localizedDescription] 
-                                                                                         delegate:nil 
-                                                                                cancelButtonTitle:@"OK" 
-                                                                                otherButtonTitles:nil];
-                                          [alert show];
+//                                          UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Occured" 
+//                                                                                          message:[error localizedDescription] 
+//                                                                                         delegate:nil 
+//                                                                                cancelButtonTitle:@"OK" 
+//                                                                                otherButtonTitles:nil];
+//                                          [alert show];
                                       }];
         }
 
@@ -126,7 +134,17 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.comments.count;
+    NSIndexPath * indexPath = [NSIndexPath indexPathForItem:self.providerMapsCarousel.carousel.currentItemIndex  inSection:section];
+    IPKProvider * provider = nil;
+    if (self.providerMapsCarousel.fetchedResultsController.fetchedObjects.count > indexPath.row) {
+        provider = ((IPKTeamMembership*)[self.providerMapsCarousel.fetchedResultsController.fetchedObjects objectAtIndex:indexPath.row]).listing;
+        NSString * providerType = [provider.listing_type isEqualToString:@"CgListing"] ? @"c": @"p";
+        NSString * threadIdentifier = [NSString stringWithFormat:@"/providers/%@/%@/detail/page_id=%@/page_name=%@",providerType, provider.cached_slug, self.page.remoteID, self.page.name];
+        
+        return [[[self commentDictionary] objectForKey:threadIdentifier] count];
+    }else{
+        return 0;
+    }
 }
 
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
@@ -137,7 +155,14 @@
     if (!cell) {
         cell = [[IPIDisqusTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
     }
-    cell.textLabel.text = ((IADisqusComment*)[self.comments objectAtIndex:indexPath.row]).forumName;
+    NSIndexPath * carouselIndexPath = [NSIndexPath indexPathForItem:self.providerMapsCarousel.carousel.currentItemIndex  inSection:1];
+    IPKProvider * provider = nil;
+    provider = ((IPKTeamMembership*)[self.providerMapsCarousel.fetchedResultsController.fetchedObjects objectAtIndex:carouselIndexPath.row]).listing;
+    NSString * providerType = [provider.listing_type isEqualToString:@"CgListing"] ? @"c": @"p";
+    NSString * threadIdentifier = [NSString stringWithFormat:@"/providers/%@/%@/detail/page_id=%@/page_name=%@",providerType, provider.cached_slug, self.page.remoteID, self.page.name];
+    cell.textLabel.text = ((IADisqusComment*)[[[self commentDictionary] objectForKey:threadIdentifier] objectAtIndex:indexPath.row]).rawMessage;
+    cell.detailTextLabel.text = ((IADisqusComment*)[[[self commentDictionary] objectForKey:threadIdentifier] objectAtIndex:indexPath.row]).forumName;
+
     return cell;
 }
 

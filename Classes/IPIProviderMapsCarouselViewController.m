@@ -37,7 +37,7 @@
     }
     self.loading = YES;
     NSString * pageIDString = [NSString stringWithFormat:@"%@", self.page.remoteID];
-    [[IPKHTTPClient sharedClient] getProvidersForPageWithId:pageIDString success:^(AFJSONRequestOperation *operation, id responseObject) {
+    [[IPKHTTPClient sharedClient] getProvidersForPageWithId:pageIDString sortUser:nil success:^(AFJSONRequestOperation *operation, id responseObject) {
         dispatch_async(dispatch_get_main_queue(), ^{
             self.fetchedResultsController = nil;
             [self.carousel reloadData];
@@ -55,25 +55,36 @@
     _page = page;
     
     [self.fetchedResultsController performFetch:nil];
-    [self refresh];
-    [self.carousel reloadData];
+    
+}
+
+- (void)setSortUser:(IPKUser *)sortUser{
+    _sortUser = sortUser;
+    
+	self.fetchedResultsController = nil;
+	[self refresh];
+    [self.carousel reloadData];	
 }
 
 -(NSString*)entityName{
-    return @"IPKProvider";
+    return @"IPKTeamMembership";
 }
 
 -(BOOL)ascending{
     return NO;
 }
 
-- (NSPredicate *)predicate {	
-	return [NSPredicate predicateWithFormat:@"(SUBQUERY(pages, $eachPage, $eachPage.remoteID == %@).@count !=0)", self.page.remoteID];
+- (NSPredicate *)predicate {
+    if (self.sortUser) {
+        return [NSPredicate predicateWithFormat:@"team_id == %@ && owner_id == %@", self.page.remoteID, self.sortUser.remoteID];
+    }else{
+        return [NSPredicate predicateWithFormat:@"team_id == %@", self.page.remoteID];
+    }
 }
 
 
 -(NSString *)sortDescriptors{
-    return @"createdAt,remoteID";
+    return @"position";
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -114,11 +125,12 @@
 //    }
     if (view == nil) {
         IPIProviderMapCarouselView * newView = [[IPIProviderMapCarouselView alloc] initWithFrame:CGRectMake(0, 0, 260, 115)];
-        [newView setProvider:[self.fetchedResultsController.fetchedObjects objectAtIndex:index]];
+        IPKProvider * provider = ((IPKTeamMembership*)[self.fetchedResultsController.fetchedObjects objectAtIndex:index]).listing;
+        [newView setProvider:provider];
         return newView;
     }
     else{
-        [((IPIProviderMapCarouselView *)view) setProvider:[self.fetchedResultsController.fetchedObjects objectAtIndex:index]];
+        [((IPIProviderMapCarouselView *)view) setProvider:((IPKTeamMembership*)[self.fetchedResultsController.fetchedObjects objectAtIndex:index]).listing];
     }
     return view;
 }

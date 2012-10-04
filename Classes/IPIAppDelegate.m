@@ -419,7 +419,7 @@
 	// Navigation bar mini
     UINavigationBar *navigationBarActivityFeed = [UINavigationBar appearanceWhenContainedIn:[IIViewDeckController class], nil];
 	[navigationBarActivityFeed setBackgroundImage:[UIImage imageNamed:@"header_background.png"] forBarMetrics:UIBarMetricsDefault];
-    [navigationBarActivityFeed setTitleVerticalPositionAdjustment:4 forBarMetrics:UIBarMetricsDefault];
+    [navigationBarActivityFeed setTitleVerticalPositionAdjustment:2 forBarMetrics:UIBarMetricsDefault];
 
 	// Navigation button
 //	NSDictionary *barButtonTitleTextAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:

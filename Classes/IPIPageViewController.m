@@ -8,7 +8,7 @@
 
 #import "IPIPageViewController.h"
 #import "TTTAttributedLabel.h"
-#import "IPIProviderTableViewCell.h"
+#import "IPIProviderRankTableViewCell.h"
 #import "IPIProviderViewController.h"
 #import "IPIPageTableViewHeader.h"
 #import "IPISocialShareHelper.h"
@@ -20,6 +20,7 @@
 //#import "CDIRenameTaskViewController.h"
 //#import "CDIWebViewController.h"
 #import "UIColor+InsiderPagesiOSAdditions.h"
+#import "UIColor-Expanded.h"
 #import "UIFont+InsiderPagesiOSAdditions.h"
 
 @interface IPIPageViewController () <IPIPageTableViewHeaderDelegate, TTTAttributedLabelDelegate, UITextFieldDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
@@ -39,23 +40,32 @@
 	self.title = self.page.name;
 //	self.tableView.hidden = self.page == nil;
 	
-	if (page == nil) {
+	if (_page == nil) {
 		return;
 	}
 	
-	[page addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionNew context:context];
-    [page addObserver:self forKeyPath:@"owner" options:NSKeyValueObservingOptionNew context:context];
-    [page addObserver:self forKeyPath:@"is_favorite" options:NSKeyValueObservingOptionNew context:context];
-    [page addObserver:self forKeyPath:@"is_following" options:NSKeyValueObservingOptionNew context:context];
+	[_page addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionNew context:context];
+    [_page.owner addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionNew context:context];
+    [_page addObserver:self forKeyPath:@"is_favorite" options:NSKeyValueObservingOptionNew context:context];
+    [_page addObserver:self forKeyPath:@"is_following" options:NSKeyValueObservingOptionNew context:context];
     
 //	self.ignoreChange = YES;
-	[self.headerView setPage:page];
+	[self.headerView setPage:_page];
+    [self.headerView setNeedsDisplay];
+	self.fetchedResultsController = nil;
+	[self.tableView reloadData];
+	self.ignoreChange = NO;
+}
+
+- (void)setSortUser:(IPKUser *)sortUser{
+    _sortUser = sortUser;
+    
 	self.fetchedResultsController = nil;
 	[self.tableView reloadData];
 	self.ignoreChange = NO;
 	
 	[SSRateLimit executeBlock:[self refresh]
-	 name:[NSString stringWithFormat:@"refresh-list-%@", self.page.remoteID] limit:0.0];
+                         name:[NSString stringWithFormat:@"refresh-list-%@", self.page.remoteID] limit:0.0];
 }
 
 //-(UITableView*)tableView{
@@ -93,13 +103,17 @@
     [self.tableView setAllowsSelectionDuringEditing:YES];
 //	self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake([CDIAddTaskView height], 0.0f, 0.0f, 0.0f);
 	self.pullToRefreshView.bottomBorderColor = [UIColor colorWithWhite:0.8f alpha:1.0f];
-    [self.tableView setFrame:CGRectMake(0, 180, 320, [UIScreen mainScreen].bounds.size.height-180)];
+    [self.tableView setFrame:CGRectMake(15, 165, 290, [UIScreen mainScreen].bounds.size.height-264)];
+    [self.tableView.layer setCornerRadius:3.0];
+    [self.tableView setClipsToBounds:YES];
+    self.tableView.layer.borderColor = [UIColor colorWithHexString:@"cccccc"].CGColor;
+    [self.tableView setSeparatorColor:[UIColor colorWithHexString:@"cccccc"]];
+    self.tableView.layer.borderWidth = 1;
 //	self.noContentView = [[CDINoTasksView alloc] initWithFrame:CGRectZero];
-    self.headerView = [[IPIPageTableViewHeader alloc] initWithFrame:CGRectMake(0, 0, 320, 180)];
+    self.headerView = [[IPIPageTableViewHeader alloc] initWithFrame:CGRectMake(0, 0, 320, 150)];
     [self.headerView setDelegate:self];
     [self.view addSubview:self.headerView];
-    
-
+    [self.view setBackgroundColor:[UIColor standardBackgroundColor]];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -132,20 +146,29 @@
 
 
 - (Class)entityClass {
-	return [IPKProvider class];
+	return [IPKTeamMembership class];
 }
 
 
 - (NSPredicate *)predicate {	
-	return [NSPredicate predicateWithFormat:@"(SUBQUERY(pages, $eachPage, $eachPage.remoteID == %@).@count !=0)", self.page.remoteID];
+    if (self.sortUser) {
+        return [NSPredicate predicateWithFormat:@"team_id == %@ && owner_id == %@", self.page.remoteID, self.sortUser.remoteID];
+    }else{
+        return [NSPredicate predicateWithFormat:@"team_id == %@", self.page.remoteID];
+    }
+}
+
+-(NSString*)sortDescriptors{
+    return @"position";
 }
 
 
 #pragma mark - SSManagedTableViewController
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-	IPIProviderTableViewCell *providerCell = (IPIProviderTableViewCell *)cell;
-	providerCell.provider = [self objectForViewIndexPath:indexPath];
+	IPIProviderRankTableViewCell *providerCell = (IPIProviderRankTableViewCell *)cell;
+	providerCell.provider = ((IPKTeamMembership*)[self objectForViewIndexPath:indexPath]).listing;
+    providerCell.rankNumberLabel.text = [NSString stringWithFormat:@"%@",((IPKTeamMembership*)[self objectForViewIndexPath:indexPath]).position];
 }
 
 
@@ -178,10 +201,11 @@
             return;
         }
         
-        if ([self.page.owner.remoteID isEqualToNumber:@(0)]) {
+        if (self.page.owner.name == nil) {
             self.loading = YES;
 
             [self.page.owner updateWithSuccess:^(void){
+                
                 dispatch_async(dispatch_get_main_queue(), ^{
                     self.loading = NO;
                 });
@@ -196,7 +220,7 @@
         self.loading = YES;
 
         NSString * pageIDString = [NSString stringWithFormat:@"%@", self.page.remoteID];
-        [[IPKHTTPClient sharedClient] getProvidersForPageWithId:pageIDString success:^(AFJSONRequestOperation *operation, id responseObject) {
+        [[IPKHTTPClient sharedClient] getProvidersForPageWithId:pageIDString sortUser:nil success:^(AFJSONRequestOperation *operation, id responseObject) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.loading = NO;
                 self.fetchedResultsController = nil;
@@ -265,9 +289,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	static NSString *const cellIdentifier = @"cellIdentifier";
 	
-	IPIProviderTableViewCell *cell = (IPIProviderTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+	IPIProviderRankTableViewCell *cell = (IPIProviderRankTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 	if (!cell) {
-		cell = [[IPIProviderTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+		cell = [[IPIProviderRankTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         cell.editing = NO;
 	}
 	
@@ -284,7 +308,7 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    IPKProvider * provider = [self objectForViewIndexPath:indexPath];
+    IPKProvider * provider = ((IPKTeamMembership*)[self objectForViewIndexPath:indexPath]).listing;
     [self.delegate didSelectProvider:provider];
 }
 
@@ -517,6 +541,9 @@
 		}
 	}
     if ([keyPath isEqualToString:@"owner"] || [keyPath isEqualToString:@"is_favorite"] || [keyPath isEqualToString:@"is_following"]) {
+    }
+    if ([keyPath isEqualToString:@"name"]) {
+        [self setPage:_page];
     }
 }
 

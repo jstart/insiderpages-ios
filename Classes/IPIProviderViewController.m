@@ -129,7 +129,7 @@
     CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([self.provider.address.lat doubleValue], [self.provider.address.lng doubleValue]);
     NSString * mapsURLFormatted = [NSString stringWithFormat:@"http://maps.google.com/maps?saddr=%f,%f&daddr=%@",coord.latitude, coord.longitude, locationFormatted];
     if ([NSClassFromString(@"MKMapItem") instancesRespondToSelector:@selector(isCurrentLocation)]){
-        NSDictionary * addressDictionary = [NSDictionary dictionaryWithObjectsAndKeys:self.provider.address.address_1, kABPersonAddressStreetKey, self.provider.address.zip_code, kABPersonAddressZIPKey, nil];
+        NSDictionary * addressDictionary = [NSDictionary dictionaryWithObjectsAndKeys:self.provider.address.address_1, kABPersonAddressStreetKey, self.provider.address.city, kABPersonAddressCityKey, self.provider.address.zip_code, kABPersonAddressZIPKey, nil];
         MKPlacemark * placemark = [[MKPlacemark alloc] initWithCoordinate:coord addressDictionary:addressDictionary];
         MKMapItem * mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
         [MKMapItem openMapsWithItems:@[ mapItem ] launchOptions:nil];

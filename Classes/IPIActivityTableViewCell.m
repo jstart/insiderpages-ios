@@ -21,7 +21,7 @@
         [self.profileImageView prepareForReuse];
         [self.profileImageView setPathToNetworkImage:[activity.user imageProfilePathForSize:IPKUserProfileImageSizeMedium] forDisplaySize:self.profileImageView.frame.size contentMode:UIViewContentModeScaleToFill];
 //        self.timeLabel.text = [activity formattedTimeElapsedSinceUpdated];
-        [self setNeedsLayout];
+        [self setNeedsDisplay];
     }
 }
 
@@ -29,9 +29,6 @@
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
 	if ((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) {
-        
-        self.layer.shouldRasterize = YES;
-        self.layer.rasterizationScale = [UIScreen mainScreen].scale;
         
         self.backgroundColor = [UIColor clearColor];
         self.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -77,12 +74,16 @@
     CGRect textLabelFrame = self.activityLabel.frame;
     textLabelFrame.origin.x = 64;
     self.activityLabel.frame = textLabelFrame;
-
 }
 
 +(CGFloat)heightForCellWithText:(NSString *)text{
     return 55;
 }
 
+-(void)addSubview:(UIView *)view{
+    if (view.frame.size.width != 1) {
+        [super addSubview:view];
+    }
+}
 
 @end

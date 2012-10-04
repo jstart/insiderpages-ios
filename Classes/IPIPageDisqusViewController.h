@@ -15,7 +15,8 @@
 @property (nonatomic, strong) UITableView * tableView;
 
 @property (nonatomic, strong) IPKPage *page;
+@property (nonatomic, strong) IPKUser * sortUser;
 @property (nonatomic, strong) IPIProviderMapsCarouselViewController * providerMapsCarousel;
-@property (nonatomic, strong) NSMutableArray * comments;
+@property (nonatomic, strong) NSMutableDictionary * commentDictionary;
 
 @end

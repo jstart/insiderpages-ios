@@ -45,23 +45,23 @@
         [self.profileImageView setFrame:CGRectMake(15, 6, 40, 40)];
         [self addSubview:self.profileImageView];
         
-        self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width-80, 5, 80, 20)];
-        self.timeLabel.backgroundColor = [UIColor clearColor];
-        [self.timeLabel setFont:[UIFont systemFontOfSize:[UIFont smallSystemFontSize]]];
-        [self addSubview:self.timeLabel];
+//        self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width-80, 5, 80, 20)];
+//        self.timeLabel.backgroundColor = [UIColor clearColor];
+//        [self.timeLabel setFont:[UIFont systemFontOfSize:[UIFont smallSystemFontSize]]];
+//        [self addSubview:self.timeLabel];
 	}
 	return self;
 }
 
-- (void) layoutSubviews {
-    [super layoutSubviews];
-    CGRect textLabelFrame = self.textLabel.frame;
-    textLabelFrame.origin.x = 50;
-    self.textLabel.frame = textLabelFrame;
-    
-    CGRect detailTextLabelFrame = self.detailTextLabel.frame;
-    detailTextLabelFrame.origin.x = 50;
-    self.detailTextLabel.frame = detailTextLabelFrame;
-}
+//- (void) layoutSubviews {
+//    [super layoutSubviews];
+//    CGRect textLabelFrame = self.textLabel.frame;
+//    textLabelFrame.origin.x = 50;
+//    self.textLabel.frame = textLabelFrame;
+//    
+//    CGRect detailTextLabelFrame = self.detailTextLabel.frame;
+//    detailTextLabelFrame.origin.x = 50;
+//    self.detailTextLabel.frame = detailTextLabelFrame;
+//}
 
 @end
