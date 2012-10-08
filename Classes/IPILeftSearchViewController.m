@@ -12,7 +12,6 @@
 #import "CDINoListsView.h"
 #import <SSToolkit/UIScrollView+SSToolkitAdditions.h>
 #import "SVPullToRefresh.h"
-#import "IPISearchBar.h"
 
 @interface IPILeftSearchViewController ()
 - (void)_currentUserDidChange:(NSNotification *)notification;

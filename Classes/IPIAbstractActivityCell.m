@@ -20,7 +20,6 @@
 //        self.backgroundColor = [UIColor clearColor];
         self.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        self.activity = activity;
     }
     return self;
 }

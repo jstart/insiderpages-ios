@@ -8,6 +8,8 @@
 
 #import "IPIMiniPageActivityCell.h"
 #import "IPKActivity+Formatting.h"
+#import "UIColor+InsiderPagesiOSAdditions.h"
+#import "UIImageView+Rasterize.h"
 
 @implementation IPIMiniPageActivityCell
 @synthesize activity = _activity;
@@ -17,12 +19,13 @@
         _activity = activity;
         
         self.activityLabel.text = [activity attributedActionText];
-        [self.profileImageView prepareForReuse];
-        [self.profileImageView setPathToNetworkImage:[activity.user imageProfilePathForSize:IPKUserProfileImageSizeMedium] forDisplaySize:self.profileImageView.frame.size contentMode:UIViewContentModeScaleToFill];
-        [self.smallPageCoverImageView prepareForReuse];
-        [self.smallPageCoverImageView setPathToNetworkImage:@"http://gentlemint.com/media/images/2012/04/26/3f31ab05.jpg.650x650_q85.jpg" forDisplaySize:self.smallPageCoverImageView.frame.size contentMode:UIViewContentModeScaleToFill];
-        //        self.timeLabel.text = [activity formattedTimeElapsedSinceUpdated];
-        [self setNeedsLayout];
+
+        NSString *profileImageViewURLString = [activity.user imageProfilePathForSize:IPKUserProfileImageSizeMedium];
+        [self.profileImageView loadURLString:profileImageViewURLString forSize:self.profileImageView.frame.size mode:NYXCropModeCenter];
+        
+        NSString* URLString = @"http://gentlemint.com/media/images/2012/04/26/3f31ab05.jpg.650x650_q85.jpg";
+        [self.smallPageCoverImageView loadURLString:URLString forSize:self.smallPageCoverImageView.frame.size mode:NYXCropModeCenter];
+        
         [self setNeedsDisplay];
     }
 }
@@ -32,7 +35,7 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
 	if ((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) {
         
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor standardBackgroundColor];
         self.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
         self.profileImageView = [[NINetworkImageView alloc] initWithImage:[UIImage imageNamed:@"reload-button"]];
         self.profileImageView.layer.borderWidth = 1;
@@ -57,7 +60,7 @@
         [self addSubview:profileView];
                 
         self.activityLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(64, 0, 170, 45)];
-        self.activityLabel.backgroundColor = [UIColor clearColor];
+        self.activityLabel.backgroundColor = [UIColor standardBackgroundColor];
         self.activityLabel.numberOfLines = 3;
         self.activityLabel.verticalAlignment = TTTAttributedLabelVerticalAlignmentBottom;
         self.activityLabel.contentMode = UIViewContentModeBottom;

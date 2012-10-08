@@ -8,6 +8,9 @@
 
 #import "IPIActivityTableViewCell.h"
 #import "IPKActivity+Formatting.h"
+#import "UIColor+InsiderPagesiOSAdditions.h"
+#import "NYXImagesKit.h"
+#import "UIImageView+Rasterize.h"
 
 @implementation IPIActivityTableViewCell
 
@@ -18,10 +21,9 @@
         _activity = activity;
         
         self.activityLabel.text = [activity attributedActionText];
-        [self.profileImageView prepareForReuse];
-        [self.profileImageView setPathToNetworkImage:[activity.user imageProfilePathForSize:IPKUserProfileImageSizeMedium] forDisplaySize:self.profileImageView.frame.size contentMode:UIViewContentModeScaleToFill];
-//        self.timeLabel.text = [activity formattedTimeElapsedSinceUpdated];
-        [self setNeedsDisplay];
+
+        NSString *profileImageViewURLString = [activity.user imageProfilePathForSize:IPKUserProfileImageSizeMedium];
+        [self.profileImageView loadURLString:profileImageViewURLString forSize:self.profileImageView.frame.size mode:NYXCropModeCenter];
     }
 }
 
@@ -55,7 +57,7 @@
         [self addSubview:profileView];
         
         self.activityLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(64, 15, 240, 45)];
-        self.activityLabel.backgroundColor = [UIColor clearColor];
+        self.activityLabel.backgroundColor = [UIColor standardBackgroundColor];
         self.activityLabel.numberOfLines = 3;
         self.activityLabel.verticalAlignment = TTTAttributedLabelVerticalAlignmentBottom;
         self.activityLabel.contentMode = UIViewContentModeBottom;

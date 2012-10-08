@@ -23,7 +23,6 @@
     }
 }
 
-
 #pragma mark - UITableViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {

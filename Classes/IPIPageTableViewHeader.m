@@ -38,7 +38,7 @@
         
         CGRect nameLabelFrame;
         nameLabelFrame.size.height = 22;
-        nameLabelFrame.size.width = 320;
+        nameLabelFrame.size.width = 230;
         nameLabelFrame.origin.y = self.pageCoverImageView.frame.size.height * .68;
         nameLabelFrame.origin.x = 10;
         
@@ -153,8 +153,8 @@
 -(void)setPage:(IPKPage *)page{
 //    if (_page != page && ![_page.owner.id isEqualToNumber:page.owner.id]) {
         _page = page;
-        [self.nameLabel setText:_page.name];
-        [self.creatorLabel setText:[NSString stringWithFormat:@"Created by %@", _page.owner.name ? _page.owner.name : @"..."]];
+        [self.nameLabel setText:page.name];
+        [self.creatorLabel setText:[NSString stringWithFormat:@"Created by %@", page.owner.name ? page.owner.name : @"..."]];
         //load image view with URL
         [self.pageCoverImageView setPathToNetworkImage:@"http://gentlemint.com/media/images/2012/04/26/3f31ab05.jpg.650x650_q85.jpg" forDisplaySize:self.pageCoverImageView.frame.size contentMode:UIViewContentModeCenter];
 //        [self.creatorProfileImageView setInitialImage:[UIImage imageNamed:@"reload-button"]];

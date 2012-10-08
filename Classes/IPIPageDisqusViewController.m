@@ -25,6 +25,13 @@
 	if ((self = [super init])) {
 //		self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Tasks" style:UIBarButtonItemStyleBordered target:nil action:nil];
         self.commentDictionary = [NSMutableDictionary dictionary];
+        
+        self.providerMapsCarousel = [[IPIProviderMapsCarouselViewController alloc] init];
+        self.providerMapsCarousel.delegate = self;
+        
+        self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 0, 300, 480) style:UITableViewStyleGrouped];
+        self.tableView.delegate = self;
+        self.tableView.dataSource = self;
     }
 	return self;
 }
@@ -39,9 +46,7 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
     self.view.backgroundColor = [UIColor grayColor];
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 0, 300, 480) style:UITableViewStyleGrouped];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
+
     
     
     UIView * backgroundView = [[UIView alloc] initWithFrame:self.tableView.frame];
@@ -51,8 +56,7 @@
 
     UIView * headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 130)];
     headerView.backgroundColor = [UIColor grayColor];
-    self.providerMapsCarousel = [[IPIProviderMapsCarouselViewController alloc] init];
-    self.providerMapsCarousel.delegate = self;
+
 //    [self addChildViewControlxler:self.providerMapsCarousel];
     self.providerMapsCarousel.view.frame = CGRectMake(0, 10, 320, 115);
     [self.providerMapsCarousel.carousel setUserInteractionEnabled:YES];
@@ -80,11 +84,11 @@
 -(void)setPage:(IPKPage *)page{
     _page = page;
     [self.providerMapsCarousel setPage:page];
-    [self fetchComments];
 }
 - (void)setSortUser:(IPKUser *)sortUser{
     _sortUser = sortUser;
 	[self.providerMapsCarousel setSortUser:sortUser];
+    [self fetchComments];
 }
 
 -(void)pageChanged{
@@ -93,7 +97,7 @@
 }
 
 -(void)fetchComments{
-    NSIndexPath * indexPath = [NSIndexPath indexPathForItem:self.providerMapsCarousel.carousel.currentItemIndex  inSection:1];
+    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:self.providerMapsCarousel.carousel.currentItemIndex inSection:1];
     IPKProvider * provider = nil;
 
     if (self.providerMapsCarousel.fetchedResultsController.fetchedObjects.count > indexPath.row) {
@@ -134,7 +138,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    NSIndexPath * indexPath = [NSIndexPath indexPathForItem:self.providerMapsCarousel.carousel.currentItemIndex  inSection:section];
+    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:self.providerMapsCarousel.carousel.currentItemIndex inSection:section];
     IPKProvider * provider = nil;
     if (self.providerMapsCarousel.fetchedResultsController.fetchedObjects.count > indexPath.row) {
         provider = ((IPKTeamMembership*)[self.providerMapsCarousel.fetchedResultsController.fetchedObjects objectAtIndex:indexPath.row]).listing;
@@ -155,7 +159,7 @@
     if (!cell) {
         cell = [[IPIDisqusTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
     }
-    NSIndexPath * carouselIndexPath = [NSIndexPath indexPathForItem:self.providerMapsCarousel.carousel.currentItemIndex  inSection:1];
+    NSIndexPath * carouselIndexPath = [NSIndexPath indexPathForRow:self.providerMapsCarousel.carousel.currentItemIndex inSection:1];
     IPKProvider * provider = nil;
     provider = ((IPKTeamMembership*)[self.providerMapsCarousel.fetchedResultsController.fetchedObjects objectAtIndex:carouselIndexPath.row]).listing;
     NSString * providerType = [provider.listing_type isEqualToString:@"CgListing"] ? @"c": @"p";

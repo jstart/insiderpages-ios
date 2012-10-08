@@ -97,8 +97,7 @@
     _fullScreenDelegate.shouldShowUIBarsOnScrollUp = YES;
     
     self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
-    [SSRateLimit executeBlock:[self refresh] name:NSStringFromClass([self class]) limit:20];
-    [self.tableView.pullToRefreshView startAnimating];
+    [self.tableView.pullToRefreshView triggerRefresh];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -232,6 +231,10 @@
     return ^(void){
         if (self.loading || ![IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]]) {
             [SSRateLimit resetLimitForName:@"refresh-activity"];
+              dispatch_async(dispatch_get_main_queue(), ^{
+                  [self.tableView.pullToRefreshView stopAnimating];
+              });
+
             return;
         }
                 
@@ -258,10 +261,10 @@
             self.fetchedResultsController = nil;
             self.ignoreChange = YES;
             [[IPKHTTPClient sharedClient] getPageActivititesWithCurrentPage:@1 perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
+                self.fetchedResultsController = nil;
                 dispatch_async(dispatch_get_main_queue(), ^{
                     self.ignoreChange = NO;
                     self.loading = NO;
-                    self.fetchedResultsController = nil;
                     NSLog(@"retrieved %d activity items", ((NSArray*)responseObject[@"activities"]).count);
                     [[self tableView] reloadData];
                 });
@@ -381,7 +384,7 @@
 
     IPKActivity * activity = [self objectForViewIndexPath:indexPath];
     
-    NSString * cellIdentifier = NSStringFromClass(activity.class);
+    NSString * cellIdentifier = [NSString stringWithFormat:@"%d-%d", [activity activityType], [activity trackableType]];
 
 	IPIAbstractActivityCell *cell = (IPIAbstractActivityCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 	if (!cell) {
@@ -428,6 +431,7 @@
             // Display BPP with approriate action
             IPISegmentContainerViewController * pageVC = [[IPISegmentContainerViewController alloc] init];
             pageVC.page = activity.page;
+            pageVC.sortUser = activity.user;
             [self.navigationController pushViewController:pageVC animated:YES];
         }
             break;
@@ -435,6 +439,7 @@
             //Display Review with approriate action
             IPISegmentContainerViewController * pageVC = [[IPISegmentContainerViewController alloc] init];
             pageVC.page = activity.page;
+            pageVC.sortUser = activity.user;
             [self.navigationController pushViewController:pageVC animated:YES];
         }
             break;
@@ -442,6 +447,7 @@
             //UPP
             IPISegmentContainerViewController * pageVC = [[IPISegmentContainerViewController alloc] init];
             pageVC.page = activity.page;
+            pageVC.sortUser = activity.user;
             [self.navigationController pushViewController:pageVC animated:YES];
         }
             break;
@@ -449,6 +455,7 @@
             //UPP
             IPISegmentContainerViewController * pageVC = [[IPISegmentContainerViewController alloc] init];
             pageVC.page = activity.page;
+            pageVC.sortUser = activity.user;
             [self.navigationController pushViewController:pageVC animated:YES];
         }
             break;
@@ -456,6 +463,7 @@
             //UPP
             IPISegmentContainerViewController * pageVC = [[IPISegmentContainerViewController alloc] init];
             pageVC.page = activity.page;
+            pageVC.sortUser = activity.user;
             [self.navigationController pushViewController:pageVC animated:YES];
         }
             break;
@@ -463,6 +471,7 @@
             //Generic Activity
             IPISegmentContainerViewController * pageVC = [[IPISegmentContainerViewController alloc] init];
             pageVC.page = activity.page;
+            pageVC.sortUser = activity.user;
             [self.navigationController pushViewController:pageVC animated:YES];
         }
             break;
@@ -540,6 +549,7 @@
     IPKActivity * activity = ((IPIActivityTableViewCell*)sender.view).activity;
     IPISegmentContainerViewController * pageVC = [[IPISegmentContainerViewController alloc] init];
     pageVC.page = activity.page;
+    pageVC.sortUser = activity.user;
     [self.navigationController pushViewController:pageVC animated:YES];
 }
 

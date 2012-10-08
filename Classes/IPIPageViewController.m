@@ -1,9 +1,7 @@
 //
-//  CDIListViewController.m
-//  Cheddar for iOS
+//  IPIPageViewController.m
+//  InsiderPages for iOS
 //
-//  Created by Sam Soffes on 3/31/12.
-//  Copyright (c) 2012 Nothing Magical. All rights reserved.
 //
 
 #import "IPIPageViewController.h"
@@ -12,6 +10,7 @@
 #import "IPIProviderViewController.h"
 #import "IPIPageTableViewHeader.h"
 #import "IPISocialShareHelper.h"
+#import "SVPullToRefresh.h"
 //#import "CDIAddTaskView.h"
 //#import "CDIAddTaskAnimationView.h"
 //#import "CDIAttributedLabel.h"
@@ -23,15 +22,14 @@
 #import "UIColor-Expanded.h"
 #import "UIFont+InsiderPagesiOSAdditions.h"
 
-@interface IPIPageViewController () <IPIPageTableViewHeaderDelegate, TTTAttributedLabelDelegate, UITextFieldDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
-- (void)_renameList:(id)sender;
-- (void)_archiveTasks:(id)sender;
-- (void)_archiveAllTasks:(id)sender;
-- (void)_archiveCompletedTasks:(id)sender;
+@interface IPIPageViewController () <IPIPageTableViewHeaderDelegate, IPIRankBarDelegate, TTTAttributedLabelDelegate, UITextFieldDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
+
 @end
 
 @implementation IPIPageViewController
 @synthesize page = _page;
+
+static CGFloat prevContentOffset = 0;
 
 - (void)setPage:(IPKPage *)page {
 
@@ -52,20 +50,23 @@
 //	self.ignoreChange = YES;
 	[self.headerView setPage:_page];
     [self.headerView setNeedsDisplay];
-	self.fetchedResultsController = nil;
-	[self.tableView reloadData];
-	self.ignoreChange = NO;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.fetchedResultsController = nil;
+        [self.tableView reloadData];
+        self.ignoreChange = NO;
+    });
 }
 
 - (void)setSortUser:(IPKUser *)sortUser{
     _sortUser = sortUser;
-    
-	self.fetchedResultsController = nil;
-	[self.tableView reloadData];
-	self.ignoreChange = NO;
+    [self.rankBar setSortUser:sortUser];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.fetchedResultsController = nil;
+        [self.tableView reloadData];
+        self.ignoreChange = NO;
+    });
 	
-	[SSRateLimit executeBlock:[self refresh]
-                         name:[NSString stringWithFormat:@"refresh-list-%@", self.page.remoteID] limit:0.0];
+	[self.tableView.pullToRefreshView triggerRefresh];
 }
 
 //-(UITableView*)tableView{
@@ -103,6 +104,7 @@
     [self.tableView setAllowsSelectionDuringEditing:YES];
 //	self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake([CDIAddTaskView height], 0.0f, 0.0f, 0.0f);
 	self.pullToRefreshView.bottomBorderColor = [UIColor colorWithWhite:0.8f alpha:1.0f];
+    self.tableView.showsInfiniteScrolling = NO;
     [self.tableView setFrame:CGRectMake(15, 165, 290, [UIScreen mainScreen].bounds.size.height-264)];
     [self.tableView.layer setCornerRadius:3.0];
     [self.tableView setClipsToBounds:YES];
@@ -110,16 +112,24 @@
     [self.tableView setSeparatorColor:[UIColor colorWithHexString:@"cccccc"]];
     self.tableView.layer.borderWidth = 1;
 //	self.noContentView = [[CDINoTasksView alloc] initWithFrame:CGRectZero];
+    
     self.headerView = [[IPIPageTableViewHeader alloc] initWithFrame:CGRectMake(0, 0, 320, 150)];
     [self.headerView setDelegate:self];
     [self.view addSubview:self.headerView];
+    
+    self.rankBar = [[IPIRankBar alloc] initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height - 50 - 44 - 20, 320, 50)];
+    [self.rankBar setDelegate:self];
+    [self.view addSubview:self.rankBar];
+    
     [self.view setBackgroundColor:[UIColor standardBackgroundColor]];
+    [self setSortUser:self.sortUser];
+    [self setPage:self.page];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self setEditing:YES animated:YES];
-    [SSRateLimit executeBlock:[self refresh] name:[NSString stringWithFormat:@"refresh-list-%@", self.page.remoteID] limit:0.0];
+//    [self setEditing:YES animated:YES];
+    [self.tableView.pullToRefreshView triggerRefresh];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -141,7 +151,7 @@
 #pragma mark - SSManagedViewController
 
 + (Class)fetchedResultsControllerClass {
-	return [SSFilterableFetchedResultsController class];
+	return [NSFetchedResultsController class];
 }
 
 
@@ -154,12 +164,18 @@
     if (self.sortUser) {
         return [NSPredicate predicateWithFormat:@"team_id == %@ && owner_id == %@", self.page.remoteID, self.sortUser.remoteID];
     }else{
-        return [NSPredicate predicateWithFormat:@"team_id == %@", self.page.remoteID];
+        return [NSPredicate predicateWithFormat:@"team_id == %@ && pollaverage == %@", self.page.remoteID, @(YES)];
     }
 }
 
 -(NSString*)sortDescriptors{
     return @"position";
+}
+
+#pragma mark - IPICollaboratorRankingsDelegate
+
+-(void)didSelectUser:(IPKUser*)sortUser{
+    [self setSortUser:sortUser];
 }
 
 
@@ -220,14 +236,23 @@
         self.loading = YES;
 
         NSString * pageIDString = [NSString stringWithFormat:@"%@", self.page.remoteID];
-        [[IPKHTTPClient sharedClient] getProvidersForPageWithId:pageIDString sortUser:nil success:^(AFJSONRequestOperation *operation, id responseObject) {
+        IPKUser * sortUser = self.sortUser ? self.sortUser : nil;
+        self.ignoreChange = YES;
+        [[IPKHTTPClient sharedClient] getProvidersForPageWithId:pageIDString sortUser:sortUser success:^(AFJSONRequestOperation *operation, id responseObject) {
+            if ([responseObject objectForKey:@"errors"]) {
+                NSLog(@"%@", responseObject);
+            }
+            self.fetchedResultsController = nil;
             dispatch_async(dispatch_get_main_queue(), ^{
-                self.loading = NO;
-                self.fetchedResultsController = nil;
                 [self.tableView reloadData];
+                self.loading = NO;
+                self.ignoreChange = NO;
             });
         } failure:^(AFJSONRequestOperation *operation, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
+                SSHUDView * hud = [[SSHUDView alloc] initWithTitle:@"Page is private"];
+                [hud show];
+                [hud failAndDismissWithTitle:@"Page is private"];
                 [SSRateLimit resetLimitForName:[NSString stringWithFormat:@"refresh-list-%@", self.page.remoteID]];
                 self.loading = NO;
             });
@@ -374,81 +399,60 @@
 
 #pragma mark - UIScrollViewDelegate
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-	if ([self showingCoverView]) {
-//		[self.addTaskView.textField resignFirstResponder];
-	}
-	
-	[super scrollViewDidScroll:scrollView];
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    prevContentOffset = scrollView.contentOffset.y;
+//    [_fullScreenDelegate scrollViewWillBeginDragging:scrollView];
 }
 
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    if (prevContentOffset < scrollView.contentOffset.y) {
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:0.3];
+        CGRect rankFrame = self.rankBar.frame;
+        rankFrame.origin.y = [UIScreen mainScreen].bounds.size.height;
+        self.rankBar.frame = rankFrame;
+        [UIView commitAnimations];
+    }else{
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:0.3];
+        CGRect rankFrame = self.rankBar.frame;
+        rankFrame.origin.y = [UIScreen mainScreen].bounds.size.height - rankFrame.size.height - 44 - 20;
+        self.rankBar.frame = rankFrame;
+        [UIView commitAnimations];
+    }
+}
 
-#pragma mark - CDIAddTaskViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    //    LOG_INT(self.tableView.tracking);
+    //    LOG_INT(self.tableView.dragging);
+    //    LOG_INT(self.tableView.decelerating);
+    
+//    [_fullScreenDelegate scrollViewDidScroll:scrollView];
+    
 
-//- (void)addTaskView:(CDIAddTaskView *)addTaskView didReturnWithTitle:(NSString *)title {
-//	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-//		dispatch_semaphore_wait(_createTaskSemaphore, DISPATCH_TIME_FOREVER);
-//		dispatch_async(dispatch_get_main_queue(), ^{
-//			CDIAddTaskAnimationView *animation = [[CDIAddTaskAnimationView alloc] initWithFrame:self.view.bounds];
-//			animation.title = title;
-//			[self.view addSubview:animation];
-//			
-//			self.ignoreChange = YES;
-//			
-//			NSInteger numberOfRows = [self.tableView numberOfRowsInSection:0];
-//			NSIndexPath *indexPath = [NSIndexPath indexPathForRow:numberOfRows inSection:0];
-//			
-//			CDKTask *task = [[CDKTask alloc] init];
-//			task.text = title;
-//			task.displayText = title;
-//			task.list = self.list;
-//			task.position = [NSNumber numberWithInteger:self.list.highestPosition + 1];
-//			
-//			CGPoint point = CGPointZero;
-//			if (numberOfRows > 0) {
-//				CGRect rect = [self.tableView rectForRowAtIndexPath:[NSIndexPath indexPathForRow:numberOfRows - 1 inSection:0]];
-//				point = rect.origin;
-//				point.y += rect.size.height;
-//			} else {
-//				point.y = [CDIAddTaskView height];
-//			}
-//			
-//			[animation animationToPoint:point height:self.tableView.bounds.size.height insertTask:^{
-//				[self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
-//				self.ignoreChange = NO;
-//			} completion:^{		
-//				[animation removeFromSuperview];
-//				dispatch_semaphore_signal(_createTaskSemaphore);
-//			}];
-//			
-//			[task createWithSuccess:nil failure:^(AFJSONRequestOperation *remoteOperation, NSError *error) {
-//				dispatch_async(dispatch_get_main_queue(), ^{
-//					addTaskView.textField.text = title;
-//					SSHUDView *hud = [[SSHUDView alloc] init];
-//					[hud failQuicklyWithTitle:@"Failed to create task"];
-//				});
-//			}];
-//		});
-//	});
-//}
-//
-//
-//- (void)addTaskViewDidBeginEditing:(CDIAddTaskView *)addTaskView {
-//	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-//		[self showCoverView];
-//	}
-//}
-//
-//
-//- (void)addTaskViewDidEndEditing:(CDIAddTaskView *)addTaskView {
-//	[self hideCoverView];
-//}
-//
-//
-//- (void)addTaskViewShouldCloseTag:(CDIAddTaskView *)addTaskView; {
-//	self.currentTag = nil;
-//}
+}
 
+- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView
+{
+    return YES;
+}
+
+- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView
+{
+//    [_fullScreenDelegate scrollViewDidScrollToTop:scrollView];
+}
+
+#pragma mark - IPIRankBarDelegate
+
+-(void)didSelectRankingSwitch{
+    IPICollaboratorRankingsViewController * collaboratorRankingsViewController = [[IPICollaboratorRankingsViewController alloc] init];
+    [collaboratorRankingsViewController setPage:self.page];
+    [collaboratorRankingsViewController setDelegate:self];
+    UINavigationController * collabNavController = [[UINavigationController alloc] initWithRootViewController:collaboratorRankingsViewController];
+    [(UIViewController*)self.delegate presentModalViewController:collabNavController animated:YES];
+}
 
 #pragma mark - TTTAttributedLabelDelegate
 

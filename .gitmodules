@@ -82,3 +82,6 @@
 [submodule "Vendor/Development/iOS-HierarchyViewer"]
 	path = Vendor/Development/iOS-HierarchyViewer
 	url = git://github.com/glock45/iOS-Hierarchy-Viewer.git
+[submodule "Vendor/Production/NYXImagesKit"]
+	path = Vendor/Production/NYXImagesKit
+	url = git://github.com/Nyx0uf/NYXImagesKit.git

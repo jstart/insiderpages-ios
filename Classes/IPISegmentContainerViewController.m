@@ -44,13 +44,19 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setTitleVerticalPositionAdjustment:2 forBarMetrics:UIBarMetricsDefault];
-
-    [self.pageViewController setPage:self.page];
-    [self.pageViewController setSortUser:self.sortUser];
-    [self.pageDisqusViewController setPage:self.page];
-    [self.pageDisqusViewController setSortUser:self.sortUser];
 }
 
+-(void)setSortUser:(IPKUser *)sortUser{
+    _sortUser = sortUser;
+    [self.pageViewController setSortUser:sortUser];
+    [self.pageDisqusViewController setSortUser:sortUser];
+}
+
+-(void)setPage:(IPKPage *)page{
+    _page = page;
+    [self.pageViewController setPage:page];
+    [self.pageDisqusViewController setPage:page];
+}
 #pragma mark - IPIBasePageSegmentDelegate
 
 -(void)didSelectProvider:(IPKProvider*)provider{

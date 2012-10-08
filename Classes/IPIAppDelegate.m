@@ -58,6 +58,7 @@
 	#endif
     [IPKHTTPClient setDevelopmentModeEnabled:YES];
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"InsiderPages.sqlite"];
+//    NSLog(@"%@",[[NSManagedObjectContext MR_contextForCurrentThread] persistentStoreCoordinator].managedObjectModel.entities);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDataModelChange:) name:NSManagedObjectContextObjectsDidChangeNotification object:[NSManagedObjectContext MR_contextForCurrentThread]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDataModelChange:) name:NSManagedObjectContextDidSaveNotification object:[NSManagedObjectContext MR_contextForCurrentThread]];
     [[NSManagedObjectContext MR_contextForCurrentThread] setMergePolicy:NSOverwriteMergePolicy];
@@ -154,7 +155,6 @@
     for (NSInteger i = [updates count]-1; i >= 0; i--) {
         [[[NSManagedObjectContext MR_contextForCurrentThread] objectWithID:[[updates objectAtIndex:i] objectID]] willAccessValueForKey:nil];
     }
-    [[NSManagedObjectContext MR_contextForCurrentThread] mergeChangesFromContextDidSaveNotification:note];
     
     [[NSManagedObjectContext MR_contextForCurrentThread] mergeChangesFromContextDidSaveNotification:note];
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveErrorHandler:^(NSError *error){

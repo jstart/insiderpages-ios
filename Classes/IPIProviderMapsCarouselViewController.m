@@ -78,7 +78,7 @@
     if (self.sortUser) {
         return [NSPredicate predicateWithFormat:@"team_id == %@ && owner_id == %@", self.page.remoteID, self.sortUser.remoteID];
     }else{
-        return [NSPredicate predicateWithFormat:@"team_id == %@", self.page.remoteID];
+        return [NSPredicate predicateWithFormat:@"team_id == %@ && pollaverage == %@", self.page.remoteID, @(YES)];
     }
 }
 

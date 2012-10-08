@@ -94,6 +94,15 @@
     return height;
 }
 
++(Class)cellClassForActivity:(IPKActivity*)activity{
+    if ([activity trackableType] == IPKTrackableTypeProvider || [activity trackableType] == IPKTrackableTypeCgListing){
+        return [IPIMiniPageActivityCell class];
+    }else if ([activity trackableType] == IPKTrackableTypeUser){
+        return [IPIUserActivityCell class];
+    }
+    return [IPIActivityTableViewCell class];
+}
+
 +(Class)headerViewClassForActivity:(IPKActivity*)activity{
     if ([activity trackableType] == IPKTrackableTypeProvider || [activity trackableType] == IPKTrackableTypeCgListing){
         return [IPIMiniPageActivityCell class];
