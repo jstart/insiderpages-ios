@@ -46,23 +46,25 @@ static CGFloat prevContentOffset = 0;
     [_page.owner addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionNew context:context];
     [_page addObserver:self forKeyPath:@"is_favorite" options:NSKeyValueObservingOptionNew context:context];
     [_page addObserver:self forKeyPath:@"is_following" options:NSKeyValueObservingOptionNew context:context];
-    [_page updateWithSuccess:^(){
-
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.headerView setPage:_page];
-            [self.headerView setNeedsDisplay];
-            [self.tableView.infiniteScrollingView triggerRefresh];
-        });
-        if ([_page.owner isEqual:[IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]]] || [_page.privacy_setting isEqualToNumber:@(0)] || _page.is_collaborator) {
-            [self.tabButton setImage:[UIImage imageNamed:@"rank_tab"] forState:UIControlStateNormal];
-        }else{
-            [self.tabButton setImage:[UIImage imageNamed:@"locked_tab"] forState:UIControlStateNormal];
-            [self.tabButton setUserInteractionEnabled:NO];
-        }
-    } failure:^(AFJSONRequestOperation * op, NSError * err){
-        
-    }];
-
+    if (page.name == nil) {
+        [_page updateWithSuccess:^(){
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.headerView setPage:_page];
+                [self.headerView setNeedsDisplay];
+                [self.tableView.infiniteScrollingView triggerRefresh];
+            });
+            if ([_page.owner isEqual:[IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]]] || [_page.privacy_setting isEqualToNumber:@(0)] || _page.is_collaborator) {
+                [self.tabButton setImage:[UIImage imageNamed:@"rank_tab"] forState:UIControlStateNormal];
+            }else{
+                [self.tabButton setImage:[UIImage imageNamed:@"locked_tab"] forState:UIControlStateNormal];
+                [self.tabButton setUserInteractionEnabled:NO];
+            }
+        } failure:^(AFJSONRequestOperation * op, NSError * err){
+            
+        }];
+    }
+    
 //	self.ignoreChange = YES;
     
     if ([_page.owner isEqual:[IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]]] || [_page.privacy_setting isEqualToNumber:@(0)] || _page.is_collaborator) {

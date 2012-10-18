@@ -46,23 +46,25 @@
     MKMapRect mapRect = MKMapRectMake(coordinate.latitude, coordinate.longitude, 100, 100);
     [self.mapView setVisibleMapRect:mapRect animated:YES];
     [self.mapView setCenterCoordinate:CLLocationCoordinate2DMake([self.provider.address.lat doubleValue], [self.provider.address.lng doubleValue]) animated:YES];
-    [provider updateWithSuccess:^(){
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.pagesCarousel setProvider:provider];
-            self.title = self.provider.full_name;
-            [self.headerView setProvider:self.provider];
-            MKPointAnnotation * point = [[MKPointAnnotation alloc] init];
-            CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([self.provider.address.lat doubleValue], [self.provider.address.lng doubleValue]);
-            [point setCoordinate:coordinate];
-            [self.mapView addAnnotation:point];
+    if (provider.full_name == nil) {
+        [provider updateWithSuccess:^(){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.pagesCarousel setProvider:provider];
+                self.title = self.provider.full_name;
+                [self.headerView setProvider:self.provider];
+                MKPointAnnotation * point = [[MKPointAnnotation alloc] init];
+                CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([self.provider.address.lat doubleValue], [self.provider.address.lng doubleValue]);
+                [point setCoordinate:coordinate];
+                [self.mapView addAnnotation:point];
+                
+                MKMapRect mapRect = MKMapRectMake(coordinate.latitude, coordinate.longitude, 100, 100);
+                [self.mapView setVisibleMapRect:mapRect animated:YES];
+                [self.mapView setCenterCoordinate:CLLocationCoordinate2DMake([self.provider.address.lat doubleValue], [self.provider.address.lng doubleValue]) animated:YES];
+            });
+        } failure:^(AFJSONRequestOperation * op, NSError * err){
             
-            MKMapRect mapRect = MKMapRectMake(coordinate.latitude, coordinate.longitude, 100, 100);
-            [self.mapView setVisibleMapRect:mapRect animated:YES];
-            [self.mapView setCenterCoordinate:CLLocationCoordinate2DMake([self.provider.address.lat doubleValue], [self.provider.address.lng doubleValue]) animated:YES];
-        });
-    } failure:^(AFJSONRequestOperation * op, NSError * err){
-        
-    }];
+        }];
+    }
 }
 
 #pragma mark - UIViewController

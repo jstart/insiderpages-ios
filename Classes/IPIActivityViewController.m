@@ -91,7 +91,6 @@
     [[self view] addSubview:self.tabBar];
 //	self.noContentView = [[CDINoListsView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundView.backgroundColor = [UIColor standardBackgroundColor];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_currentUserDidChange:) name:kIPKCurrentUserChangedNotificationName object:nil];
     
 	_fullScreenDelegate = [[YIFullScreenScroll alloc] initWithViewController:self];
     _fullScreenDelegate.shouldShowUIBarsOnScrollUp = YES;
@@ -106,6 +105,8 @@
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [_fullScreenDelegate layoutTabBarController];
     [self.navigationController.navigationBar setTitleVerticalPositionAdjustment:2 forBarMetrics:UIBarMetricsDefault];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_currentUserDidChange:) name:kIPKCurrentUserChangedNotificationName object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_currentUserDidChange:) name:@"Logged In" object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
