@@ -7,9 +7,7 @@
 #import <MapKit/MapKit.h>
 #import <AddressBook/AddressBook.h>
 #import "IPIBookmarkBaseViewController.h"
-#import "iCarousel.h"
 #import "IPIProviderPagesCarouselViewController.h"
-#import "IPIProviderScoopsCarouselViewController.h"
 
 @class IPKProvider;
 @class IPIProviderViewHeader;
@@ -20,6 +18,5 @@
 @property (nonatomic, strong) MKMapView * mapView;
 @property (nonatomic, strong) IPIProviderViewHeader * headerView;
 @property (nonatomic, strong) IPIProviderPagesCarouselViewController * pagesCarousel;
-@property (nonatomic, strong) IPIProviderScoopsCarouselViewController * scoopsCarousel;
 
 @end

@@ -1,5 +1,5 @@
 //
-//  IPIProviderScoopsCarouselViewController.m
+//  IPIProviderMapsCarouselViewController.m
 //
 
 #import "IPIProviderMapsCarouselViewController.h"
@@ -12,9 +12,10 @@
 
 - (id)init {
 	if ((self = [super init])) {
-        self.carousel.frame = CGRectMake(0, 0, 320, 115);
+        self.carousel.frame = CGRectMake(0, 0, 320, 90);
         [self.carousel setContentOffset:CGSizeMake(0, 0)];
         [self.carousel setCurrentItemIndex:0];
+        [self.carousel setBounceDistance:0.05];
     }
 	return self;
 }
@@ -124,7 +125,7 @@
 //        return [self loadingViewWithFrame:CGRectMake(0, 0, 250, 150)];
 //    }
     if (view == nil) {
-        IPIProviderMapCarouselView * newView = [[IPIProviderMapCarouselView alloc] initWithFrame:CGRectMake(0, 0, 260, 115)];
+        IPIProviderMapCarouselView * newView = [[IPIProviderMapCarouselView alloc] initWithFrame:CGRectMake(0, 0, 290, 90)];
         IPKProvider * provider = ((IPKTeamMembership*)[self.fetchedResultsController.fetchedObjects objectAtIndex:index]).listing;
         [newView setProvider:provider];
         return newView;
@@ -139,9 +140,7 @@
 
 - (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel{
     //override to stop loading cells from being added
-    if (self.delegate) {
-        [self.delegate pageChanged];
-    }
+
 }
 
 - (void)carouselWillBeginScrollingAnimation:(iCarousel *)carousel{
@@ -149,7 +148,9 @@
 }
 
 - (void)carouselDidEndScrollingAnimation:(iCarousel *)carousel{
-    
+    if (self.delegate) {
+        [self.delegate pageChanged];
+    }
 }
 
 - (void)carouselDidScroll:(iCarousel *)carousel{
@@ -169,7 +170,7 @@
 }
 
 - (void)carouselDidEndDecelerating:(iCarousel *)carousel{
-    
+
 }
 
 - (BOOL)carousel:(iCarousel *)carousel shouldSelectItemAtIndex:(NSInteger)index{
@@ -181,7 +182,7 @@
 }
 
 - (CGFloat)carouselItemWidth:(iCarousel *)carousel{
-    return 280;
+    return 300;
 }
 
 

@@ -32,7 +32,6 @@ static NSMutableDictionary * queueDictionary;
     NSURL *profileImageViewURL = [NSURL URLWithString:URLString];
     NSString * cacheKey = [NSString stringWithFormat:@"%@-%@-%@", URLString, NSStringFromCGSize(size), @"rasterized"];
     [[self queueForKey:cacheKey] cancelAllOperations];
-
     UIImage * cachedImage = [[Nimbus imageMemoryCache] objectWithName:cacheKey];
     if (cachedImage) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -50,9 +49,7 @@ static NSMutableDictionary * queueDictionary;
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.image = rasterizedImage;
             });
-            dispatch_async(dispatch_get_current_queue(), ^{
-                [[Nimbus imageMemoryCache] storeObject:rasterizedImage withName:cacheKey];
-            });
+            [[Nimbus imageMemoryCache] storeObject:rasterizedImage withName:cacheKey expiresAfter:[NSDate dateWithTimeIntervalSinceNow:3600]];
         }];
     }
 }
@@ -61,7 +58,6 @@ static NSMutableDictionary * queueDictionary;
     NSURL *profileImageViewURL = [NSURL URLWithString:URLString];
     NSString * cacheKey = [NSString stringWithFormat:@"%@-%@-%@", URLString, NSStringFromCGSize(size), ((UILabel*)subviews[1]).text];
     [[self queueForKey:cacheKey] cancelAllOperations];
-
     UIImage * cachedImage = [[Nimbus imageMemoryCache] objectWithName:cacheKey];
     if (cachedImage) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -82,9 +78,7 @@ static NSMutableDictionary * queueDictionary;
                 self.image = rasterizedImage;
                 [self addSubview:subviews[1]];
             });
-            dispatch_async(dispatch_get_current_queue(), ^{
-                [[Nimbus imageMemoryCache] storeObject:rasterizedImage withName:cacheKey];
-            });
+            [[Nimbus imageMemoryCache] storeObject:rasterizedImage withName:cacheKey expiresAfter:[NSDate dateWithTimeIntervalSinceNow:3600]];
         }];
     }
 }

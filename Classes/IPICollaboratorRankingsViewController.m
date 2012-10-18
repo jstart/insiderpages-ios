@@ -31,21 +31,14 @@
 	[super viewDidLoad];
     self.title = @"Insiders";
     
-    UIView * cancelView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 32, 22)];
-    UIButton * cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 0, 22, 22)];
+    UIView * cancelView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    UIButton * cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    [cancelButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
     [cancelButton setImage:[UIImage imageNamed:@"cancel_button"] forState:UIControlStateNormal];
     [cancelButton addTarget:self action:@selector(close) forControlEvents:UIControlEventTouchUpInside];
     [cancelView addSubview:cancelButton];
     UIBarButtonItem * cancelButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelView];
     self.navigationItem.leftBarButtonItem = cancelButtonItem;
-    
-    UIView * addView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 32, 22)];
-    UIButton * addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
-    [addButton setImage:[UIImage imageNamed:@"add_page_button"] forState:UIControlStateNormal];
-    [addButton addTarget:self action:@selector(new) forControlEvents:UIControlEventTouchUpInside];
-    [addView addSubview:addButton];
-    UIBarButtonItem * addButtonItem = [[UIBarButtonItem alloc] initWithCustomView:addView];
-    self.navigationItem.rightBarButtonItem = addButtonItem;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -62,6 +55,21 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
 	return toInterfaceOrientation == UIInterfaceOrientationPortrait;
+}
+
+-(void)setPage:(IPKPage *)page{
+    _page = page;
+    if ([page.owner isEqual:[IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]]]) {
+        UIView * addView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 32, 22)];
+        UIButton * addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
+        [addButton setImage:[UIImage imageNamed:@"add_page_button"] forState:UIControlStateNormal];
+        [addButton addTarget:self action:@selector(new) forControlEvents:UIControlEventTouchUpInside];
+        [addView addSubview:addButton];
+        UIBarButtonItem * addButtonItem = [[UIBarButtonItem alloc] initWithCustomView:addView];
+        self.navigationItem.rightBarButtonItem = addButtonItem;
+    }else{
+        self.navigationItem.rightBarButtonItem = nil;
+    }
 }
 
 -(void)new{

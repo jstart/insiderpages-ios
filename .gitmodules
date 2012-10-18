@@ -85,3 +85,9 @@
 [submodule "Vendor/Production/NYXImagesKit"]
 	path = Vendor/Production/NYXImagesKit
 	url = git://github.com/Nyx0uf/NYXImagesKit.git
+[submodule "Vendor/Production/PSTCollectionView"]
+	path = Vendor/Production/PSTCollectionView
+	url = git://github.com/steipete/PSTCollectionView.git
+[submodule "Vendor/Production/iCarousel"]
+	path = Vendor/Production/iCarousel
+	url = git://github.com/nicklockwood/iCarousel.git

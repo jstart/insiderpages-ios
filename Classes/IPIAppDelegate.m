@@ -17,18 +17,18 @@
 #import "UIViewController+KNSemiModal.h"
 #import "IPISocialShareHelper.h"
 #import "UIColor-Expanded.h"
+#import "IPIPushNotificationRouter.h"
 //#import "iOSHierarchyViewer.h"
 
 #import "SDURLCache.h"
 #import "UIResponder+KeyboardCache.h"
 #import "UIFont+InsiderPagesiOSAdditions.h"
-#import "LocalyticsUtilities.h"
 #import "UISS.h"
 #import "UISSStatusWindow.h"
 #import "AFHTTPRequestOperationLogger.h"
 
 #import <Crashlytics/Crashlytics.h>
- #if TARGET_IPHONE_SIMULATOR
+#if TARGET_IPHONE_SIMULATOR
     #import "DCIntrospect.h"
     #import <PonyDebugger/PonyDebugger.h>
 #endif
@@ -51,17 +51,18 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
 	// Configure analytics
-	// If you don't work at Nothing Magical, you shouldn't turn these on.
 	[Crashlytics startWithAPIKey:@"ff6f76d45da103570f8070443d1760ea5199fc81"];
 	#ifdef INSIDER_PAGES_LOCALYTICS_KEY
 	LLStartSession(CHEDDAR_LOCALYTICS_KEY);
 	#endif
-    [IPKHTTPClient setDevelopmentModeEnabled:YES];
+    NSString *baseAPIHost = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"baseAPIHost"];
+    [IPKHTTPClient setBaseAPIHost:baseAPIHost];
+    
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"InsiderPages.sqlite"];
 //    NSLog(@"%@",[[NSManagedObjectContext MR_contextForCurrentThread] persistentStoreCoordinator].managedObjectModel.entities);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDataModelChange:) name:NSManagedObjectContextObjectsDidChangeNotification object:[NSManagedObjectContext MR_contextForCurrentThread]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDataModelChange:) name:NSManagedObjectContextDidSaveNotification object:[NSManagedObjectContext MR_contextForCurrentThread]];
-    [[NSManagedObjectContext MR_contextForCurrentThread] setMergePolicy:NSOverwriteMergePolicy];
+    [[NSManagedObjectContext MR_contextForCurrentThread] setMergePolicy:NSErrorMergePolicy];
     
 #define TESTING 0
 #ifdef TESTING
@@ -136,24 +137,37 @@
 
 - (void)handleDataModelChange:(NSNotification *)note
 {
-//    NSSet *updatedObjects = [[note userInfo] objectForKey:NSUpdatedObjectsKey];
-//    NSSet *deletedObjects = [[note userInfo] objectForKey:NSDeletedObjectsKey];
-//    NSSet *insertedObjects = [[note userInfo] objectForKey:NSInsertedObjectsKey];
-    
-    // Do something in response to this
-//    if (updatedObjects)
-//        NSLog(@"Updated: %d", updatedObjects.count);
-//    if (deletedObjects)
+    NSSet *updatedObjects = [[note userInfo] objectForKey:NSUpdatedObjectsKey];
+    NSSet *deletedObjects = [[note userInfo] objectForKey:NSDeletedObjectsKey];
+    NSSet *insertedObjects = [[note userInfo] objectForKey:NSInsertedObjectsKey];
+  
+  // Do something in response to this
+    if (updatedObjects.count > 0){
+//        NSLog(@"Updated: %d Objects: %@", updatedObjects.count, updatedObjects);
+        for (id object in updatedObjects) {
+            if ([object isKindOfClass:[IPKTeamMembership class]]) {
+                IPKTeamMembership * tm = object;
+                NSLog(@"Updated: %@ at: %@", tm.listing.full_name, tm.position);
+            }
+        }
+    }
+    if (deletedObjects.count > 0){
 //        NSLog(@"Deleted: %d Objects: %@", deletedObjects.count, deletedObjects);
-//    if (insertedObjects)
-//        NSLog(@"Inserted: %d", insertedObjects.count);
+    }
+    if (insertedObjects.count > 0){
+//        NSLog(@"Inserted: %d Objects: %@", insertedObjects.count, insertedObjects);
+    }
     // This ensures no updated object is fault, which would cause the NSFetchedResultsController updates to fail.
     // http://www.mlsite.net/blog/?p=518
     
-    NSArray* updates = [[note.userInfo objectForKey:@"updated"] allObjects];
-    
-    for (NSInteger i = [updates count]-1; i >= 0; i--) {
+    NSMutableArray* updates = [[updatedObjects allObjects] mutableCopy];
+    [updates addObjectsFromArray:[deletedObjects allObjects]];
+    [updates addObjectsFromArray:[insertedObjects allObjects]];
+
+    for (NSInteger i = 0; i > 0; i++) {
         [[[NSManagedObjectContext MR_contextForCurrentThread] objectWithID:[[updates objectAtIndex:i] objectID]] willAccessValueForKey:nil];
+            IPKTeamMembership * tm = [updates objectAtIndex:i];
+            NSLog(@"%@", tm);
     }
     
     [[NSManagedObjectContext MR_contextForCurrentThread] mergeChangesFromContextDidSaveNotification:note];
@@ -200,6 +214,7 @@
                     [hud completeAndDismissWithTitle:@"Successfully Logged In"];
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"Logged In" object:nil];
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"IPCurrentUserChangedNotification" object:nil];
+                    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound)];
                 });
             }else{
                 [self storeCookies];
@@ -207,6 +222,7 @@
                     [hud completeAndDismissWithTitle:@"Successfully Registered"];
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"Logged In" object:nil];
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"IPCurrentUserChangedNotification" object:nil];
+                    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound)];
                 });
             }
         } failure:^(AFJSONRequestOperation *operation, NSError *error) {
@@ -368,8 +384,47 @@
     }
 }
 
-- (void)applicationWillEnterForeground:(UIApplication *)application {
+- (void)application:(UIApplication *)application
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    NSLog(@"application:didRegisterForRemoteNotificationsWithDeviceToken: %@", deviceToken);
+    NSUUID* uuid = [NSUUID UUID];
+    NSString * uuidString = [uuid UUIDString];
+    [[IPKHTTPClient sharedClient] registerForNotificationsWithToken:(NSString*)deviceToken uuid:uuidString success:^(AFJSONRequestOperation *operation, id responseObject) {
+        
+        } failure:^(AFJSONRequestOperation* operation, NSError* error){
+        
+        }
+    ];
+    // Register the device token with a webservice
+}
+
+-(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+    NSLog(@"application:didFailToRegisterForRemoteNotificationsWithError: %@", error);
     
+}
+
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+    NSLog(@"application:didReceiveRemoteNotification: %@", userInfo);
+    if (application.applicationState != UIApplicationStateActive) {
+        UIViewController * pushViewController = [IPIPushNotificationRouter viewControllerForPushNotificationResponse:userInfo];
+    //    UINavigationController * navigationControllerWrapper = [[UINavigationController alloc] initWithRootViewController:pushViewController];
+    //    [self.window.rootViewController presentModalViewController:navigationControllerWrapper animated:YES];
+        [((UINavigationController*)((IIViewDeckController*)((UINavigationController*)self.window.rootViewController).topViewController).centerController) pushViewController:pushViewController animated:YES];
+    }else{
+        //update notification ribbon
+        [[IPKHTTPClient sharedClient] getNotificationsWithCurrentPage:@1 perPage:@10 success:^(AFJSONRequestOperation *operation, id responseObject) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"updateNotificationNumber" object:nil];
+            });
+        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+            
+        }];
+    }
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application {
+    application.applicationIconBadgeNumber = 0;
 }
 
 

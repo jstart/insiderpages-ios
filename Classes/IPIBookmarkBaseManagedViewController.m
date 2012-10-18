@@ -30,14 +30,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
-    UIImageView * customBackImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"backbutton.png"]];
-    
-    UIView * customBackButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, customBackImageView.frame.size.width + 10, customBackImageView.frame.size.height + 10)];
+	// Do any additional setup after loading the view.    
+    UIView * customBackButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     
     UIButton * customBackButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [customBackButton setImageEdgeInsets:UIEdgeInsetsMake(0, -9, 0, 0)];
     [customBackButton setImage:[UIImage imageNamed:@"backbutton.png"] forState:UIControlStateNormal];
-    [customBackButton setImageEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
     customBackButton.frame = CGRectMake(0, 0, customBackButtonView.frame.size.width, customBackButtonView.frame.size.height);
     [customBackButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     
@@ -56,7 +54,10 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateNotificationNumber)
+                                                 name:@"updateNotificationNumber"
+                                               object:nil];
     if ( [IPIAppDelegate sharedAppDelegate].bookmarkNavigationController == nil) {
         IPIBookmarkContainerViewController *bookmarkContainerViewController = [[IPIBookmarkContainerViewController alloc] initWithNibName:@"IPIBookmarkContainerViewController" bundle:[NSBundle mainBundle]];
         [IPIAppDelegate sharedAppDelegate].bookmarkNavigationController = [[UINavigationController alloc] initWithRootViewController:bookmarkContainerViewController];
@@ -78,26 +79,43 @@
     
     [v addSubview:button];
     
+    self.notificationCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, 12, 20, 20)];
+    [self.notificationCountLabel setFont:[UIFont fontWithName:@"ArialRoundedMTBold" size:12]];
+    [self.notificationCountLabel setTextAlignment:NSTextAlignmentCenter];
+    [self.notificationCountLabel setBackgroundColor:[UIColor clearColor]];
+    [self.notificationCountLabel setTextColor:[UIColor whiteColor]];
+    [v addSubview:self.notificationCountLabel];
+    
     UIBarButtonItem * bookmarkButton = [[UIBarButtonItem alloc] initWithCustomView:v];
     CGRect frame = [[bookmarkButton customView] frame];
     frame.origin.y = frame.origin.y - 17;
     [bookmarkButton customView].frame = frame;
     self.navigationItem.rightBarButtonItem = bookmarkButton;
+    IPKUser * currentUser = [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]];
+    NSArray * unreadNotificationsArray = [[currentUser.notifications filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"read == NO"]] allObjects];
+    [self.notificationCountLabel setText:[NSString stringWithFormat:@"%d", unreadNotificationsArray.count]];
     
     if ([[self.navigationItem.rightBarButtonItem customView] isHidden]) {
         [self showBookmark];
     }
-    UIBarButtonItem * backBarButtonItem = self.navigationItem.leftBarButtonItem;
-    CGRect backFrame = backBarButtonItem.customView.frame;
-    backFrame.origin.x = 30;
-    backFrame.origin.y = 20;
-    backBarButtonItem.customView.frame = backFrame;
-    
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+-(void)updateNotificationNumber{
+    IPKUser * currentUser = [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]];
+    NSArray * unreadNotificationsArray = [[currentUser.notifications filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"read == NO"]] allObjects];
+    NSLog(@"%@ unread: %@", unreadNotificationsArray, currentUser.notifications);
+    NSLog(@"is read boolean %@", ((IPKNotification*)[unreadNotificationsArray lastObject]).read);
+    [self.notificationCountLabel setText:[NSString stringWithFormat:@"%d", unreadNotificationsArray.count]];
 }
 
 -(void) bookmarkViewWasDismissed:(int)homePageIndex{

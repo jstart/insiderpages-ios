@@ -19,7 +19,6 @@
     if (_activity != activity) {
         _activity = activity;
         self.nameLabel.text = activity.page.name;
-        NSLog(@"%@", self.nameLabel.text);
         NSString *URLString = @"http://studentaffairs.duke.edu/sites/default/files/u60/coffee%20pic.jpeg";
         UIImageView * shadowImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"page_shadow"]];
         CGRect shadowFrame = shadowImageView.frame;

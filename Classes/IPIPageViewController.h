@@ -17,5 +17,6 @@
 @property (nonatomic, strong) IPKUser *sortUser;
 @property (nonatomic, strong) IPIPageTableViewHeader * headerView;
 @property (nonatomic, strong) IPIRankBar * rankBar;
+@property (nonatomic, strong) UIButton * tabButton;
 
 @end

@@ -32,6 +32,7 @@
         [_carousel setDataSource:self];
         [_carousel setContentOffset:CGSizeMake(-15, 0)];
         [_carousel setDelegate:self];
+        [_carousel setClipsToBounds:YES];
     }
     return _carousel;
 }

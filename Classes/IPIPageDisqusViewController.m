@@ -19,6 +19,8 @@
 
 @implementation IPIPageDisqusViewController
 
+@synthesize commentField;
+
 #pragma mark - NSObject
 
 - (id)init {
@@ -29,9 +31,15 @@
         self.providerMapsCarousel = [[IPIProviderMapsCarouselViewController alloc] init];
         self.providerMapsCarousel.delegate = self;
         
-        self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 0, 300, 480) style:UITableViewStyleGrouped];
+        self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 0, 300, [UIScreen mainScreen].bounds.size.height - 20 - 44) style:UITableViewStyleGrouped];
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
+        
+        self.commentField = [[UITextField alloc] initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height-20-30-44, 320, 30)];
+        [self.commentField setDelegate:self];
+        self.commentField.placeholder = @"Post comment";
+        [self.commentField setBorderStyle:UITextBorderStyleRoundedRect];
+        [self.commentField setReturnKeyType:UIReturnKeySend];
     }
 	return self;
 }
@@ -54,14 +62,16 @@
     self.tableView.backgroundView = backgroundView;
     [self.view addSubview:self.tableView];
 
-    UIView * headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 130)];
+    UIView * headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
     headerView.backgroundColor = [UIColor grayColor];
 
 //    [self addChildViewControlxler:self.providerMapsCarousel];
-    self.providerMapsCarousel.view.frame = CGRectMake(0, 10, 320, 115);
+    self.providerMapsCarousel.view.frame = CGRectMake(0, 10, 320, 90);
     [self.providerMapsCarousel.carousel setUserInteractionEnabled:YES];
     [self.view addSubview:self.providerMapsCarousel.view];
     self.tableView.tableHeaderView = headerView;
+    
+    [self.view addSubview:self.commentField];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -92,7 +102,6 @@
 }
 
 -(void)pageChanged{
-    [self.tableView reloadData];
     [self fetchComments];
 }
 
@@ -106,23 +115,24 @@
 //                               NSUTF8StringEncoding];
         NSString * providerType = [provider.listing_type isEqualToString:@"CgListing"] ? @"c": @"p";
         NSString * threadIdentifier = [NSString stringWithFormat:@"/providers/%@/%@/detail/page_id=%@/page_name=%@",providerType, provider.cached_slug, self.page.remoteID, self.page.name];
+        dispatch_async(dispatch_get_main_queue(), ^(){
+            [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+        });
         [IADisquser getCommentsFromThreadIdentifier:threadIdentifier
                                       success:^(NSArray *newComments) {
                                           // get the array of comments, reverse it (oldest comment on top)
                                           if (newComments) {
                                               [self.commentDictionary setObject:[[[newComments reverseObjectEnumerator] allObjects] mutableCopy] forKey:threadIdentifier];
-                                          }
-
-                                          
-                                          // start activity indicator
-                                          [self.tableView setAlpha:1.0];
-                                          
+                                          }                                          
                                           // reload the table
-                                          [self.tableView reloadData];
+                                          dispatch_async(dispatch_get_main_queue(), ^(){
+                                              [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+                                          });
                                       } fail:^(NSError *error) {
                                           // start activity indicator
-                                          [self.tableView setAlpha:1.0];
-                                          [self.tableView reloadData];
+                                          dispatch_async(dispatch_get_main_queue(), ^(){
+                                              [self.tableView reloadData];
+                                          });
                                           // alert the error
 //                                          UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Occured" 
 //                                                                                          message:[error localizedDescription] 
@@ -135,12 +145,52 @@
 
 }
 
+#pragma mark - UITextFieldDelegate
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField { //Keyboard becomes visible
+    self.commentField.frame = CGRectMake(self.commentField.frame.origin.x, self.commentField.frame.origin.y - 217,
+                                  self.commentField.frame.size.width, self.commentField.frame.size.height); //resize
+}
+
+-(void)textFieldDidEndEditing:(UITextField *)textField { //keyboard will hide
+    self.commentField.frame = CGRectMake(self.commentField.frame.origin.x, self.commentField.frame.origin.y + 217,
+                                  self.commentField.frame.size.width, self.commentField.frame.size.height); //resize
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    if ([textField.text isEqualToString:@""]) {
+        return NO;
+    }
+    NSIndexPath * carouselIndexPath = [NSIndexPath indexPathForRow:self.providerMapsCarousel.carousel.currentItemIndex inSection:1];
+    IPKProvider *provider = ((IPKTeamMembership*)[self.providerMapsCarousel.fetchedResultsController.fetchedObjects objectAtIndex:carouselIndexPath.row]).listing;
+    NSString *providerType = [provider.listing_type isEqualToString:@"CgListing"] ? @"c": @"p";
+    NSString *threadIdentifier = [NSString stringWithFormat:@"/providers/%@/%@/detail/page_id=%@/page_name=%@",providerType, provider.cached_slug, self.page.remoteID, self.page.name];
+    
+    IADisqusComment * comment = [[IADisqusComment alloc] init];
+    comment.rawMessage = [textField text];
+    IPKUser * currentUser = [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]];
+    comment.authorName = currentUser.name;
+    comment.authorEmail = currentUser.email;
+    comment.threadIdentifier = threadIdentifier;
+    SSHUDView * hud = [[SSHUDView alloc] initWithTitle:@"Can't post comments yet."];
+    [hud show];
+    [hud failAndDismissWithTitle:@"Can't post comments yet."];
+    [IADisquser postComment:comment success:^() {
+        
+    } fail:^(NSError *error) {
+        
+    }];
+    
+    [textField resignFirstResponder];
+    return YES;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     NSIndexPath * indexPath = [NSIndexPath indexPathForRow:self.providerMapsCarousel.carousel.currentItemIndex inSection:section];
     IPKProvider * provider = nil;
-    if (self.providerMapsCarousel.fetchedResultsController.fetchedObjects.count > indexPath.row) {
+    if (self.providerMapsCarousel.fetchedResultsController.fetchedObjects.count > 0) {
         provider = ((IPKTeamMembership*)[self.providerMapsCarousel.fetchedResultsController.fetchedObjects objectAtIndex:indexPath.row]).listing;
         NSString * providerType = [provider.listing_type isEqualToString:@"CgListing"] ? @"c": @"p";
         NSString * threadIdentifier = [NSString stringWithFormat:@"/providers/%@/%@/detail/page_id=%@/page_name=%@",providerType, provider.cached_slug, self.page.remoteID, self.page.name];
@@ -155,19 +205,31 @@
 // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    IPIDisqusTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"IPIDisqusTableViewCell"];
     if (!cell) {
-        cell = [[IPIDisqusTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+        cell = [[IPIDisqusTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"IPIDisqusTableViewCell"];
     }
     NSIndexPath * carouselIndexPath = [NSIndexPath indexPathForRow:self.providerMapsCarousel.carousel.currentItemIndex inSection:1];
     IPKProvider * provider = nil;
     provider = ((IPKTeamMembership*)[self.providerMapsCarousel.fetchedResultsController.fetchedObjects objectAtIndex:carouselIndexPath.row]).listing;
     NSString * providerType = [provider.listing_type isEqualToString:@"CgListing"] ? @"c": @"p";
     NSString * threadIdentifier = [NSString stringWithFormat:@"/providers/%@/%@/detail/page_id=%@/page_name=%@",providerType, provider.cached_slug, self.page.remoteID, self.page.name];
-    cell.textLabel.text = ((IADisqusComment*)[[[self commentDictionary] objectForKey:threadIdentifier] objectAtIndex:indexPath.row]).rawMessage;
-    cell.detailTextLabel.text = ((IADisqusComment*)[[[self commentDictionary] objectForKey:threadIdentifier] objectAtIndex:indexPath.row]).forumName;
+    IADisqusComment * comment = ((IADisqusComment*)[[[self commentDictionary] objectForKey:threadIdentifier] objectAtIndex:indexPath.row]);
+    [cell setComment:comment];
 
     return cell;
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSIndexPath * carouselIndexPath = [NSIndexPath indexPathForRow:self.providerMapsCarousel.carousel.currentItemIndex inSection:1];
+    IPKProvider * provider = nil;
+    provider = ((IPKTeamMembership*)[self.providerMapsCarousel.fetchedResultsController.fetchedObjects objectAtIndex:carouselIndexPath.row]).listing;
+    NSString * providerType = [provider.listing_type isEqualToString:@"CgListing"] ? @"c": @"p";
+    NSString * threadIdentifier = [NSString stringWithFormat:@"/providers/%@/%@/detail/page_id=%@/page_name=%@",providerType, provider.cached_slug, self.page.remoteID, self.page.name];
+    IADisqusComment * comment = ((IADisqusComment*)[[[self commentDictionary] objectForKey:threadIdentifier] objectAtIndex:indexPath.row]);
+
+    return [IPIDisqusTableViewCell cellHeightForComment:comment];
 }
 
 #pragma mark - UIScrollViewDelegate

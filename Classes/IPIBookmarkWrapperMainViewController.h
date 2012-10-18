@@ -14,6 +14,6 @@
 
 @property (strong, nonatomic) IPIBookmarkMyPagesTableViewController * myPagesTableViewController;
 
-@property (strong, nonatomic) IPIBookmarkNotificationBarViewController * headerViewController;
+@property (strong, nonatomic) IPIBookmarkNotificationBarViewController * footerViewController;
 
 @end

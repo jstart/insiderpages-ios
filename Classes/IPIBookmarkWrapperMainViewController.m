@@ -30,13 +30,10 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    
-    self.parentViewController.parentViewController.title = @"My Pages";
-    
-    self.parentViewController.parentViewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createPage)];
 
-    self.headerViewController = [[IPIBookmarkNotificationBarViewController alloc] initWithNibName:@"IPIBookmarkNotificationBarViewController" bundle:[NSBundle mainBundle]];
-    CGRect headerFrame = self.headerViewController.view.frame;
+    self.footerViewController = [[IPIBookmarkNotificationBarViewController alloc] initWithNibName:@"IPIBookmarkNotificationBarViewController" bundle:[NSBundle mainBundle]];
+    [self addChildViewController:self.footerViewController];
+    CGRect headerFrame = self.footerViewController.view.frame;
     
     self.myPagesTableViewController = [[IPIBookmarkMyPagesTableViewController alloc] initWithNibName:@"IPIBookmarkMyPagesTableViewController" bundle:[NSBundle mainBundle]];
     [self addChildViewController:self.myPagesTableViewController];
@@ -45,13 +42,31 @@
     [[self view] addSubview:self.myPagesTableViewController.view];
     
     headerFrame.origin.y = self.parentViewController.view.frame.size.height - headerFrame.size.height;
-    [self.headerViewController.view setFrame:headerFrame];
-    [[self view] addSubview:self.headerViewController.view];
+    [self.footerViewController.view setFrame:headerFrame];
+    [[self view] addSubview:self.footerViewController.view];
     IPKUser * currentUser = [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]];
+    NSArray * unreadNotificationsArray = [[currentUser.notifications filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"read == NO"]] allObjects];
     if (currentUser) {
-        [self.headerViewController.notificationsButton setTitle:(currentUser.notifications.count > 1 || currentUser.notifications.count == 0) ? [NSString stringWithFormat:@"%d Notifications", currentUser.notifications.count] : [NSString stringWithFormat:@"%d Notification", currentUser.notifications.count] forState:UIControlStateNormal];
-        [self.headerViewController.notificationsButton setTitle:(currentUser.notifications.count > 1 || currentUser.notifications.count == 0) ? [NSString stringWithFormat:@"%d Notifications", currentUser.notifications.count] : [NSString stringWithFormat:@"%d Notification", currentUser.notifications.count] forState:UIControlStateSelected];
+        [self.footerViewController.notificationsButton setTitle:(unreadNotificationsArray.count > 1 || unreadNotificationsArray.count == 0) ? [NSString stringWithFormat:@"%d Notifications", unreadNotificationsArray.count] : [NSString stringWithFormat:@"%d Notification", unreadNotificationsArray.count] forState:UIControlStateNormal];
+        [self.footerViewController.notificationsButton setTitle:(unreadNotificationsArray.count > 1 || unreadNotificationsArray.count == 0) ? [NSString stringWithFormat:@"%d Notifications", unreadNotificationsArray.count] : [NSString stringWithFormat:@"%d Notification", unreadNotificationsArray.count] forState:UIControlStateSelected];
     }
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    self.parentViewController.parentViewController.title = @"My Pages";
+    
+    self.parentViewController.parentViewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createPage)];
+    self.parentViewController.parentViewController.navigationItem.leftBarButtonItem = nil;
+    [[IPKHTTPClient sharedClient] getNotificationsWithCurrentPage:@1 perPage:@10 success:^(AFJSONRequestOperation *operation, id responseObject) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            IPKUser * currentUser = [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]];
+            NSArray * unreadNotificationsArray = [[currentUser.notifications filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"read == NO"]] allObjects];
+            [self.footerViewController.notificationsButton setTitle:(unreadNotificationsArray.count > 1 || unreadNotificationsArray.count == 0) ? [NSString stringWithFormat:@"%d Notifications", unreadNotificationsArray.count] : [NSString stringWithFormat:@"%d Notification", unreadNotificationsArray.count] forState:UIControlStateNormal];
+            [self.footerViewController.notificationsButton setTitle:(unreadNotificationsArray.count > 1 || unreadNotificationsArray.count == 0) ? [NSString stringWithFormat:@"%d Notifications", unreadNotificationsArray.count] : [NSString stringWithFormat:@"%d Notification", unreadNotificationsArray.count] forState:UIControlStateSelected];
+        });
+    } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+    }];
+
 }
 
 - (void)didReceiveMemoryWarning

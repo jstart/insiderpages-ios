@@ -83,8 +83,9 @@
         
         self.pullOutTableViewController = [[IPIPullOutTableViewController alloc] initWithStyle:UITableViewStylePlain];
         [self.pullOutTableViewController.tableView setFrame:CGRectMake(0, 44, 320, [UIScreen mainScreen].bounds.size.height-44)];
-        [self.pullOutTableViewController.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(coverViewTapped:)]];
+//        [self.pullOutTableViewController.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(coverViewTapped:)]];
         [self.view addSubview:self.pullOutTableViewController.tableView];
+        [self addChildViewController:self.pullOutTableViewController];
     }
 
     return self.pullOutTableViewController.tableView;
@@ -565,10 +566,7 @@
         }
             break;
         case 1: {
-            SSHUDView * hud = [[SSHUDView alloc] initWithTitle:@"Place search is broken."];
-            [hud show];
-            [hud failAndDismissWithTitle:@"Place search is iffy."];
-//            [self.searchDisplayController.searchBar setSelectedScopeButtonIndex:0];
+
         }
             break;
         case 2: {

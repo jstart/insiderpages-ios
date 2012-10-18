@@ -3,7 +3,7 @@
 //
 
 #import "IPIBookmarkNotificationsViewController.h"
-#import "IPIPageTableViewCell.h"
+#import "IPINotifcationTableViewCell.h"
 #import "UIColor+InsiderPagesiOSAdditions.h"
 //#import "CDINoListsView.h"
 #import <SSToolkit/UIScrollView+SSToolkitAdditions.h>
@@ -27,21 +27,32 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
+    UIView * customBackButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    
+    UIButton * customBackButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [customBackButton setImageEdgeInsets:UIEdgeInsetsMake(0, -9, 0, 0)];
+    [customBackButton setImage:[UIImage imageNamed:@"backbutton.png"] forState:UIControlStateNormal];
+    customBackButton.frame = CGRectMake(0, 0, customBackButtonView.frame.size.width, customBackButtonView.frame.size.height);
+    [customBackButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    
+    [customBackButtonView addSubview:customBackButton];
+    
+    UIBarButtonItem * backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:customBackButtonView];
+    self.parentViewController.parentViewController.navigationItem.leftBarButtonItem = backBarButtonItem;
 }
 
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
-    UIBarButtonItem * closeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonItemStylePlain target:self action:@selector(close)];
-    [closeButton setTitle:@"Done"];
-    self.navigationItem.leftBarButtonItem = closeButton;
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    self.parentViewController.parentViewController.title = @"Notifications";
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
 
-	[SSRateLimit executeBlock:[self refresh] name:@"refresh-add-to-pages" limit:30.0];
+	[SSRateLimit executeBlock:[self refresh] name:@"refresh-notifications" limit:30.0];
 }
 
 
@@ -49,27 +60,23 @@
 	return toInterfaceOrientation == UIInterfaceOrientationPortrait;
 }
 
--(void)close{
-    [self.presentingViewController dismissModalViewControllerAnimated:YES];
+-(void)back{
+    [((UINavigationController*)self.parentViewController) popViewControllerAnimated:YES];
 }
 
 #pragma mark - SSManagedViewController
 
 - (Class)entityClass {
-	return [IPKPage class];
+	return [IPKNotification class];
 }
 
 
 - (NSPredicate *)predicate {
-	return [NSPredicate predicateWithFormat:@"name != %@ && section_header != %@", @"",@""];
+	return [NSPredicate predicateWithFormat:@"user.remoteID == %@", [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]].remoteID];
 }
 
 -(NSString *)sortDescriptors{
-    return @"section_header";
-}
-
-- (NSString *)sectionNameKeyPath {
-	return @"section_header";
+    return @"updatedAt";
 }
 
 #pragma mark - SSManagedTableViewController
@@ -108,42 +115,15 @@
         }
         
         self.loading = YES;
-        NSString * myUserId = [NSString stringWithFormat:@"%@", [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]].remoteID];
-        [[IPKHTTPClient sharedClient] getPagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
+        [[IPKHTTPClient sharedClient] getNotificationsWithCurrentPage:@1 perPage:@10 success:^(AFJSONRequestOperation *operation, id responseObject) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.loading = NO;
-                [self.fetchedResultsController performFetch:nil];
+                self.fetchedResultsController = nil;
                 [self.tableView reloadData];
             });
         } failure:^(AFJSONRequestOperation *operation, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [SSRateLimit resetLimitForName:@"refresh-mine-pages"];
-                self.loading = NO;
-            });
-        }];
-        
-        [[IPKHTTPClient sharedClient] getFavoritePagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.loading = NO;
-                [self.fetchedResultsController performFetch:nil];
-                [self.tableView reloadData];
-            });
-        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [SSRateLimit resetLimitForName:@"refresh-mine-pages"];
-                self.loading = NO;
-            });
-        }];
-        
-        [[IPKHTTPClient sharedClient] getFollowingPagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.loading = NO;
-                [self.fetchedResultsController performFetch:nil];
-                [self.tableView reloadData];
-            });
-        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [SSRateLimit resetLimitForName:@"refresh-mine-pages"];
+                [SSRateLimit resetLimitForName:@"refresh-notifications"];
                 self.loading = NO;
             });
         }];
@@ -162,12 +142,12 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	static NSString *const cellIdentifier = @"cellIdentifier";
 
-	IPIPageTableViewCell *cell = (IPIPageTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+	IPINotifcationTableViewCell *cell = (IPINotifcationTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 	if (!cell) {
-		cell = [[IPIPageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+		cell = [[IPINotifcationTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
 	}
 	
-	cell.page = [self objectForViewIndexPath:indexPath];
+	cell.notification = [self objectForViewIndexPath:indexPath];
 	
 	return cell;
 }
@@ -176,24 +156,7 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    SSHUDView * hudView = [[SSHUDView alloc] initWithTitle:@"Adding Provider" loading:YES];
-    [hudView show];
-    IPKPage * page = [self objectForViewIndexPath:indexPath];
-    NSString * pageIDString = [NSString stringWithFormat:@"%@", page.remoteID];
-    NSString * providerIDString = [NSString stringWithFormat:@"%@", self.provider.remoteID];
-    [[IPKHTTPClient sharedClient] addProvidersToPageWithId:pageIDString providerId:providerIDString success:^(AFJSONRequestOperation *operation, id responseObject) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.loading = NO;
-            [hudView completeAndDismissWithTitle:@"Provider Added"];
-            [self.presentingViewController dismissModalViewControllerAnimated:YES];
-        });
-    } failure:^(AFJSONRequestOperation *operation, NSError *error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [hudView failAndDismissWithTitle:@"Could not add provider"];
-            [SSRateLimit resetLimitForName:@"refresh-mine-pages"];
-            self.loading = NO;
-        });
-    }];
+
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView{

@@ -18,5 +18,6 @@
 @property (nonatomic, strong) IPKUser * sortUser;
 @property (nonatomic, strong) IPIProviderMapsCarouselViewController * providerMapsCarousel;
 @property (nonatomic, strong) NSMutableDictionary * commentDictionary;
+@property (nonatomic, strong) UITextField * commentField;
 
 @end

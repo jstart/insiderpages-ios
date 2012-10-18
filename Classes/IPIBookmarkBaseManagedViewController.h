@@ -14,6 +14,7 @@
 @interface IPIBookmarkBaseManagedViewController : CDIManagedTableViewController <IPIBookmarkViewDelegate>
 
 @property (strong, nonatomic) UINavigationController* bookmarkNavigationController;
+@property (strong, nonatomic) UILabel * notificationCountLabel;
 
 -(void)hideBookmark;
 -(void)showBookmark;

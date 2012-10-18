@@ -196,6 +196,7 @@
     self.fetchedResultsController = nil;
     [[self tableView] reloadData];
 }
+
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
     [((SSFilterableFetchedResultsController*)self.fetchedResultsController) addFilterPredicate:^BOOL(id obj) {
                 return ([[((IPKPage *)obj) name] rangeOfString:searchText].location != NSNotFound);} forKey:searchText];

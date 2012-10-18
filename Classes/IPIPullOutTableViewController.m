@@ -12,6 +12,9 @@
 #import "IPIPullOutLogoCell.h"
 #import "UIColor+InsiderPagesiOSAdditions.h"
 #import "UIColor-Expanded.h"
+#import "IIViewDeckController.h"
+
+#import "IPIActivityViewController.h"
 
 @interface IPIPullOutTableViewController ()
 
@@ -83,7 +86,10 @@
             [cell addSubview:bottomView];
 //            cell.detailTextLabel.text = NSLocalizedString(@"T.A.R.D.I.S.", @"T.A.R.D.I.S.");
         } whenSelected:^(NSIndexPath *indexPath) {
-            //            [self.navigationController pushViewController:[[WifiViewController alloc] init] animated:YES];
+            [self.parentViewController.viewDeckController closeLeftViewAnimated:YES completion:^(IIViewDeckController *controller) {
+                IPIActivityViewController * activityViewController = [[IPIActivityViewController alloc] init];
+                [((UINavigationController*)controller.centerController) pushViewController:activityViewController animated:NO];
+            }];
         }];
         [section addCell:^(JMStaticContentTableViewCell *staticContentCell, UITableViewCell *cell, NSIndexPath *indexPath) {
             staticContentCell.cellStyle = UITableViewCellStyleValue1;
@@ -180,7 +186,7 @@
 //            cell.textLabel.text = @"Logout";
             //            cell.detailTextLabel.text = NSLocalizedString(@"T.A.R.D.I.S.", @"T.A.R.D.I.S.");
         } whenSelected:^(NSIndexPath *indexPath) {
-            //            [self.navigationController pushViewController:[[WifiViewController alloc] init] animated:YES];
+
         }];
     }];
     [[self tableView] reloadData];

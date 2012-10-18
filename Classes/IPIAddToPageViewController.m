@@ -67,7 +67,7 @@
 
 
 - (NSPredicate *)predicate {
-	return [NSPredicate predicateWithFormat:@"name != %@ && section_header != %@ && user_id == %@", @"",@"", [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]].remoteID];
+	return [NSPredicate predicateWithFormat:@"(name != %@ && section_header != %@) && (is_following == YES || user_id == %@)", @"",@"", [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]].remoteID];
 }
 
 //-(NSString *)sortDescriptors{
@@ -141,18 +141,18 @@
 //            });
 //        }];
 //        
-//        [[IPKHTTPClient sharedClient] getFollowingPagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                self.loading = NO;
-//                [self.fetchedResultsController performFetch:nil];
-//                [self.tableView reloadData];
-//            });
-//        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                [SSRateLimit resetLimitForName:@"refresh-mine-pages"];
-//                self.loading = NO;
-//            });
-//        }];
+        [[IPKHTTPClient sharedClient] getFollowingPagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.loading = NO;
+                [self.fetchedResultsController performFetch:nil];
+                [self.tableView reloadData];
+            });
+        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SSRateLimit resetLimitForName:@"refresh-mine-pages"];
+                self.loading = NO;
+            });
+        }];
     };
 }
 
@@ -186,8 +186,7 @@
     [hudView show];
     IPKPage * page = [self objectForViewIndexPath:indexPath];
     NSString * pageIDString = [NSString stringWithFormat:@"%@", page.remoteID];
-    NSString * providerIDString = [NSString stringWithFormat:@"%@", [self.provider listing_id]];
-    [[IPKHTTPClient sharedClient] addProvidersToPageWithId:pageIDString providerId:providerIDString success:^(AFJSONRequestOperation *operation, id responseObject) {
+    [[IPKHTTPClient sharedClient] addProvidersToPageWithId:pageIDString provider:self.provider success:^(AFJSONRequestOperation *operation, id responseObject) {
         dispatch_async(dispatch_get_main_queue(), ^{
             self.loading = NO;
             [hudView completeAndDismissWithTitle:@"Provider Added"];

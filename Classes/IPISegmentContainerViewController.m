@@ -18,7 +18,9 @@
         [self.segmentControl setSegmentedControlStyle:UISegmentedControlStyleBar];
 
         self.pageViewController = [[IPIPageViewController alloc] init];
+        [self addChildViewController:self.pageViewController];
         self.pageDisqusViewController = [[IPIPageDisqusViewController alloc] init];
+        [self addChildViewController:self.pageDisqusViewController];
     }
     return self;
 }

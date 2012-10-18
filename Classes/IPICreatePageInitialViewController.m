@@ -27,24 +27,27 @@
         // Custom initialization
         self.title = @"Create a Page";
         self.view.backgroundColor = [UIColor colorWithHexString:@"eeeeee"];
-        UIView * cancelView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 32, 22)];
-        UIButton * cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 0, 22, 22)];
+        
+        UIView * cancelView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+        UIButton * cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+        [cancelButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
         [cancelButton setImage:[UIImage imageNamed:@"cancel_button"] forState:UIControlStateNormal];
         [cancelButton addTarget:self action:@selector(close) forControlEvents:UIControlEventTouchUpInside];
         [cancelView addSubview:cancelButton];
         UIBarButtonItem * cancelButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelView];
         self.navigationItem.leftBarButtonItem = cancelButtonItem;
         
-        UIView * checkmarkView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 23, 21)];
-        UIButton * checkmarkButton = [[UIButton alloc] initWithFrame:CGRectMake(-9, 0, 23, 21)];
+        UIView * checkmarkView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+        UIButton * checkmarkButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+        [checkmarkButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
         [checkmarkButton setImage:[UIImage imageNamed:@"checkmark_inactive"] forState:UIControlStateNormal];
         [checkmarkButton setImage:[UIImage imageNamed:@"checkmark_active"] forState:UIControlStateSelected];
         [checkmarkButton addTarget:self action:@selector(done) forControlEvents:UIControlEventTouchUpInside];
         [checkmarkButton setEnabled:NO];
         [checkmarkView addSubview:checkmarkButton];
         UIBarButtonItem * checkmarkButtonItem = [[UIBarButtonItem alloc] initWithCustomView:checkmarkView];
-        
         self.navigationItem.rightBarButtonItem = checkmarkButtonItem;
+        
         self.privacyTableView = [[UITableView alloc] initWithFrame:CGRectMake(320, 0, 300, 44*3) style:UITableViewStylePlain];
         self.privacyTableView.delegate = self;
         self.privacyTableView.dataSource = self;

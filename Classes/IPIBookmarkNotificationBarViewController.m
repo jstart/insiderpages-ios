@@ -7,6 +7,7 @@
 //
 
 #import "IPIBookmarkNotificationBarViewController.h"
+#import "IPIBookmarkNotificationsViewController.h"
 
 @interface IPIBookmarkNotificationBarViewController ()
 
@@ -29,6 +30,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.notificationsButton.titleLabel.font = [UIFont fontWithName:@"Comfortaa" size:17];
+    [self.notificationsButton addTarget:self action:@selector(buttonClicked) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)viewDidUnload
@@ -42,6 +44,11 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+-(void)buttonClicked{
+    IPIBookmarkNotificationsViewController * bookmarkNotificationsViewController = [[IPIBookmarkNotificationsViewController alloc] init];
+    [self.parentViewController.navigationController pushViewController:bookmarkNotificationsViewController animated:YES];
 }
 
 @end

@@ -256,10 +256,11 @@
         }
         self.loading = YES;
         self.currentPage = @(1);
+        self.ignoreChange = YES;
+        [self.tableView setUserInteractionEnabled:NO];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             [IPKActivity deleteAllLocal];
             self.fetchedResultsController = nil;
-            self.ignoreChange = YES;
             [[IPKHTTPClient sharedClient] getPageActivititesWithCurrentPage:@1 perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
                 self.fetchedResultsController = nil;
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -267,6 +268,7 @@
                     self.loading = NO;
                     NSLog(@"retrieved %d activity items", ((NSArray*)responseObject[@"activities"]).count);
                     [[self tableView] reloadData];
+                    [self.tableView setUserInteractionEnabled:YES];
                 });
             } failure:^(AFJSONRequestOperation *operation, NSError *error) {
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -277,6 +279,7 @@
                     [SSRateLimit resetLimitForName:@"refresh-activity"];
                     [self.tableView.pullToRefreshView triggerRefresh];
                     self.loading = NO;
+                    [self.tableView setUserInteractionEnabled:YES];
                 });
             }];
         });
@@ -525,7 +528,7 @@
 	
 	((IPIActivityTableViewCell*)cell).activity = activity;
     
-    UITapGestureRecognizer *singleTapRecogniser = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapSectionHeader:)] autorelease];
+    UITapGestureRecognizer *singleTapRecogniser = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapSectionHeader:)];
     [singleTapRecogniser setDelegate:self];
     singleTapRecogniser.numberOfTouchesRequired = 1;
     singleTapRecogniser.numberOfTapsRequired = 1;

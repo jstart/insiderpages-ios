@@ -69,7 +69,7 @@
 
     
 	UIView *background = [[UIView alloc] initWithFrame:CGRectZero];
-	background.backgroundColor = [UIColor cheddarArchesColor];
+//	background.backgroundColor = [UIColor cheddarArchesColor];
 	self.tableView.backgroundView = background;
 	
 //	SSGradientView *footer = [[SSGradientView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 3.0f)];

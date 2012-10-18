@@ -4,11 +4,11 @@
 //
 //  Created by Christopher Truman.
 //
-#import "IPIAbstractCarouselViewController.h"
+#import "IPIAbstractCollectionViewController.h"
 
 @class IPKProvider;
 
-@interface IPIProviderScoopsCarouselViewController : IPIAbstractCarouselViewController
+@interface IPIProviderScoopsCarouselViewController : IPIAbstractCollectionViewController
 
 @property (nonatomic, strong) IPKProvider *provider;
 

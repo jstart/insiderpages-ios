@@ -41,6 +41,10 @@
 		selectedBackground.contentMode = UIViewContentModeRedraw;
 		self.selectedBackgroundView = selectedBackground;
         
+        CGRect frame = self.textLabel.frame;
+        frame.size.width = 190;
+        self.textLabel.frame = frame;
+
         [self.textLabel setFont:[UIFont fontWithName:@"Myriad Web Pro" size:17]];
         [self.textLabel setTextColor:[UIColor colorWithHexString:@"333333"]];
         [self.textLabel setBackgroundColor:[UIColor clearColor]];
@@ -60,12 +64,31 @@
 	return self;
 }
 
+-(void)setEditing:(BOOL)editing animated:(BOOL)animated{
+    [super setEditing:editing animated:YES];
+    if (editing) {
+        self.rankNumberLabel.frame = CGRectMake(30, 17, 25, 20);
+    }else{
+        CGRect frame = self.textLabel.frame;
+        frame.origin.x = frame.origin.x + 15;
+        self.textLabel.frame = frame;
+        self.rankNumberLabel.frame = CGRectMake(5, 17, 25, 20);
+    }
+}
+
 - (void) layoutSubviews {
     [super layoutSubviews];
-    CGRect textLabelFrame = self.textLabel.frame;
-    textLabelFrame.origin.x = 35;
-    textLabelFrame.origin.y = 17;
-    self.textLabel.frame = textLabelFrame;
+    if (self.editing) {
+        CGRect frame = self.textLabel.frame;
+        frame.origin.x = 20;
+        frame.origin.y = 17;
+        self.textLabel.frame = frame;
+    }else{
+        CGRect textLabelFrame = self.textLabel.frame;
+        textLabelFrame.origin.x = 35;
+        textLabelFrame.origin.y = 17;
+        self.textLabel.frame = textLabelFrame;
+    }
 }
 
 @end

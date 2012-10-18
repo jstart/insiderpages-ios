@@ -5,6 +5,7 @@
 //
 
 #import "IPIPageViewController.h"
+#import "IPIPageRankActionViewController.h"
 #import "TTTAttributedLabel.h"
 #import "IPIProviderRankTableViewCell.h"
 #import "IPIProviderViewController.h"
@@ -12,7 +13,6 @@
 #import "IPISocialShareHelper.h"
 #import "SVPullToRefresh.h"
 //#import "CDIAddTaskView.h"
-//#import "CDIAddTaskAnimationView.h"
 //#import "CDIAttributedLabel.h"
 //#import "CDICreateListViewController.h"
 #import "CDINoTasksView.h"
@@ -46,14 +46,38 @@ static CGFloat prevContentOffset = 0;
     [_page.owner addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionNew context:context];
     [_page addObserver:self forKeyPath:@"is_favorite" options:NSKeyValueObservingOptionNew context:context];
     [_page addObserver:self forKeyPath:@"is_following" options:NSKeyValueObservingOptionNew context:context];
-    
+    [_page updateWithSuccess:^(){
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.headerView setPage:_page];
+            [self.headerView setNeedsDisplay];
+            [self.tableView.infiniteScrollingView triggerRefresh];
+        });
+        if ([_page.owner isEqual:[IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]]] || [_page.privacy_setting isEqualToNumber:@(0)] || _page.is_collaborator) {
+            [self.tabButton setImage:[UIImage imageNamed:@"rank_tab"] forState:UIControlStateNormal];
+        }else{
+            [self.tabButton setImage:[UIImage imageNamed:@"locked_tab"] forState:UIControlStateNormal];
+            [self.tabButton setUserInteractionEnabled:NO];
+        }
+    } failure:^(AFJSONRequestOperation * op, NSError * err){
+        
+    }];
+
 //	self.ignoreChange = YES;
+    
+    if ([_page.owner isEqual:[IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]]] || [_page.privacy_setting isEqualToNumber:@(0)] || _page.is_collaborator) {
+        [self.tabButton setImage:[UIImage imageNamed:@"rank_tab"] forState:UIControlStateNormal];
+    }else{
+        [self.tabButton setImage:[UIImage imageNamed:@"locked_tab"] forState:UIControlStateNormal];
+        [self.tabButton setUserInteractionEnabled:NO];
+    }
+    
 	[self.headerView setPage:_page];
     [self.headerView setNeedsDisplay];
     dispatch_async(dispatch_get_main_queue(), ^{
-        self.fetchedResultsController = nil;
         [self.tableView reloadData];
         self.ignoreChange = NO;
+        self.fetchedResultsController = nil;
     });
 }
 
@@ -61,12 +85,15 @@ static CGFloat prevContentOffset = 0;
     _sortUser = sortUser;
     [self.rankBar setSortUser:sortUser];
     dispatch_async(dispatch_get_main_queue(), ^{
-        self.fetchedResultsController = nil;
-        [self.tableView reloadData];
         self.ignoreChange = NO;
+        [self.tableView reloadData];
     });
+    [_sortUser updateWithSuccess:^(){
+        [self.tableView.infiniteScrollingView triggerRefresh];
+    } failure:^(AFJSONRequestOperation * op, NSError * err){
+        
+    }];
 	
-	[self.tableView.pullToRefreshView triggerRefresh];
 }
 
 //-(UITableView*)tableView{
@@ -99,13 +126,13 @@ static CGFloat prevContentOffset = 0;
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
-	self.view.backgroundColor = [UIColor cheddarArchesColor];
+//	self.view.backgroundColor = [UIColor cheddarArchesColor];
 //	self.tableView.hidden = self.page == nil;
     [self.tableView setAllowsSelectionDuringEditing:YES];
 //	self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake([CDIAddTaskView height], 0.0f, 0.0f, 0.0f);
 	self.pullToRefreshView.bottomBorderColor = [UIColor colorWithWhite:0.8f alpha:1.0f];
     self.tableView.showsInfiniteScrolling = NO;
-    [self.tableView setFrame:CGRectMake(15, 165, 290, [UIScreen mainScreen].bounds.size.height-264)];
+    [self.tableView setFrame:CGRectMake(15, 165, 290, [UIScreen mainScreen].bounds.size.height-248)];
     [self.tableView.layer setCornerRadius:3.0];
     [self.tableView setClipsToBounds:YES];
     self.tableView.layer.borderColor = [UIColor colorWithHexString:@"cccccc"].CGColor;
@@ -117,6 +144,12 @@ static CGFloat prevContentOffset = 0;
     [self.headerView setDelegate:self];
     [self.view addSubview:self.headerView];
     
+    self.tabButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.tabButton.frame = CGRectMake(320, 83+150, 45, 51);
+    [self.tabButton setImage:[UIImage imageNamed:@"rank_tab"] forState:UIControlStateNormal];
+    [self.tabButton addTarget:self action:@selector(tabSelected) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.tabButton];
+    
     self.rankBar = [[IPIRankBar alloc] initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height - 50 - 44 - 20, 320, 50)];
     [self.rankBar setDelegate:self];
     [self.view addSubview:self.rankBar];
@@ -126,6 +159,7 @@ static CGFloat prevContentOffset = 0;
     [self setPage:self.page];
 }
 
+//these aren't beign called in the segment container
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
 //    [self setEditing:YES animated:YES];
@@ -134,7 +168,10 @@ static CGFloat prevContentOffset = 0;
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-    [self.headerView setPage:self.page];
+//    [self.headerView setPage:self.page];
+    [UIView animateWithDuration:0.2 animations:^{
+        self.tabButton.frame = CGRectMake(276, 83+150, 45, 51);
+    }];
 }
 
 
@@ -147,6 +184,46 @@ static CGFloat prevContentOffset = 0;
 	return toInterfaceOrientation == UIInterfaceOrientationPortrait;
 }
 
+-(void)tabSelected{
+    if ([self.page.is_collaborator boolValue] || [self.page.owner.remoteID isEqualToNumber:[IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]].remoteID]) {
+        IPIPageRankActionViewController * pageRankActionViewController = [[IPIPageRankActionViewController alloc] init];
+        [pageRankActionViewController setPage:self.page];
+        [((UIViewController*)self.delegate).navigationController pushViewController:pageRankActionViewController animated:YES];
+    }else{
+        NSArray * teamMemberships;
+        if (self.sortUser) {
+            teamMemberships = [[[IPKTeamMembership MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"owner_id == %@ && team_id == %@", self.sortUser.remoteID, self.page.remoteID] inContext:[NSManagedObjectContext MR_contextForCurrentThread]] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"position" ascending:NO]]] mutableArrayValueForKey:@"position"];
+        }else{
+            teamMemberships = [[[IPKTeamMembership MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"pollaverage == YES && team_id == %@", self.page.remoteID] inContext:[NSManagedObjectContext MR_contextForCurrentThread]] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"position" ascending:NO]]] mutableArrayValueForKey:@"position"];
+        }
+        SSHUDView * hud = [[SSHUDView alloc] initWithTitle:@"Submitting page order." loading:YES];
+        [hud show];
+        
+        [[IPKHTTPClient sharedClient] createCollaboratorRankingForPageWithId:[self.page.remoteID stringValue] userId:[self.sortUser.remoteID stringValue] newOrder:teamMemberships success:^(AFJSONRequestOperation *operation, id responseObject) {
+            if ([responseObject objectForKey:@"errors"]) {
+                NSLog(@"%@", responseObject);
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.ignoreChange = NO;
+                self.fetchedResultsController = nil;
+                [self.tableView reloadData];
+                self.loading = NO;
+                [hud completeAndDismissWithTitle:@"Page reordered."];
+                IPIPageRankActionViewController * pageRankActionViewController = [[IPIPageRankActionViewController alloc] init];
+                [pageRankActionViewController setPage:self.page];
+                [((UIViewController*)self.delegate).navigationController pushViewController:pageRankActionViewController animated:YES];
+            });
+        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                SSHUDView * hud = [[SSHUDView alloc] initWithTitle:@"Page is private"];
+                [hud show];
+                [hud failAndDismissWithTitle:@"Reorder failed."];
+                [SSRateLimit resetLimitForName:[NSString stringWithFormat:@"refresh-list-%@", self.page.remoteID]];
+                self.loading = NO;
+            });
+        }];
+    }
+}
 
 #pragma mark - SSManagedViewController
 
@@ -160,11 +237,11 @@ static CGFloat prevContentOffset = 0;
 }
 
 
-- (NSPredicate *)predicate {	
-    if (self.sortUser) {
+- (NSPredicate *)predicate {
+    if (self.sortUser != nil) {
         return [NSPredicate predicateWithFormat:@"team_id == %@ && owner_id == %@", self.page.remoteID, self.sortUser.remoteID];
     }else{
-        return [NSPredicate predicateWithFormat:@"team_id == %@ && pollaverage == %@", self.page.remoteID, @(YES)];
+        return [NSPredicate predicateWithFormat:@"team_id == %@ && pollaverage == 1", self.page.remoteID];
     }
 }
 
@@ -242,11 +319,12 @@ static CGFloat prevContentOffset = 0;
             if ([responseObject objectForKey:@"errors"]) {
                 NSLog(@"%@", responseObject);
             }
-            self.fetchedResultsController = nil;
+
             dispatch_async(dispatch_get_main_queue(), ^{
+                self.ignoreChange = NO;
+                self.fetchedResultsController = nil;
                 [self.tableView reloadData];
                 self.loading = NO;
-                self.ignoreChange = NO;
             });
         } failure:^(AFJSONRequestOperation *operation, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -260,6 +338,9 @@ static CGFloat prevContentOffset = 0;
     };
 }
 
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+	[super controllerWillChangeContent:controller];
+}
 
 #pragma mark - Private
 
@@ -366,7 +447,7 @@ static CGFloat prevContentOffset = 0;
 		return;
 	}
 	
-	self.ignoreChange = YES;
+	self.ignoreChange = NO;
 //	NSMutableArray *tasks = [self.fetchedResultsController.fetchedObjects mutableCopy];
 //	CDKTask *task = [self objectForViewIndexPath:sourceIndexPath];
 //	[tasks removeObject:task];
@@ -547,7 +628,7 @@ static CGFloat prevContentOffset = 0;
     if ([keyPath isEqualToString:@"owner"] || [keyPath isEqualToString:@"is_favorite"] || [keyPath isEqualToString:@"is_following"]) {
     }
     if ([keyPath isEqualToString:@"name"]) {
-        [self setPage:_page];
+//        [self setPage:_page];
     }
 }
 

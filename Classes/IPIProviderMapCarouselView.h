@@ -6,8 +6,6 @@
 //  Copyright (c) 2012 InsiderPages. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 @interface IPIProviderMapCarouselView : UIView
 
 @property (nonatomic, strong) UIView * overlayView;
