@@ -87,7 +87,7 @@
 //            cell.detailTextLabel.text = NSLocalizedString(@"T.A.R.D.I.S.", @"T.A.R.D.I.S.");
         } whenSelected:^(NSIndexPath *indexPath) {
             [self.parentViewController.viewDeckController closeLeftViewAnimated:YES completion:^(IIViewDeckController *controller) {
-                IPIActivityViewController * activityViewController = [[IPIActivityViewController alloc] init];
+                IPIActivityViewController * activityViewController = [[IPIActivityViewController alloc] initWithStyle:UITableViewStyleGrouped];
                 [((UINavigationController*)controller.centerController) pushViewController:activityViewController animated:NO];
             }];
         }];

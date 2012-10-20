@@ -52,7 +52,6 @@ static CGFloat prevContentOffset = 0;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.headerView setPage:_page];
                 [self.headerView setNeedsDisplay];
-                [self.tableView.infiniteScrollingView triggerRefresh];
             });
             if ([_page.owner isEqual:[IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]]] || [_page.privacy_setting isEqualToNumber:@(0)] || _page.is_collaborator) {
                 [self.tabButton setImage:[UIImage imageNamed:@"rank_tab"] forState:UIControlStateNormal];
@@ -76,11 +75,6 @@ static CGFloat prevContentOffset = 0;
     
 	[self.headerView setPage:_page];
     [self.headerView setNeedsDisplay];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.tableView reloadData];
-        self.ignoreChange = NO;
-        self.fetchedResultsController = nil;
-    });
 }
 
 - (void)setSortUser:(IPKUser *)sortUser{
@@ -90,12 +84,16 @@ static CGFloat prevContentOffset = 0;
         self.ignoreChange = NO;
         [self.tableView reloadData];
     });
-    [_sortUser updateWithSuccess:^(){
-        [self.tableView.infiniteScrollingView triggerRefresh];
-    } failure:^(AFJSONRequestOperation * op, NSError * err){
-        
-    }];
-	
+    [SSRateLimit executeBlock:[self refresh] name:@"refresh-add-to-pages" limit:0.0];
+
+    if (_sortUser.name == nil) {
+        [_sortUser updateWithSuccess:^(){
+            [SSRateLimit executeBlock:[self refresh] name:@"refresh-add-to-pages" limit:0.0];
+            
+        } failure:^(AFJSONRequestOperation * op, NSError * err){
+            
+        }];
+    }
 }
 
 //-(UITableView*)tableView{
@@ -127,14 +125,14 @@ static CGFloat prevContentOffset = 0;
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
+    self.tableView.showsInfiniteScrolling = NO;
 	
 //	self.view.backgroundColor = [UIColor cheddarArchesColor];
 //	self.tableView.hidden = self.page == nil;
     [self.tableView setAllowsSelectionDuringEditing:YES];
 //	self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake([CDIAddTaskView height], 0.0f, 0.0f, 0.0f);
 	self.pullToRefreshView.bottomBorderColor = [UIColor colorWithWhite:0.8f alpha:1.0f];
-    self.tableView.showsInfiniteScrolling = NO;
-    [self.tableView setFrame:CGRectMake(15, 165, 290, [UIScreen mainScreen].bounds.size.height-248)];
+     [self.tableView setFrame:CGRectMake(15, 165, 290, [UIScreen mainScreen].bounds.size.height-248)];
     [self.tableView.layer setCornerRadius:3.0];
     [self.tableView setClipsToBounds:YES];
     self.tableView.layer.borderColor = [UIColor colorWithHexString:@"cccccc"].CGColor;
@@ -161,10 +159,11 @@ static CGFloat prevContentOffset = 0;
     [self setPage:self.page];
 }
 
-//these aren't beign called in the segment container
+//these aren't being called in the segment container
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
 //    [self setEditing:YES animated:YES];
+    [SSRateLimit executeBlock:[self refresh] name:@"refresh-add-to-pages" limit:0.0];
     [self.tableView.pullToRefreshView triggerRefresh];
 }
 
@@ -630,7 +629,9 @@ static CGFloat prevContentOffset = 0;
     if ([keyPath isEqualToString:@"owner"] || [keyPath isEqualToString:@"is_favorite"] || [keyPath isEqualToString:@"is_following"]) {
     }
     if ([keyPath isEqualToString:@"name"]) {
-//        [self setPage:_page];
+        dispatch_async(dispatch_get_main_queue(), ^(){
+            [self.headerView setPage:_page];
+        });
     }
 }
 

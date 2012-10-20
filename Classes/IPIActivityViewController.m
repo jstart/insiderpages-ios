@@ -346,6 +346,11 @@
 
 
 - (void)_currentUserDidChange:(NSNotification *)notification {
+    [[IPKHTTPClient sharedClient] getNotificationsWithCurrentPage:@1 perPage:@10 success:^(AFJSONRequestOperation *operation, id responseObject) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"updateNotificationNumber" object:nil userInfo:nil];
+    } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+        
+    }];
     [self.tableView.pullToRefreshView triggerRefresh];
 	[self.tableView reloadData];
 }

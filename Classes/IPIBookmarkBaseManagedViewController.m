@@ -79,9 +79,10 @@
     
     [v addSubview:button];
     
-    self.notificationCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, 12, 20, 20)];
+    self.notificationCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, 11, 20, 20)];
     [self.notificationCountLabel setFont:[UIFont fontWithName:@"ArialRoundedMTBold" size:12]];
     [self.notificationCountLabel setTextAlignment:NSTextAlignmentCenter];
+    [self.notificationCountLabel setContentMode:UIViewContentModeCenter];
     [self.notificationCountLabel setBackgroundColor:[UIColor clearColor]];
     [self.notificationCountLabel setTextColor:[UIColor whiteColor]];
     [v addSubview:self.notificationCountLabel];
@@ -105,6 +106,10 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
@@ -113,8 +118,6 @@
 -(void)updateNotificationNumber{
     IPKUser * currentUser = [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]];
     NSArray * unreadNotificationsArray = [[currentUser.notifications filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"read == NO"]] allObjects];
-    NSLog(@"%@ unread: %@", unreadNotificationsArray, currentUser.notifications);
-    NSLog(@"is read boolean %@", ((IPKNotification*)[unreadNotificationsArray lastObject]).read);
     [self.notificationCountLabel setText:[NSString stringWithFormat:@"%d", unreadNotificationsArray.count]];
 }
 

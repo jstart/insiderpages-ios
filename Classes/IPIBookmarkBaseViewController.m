@@ -85,8 +85,9 @@
     
     [v addSubview:button];
     
-    self.notificationCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, 12, 20, 20)];
+    self.notificationCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, 11, 20, 20)];
     [self.notificationCountLabel setFont:[UIFont fontWithName:@"ArialRoundedMTBold" size:12]];
+    [self.notificationCountLabel setContentMode:UIViewContentModeCenter];
     [self.notificationCountLabel setTextAlignment:NSTextAlignmentCenter];
     [self.notificationCountLabel setBackgroundColor:[UIColor clearColor]];
     [self.notificationCountLabel setTextColor:[UIColor whiteColor]];
@@ -108,6 +109,10 @@
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+-(void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

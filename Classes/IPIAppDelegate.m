@@ -132,6 +132,12 @@
 //    [TestFlight takeOff:@"30d92a896df4ab4b4873886ea58f8b06_NzE0NzIyMDEyLTAzLTE0IDEzOjQ0OjU4Ljk3MDAxOQ"];
 #endif
     
+    [[IPKHTTPClient sharedClient] getNotificationsWithCurrentPage:@1 perPage:@10 success:^(AFJSONRequestOperation *operation, id responseObject) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"updateNotificationNumber" object:nil userInfo:nil];
+    } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+        
+    }];
+    
 	return YES;
 }
 
@@ -414,9 +420,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
     }else{
         //update notification ribbon
         [[IPKHTTPClient sharedClient] getNotificationsWithCurrentPage:@1 perPage:@10 success:^(AFJSONRequestOperation *operation, id responseObject) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"updateNotificationNumber" object:nil];
-            });
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"updateNotificationNumber" object:nil userInfo:nil];
         } failure:^(AFJSONRequestOperation *operation, NSError *error) {
             
         }];
@@ -425,6 +429,11 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     application.applicationIconBadgeNumber = 0;
+    [[IPKHTTPClient sharedClient] getNotificationsWithCurrentPage:@1 perPage:@10 success:^(AFJSONRequestOperation *operation, id responseObject) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"updateNotificationNumber" object:nil userInfo:nil];
+    } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+        
+    }];
 }
 
 

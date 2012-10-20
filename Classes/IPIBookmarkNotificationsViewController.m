@@ -79,6 +79,10 @@
     return @"updatedAt";
 }
 
+-(BOOL)ascending{
+    return NO;
+}
+
 #pragma mark - SSManagedTableViewController
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
@@ -162,6 +166,11 @@
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView{
     // necessary, disables uitableviewindex http://stackoverflow.com/questions/3189345/remove-gray-uitableview-index-bar
     return nil;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    IPKNotification * n = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    return [IPINotifcationTableViewCell cellHeightForNotification:n];
 }
 
 #pragma mark - UIScrollViewDelegate

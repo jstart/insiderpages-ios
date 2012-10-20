@@ -88,11 +88,11 @@
 }
 
 - (NSPredicate *)predicate {
-	return [NSPredicate predicateWithFormat:@"ANY providers.remoteID = %@", self.provider.remoteID];
+	return [NSPredicate predicateWithFormat:@"ANY providers.remoteID == %@", self.provider.remoteID];
 }
 
 -(NSString *)sortDescriptors{
-    return @"createdAt,remoteID";
+    return @"createdAt";
 }
 
 -(void)viewWillAppear:(BOOL)animated{

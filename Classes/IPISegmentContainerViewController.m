@@ -63,8 +63,8 @@
 
 -(void)didSelectProvider:(IPKProvider*)provider{
     IPIProviderViewController * providerViewController = [[IPIProviderViewController alloc] init];
-    [providerViewController setProvider:provider];
     [self.navigationController pushViewController:providerViewController animated:YES];
+    [providerViewController setProvider:provider];
 }
 
 #pragma mark - FireUIPagedScrollViewDelegate

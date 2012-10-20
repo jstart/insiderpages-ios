@@ -1826,6 +1826,10 @@
 		FDD662951630AC250022D936 /* add_page_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDBAB01F1623719D00E305CC /* add_page_button@2x.png */; };
 		FDD662961630AC250022D936 /* locked_tab.png in Resources */ = {isa = PBXBuildFile; fileRef = FDB267291627608A0040C5FB /* locked_tab.png */; };
 		FDD662971630AC250022D936 /* locked_tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDB2672A1627608A0040C5FB /* locked_tab@2x.png */; };
+		FDD662A11631DC8D0022D936 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD662A01631DC8D0022D936 /* NSString+HTML.m */; };
+		FDD662A21631DCEE0022D936 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD662A01631DC8D0022D936 /* NSString+HTML.m */; };
+		FDD662A31631DCEF0022D936 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD662A01631DC8D0022D936 /* NSString+HTML.m */; };
+		FDD662A41631DCEF0022D936 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD662A01631DC8D0022D936 /* NSString+HTML.m */; };
 		FDD8B3381609355D00C5BE6B /* IPIPullOutUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD8B3371609355D00C5BE6B /* IPIPullOutUserCell.m */; };
 		FDD8B33A16094C8400C5BE6B /* myriad-web-pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FDD8B33916094C8400C5BE6B /* myriad-web-pro.ttf */; };
 		FDD8B35A1609BE5C00C5BE6B /* IPIIconCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD8B3591609BE5C00C5BE6B /* IPIIconCell.m */; };
@@ -2172,7 +2176,7 @@
 		B208C1F315BF64630080705D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B23261A815C207FF00D455EF /* CDIWebSignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIWebSignInViewController.h; sourceTree = "<group>"; };
 		B23261A915C207FF00D455EF /* CDIWebSignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIWebSignInViewController.m; sourceTree = "<group>"; };
-		B23FA755151FE0710069A0D1 /* InsiderPages-Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "InsiderPages-Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B23FA755151FE0710069A0D1 /* InsiderPages.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InsiderPages.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B26AE9B215C5CF2B0008AB1F /* CDISettingsTapPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDISettingsTapPickerViewController.h; sourceTree = "<group>"; };
 		B26AE9B315C5CF2B0008AB1F /* CDISettingsTapPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDISettingsTapPickerViewController.m; sourceTree = "<group>"; };
 		B26AE9B515C5D0040008AB1F /* CDISettingsTextSizePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDISettingsTextSizePickerViewController.h; sourceTree = "<group>"; };
@@ -2698,6 +2702,8 @@
 		FDD660B11630ABAB0022D936 /* InsiderPages_iOS_qa-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "InsiderPages_iOS_qa-Info.plist"; path = "/Users/trumanc/Desktop/insiderpages-kit+app/insiderpages-ios/InsiderPages_iOS_qa-Info.plist"; sourceTree = "<absolute>"; };
 		FDD6629C1630AC250022D936 /* InsiderPages-Staging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "InsiderPages-Staging.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDD6629E1630AC260022D936 /* InsiderPages_iOS_staging-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "InsiderPages_iOS_staging-Info.plist"; path = "/Users/trumanc/Desktop/insiderpages-kit+app/insiderpages-ios/InsiderPages_iOS_staging-Info.plist"; sourceTree = "<absolute>"; };
+		FDD6629F1631DC8C0022D936 /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
+		FDD662A01631DC8D0022D936 /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
 		FDD8B3361609355D00C5BE6B /* IPIPullOutUserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIPullOutUserCell.h; sourceTree = "<group>"; };
 		FDD8B3371609355D00C5BE6B /* IPIPullOutUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIPullOutUserCell.m; sourceTree = "<group>"; };
 		FDD8B33916094C8400C5BE6B /* myriad-web-pro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "myriad-web-pro.ttf"; sourceTree = "<group>"; };
@@ -3335,7 +3341,7 @@
 		B23FA756151FE0710069A0D1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B23FA755151FE0710069A0D1 /* InsiderPages-Dev.app */,
+				B23FA755151FE0710069A0D1 /* InsiderPages.app */,
 				FDD65EC21630AB4E0022D936 /* InsiderPages-Beta.app */,
 				FDD660AF1630ABAA0022D936 /* InsiderPages-QA.app */,
 				FDD6629C1630AC250022D936 /* InsiderPages-Staging.app */,
@@ -3438,6 +3444,8 @@
 				FD234696161F91DB007F6484 /* UIView+Rasterize.m */,
 				FDBAB01B1623401700E305CC /* UIImageView+Rasterize.h */,
 				FDBAB01C1623401700E305CC /* UIImageView+Rasterize.m */,
+				FDD6629F1631DC8C0022D936 /* NSString+HTML.h */,
+				FDD662A01631DC8D0022D936 /* NSString+HTML.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -4552,7 +4560,7 @@
 			);
 			name = InsiderPages_iOS;
 			productName = Cheddar;
-			productReference = B23FA755151FE0710069A0D1 /* InsiderPages-Dev.app */;
+			productReference = B23FA755151FE0710069A0D1 /* InsiderPages.app */;
 			productType = "com.apple.product-type.application";
 		};
 		FDD65CD81630AB4E0022D936 /* InsiderPages_iOS_beta */ = {
@@ -5966,6 +5974,7 @@
 				FD46C7F2162F285A002D9E36 /* iCarousel.m in Sources */,
 				FDD65CD416306F390022D936 /* IPINotificationTableViewCell.m in Sources */,
 				FDD65CD71630869D0022D936 /* IPIPushNotificationRouter.m in Sources */,
+				FDD662A11631DC8D0022D936 /* NSString+HTML.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6183,6 +6192,7 @@
 				FDD65DAF1630AB4E0022D936 /* iCarousel.m in Sources */,
 				FDD65DB01630AB4E0022D936 /* IPINotificationTableViewCell.m in Sources */,
 				FDD65DB11630AB4E0022D936 /* IPIPushNotificationRouter.m in Sources */,
+				FDD662A21631DCEE0022D936 /* NSString+HTML.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6400,6 +6410,7 @@
 				FDD65F9C1630ABAA0022D936 /* iCarousel.m in Sources */,
 				FDD65F9D1630ABAA0022D936 /* IPINotificationTableViewCell.m in Sources */,
 				FDD65F9E1630ABAA0022D936 /* IPIPushNotificationRouter.m in Sources */,
+				FDD662A31631DCEF0022D936 /* NSString+HTML.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6617,6 +6628,7 @@
 				FDD661891630AC250022D936 /* iCarousel.m in Sources */,
 				FDD6618A1630AC250022D936 /* IPINotificationTableViewCell.m in Sources */,
 				FDD6618B1630AC250022D936 /* IPIPushNotificationRouter.m in Sources */,
+				FDD662A41631DCEF0022D936 /* NSString+HTML.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6800,7 +6812,7 @@
 					"-ObjC",
 					"-lsqlite3.0",
 				);
-				PRODUCT_NAME = "InsiderPages-Dev";
+				PRODUCT_NAME = InsiderPages;
 				PROVISIONING_PROFILE = "664648E1-A451-4113-AEC9-60D7C5B9EE62";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "664648E1-A451-4113-AEC9-60D7C5B9EE62";
 				TARGETED_DEVICE_FAMILY = "1,2";

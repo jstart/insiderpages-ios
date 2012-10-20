@@ -59,6 +59,7 @@
     self.parentViewController.parentViewController.navigationItem.leftBarButtonItem = nil;
     [[IPKHTTPClient sharedClient] getNotificationsWithCurrentPage:@1 perPage:@10 success:^(AFJSONRequestOperation *operation, id responseObject) {
         dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"updateNotificationNumber" object:nil userInfo:nil];
             IPKUser * currentUser = [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]];
             NSArray * unreadNotificationsArray = [[currentUser.notifications filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"read == NO"]] allObjects];
             [self.footerViewController.notificationsButton setTitle:(unreadNotificationsArray.count > 1 || unreadNotificationsArray.count == 0) ? [NSString stringWithFormat:@"%d Notifications", unreadNotificationsArray.count] : [NSString stringWithFormat:@"%d Notification", unreadNotificationsArray.count] forState:UIControlStateNormal];
