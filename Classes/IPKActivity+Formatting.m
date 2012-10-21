@@ -79,6 +79,9 @@
         case IPKActivityTypeAccept:
             actionText = [NSString stringWithFormat:@" accepted invite from "];
             break;
+        case IPKActivityTypeComment:
+            actionText = [NSString stringWithFormat:@" commented on "];
+            break;
         case IPKActivityTypeAll:
             actionText = [NSString stringWithFormat:@" activity "];
             break;
@@ -123,6 +126,9 @@
     }
     else if ([self activityType] == IPKActivityTypeTeam && [self trackableType] == IPKTrackableTypeReview){
         nounText = self.review.page.name;
+    }
+    else if ([self activityType] == IPKActivityTypeComment && ([self trackableType] == IPKTrackableTypeProvider || [self trackableType] == IPKTrackableTypeCgListing)){
+        nounText = self.provider.full_name;
     }
     return nounText;
 }

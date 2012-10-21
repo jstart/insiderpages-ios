@@ -27,6 +27,7 @@
 	if ((self = [super init])) {
 //		self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Tasks" style:UIBarButtonItemStyleBordered target:nil action:nil];
         self.commentDictionary = [NSMutableDictionary dictionary];
+        self.threadIDDictionary = [NSMutableDictionary dictionary];
         
         self.providerMapsCarousel = [[IPIProviderMapsCarouselViewController alloc] init];
         self.providerMapsCarousel.delegate = self;
@@ -128,8 +129,26 @@
                                           dispatch_async(dispatch_get_main_queue(), ^(){
                                               [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
                                           });
+                                          
+                                          [IADisquser getThreadIdWithIdentifier:threadIdentifier success:^(NSNumber* number){
+                                              [self.threadIDDictionary setObject:number forKey:threadIdentifier];
+                                          } fail:^(NSError *error) {
+                                              
+                                          }];
+                                          
                                       } fail:^(NSError *error) {
                                           // start activity indicator
+                                          [IADisquser getThreadIdWithLink:threadIdentifier success:^(NSNumber* number){
+                                              [self.threadIDDictionary setObject:number forKey:threadIdentifier];
+                                          } fail:^(NSError *error) {
+                                              NSString * title = [NSString stringWithFormat:@"%@ discussing %@", self.page.name, provider.name];
+                                              [IADisquser createThreadWithIdentifier:threadIdentifier Title:title success:^(NSNumber * number){
+                                                  [self.threadIDDictionary setObject:number forKey:threadIdentifier];
+                                              } fail:^(NSError* error) {
+                                                  
+                                              }];
+                                          }];
+
                                           dispatch_async(dispatch_get_main_queue(), ^(){
                                               [self.tableView reloadData];
                                           });
@@ -171,7 +190,7 @@
     IPKUser * currentUser = [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]];
     comment.authorName = currentUser.name;
     comment.authorEmail = currentUser.email;
-    comment.threadIdentifier = threadIdentifier;
+    comment.threadID = [self.threadIDDictionary objectForKey:threadIdentifier];
     SSHUDView * hud = [[SSHUDView alloc] initWithTitle:@"Can't post comments yet."];
     [hud show];
     [hud failAndDismissWithTitle:@"Can't post comments yet."];

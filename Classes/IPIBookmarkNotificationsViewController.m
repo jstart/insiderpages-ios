@@ -76,7 +76,7 @@
 }
 
 -(NSString *)sortDescriptors{
-    return @"updatedAt";
+    return @"remoteID";
 }
 
 -(BOOL)ascending{

@@ -55,7 +55,14 @@
 -(void)viewWillAppear:(BOOL)animated{
     self.parentViewController.parentViewController.title = @"My Pages";
     
-    self.parentViewController.parentViewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createPage)];
+    UIView * addView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    UIButton * addButton = [[UIButton alloc] initWithFrame:CGRectMake(11, 11, 22, 22)];
+    [addButton setImage:[UIImage imageNamed:@"add_page_button"] forState:UIControlStateNormal];
+    [addButton addTarget:self action:@selector(createPage) forControlEvents:UIControlEventTouchUpInside];
+    [addView addSubview:addButton];
+    UIBarButtonItem * addButtonItem = [[UIBarButtonItem alloc] initWithCustomView:addView];
+    self.navigationItem.rightBarButtonItem = addButtonItem;
+    self.parentViewController.parentViewController.navigationItem.rightBarButtonItem = addButtonItem;
     self.parentViewController.parentViewController.navigationItem.leftBarButtonItem = nil;
     [[IPKHTTPClient sharedClient] getNotificationsWithCurrentPage:@1 perPage:@10 success:^(AFJSONRequestOperation *operation, id responseObject) {
         dispatch_async(dispatch_get_main_queue(), ^{

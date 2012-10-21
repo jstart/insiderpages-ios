@@ -22,7 +22,6 @@
 @synthesize keyboardRect = _keyboardRect;
 @synthesize coverView = _coverView;
 
-
 - (UIView *)coverView {
 	if (!_coverView) {
 		CGRect frame = self.tableView.bounds;
@@ -39,13 +38,11 @@
 	return _coverView;
 }
 
-
 #pragma mark - NSObject
 
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
 
 #pragma mark - UIViewController
 
@@ -66,8 +63,9 @@
     [self.tableView addInfiniteScrollingWithActionHandler:^{
         nextPageBlock();
     }];
-
     
+    [self.tableView setScrollIndicatorInsets:UIEdgeInsetsMake(44, 0, 0, 0)];
+
 	UIView *background = [[UIView alloc] initWithFrame:CGRectZero];
 //	background.backgroundColor = [UIColor cheddarArchesColor];
 	self.tableView.backgroundView = background;
@@ -90,7 +88,6 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
 }
 
-
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
 	[super setEditing:editing animated:animated];
 	if (!editing) {
@@ -98,11 +95,9 @@
 	}
 }
 
-
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 }
-
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -112,7 +107,6 @@
 	return toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
 }
 
-
 #pragma mark - SSManagedViewController
 
 - (void)setLoading:(BOOL)loading animated:(BOOL)animated {
@@ -121,7 +115,6 @@
         [self.tableView.pullToRefreshView stopAnimating];
     }
 }
-
 
 - (void)showLoadingView:(BOOL)animated {
 	if (!self.loadingView || self.loadingView.superview) {
@@ -144,7 +137,6 @@
 	}
 }
 
-
 - (void)showNoContentView:(BOOL)animated {
 	if (!self.noContentView || self.noContentView.superview) {
 		return;
@@ -157,7 +149,6 @@
 	void (^change)(void) = ^{
 		self.noContentView.alpha = 1.0f;
 	};
-	
 	
 	if (animated) {
 		[UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionAllowUserInteraction animations:change completion:nil];
@@ -254,13 +245,11 @@
 	[UIView commitAnimations];	
 }
 
-
 - (void)reachabilityChanged:(NSNotification *)notification {
 	if ([notification.object isReachable]) {
 		[self refresh];
 	}
 }
-
 
 #pragma mark - Private
 
@@ -280,11 +269,9 @@
 	} completion:nil];
 }
 
-
 - (BOOL)showingCoverView {
 	return _coverView != nil;
 }
-
 
 - (void)hideCoverView {
 	[UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionAllowUserInteraction animations:^{
@@ -295,11 +282,9 @@
 	}];
 }
 
-
 - (void)coverViewTapped:(id)sender {
 	// Subclasses should override this method
 }
-
 
 #pragma mark - UIScrollViewDelegate
 
@@ -318,7 +303,6 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
 	return NO;
 }
-
 
 #pragma mark - NSFetchedResultsControllerDelegate
 

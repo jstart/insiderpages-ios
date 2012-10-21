@@ -60,8 +60,8 @@
 -(void)setPage:(IPKPage *)page{
     _page = page;
     if ([page.owner isEqual:[IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]]]) {
-        UIView * addView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 32, 22)];
-        UIButton * addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
+        UIView * addView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+        UIButton * addButton = [[UIButton alloc] initWithFrame:CGRectMake(11, 11, 22, 22)];
         [addButton setImage:[UIImage imageNamed:@"add_page_button"] forState:UIControlStateNormal];
         [addButton addTarget:self action:@selector(new) forControlEvents:UIControlEventTouchUpInside];
         [addView addSubview:addButton];
