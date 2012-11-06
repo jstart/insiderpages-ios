@@ -12,7 +12,7 @@
 #import "UIImageView+Rasterize.h"
 
 @implementation IPIMiniPageActivityCell
-@synthesize activity = _activity;
+@synthesize activity = _activity, delegate = _delegate;
 
 - (void)setActivity:(IPKActivity *)activity {
     if (_activity != activity) {
@@ -40,25 +40,27 @@
         self.profileImageView = [[NINetworkImageView alloc] initWithImage:[UIImage imageNamed:@"reload-button"]];
         self.profileImageView.layer.borderWidth = 1;
         self.profileImageView.layer.borderColor = [UIColor whiteColor].CGColor;
-        [self.profileImageView setFrame:CGRectMake(0, 0, 45, 45)];
         [self.profileImageView setInitialImage:[UIImage imageNamed:@"reload-button"]];
+        [self.profileImageView setFrame:CGRectMake(0, 0, 45, 45)];
+        [self.profileImageView setUserInteractionEnabled:YES];
+        UITapGestureRecognizer * tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didSelectUser)];
+        [self.profileImageView addGestureRecognizer:tapGestureRecognizer];
         
-        UIView * profileView = [[UIView alloc] initWithFrame:self.profileImageView.frame];
+        CGRect profileFrame = self.profileImageView.frame;
+        profileFrame.origin.x = 15;
+        profileFrame.origin.y = 0;
+
+        UIView * profileView = [[UIView alloc] initWithFrame:profileFrame];
         [[profileView layer] setMasksToBounds:NO];
         [[profileView layer] setShadowColor:[UIColor blackColor].CGColor];
         [[profileView layer] setShadowOpacity:0.34f];
         [[profileView layer] setShadowRadius:2.0f];
         [[profileView layer] setShadowOffset:CGSizeMake(0, 2)];
-        
-        CGRect profileFrame = profileView.frame;
-        profileFrame.origin.x = 15;
-        profileFrame.origin.y = 0;
-        profileView.frame = profileFrame;
-        
+                
         [profileView addSubview:self.profileImageView];
         
         [self addSubview:profileView];
-                
+        
         self.activityLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(64, 0, 170, 45)];
         self.activityLabel.backgroundColor = [UIColor standardBackgroundColor];
         self.activityLabel.numberOfLines = 3;
@@ -69,7 +71,7 @@
         self.smallPageCoverImageView = [[NINetworkImageView alloc] initWithImage:[UIImage imageNamed:@"reload-button"]];
         self.smallPageCoverImageView.layer.cornerRadius = 4;
         [self.smallPageCoverImageView.layer setMasksToBounds:YES];
-        [self.smallPageCoverImageView setFrame:CGRectMake(235, 0, 69, 45)];
+        [self.smallPageCoverImageView setFrame:CGRectMake(0, 0, 69, 45)];
         [self.smallPageCoverImageView setInitialImage:[UIImage imageNamed:@"reload-button"]];
         
         UIView * roundedView = [[UIView alloc] initWithFrame:self.smallPageCoverImageView.frame];
@@ -80,8 +82,7 @@
         [[roundedView layer] setShadowOffset:CGSizeMake(2, 2)];
         
         CGRect frame = roundedView.frame;
-        frame.origin.x = 0;
-        frame.origin.y = 0;
+        frame.origin.x = 235;
         roundedView.frame = frame;
         
         [roundedView addSubview:self.smallPageCoverImageView];
@@ -111,6 +112,16 @@
 
 +(CGFloat)heightForCellWithText:(NSString *)text{
     return 55;
+}
+
+-(void)didSelectUser{
+    if (self.delegate) {
+        [self.delegate didSelectUser:self.activity.user];
+    }
+}
+
+-(void)setDelegate:(id<IPIAbstractActivityCellDelegate>)delegate{
+    _delegate = delegate;
 }
 
 

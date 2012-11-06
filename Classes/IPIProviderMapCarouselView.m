@@ -16,9 +16,12 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        self.layer.cornerRadius = 4;
+        self.clipsToBounds = YES;
         
-        // Section margin
-        self.backgroundColor = [UIColor grayColor];
+        self.mapView = [[MKMapView alloc] initWithFrame:frame];
+        [self addSubview:self.mapView];
+        
         CGRect overlayFrame = frame;
         overlayFrame.size.height = overlayFrame.size.height * .47;
         overlayFrame.origin.x = 0;
@@ -42,9 +45,16 @@
 }
 
 -(void)setProvider:(IPKProvider *)provider{
-        _provider = provider;
-        [self.nameLabel setText:provider.full_name];
-
+    _provider = provider;
+    [self.nameLabel setText:provider.full_name];
+    MKPointAnnotation * point = [[MKPointAnnotation alloc] init];
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([self.provider.address.lat doubleValue], [self.provider.address.lng doubleValue]);
+    [point setCoordinate:coordinate];
+    [self.mapView addAnnotation:point];
+    
+    MKMapRect mapRect = MKMapRectMake(coordinate.latitude, coordinate.longitude, 100, 100);
+    [self.mapView setVisibleMapRect:mapRect animated:YES];
+    [self.mapView setCenterCoordinate:CLLocationCoordinate2DMake([self.provider.address.lat doubleValue], [self.provider.address.lng doubleValue]) animated:YES];
 }
 
 -(void)dealloc{

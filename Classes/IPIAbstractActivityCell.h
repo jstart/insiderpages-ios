@@ -3,16 +3,20 @@
 //  InsiderPages_iOS
 //
 //  Created by Truman, Christopher on 9/20/12.
-//  Copyright (c) 2012 InisderPages. All rights reserved.
+//  Copyright (c) 2012 InsiderPages. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+
+@protocol IPIAbstractActivityCellDelegate <NSObject>
+
+-(void)didSelectUser:(IPKUser*)user;
+
+@end
 
 @interface IPIAbstractActivityCell : UITableViewCell
 
 @property (nonatomic, strong) IPKActivity * activity;
-
-- (id)initWithActivity:(IPKActivity*)activity reuseIdentifier:(NSString *)reuseIdentifier;
+@property (nonatomic, strong) id <IPIAbstractActivityCellDelegate> delegate;
 
 +(CGFloat)cellHeight;
 

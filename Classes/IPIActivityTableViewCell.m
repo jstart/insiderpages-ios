@@ -35,11 +35,14 @@
         self.backgroundColor = [UIColor clearColor];
         self.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
         self.profileImageView = [[NINetworkImageView alloc] initWithImage:[UIImage imageNamed:@"reload-button"]];
+        [self.profileImageView setUserInteractionEnabled:YES];
         self.profileImageView.layer.borderWidth = 1;
         self.profileImageView.layer.borderColor = [UIColor whiteColor].CGColor;
-        [self.profileImageView setFrame:CGRectMake(0, 7.5, 45, 45)];
+        [self.profileImageView setFrame:CGRectMake(0, 0, 45, 45)];
         [self.profileImageView setInitialImage:[UIImage imageNamed:@"reload-button"]];
-        [self addSubview:self.profileImageView];
+
+        UITapGestureRecognizer * tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didSelectUser)];
+        [self.profileImageView addGestureRecognizer:tapGestureRecognizer];
         
         UIView * profileView = [[UIView alloc] initWithFrame:self.profileImageView.frame];
         [[profileView layer] setMasksToBounds:NO];
@@ -52,8 +55,9 @@
         profileFrame.origin.x = 15;
         profileFrame.origin.y = 0;
         profileView.frame = profileFrame;
-        
+
         [profileView addSubview:self.profileImageView];
+                
         [self addSubview:profileView];
         
         self.activityLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(64, 15, 240, 45)];
@@ -85,6 +89,12 @@
 -(void)addSubview:(UIView *)view{
     if (view.frame.size.width != 1) {
         [super addSubview:view];
+    }
+}
+
+-(void)didSelectUser{
+    if (self.delegate) {
+        [self.delegate didSelectUser:self.activity.user];
     }
 }
 

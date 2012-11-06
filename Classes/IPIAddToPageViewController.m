@@ -67,7 +67,7 @@
 
 
 - (NSPredicate *)predicate {
-	return [NSPredicate predicateWithFormat:@"(name != %@ && section_header != %@) && (is_following == YES || user_id == %@)", @"",@"", [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]].remoteID];
+	return [NSPredicate predicateWithFormat:@"(name != %@) && (is_following == YES || user_id == %@)", @"", [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]].remoteID];
 }
 
 //-(NSString *)sortDescriptors{
@@ -141,7 +141,7 @@
 //            });
 //        }];
 //        
-        [[IPKHTTPClient sharedClient] getFollowingPagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
+        [[IPKHTTPClient sharedClient] getFollowingPagesForUserWithId:myUserId withCurrentPage:@(1) perPage:@(20) success:^(AFJSONRequestOperation *operation, id responseObject) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.loading = NO;
                 [self.fetchedResultsController performFetch:nil];

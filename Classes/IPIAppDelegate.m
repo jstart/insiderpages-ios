@@ -30,7 +30,7 @@
 #import <Crashlytics/Crashlytics.h>
 #if TARGET_IPHONE_SIMULATOR
     #import "DCIntrospect.h"
-    #import <PonyDebugger/PonyDebugger.h>
+//    #import <PonyDebugger/PonyDebugger.h>
 #endif
 
 @interface IPIAppDelegate ()
@@ -76,7 +76,7 @@
 	// Initialize the window
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	self.window.backgroundColor = [UIColor blackColor];
-	
+	self.session = [FBSession activeSession];
     [self openSessionCheckCache:YES];
 
     IPIActivityViewController *viewController = [[IPIActivityViewController alloc] initWithStyle:UITableViewStyleGrouped];
@@ -103,12 +103,16 @@
     #if TARGET_IPHONE_SIMULATOR
         [[DCIntrospect sharedIntrospector] start];
  
-        PDDebugger *debugger = [PDDebugger defaultInstance];
-        [debugger enableNetworkTrafficDebugging];
-        [debugger forwardAllNetworkTraffic];
-        [debugger enableCoreDataDebugging];
-        [debugger addManagedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread]];
-        [debugger connectToURL:[NSURL URLWithString:@"ws://localhost:9000/device"]];
+//        PDDebugger *debugger = [PDDebugger defaultInstance];
+//        [debugger enableNetworkTrafficDebugging];
+//        [debugger forwardAllNetworkTraffic];
+//        [debugger enableCoreDataDebugging];
+//        [debugger addManagedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread]];
+//        // Enable View Hierarchy debugging. This will swizzle UIView methods to monitor changes in the hierarchy
+//        // Choose a few UIView key paths to display as attributes of the dom nodes
+//        [debugger enableViewHierarchyDebugging];
+//        [debugger setDisplayedViewAttributeKeyPaths:@[@"frame", @"hidden", @"alpha", @"opaque"]];
+//        [debugger connectToURL:[NSURL URLWithString:@"ws://localhost:9000/device"]];
     #endif
 //    [iOSHierarchyViewer start];
 //    [iOSHierarchyViewer addContext:[NSManagedObjectContext MR_contextForCurrentThread] name:@"Root managed context"];
@@ -150,12 +154,6 @@
   // Do something in response to this
     if (updatedObjects.count > 0){
 //        NSLog(@"Updated: %d Objects: %@", updatedObjects.count, updatedObjects);
-        for (id object in updatedObjects) {
-            if ([object isKindOfClass:[IPKTeamMembership class]]) {
-                IPKTeamMembership * tm = object;
-                NSLog(@"Updated: %@ at: %@", tm.listing.full_name, tm.position);
-            }
-        }
     }
     if (deletedObjects.count > 0){
 //        NSLog(@"Deleted: %d Objects: %@", deletedObjects.count, deletedObjects);
@@ -306,14 +304,20 @@
 
 #pragma mark - Facebook
 
-- (FBSession *)createNewSession
+- (void)createNewSession
 {
-    NSArray *permissions = [[NSArray alloc] initWithObjects:
-                            @"user_likes", 
-                            @"read_stream",
-                            nil];
-    self.session = [[FBSession alloc] initWithPermissions:permissions];
-    return self.session;
+    NSArray *permissions = [NSArray arrayWithObjects:@"email", @"user_location", nil];
+    
+    [FBSession openActiveSessionWithReadPermissions:permissions
+                                       allowLoginUI:YES
+                                  completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+                                      /* handle success + failure in block */
+                                      if (status == FBSessionStateOpen) {
+                                          self.session = session;
+                                          [self registerOrLogin];
+                                      }
+                                  }];
+    
 }
 
 - (void)sessionStateChanged:(FBSession *)session 
@@ -357,7 +361,7 @@
 
 - (void) openSessionCheckCache:(BOOL)check {
     // Create a new session object
-    if (!self.session.isOpen) {
+    if (!check && !self.session.isOpen) {
         NSLog(@"Create new session: %@", self.session);
         [self createNewSession];
     }
@@ -369,10 +373,23 @@
     if (!check ||
         (self.session.state == FBSessionStateCreatedTokenLoaded)) {
         NSLog(@"!check new session: %@ ", self.session);
-        [self.session openWithCompletionHandler:
-         ^(FBSession *session, FBSessionState state, NSError *error) {
-             [self sessionStateChanged:session state:state error:error];
-         }];
+        
+//        [self.session openWithCompletionHandler:
+//         ^(FBSession *session, FBSessionState state, NSError *error) {
+//             [self sessionStateChanged:session state:state error:error];
+//         }];
+        NSArray *permissions = [NSArray arrayWithObjects:@"email", @"user_location", nil];
+        [FBSession openActiveSessionWithReadPermissions:permissions
+                                           allowLoginUI:YES
+                                      completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+                                          /* handle success + failure in block */
+                                          if (status == FBSessionStateOpen) {
+                                              self.session = session;
+                                              if (![[NSUserDefaults standardUserDefaults] objectForKey:@"FBUserId"]) {
+                                                  [self registerOrLogin];
+                                              }
+                                          }
+                                      }];
     }
 }
 
@@ -382,8 +399,8 @@
          annotation:(id)annotation 
 {
     NSLog(@"OpenURL %@ Session %@", self.session, url);
-    if (![self.session isOpen]) {
-        return [self.session handleOpenURL:url];
+    if (![[FBSession activeSession] isOpen]) {
+        return [[FBSession activeSession] handleOpenURL:url];
     }else{
         [self openSessionCheckCache:YES];
         return YES;

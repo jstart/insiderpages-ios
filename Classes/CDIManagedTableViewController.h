@@ -31,7 +31,7 @@
 
 - (void)showCoverView;
 - (BOOL)showingCoverView;
-- (void)hideCoverView;
+- (void)hideCoverViewWithCompletion:(void (^)(BOOL finished))completion;
 - (void)coverViewTapped:(id)sender;
 
 @end

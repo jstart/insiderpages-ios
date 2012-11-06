@@ -3,7 +3,7 @@
 //  InsiderPages_iOS
 //
 //  Created by Truman, Christopher on 9/19/12.
-//  Copyright (c) 2012 InisderPages. All rights reserved.
+//  Copyright (c) 2012 InsiderPages. All rights reserved.
 //
 
 #import "IPIIconCell.h"

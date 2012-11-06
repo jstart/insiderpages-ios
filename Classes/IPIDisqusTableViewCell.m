@@ -14,7 +14,6 @@ static CGFloat messageLabelHeight = 0;
 - (void)setComment:(IADisqusComment *)comment {
     if (_comment != comment) {
         _comment = comment;
-        
         self.messageLabel.text = comment.rawMessage;
         self.usernameLabel.text = comment.authorName;
 //        self.detailTextLabel.text = [activity actionText];
@@ -32,9 +31,9 @@ static CGFloat messageLabelHeight = 0;
 
 +(CGFloat)cellHeightForComment:(IADisqusComment*)comment{
     if (comment.parent != nil) {
-        return [comment.rawMessage sizeWithFont:[UIFont fontWithName:@"MyriadWebPro-Bold" size:13] constrainedToSize:CGSizeMake(200, 9999) lineBreakMode:NSLineBreakByWordWrapping].height + 40;
+        return [comment.rawMessage sizeWithFont:[UIFont fontWithName:@"MyriadWebPro-Bold" size:13] constrainedToSize:CGSizeMake(200, 9999) lineBreakMode:NSLineBreakByWordWrapping].height + 40 + 28;
     }else{
-        return [comment.rawMessage sizeWithFont:[UIFont fontWithName:@"MyriadWebPro-Bold" size:13] constrainedToSize:CGSizeMake(230, 9999) lineBreakMode:NSLineBreakByWordWrapping].height + 40;
+        return [comment.rawMessage sizeWithFont:[UIFont fontWithName:@"MyriadWebPro-Bold" size:13] constrainedToSize:CGSizeMake(230, 9999) lineBreakMode:NSLineBreakByWordWrapping].height + 40 + 28;
     }
 }
 
@@ -42,7 +41,15 @@ static CGFloat messageLabelHeight = 0;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
 	if ((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) {
+        self.layer.cornerRadius = 4;
+        self.clipsToBounds = YES;      
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
 
+        CGRect contentViewFrame = self.frame;
+        self.contentView.frame = contentViewFrame;
+        
+        self.backgroundView = [[UIView alloc] init];
+        [self.backgroundView setBackgroundColor:[UIColor whiteColor]];
         
         UIImage * image = nil;
         self.profileImageView = [[NINetworkImageView alloc] initWithImage:image];
@@ -68,14 +75,24 @@ static CGFloat messageLabelHeight = 0;
         self.timeLabel.textColor = [UIColor colorWithHexString:@"666666"];
         [self.timeLabel setFont:[UIFont systemFontOfSize:[UIFont smallSystemFontSize]]];
         [self addSubview:self.timeLabel];
+        
+        self.commentReplyButton = [[IPICommentReplyButton alloc] initWithFrame:CGRectMake(225, 0, 55, 28)];
+        [self.commentReplyButton addTarget:self action:@selector(replyButtonSelected) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:self.commentReplyButton];
 	}
 	return self;
 }
 
+-(void)replyButtonSelected{
+    [self.commentReplyButton setSelected:YES];
+    if (self.delegate) {
+        [self.delegate replyToComment:self.comment cell:self];
+    }
+}
+
 - (void) layoutSubviews {
     [super layoutSubviews];
-
-
+    
     if (self.comment.parent != nil) {
         CGRect profileImageViewFrame = self.profileImageView.frame;
         profileImageViewFrame.origin.x = 47;
@@ -96,6 +113,10 @@ static CGFloat messageLabelHeight = 0;
         CGRect detailTextLabelFrame = self.detailTextLabel.frame;
         detailTextLabelFrame.origin.x = 75;
         self.detailTextLabel.frame = detailTextLabelFrame;
+        
+        CGRect commentReplyButtonFrame = self.commentReplyButton.frame;
+        commentReplyButtonFrame.origin.y = [self.comment.rawMessage sizeWithFont:[UIFont fontWithName:@"MyriadWebPro-Bold" size:13] constrainedToSize:CGSizeMake(200, 9999) lineBreakMode:NSLineBreakByWordWrapping].height + 40 - 10;
+        self.commentReplyButton.frame = commentReplyButtonFrame;
     }else{
         CGRect profileImageViewFrame = self.profileImageView.frame;
         profileImageViewFrame.origin.x = 20;
@@ -116,6 +137,10 @@ static CGFloat messageLabelHeight = 0;
         CGRect detailTextLabelFrame = self.detailTextLabel.frame;
         detailTextLabelFrame.origin.x = 50;
         self.detailTextLabel.frame = detailTextLabelFrame;
+        
+        CGRect commentReplyButtonFrame = self.commentReplyButton.frame;
+        commentReplyButtonFrame.origin.y = [self.comment.rawMessage sizeWithFont:[UIFont fontWithName:@"MyriadWebPro-Bold" size:13] constrainedToSize:CGSizeMake(230, 9999) lineBreakMode:NSLineBreakByWordWrapping].height + 40 - 10;
+        self.commentReplyButton.frame = commentReplyButtonFrame;
     }
 }
 

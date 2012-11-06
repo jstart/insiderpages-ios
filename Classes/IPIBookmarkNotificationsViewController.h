@@ -2,10 +2,10 @@
 //  IPIBookmarkNotificationsViewController
 //
 
-#import "CDIManagedTableViewController.h"
+#import "IPIBookmarkBaseManagedModalViewController.h"
 #import "IPIPageViewController.h"
 
-@interface IPIBookmarkNotificationsViewController : CDIManagedTableViewController
+@interface IPIBookmarkNotificationsViewController : IPIBookmarkBaseManagedModalViewController
 
 @property (nonatomic, strong) IPKProvider * provider;
 

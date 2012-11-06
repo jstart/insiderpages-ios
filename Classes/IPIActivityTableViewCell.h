@@ -3,12 +3,13 @@
 //  InsiderPages_iOS
 //
 //  Created by Truman, Christopher on 9/20/12.
-//  Copyright (c) 2012 InisderPages. All rights reserved.
+//  Copyright (c) 2012 InsiderPages. All rights reserved.
 //
-
+#import "IPIAbstractActivityCell.h"
 #import "TTTAttributedLabel.h"
 
-@interface IPIActivityTableViewCell : UITableViewCell
+@interface IPIActivityTableViewCell : IPIAbstractActivityCell
+
 @property (nonatomic, strong) IPKActivity *activity;
 @property (nonatomic, strong) TTTAttributedLabel *activityLabel;
 @property (nonatomic, strong) NINetworkImageView * profileImageView;

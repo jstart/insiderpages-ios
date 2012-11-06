@@ -99,7 +99,7 @@
 	return nil;
 }
 
--(NSString *)sortDescriptors{
+- (NSString *)sortDescriptors{
     return @"createdAt,remoteID";
 }
 

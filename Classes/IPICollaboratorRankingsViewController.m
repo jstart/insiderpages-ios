@@ -4,7 +4,7 @@
 
 #import "IPICollaboratorRankingsViewController.h"
 #import "IPIInviteCollaboratorViewController.h"
-#import "IPIUserTableViewCell.h"
+#import "IPICollaboratorTableViewCell.h"
 #import "SVPullToRefresh.h"
 #import "UIColor+InsiderPagesiOSAdditions.h"
 //#import "CDINoListsView.h"
@@ -85,16 +85,16 @@
 #pragma mark - SSManagedViewController
 
 - (Class)entityClass {
-	return [IPKTeamFollowing class];
+	return [IPKUser class];
 }
 
 
 - (NSPredicate *)predicate {
-	return [NSPredicate predicateWithFormat:@"privilege == %@ && team_id == %@", @(1), self.page.remoteID];
+    return [NSPredicate predicateWithFormat:@"((0 != SUBQUERY(teamFollowings, $teamFollowing, $teamFollowing.privilege == %@).@count) AND (0 != SUBQUERY(teamFollowings, $teamFollowing, $teamFollowing.team_id == %@).@count))", @(1), self.page.remoteID];
 }
 
--(NSString *)sortDescriptors{
-    return @"user.name";
+-(NSArray *)sortDescriptors{
+    return @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
 }
 //
 //- (NSString *)sectionNameKeyPath {
@@ -120,6 +120,10 @@
 	return viewIndexPath;
 }
 
+- (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section {
+    NSInteger numberOfRows = [super tableView:table numberOfRowsInSection:section];
+    return numberOfRows + 1;
+}
 
 #pragma mark - CDIManagedTableViewController
 
@@ -140,9 +144,10 @@
         NSString * pageID = [NSString stringWithFormat:@"%@", self.page.remoteID];
         [[IPKHTTPClient sharedClient] getCollaboratorsForPageWithId:pageID success:^(AFJSONRequestOperation *operation, id responseObject) {
             dispatch_async(dispatch_get_main_queue(), ^{
+                self.page = [IPKPage objectWithRemoteID:@([pageID longLongValue])];
                 self.loading = NO;
                 self.fetchedResultsController = nil;
-                [self.tableView reloadData];
+                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
             });
         } failure:^(AFJSONRequestOperation *operation, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -153,25 +158,21 @@
     };
 }
 
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	NSInteger rows = [super tableView:tableView numberOfRowsInSection:section];
-	
-	return rows;
-}
-
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	static NSString *const cellIdentifier = @"cellIdentifier";
 
-	IPIUserTableViewCell *cell = (IPIUserTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+	IPICollaboratorTableViewCell *cell = (IPICollaboratorTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 	if (!cell) {
-		cell = [[IPIUserTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+		cell = [[IPICollaboratorTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
 	}
-	
-	cell.user = ((IPKTeamFollowing*)[self objectForViewIndexPath:indexPath]).user;
-	
+    cell.page = self.page;
+    if (indexPath.row == 0) {
+        cell.user = self.page.owner;
+    }else{
+        NSIndexPath * modifiedIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
+        cell.user = [self objectForViewIndexPath:modifiedIndexPath];
+    }
+
 	return cell;
 }
 
@@ -179,7 +180,13 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    IPKUser * sortUser = ((IPKTeamFollowing*)[self objectForViewIndexPath:indexPath]).user;
+    IPKUser * sortUser;
+    if (indexPath.row == 0) {
+        sortUser = self.page.owner;
+    }else{
+        NSIndexPath * modifiedIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
+        sortUser = [self objectForViewIndexPath:modifiedIndexPath];
+    }
     [self.delegate didSelectUser:sortUser];
     [self close];
 }

@@ -15,6 +15,7 @@
 #import "IIViewDeckController.h"
 
 #import "IPIActivityViewController.h"
+#import "IPIUserViewController.h"
 
 @interface IPIPullOutTableViewController ()
 
@@ -66,7 +67,11 @@
             bottomView.image = [UIImage imageNamed:@"keyline_piece_topdark"];
             [cell addSubview:bottomView];
         } whenSelected:^(NSIndexPath *indexPath) {
-//            [self.navigationController pushViewController:[[WifiViewController alloc] init] animated:YES];
+            [self.parentViewController.viewDeckController closeLeftViewAnimated:YES completion:^(IIViewDeckController *controller) {
+                IPIUserViewController * userViewController = [[IPIUserViewController alloc] init];
+                [userViewController setUser:[IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]]];
+                [((UINavigationController*)controller.centerController) pushViewController:userViewController animated:NO];
+            }];
         }];
         [section addCell:^(JMStaticContentTableViewCell *staticContentCell, UITableViewCell *cell, NSIndexPath *indexPath) {
             staticContentCell.cellStyle = UITableViewCellStyleValue1;
@@ -190,6 +195,10 @@
         }];
     }];
     [[self tableView] reloadData];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    
 }
 
 - (void)didReceiveMemoryWarning

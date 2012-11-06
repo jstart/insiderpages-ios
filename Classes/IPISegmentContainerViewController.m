@@ -9,13 +9,19 @@
 #import "IPISegmentContainerViewController.h"
 #import "IPIProviderViewController.h"
 #import "IPISocialShareHelper.h"
+#import "UIColor-Expanded.h"
 
 @implementation IPISegmentContainerViewController
 
 -(id)init{
     if (self = [super init]) {
         self.segmentControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Rankings", @"Debate", nil]];
+        [self.segmentControl setTitleTextAttributes:@{UITextAttributeFont:[UIFont fontWithName:@"Myriad Web Pro" size:13], UITextAttributeTextColor : [UIColor colorWithHexString:@"a2a2a2"]} forState:UIControlStateNormal];
+        [self.segmentControl setTitleTextAttributes:@{UITextAttributeFont:[UIFont fontWithName:@"Myriad Web Pro" size:13], UITextAttributeTextColor : [UIColor colorWithHexString:@"ffffff"]} forState:UIControlStateSelected];
+
+        [self.segmentControl setFrame:CGRectMake(0, 0, 142, 31)];
         [self.segmentControl setSegmentedControlStyle:UISegmentedControlStyleBar];
+        [self.segmentControl setBackgroundImage:[UIImage imageNamed:@"toggle_ranking_active.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
 
         self.pageViewController = [[IPIPageViewController alloc] init];
         [self addChildViewController:self.pageViewController];
@@ -45,7 +51,17 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.navigationController.navigationBar setTitleVerticalPositionAdjustment:2 forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setTitleVerticalPositionAdjustment:0 forBarMetrics:UIBarMetricsDefault];
+}
+
+- (void)presentBookmarkViewController{
+    [self.pageDisqusViewController bookmarkTapped];
+    [super presentBookmarkViewController];
+}
+
+-(void) bookmarkViewWasDismissed:(int)homePageIndex{
+    [super bookmarkViewWasDismissed:0];
+    [self.pageDisqusViewController bookmarkClosed];
 }
 
 -(void)setSortUser:(IPKUser *)sortUser{
@@ -71,7 +87,12 @@
 
 // Occurs when the current page is changed or a new page is added. Use this callback to update your visual control(in case you dont want to use pageControl or segmentedControl properties)
 -(void)firePagerChanged:(FireUIPagedScrollView*)pager pagesCount:(NSInteger)pagesCount currentPageIndex:(NSInteger)currentPageIndex{
-    [self.pageDisqusViewController viewWillAppear:YES];
+    if (currentPageIndex == 0) {
+        [self.segmentControl setBackgroundImage:[UIImage imageNamed:@"toggle_ranking_active.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    }else{
+        [self.segmentControl setBackgroundImage:[UIImage imageNamed:@"toggle_debate_active.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+        [self.pageDisqusViewController viewWillAppear:YES];
+    }
 }
 
 @end

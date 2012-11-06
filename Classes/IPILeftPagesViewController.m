@@ -81,11 +81,11 @@
 
 
 - (NSPredicate *)predicate {
-	return [NSPredicate predicateWithFormat:@"name != %@ && section_header != %@", @"",@""];
+	return [NSPredicate predicateWithFormat:@"name != %@", @""];
 }
 
--(NSString *)sortDescriptors{
-    return @"section_header";
+- (NSArray *)sortDescriptors{
+    return @[[NSSortDescriptor sortDescriptorWithKey:@"section_header" ascending:NO]];
 }
 
 - (NSString *)sectionNameKeyPath {
@@ -155,7 +155,7 @@
             });
         }];
         
-        [[IPKHTTPClient sharedClient] getFollowingPagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
+        [[IPKHTTPClient sharedClient] getFollowingPagesForUserWithId:myUserId withCurrentPage:@(1) perPage:@(20) success:^(AFJSONRequestOperation *operation, id responseObject) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.loading = NO;
                 [self.fetchedResultsController performFetch:nil];

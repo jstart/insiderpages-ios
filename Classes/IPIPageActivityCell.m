@@ -13,7 +13,21 @@
 
 @implementation IPIPageActivityCell
 
-@synthesize activity = _activity;
+@synthesize activity = _activity, page = _page;
+
+- (void)setPage:(IPKPage *)page {
+    if (_page != page) {
+        _page = page;
+        self.nameLabel.text = page.name;
+        NSString *URLString = @"http://studentaffairs.duke.edu/sites/default/files/u60/coffee%20pic.jpeg";
+        UIImageView * shadowImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"page_shadow"]];
+        CGRect shadowFrame = shadowImageView.frame;
+        shadowFrame.origin.y = 2;
+        [shadowImageView setFrame:shadowFrame];
+        NSArray * subviews = @[shadowImageView, self.nameLabel];
+        [self.coverImageView loadURLString:URLString forSize:self.coverImageView.frame.size withSubviews:subviews mode:NYXCropModeCenter];
+    }
+}
 
 - (void)setActivity:(IPKActivity *)activity {
     if (_activity != activity) {
@@ -29,9 +43,9 @@
     }
 }
 
-- (id)initWithActivity:(IPKActivity*)activity reuseIdentifier:(NSString *)reuseIdentifier
+-(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    self = [super initWithActivity:activity reuseIdentifier:reuseIdentifier];
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
         int leftPadding = 15;
@@ -50,7 +64,6 @@
         [containerView addSubview:self.coverImageView];
         
         self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(9, 80, 270, 25)];
-        self.nameLabel.text = activity.page.name;
         self.nameLabel.font = [UIFont fontWithName:@"Comfortaa" size:17];
         self.nameLabel.textColor = [UIColor whiteColor];
         self.nameLabel.backgroundColor = [UIColor clearColor];
@@ -94,6 +107,7 @@
     }
     return self;
 }
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

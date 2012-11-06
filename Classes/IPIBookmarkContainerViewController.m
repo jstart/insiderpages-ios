@@ -34,6 +34,11 @@
     UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:bookmarkWrapperViewController];
     [self addChildViewController:navController];
     [[self view] addSubview:navController.view];
+    
+    CGRect frame = self.bookmarkButton.frame;
+    frame.origin.y = [UIScreen mainScreen].bounds.size.height - 120;
+    self.bookmarkButton.frame = frame;
+    
 //    [self.navigationController setNavigationBarHidden:YES animated:NO];
 //    CGRect frame = self.navigationController.navigationBar.frame;
 //    frame.origin.y = 0;
@@ -43,6 +48,7 @@
 
 - (void)viewDidUnload
 {
+    [self setBookmarkButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

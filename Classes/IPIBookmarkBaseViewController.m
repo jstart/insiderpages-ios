@@ -80,6 +80,7 @@
     button.frame= CGRectMake(0.0, 0.0, image.size.width, image.size.height);
     
     [button addTarget:self action:@selector(presentBookmarkViewController) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(presentBookmarkViewController) forControlEvents:UIControlEventTouchDragInside];
     
     UIView *v=[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, image.size.width + 7, image.size.height) ];
     
@@ -124,7 +125,11 @@
 -(void)updateNotificationNumber{
     IPKUser * currentUser = [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]];
     NSArray * unreadNotificationsArray = [[currentUser.notifications filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"read == NO"]] allObjects];
-    [self.notificationCountLabel setText:[NSString stringWithFormat:@"%d", unreadNotificationsArray.count]];
+    NSLog(@"%lu", unreadNotificationsArray.count);
+
+    dispatch_async(dispatch_get_main_queue(), ^(){
+        [self.notificationCountLabel setText:[NSString stringWithFormat:@"%d", unreadNotificationsArray.count]];
+    });
 }
 
 -(void) bookmarkViewWasDismissed:(int)homePageIndex{

@@ -4,6 +4,7 @@
 
 #import "IPILeftSearchViewController.h"
 #import "IPIProviderViewController.h"
+#import "IPIUserViewController.h"
 #import "IPIPageSearchTableViewCell.h"
 #import "IPIProviderSearchTableViewCell.h"
 #import "IPISegmentContainerViewController.h"
@@ -26,10 +27,7 @@
 }
 
 - (BOOL)viewDeckControllerWillOpenLeftView:(IIViewDeckController*)viewDeckController animated:(BOOL)animated{
-//    self.tableView.hidden = YES;
     [self.view bringSubviewToFront:self.coverView];
-    [self showCoverView];
-
     return YES;
 }
 
@@ -95,6 +93,8 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
+    [self.view setAutoresizesSubviews:NO];
+
 //    [[NSClassFromString(@"UINavigationButton") appearanceWhenContainedIn:[UISearchBar class], nil] setContentEdgeInsets:UIEdgeInsetsMake(15, 15, 15, 15)];
 //    [[NSClassFromString(@"UINavigationButton") appearanceWhenContainedIn:[UISearchBar class], nil] setImage:[UIImage imageNamed:@"cancel_icon"] forState:UIControlStateNormal];
 //    [[NSClassFromString(@"UINavigationButton") appearanceWhenContainedIn:[UISearchBar class], nil] setImage:[UIImage imageNamed:@"cancel_icon"] forState:UIControlStateDisabled];
@@ -116,7 +116,12 @@
 
     self.searchDisplayController.searchBar.scopeButtonTitles = @[@"Pages", @"Places", @"Users"];
     [self.searchDisplayController.searchBar setShowsScopeBar:YES];
-    
+    UIView * backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
+    backgroundView.backgroundColor = [UIColor pulloutBackgroundColor];
+    ((UITableView*)self.tableView).backgroundView = backgroundView;
+    self.tableView.backgroundColor = [UIColor pulloutBackgroundColor];
+    self.view.backgroundColor = [UIColor pulloutBackgroundColor];
+    self.tableView.tableFooterView = backgroundView;
 
     [((UITableView*)self.view) setBounces:NO];
     [self customizeSearchBar];
@@ -126,11 +131,8 @@
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
     [self setWantsFullScreenLayout:NO];
-//    [self showCoverView];
-    UIView * backgroundView = [[UIView alloc] initWithFrame:self.tableView.frame];
-    backgroundView.backgroundColor = [UIColor pulloutBackgroundColor];
-    ((UITableView*)self.tableView).backgroundView = backgroundView;
-    self.view.backgroundColor = [UIColor pulloutBackgroundColor];
+    
+    [self showCoverView];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -198,8 +200,8 @@
     return nil;
 }
 
--(NSString *)sortDescriptors{
-    return nil;
+-(NSArray *)sortDescriptors{
+    return @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
 }
 
 - (NSString *)sectionNameKeyPath {
@@ -324,9 +326,13 @@
                    }
             break;
         case 2: {
-            SSHUDView * hud = [[SSHUDView alloc] initWithTitle:@"User profile TBD."];
-            [hud show];
-            [hud failAndDismissWithTitle:@"User profile TBD."];
+            [self.viewDeckController closeLeftViewAnimated:YES completion:^(IIViewDeckController *controller) {
+                IPKUser * user = ((IPKUser*)[self objectForViewIndexPath:indexPath]);
+                IPIUserViewController * userVC = [[IPIUserViewController alloc] init];
+                userVC.user = user;
+                [((UINavigationController*)controller.centerController) pushViewController:userVC animated:NO];
+            }];
+
         }
             break;
     }
@@ -355,32 +361,42 @@
 }// return NO to not become first responder
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
-    [self hideCoverView];
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.1];
-    [UIView commitAnimations];
+    UIView * backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
+    backgroundView.backgroundColor = [UIColor pulloutBackgroundColor];
+    ((UITableView*)self.tableView).backgroundView = backgroundView;
+    self.tableView.backgroundColor = [UIColor pulloutBackgroundColor];
+    self.view.backgroundColor = [UIColor pulloutBackgroundColor];
+    self.tableView.tableFooterView = backgroundView;
     [self.viewDeckController setLeftLedge:0];
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:.3];
-    CGRect frame = [self view].frame;
-    frame.size.width = 320;
-    [self.view setFrame:frame];
-    [UIView commitAnimations];
+    [self hideCoverViewWithCompletion:^(BOOL finished){
+            }];
+    [UIView animateWithDuration:0.3 animations:^(){
+        CGRect frame = [self view].frame;
+        frame.size.width = 320;
+        [self.view setFrame:frame];
+    } completion:^(BOOL finished) {
+    }];
+
 }                     // called when text starts editing
 
 - (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar{
-    [self.viewDeckController setLeftLedge:44];
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.1];
-    CGRect frame = [self view].frame;
-    frame.size.width = 320 - 44;
-    [[self view] setFrame:frame];
-    [UIView commitAnimations];
     return YES;
 }                        // return NO to not resign first responder
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
-    
+    UIView * backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
+    backgroundView.backgroundColor = [UIColor pulloutBackgroundColor];
+    ((UITableView*)self.tableView).backgroundView = backgroundView;
+    self.tableView.backgroundColor = [UIColor pulloutBackgroundColor];
+    self.view.backgroundColor = [UIColor pulloutBackgroundColor];
+    self.tableView.tableFooterView = backgroundView;
+    [self.viewDeckController setLeftLedge:44];
+    [UIView animateWithDuration:0.3 animations:^(){
+        CGRect frame = [self view].frame;
+        frame.size.width = 320 - 44;
+        [[self view] setFrame:frame];
+    }];
+
 }                       // called when text ends editing
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
@@ -551,7 +567,13 @@
 }                   // called when bookmark button pressed
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar{
+    [self.viewDeckController setLeftLedge:44];
     [self showCoverView];
+    [UIView animateWithDuration:0.3 animations:^(){
+        CGRect frame = [self view].frame;
+        frame.size.width = 320 - 44;
+        [[self view] setFrame:frame];
+    }];
 }                    // called when cancel button pressed
 
 - (void)searchBarResultsListButtonClicked:(UISearchBar *)searchBar {

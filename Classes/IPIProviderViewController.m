@@ -4,7 +4,7 @@
 
 #import "IPIProviderViewController.h"
 #import "TTTAttributedLabel.h"
-#import "IPIProviderTableViewCell.h"
+#import "IPIPageActivityCell.h"
 #import "IPIProviderHeaderTableViewCell.h"
 #import "IPIProviderViewHeader.h"
 #import "IPIAddToPageViewController.h"
@@ -35,7 +35,6 @@
 
 -(void)setProvider:(IPKProvider *)provider{
     _provider = provider;
-    [self.pagesCarousel setProvider:provider];
     self.title = self.provider.full_name;
     [self.headerView setProvider:self.provider];
     MKPointAnnotation * point = [[MKPointAnnotation alloc] init];
@@ -46,20 +45,24 @@
     MKMapRect mapRect = MKMapRectMake(coordinate.latitude, coordinate.longitude, 100, 100);
     [self.mapView setVisibleMapRect:mapRect animated:YES];
     [self.mapView setCenterCoordinate:CLLocationCoordinate2DMake([self.provider.address.lat doubleValue], [self.provider.address.lng doubleValue]) animated:YES];
-    if (provider.full_name == nil) {
-        [provider updateWithSuccess:^(){
+    self.fetchedResultsController = nil;
+    [self.tableView reloadData];
+    [self.callButton setPhoneNumber:_provider.address.phone];
+    if (_provider.full_name == nil) {
+        [_provider updateWithSuccess:^(){
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.pagesCarousel setProvider:provider];
-                self.title = self.provider.full_name;
-                [self.headerView setProvider:self.provider];
+                _provider = [IPKProvider objectWithRemoteID:_provider.remoteID];
+                self.title = _provider.full_name;
+                [self.headerView setProvider:_provider];
+                [self.callButton setPhoneNumber:_provider.address.phone];
                 MKPointAnnotation * point = [[MKPointAnnotation alloc] init];
-                CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([self.provider.address.lat doubleValue], [self.provider.address.lng doubleValue]);
+                CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([_provider.address.lat doubleValue], [_provider.address.lng doubleValue]);
                 [point setCoordinate:coordinate];
                 [self.mapView addAnnotation:point];
                 
                 MKMapRect mapRect = MKMapRectMake(coordinate.latitude, coordinate.longitude, 100, 100);
                 [self.mapView setVisibleMapRect:mapRect animated:YES];
-                [self.mapView setCenterCoordinate:CLLocationCoordinate2DMake([self.provider.address.lat doubleValue], [self.provider.address.lng doubleValue]) animated:YES];
+                [self.mapView setCenterCoordinate:CLLocationCoordinate2DMake([_provider.address.lat doubleValue], [_provider.address.lng doubleValue]) animated:YES];
             });
         } failure:^(AFJSONRequestOperation * op, NSError * err){
             
@@ -71,30 +74,33 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	self.view.backgroundColor = [UIColor grayColor];
-    self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 320, 180)];
+    [self.view setBackgroundColor:[UIColor standardBackgroundColor]];
+    [self.tableView setBackgroundColor:[UIColor standardBackgroundColor]];
+
+    self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 320, 148)];
     [[self view] addSubview:self.mapView];
 
-    self.headerView = [[IPIProviderViewHeader alloc] initWithFrame:CGRectMake(0, 0, 320, 180)];
+    self.headerView = [[IPIProviderViewHeader alloc] initWithFrame:CGRectMake(0, 0, 320, 148)];
     [self.headerView setDelegate:self];
     [self.view addSubview:self.headerView];
     
-    self.pagesCarousel = [[IPIProviderPagesCarouselViewController alloc] init];
-    [self addChildViewController:self.pagesCarousel];
-    self.pagesCarousel.view.frame = CGRectMake(0, 180, 320, 115);
-    [[self view] addSubview:self.pagesCarousel.view];
+    UIView * tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 90)];
+    self.callButton = [IPICallButton standardCallButton];
+    CGRect frame = self.callButton.frame;
+    frame.origin.x = 55;
+    frame.origin.y = 20;
+    [self.callButton setFrame:frame];
+    [tableHeaderView addSubview:self.callButton];
+    [self.tableView setTableHeaderView:tableHeaderView];
+    
     [self.navigationController.navigationBar setTitleVerticalPositionAdjustment:7 forBarMetrics:UIBarMetricsDefault];
+    [self.tableView setFrame:CGRectMake(0, 148, 320, [UIScreen mainScreen].bounds.size.height-200+32)];
 
-//    self.scoopsCarousel = [[IPIProviderScoopsCarouselViewController alloc] init];
-//    [self.scoopsCarousel setProvider:self.provider];
-//    [self addChildViewController:self.scoopsCarousel];
-//    self.scoopsCarousel.view.frame = CGRectMake(0, 295, 320, 160);
-//    [[self view] addSubview:self.scoopsCarousel.view];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-
+    [self.tableView setScrollIndicatorInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
 }
 
 
@@ -108,6 +114,89 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
 	return toInterfaceOrientation == UIInterfaceOrientationPortrait;
+}
+
+-(void)back{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void (^)(void))refresh{
+    return ^(void){
+        self.currentPage = @1;
+        if (self.loading) {
+            return ;
+        }
+        self.loading = YES;
+        NSString * providerIDString = [NSString stringWithFormat:@"%@", self.provider.remoteID];
+        [[IPKHTTPClient sharedClient] getPagesForProviderWithId:providerIDString withCurrentPage:self.currentPage perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.fetchedResultsController = nil;
+                [self.tableView reloadData];
+                self.loading = NO;
+            });
+        } failure:^(AFJSONRequestOperation *operation, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SSRateLimit resetLimitForName:[NSString stringWithFormat:@"refresh-provider-pages-%@", self.provider.remoteID]];
+                self.loading = NO;
+            });
+        }];
+    };
+}
+
+#pragma mark - SSManagedTableViewController
+
+- (NSFetchRequest *)fetchRequest {
+	NSFetchRequest * fetchRequest = [super fetchRequest];
+    [fetchRequest setReturnsDistinctResults:YES];
+	return fetchRequest;
+}
+
+- (Class)entityClass {
+    return [IPKTeamMembership class];
+}
+
+- (NSPredicate *)predicate {
+	return [NSPredicate predicateWithFormat:@"listing.remoteID == %@", self.provider.remoteID];
+}
+
+-(NSArray *)sortDescriptors{
+    return @[[NSSortDescriptor sortDescriptorWithKey:@"team_id" ascending:YES]];
+}
+
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+	IPIPageActivityCell *pageCell = (IPIPageActivityCell *)cell;
+	pageCell.page = ((IPKTeamMembership*)[self objectForViewIndexPath:indexPath]).team;
+}
+
+#pragma mark - UITableViewDataSource
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	static NSString *const cellIdentifier = @"cellIdentifier";
+	
+	IPIPageActivityCell *cell = (IPIPageActivityCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+	if (!cell) {
+		cell = [[IPIPageActivityCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell.editing = NO;
+	}
+	
+	[self configureCell:cell atIndexPath:indexPath];
+	
+	return cell;
+}
+
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+//	return self.addTaskView;
+//}
+
+
+#pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return [IPIPageActivityCell cellHeight] + 20;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
 }
 
 #pragma mark - UIScrollViewDelegate

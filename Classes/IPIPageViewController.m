@@ -12,6 +12,7 @@
 #import "IPIPageTableViewHeader.h"
 #import "IPISocialShareHelper.h"
 #import "SVPullToRefresh.h"
+
 //#import "CDIAddTaskView.h"
 //#import "CDIAttributedLabel.h"
 //#import "CDICreateListViewController.h"
@@ -46,9 +47,8 @@ static CGFloat prevContentOffset = 0;
     [_page.owner addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionNew context:context];
     [_page addObserver:self forKeyPath:@"is_favorite" options:NSKeyValueObservingOptionNew context:context];
     [_page addObserver:self forKeyPath:@"is_following" options:NSKeyValueObservingOptionNew context:context];
-    if (page.name == nil) {
+    if (page.owner == nil) {
         [_page updateWithSuccess:^(){
-            
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.headerView setPage:_page];
                 [self.headerView setNeedsDisplay];
@@ -165,6 +165,7 @@ static CGFloat prevContentOffset = 0;
 //    [self setEditing:YES animated:YES];
     [SSRateLimit executeBlock:[self refresh] name:@"refresh-add-to-pages" limit:0.0];
     [self.tableView.pullToRefreshView triggerRefresh];
+    [self.tableView setScrollIndicatorInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -216,7 +217,7 @@ static CGFloat prevContentOffset = 0;
             });
         } failure:^(AFJSONRequestOperation *operation, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                SSHUDView * hud = [[SSHUDView alloc] initWithTitle:@"Page is private"];
+                SSHUDView * hud = [[SSHUDView alloc] initWithTitle:@"Reorder failed."];
                 [hud show];
                 [hud failAndDismissWithTitle:@"Reorder failed."];
                 [SSRateLimit resetLimitForName:[NSString stringWithFormat:@"refresh-list-%@", self.page.remoteID]];
@@ -246,8 +247,8 @@ static CGFloat prevContentOffset = 0;
     }
 }
 
--(NSString*)sortDescriptors{
-    return @"position";
+- (NSArray *)sortDescriptors{
+    return @[[NSSortDescriptor sortDescriptorWithKey:@"position" ascending:YES]];
 }
 
 #pragma mark - IPICollaboratorRankingsDelegate
@@ -329,9 +330,17 @@ static CGFloat prevContentOffset = 0;
             });
         } failure:^(AFJSONRequestOperation *operation, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                SSHUDView * hud = [[SSHUDView alloc] initWithTitle:@"Page is private"];
-                [hud show];
-                [hud failAndDismissWithTitle:@"Page is private"];
+                NSString * errorDescription = [[[error localizedRecoverySuggestion] stringByReplacingOccurrencesOfString:@"{\"message\":\"" withString:@""] stringByReplacingOccurrencesOfString:@"\"}" withString:@""];
+                if (errorDescription) {
+                    SSHUDView * hud = [[SSHUDView alloc] initWithTitle:errorDescription];
+                    [hud show];
+                    [hud failAndDismissWithTitle:errorDescription];
+                }else{
+                    SSHUDView * hud = [[SSHUDView alloc] initWithTitle:@"Can't Access Page"];
+                    [hud show];
+                    [hud failAndDismissWithTitle:@"Can't Access Page"];
+                }
+
                 [SSRateLimit resetLimitForName:[NSString stringWithFormat:@"refresh-list-%@", self.page.remoteID]];
                 self.loading = NO;
             });

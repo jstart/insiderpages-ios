@@ -7,6 +7,7 @@
 //
 
 #import "IPIActivityViewController.h"
+#import "IPIPushNotificationRouter.h"
 #import "IPISplitViewController.h"
 #import "IPIPageViewController.h"
 #import "IPISegmentContainerViewController.h"
@@ -30,7 +31,7 @@
 	#import "CDIWebSignInViewController.h"
 #endif
 
-@interface IPIActivityViewController ()
+@interface IPIActivityViewController () <IPIAbstractActivityCellDelegate>
 - (void)_listUpdated:(NSNotification *)notification;
 - (void)_currentUserDidChange:(NSNotification *)notification;
 - (void)_checkUser;
@@ -97,6 +98,7 @@
     
     self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
     [self.tableView.pullToRefreshView triggerRefresh];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -107,11 +109,12 @@
     [self.navigationController.navigationBar setTitleVerticalPositionAdjustment:2 forBarMetrics:UIBarMetricsDefault];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_currentUserDidChange:) name:kIPKCurrentUserChangedNotificationName object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_currentUserDidChange:) name:@"Logged In" object:nil];
+    [self.tableView setScrollIndicatorInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-	
+    [self.tableView setScrollIndicatorInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
@@ -142,12 +145,8 @@
     }
 }
 
--(NSString *)sortDescriptors{
-    return @"updatedAt";
-}
-
--(BOOL)ascending{
-    return NO;
+- (NSArray *)sortDescriptors{
+    return @[[NSSortDescriptor sortDescriptorWithKey:@"updatedAt" ascending:NO]];
 }
 
 - (NSString *)sectionNameKeyPath {
@@ -274,7 +273,7 @@
             } failure:^(AFJSONRequestOperation *operation, NSError *error) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     NSLog(@"failed to retrieve activity items, %@", [error debugDescription]);
-                    if ([[operation.error.userInfo objectForKey:@"NSLocalizedRecoverySuggestion"] isEqualToString:@"{\"message\":\"you are not logged in\"}"]) {
+                    if ([[error localizedRecoverySuggestion] isEqualToString:@"{\"message\":\"you are not logged in\"}"]) {
                         [[IPIAppDelegate sharedAppDelegate] registerOrLogin];
                     }
                     [SSRateLimit resetLimitForName:@"refresh-activity"];
@@ -401,6 +400,7 @@
 	}
     if ([cell isKindOfClass:[IPIAbstractActivityCell class]]) {
         [cell setActivity:activity];
+        [cell setDelegate:self];
     }
     
 	return cell;
@@ -527,13 +527,14 @@
 //    UIView * paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 15)];
 //    return paddingView;
     
-    UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    IPIAbstractActivityCell *cell = (IPIAbstractActivityCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 	if (!cell) {
 		cell = [[cellClass alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
 	}
-	
 	((IPIActivityTableViewCell*)cell).activity = activity;
-    
+    if ([cell isKindOfClass:[IPIAbstractActivityCell class]]) {
+        [cell setDelegate:self];
+    }
     UITapGestureRecognizer *singleTapRecogniser = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapSectionHeader:)];
     [singleTapRecogniser setDelegate:self];
     singleTapRecogniser.numberOfTouchesRequired = 1;
@@ -625,6 +626,13 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
 	[super controllerDidChangeContent:controller];
 	
+}
+
+#pragma mark - IPIActivityTableViewCellDelegate
+
+-(void)didSelectUser:(IPKUser*)user{
+    UIViewController * vc = [IPIPushNotificationRouter viewControllerForUserID:user.remoteID];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - Private

@@ -1,10 +1,14 @@
 //
-//  IPIAddToPageViewController
+//  IPIBookmarkNotificationsViewController
 //
 
 #import "IPIBookmarkNotificationsViewController.h"
 #import "IPINotifcationTableViewCell.h"
 #import "UIColor+InsiderPagesiOSAdditions.h"
+#import "IPIPushNotificationRouter.h"
+#import "IPINotificationPathRouter.h"
+#import "IIViewDeckController.h"
+#import "IPIAppDelegate.h"
 //#import "CDINoListsView.h"
 #import <SSToolkit/UIScrollView+SSToolkitAdditions.h>
 
@@ -46,12 +50,16 @@
 	[super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     self.parentViewController.parentViewController.title = @"Notifications";
-    
+    [self.tableView setScrollIndicatorInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-
+    [[IPKHTTPClient sharedClient] markNotificationsReadWithSuccess:^(AFJSONRequestOperation *operation, id responseObject) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"updateNotificationNumber" object:nil userInfo:nil];
+    } failure:^(AFJSONRequestOperation *operation, NSError *error){
+    
+    }];
 	[SSRateLimit executeBlock:[self refresh] name:@"refresh-notifications" limit:30.0];
 }
 
@@ -75,8 +83,8 @@
 	return [NSPredicate predicateWithFormat:@"user.remoteID == %@", [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]].remoteID];
 }
 
--(NSString *)sortDescriptors{
-    return @"remoteID";
+- (NSArray *)sortDescriptors{
+    return @[[NSSortDescriptor sortDescriptorWithKey:@"remoteID" ascending:NO]];
 }
 
 -(BOOL)ascending{
@@ -120,6 +128,7 @@
         
         self.loading = YES;
         [[IPKHTTPClient sharedClient] getNotificationsWithCurrentPage:@1 perPage:@10 success:^(AFJSONRequestOperation *operation, id responseObject) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"updateNotificationNumber" object:nil userInfo:nil];
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.loading = NO;
                 self.fetchedResultsController = nil;
@@ -160,7 +169,13 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-
+    IPKNotification * notification = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    UIViewController * viewController = [IPINotificationPathRouter viewControllerForActivityParent:notification.activity_parent];
+    UINavigationController * wrapperNavigationController = (UINavigationController*)((IIViewDeckController*)[IPIAppDelegate sharedAppDelegate].window.rootViewController);
+    UINavigationController * centerNavigationController = [((IIViewDeckController*)[wrapperNavigationController topViewController]) centerController];
+    [centerNavigationController pushViewController:viewController animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [[self containerViewController].delegate bookmarkViewWasDismissed:-2];
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView{

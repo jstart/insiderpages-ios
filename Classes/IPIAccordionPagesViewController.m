@@ -92,8 +92,8 @@
 	return [NSPredicate predicateWithFormat:@"name != %@ && section_header == %@", @"",self.section_header];
 }
 
--(NSString *)sortDescriptors{
-    return @"section_header,createdAt,remoteID";
+- (NSArray *)sortDescriptors{
+    return @[[NSSortDescriptor sortDescriptorWithKey:@"section_header" ascending:NO], [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO]];
 }
 
 -(NSString*)sectionNameKeyPath{
@@ -154,7 +154,7 @@
             }];
         }
         else if ([self.section_header isEqualToString:@"Following"]){
-            [[IPKHTTPClient sharedClient] getFollowingPagesForUserWithId:myUserId success:^(AFJSONRequestOperation *operation, id responseObject) {
+            [[IPKHTTPClient sharedClient] getFollowingPagesForUserWithId:myUserId withCurrentPage:@(1) perPage:@(20)  success:^(AFJSONRequestOperation *operation, id responseObject) {
                 NSLog(@"%@", responseObject);
                 dispatch_async(dispatch_get_main_queue(), ^{
                     self.loading = NO;

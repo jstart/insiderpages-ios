@@ -8,6 +8,9 @@
 
 #import "IPICreatePageInitialViewController.h"
 #import "UIColor-Expanded.h"
+#import "IPIPushNotificationRouter.h"
+#import "IIViewDeckController.h"
+#import "IPIPageRankActionViewController.h"
 
 @interface IPICreatePageInitialViewController ()
 
@@ -116,6 +119,13 @@
     [[IPKHTTPClient sharedClient] createPage:page success:^(AFJSONRequestOperation *operation, id responseObject) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [hud completeAndDismissWithTitle:@"Page Created!"];
+            IPIPageRankActionViewController *viewController = [[IPIPageRankActionViewController alloc] init];
+            [viewController setPage:page];
+            UINavigationController *navigationController = (UINavigationController*)self.presentingViewController;
+            IIViewDeckController *viewDeckController = (IIViewDeckController*)[navigationController topViewController];
+            UINavigationController * lowerNavigationController = (UINavigationController*)[viewDeckController centerController];
+            [lowerNavigationController pushViewController:viewController animated:YES];
+            [self.presentingViewController dismissModalViewControllerAnimated:YES];
         });
     } failure:^(AFJSONRequestOperation *operation, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -124,7 +134,6 @@
         });
     }];
 
-    [self.presentingViewController dismissModalViewControllerAnimated:YES];
 }
 
 - (void)viewDidUnload {

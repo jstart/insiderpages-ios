@@ -89,6 +89,7 @@
     self.fetchedResultsController = nil;
     [[self tableView] reloadData];
     [SSRateLimit executeBlock:[self refresh] name:@"refresh-my-pages" limit:0];
+    [self.tableView setScrollIndicatorInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -140,12 +141,8 @@
 	return [NSPredicate predicateWithFormat:@"user_id == %@", [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]].remoteID];
 }
 
--(NSString *)sortDescriptors{
-    return @"updatedAt,remoteID";
-}
-
--(BOOL)ascending{
-    return NO;
+- (NSArray *)sortDescriptors{
+    return @[[NSSortDescriptor sortDescriptorWithKey:@"updatedAt" ascending:NO]];
 }
 
 - (NSString *)sectionNameKeyPath {
@@ -193,6 +190,7 @@
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
     [searchBar setShowsCancelButton:NO animated:YES];
     [searchBar resignFirstResponder];
+    searchBar.text = @"";
     self.fetchedResultsController = nil;
     [[self tableView] reloadData];
 }

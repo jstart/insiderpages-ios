@@ -16,6 +16,7 @@
 
 @interface IPIBookmarkContainerViewController : UIViewController
 
+@property (strong, nonatomic) IBOutlet UIButton *bookmarkButton;
 @property (strong, nonatomic) id <IPIBookmarkViewDelegate> delegate;
 
 @end

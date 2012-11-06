@@ -44,6 +44,9 @@
     frame.size.width = 320 - 63;
 //    frame.size.height = 40;
     [self.textLabel setFrame:frame];
+    IPKUser * user = [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]];
+    
+    [self.profileImageView setPathToNetworkImage:[user imageProfilePathForSize:IPKUserProfileImageSizeMedium]];
 }
 
 +(CGFloat)cellHeight{

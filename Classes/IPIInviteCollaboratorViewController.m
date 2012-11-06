@@ -56,12 +56,8 @@
 	return [NSPredicate predicateWithFormat:@"(0 != SUBQUERY(followedUsers, $user, $user.remoteID == %@).@count)", [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]].remoteID];
 }
 
--(NSString *)sortDescriptors{
-    return @"name";
-}
-
--(BOOL)ascending{
-    return NO;
+- (NSArray *)sortDescriptors{
+    return @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:NO]];
 }
 
 - (NSString *)sectionNameKeyPath {

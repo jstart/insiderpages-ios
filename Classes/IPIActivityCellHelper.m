@@ -13,6 +13,7 @@
 #import "IPIActivityTableViewCell.h"
 #import "IPIUserActivityCell.h"
 #import "IPIProviderActivityCell.h"
+#import "IPIRankPageActivityCell.h"
 
 @implementation IPIActivityCellHelper
 
@@ -21,19 +22,19 @@
 
     UITableViewCell * activityCell;
     if ([activity activityType] == IPKActivityTypeCreate && [activity trackableType] == IPKTrackableTypeTeam) {
-        activityCell = [[IPIPageActivityCell alloc] initWithActivity:activity reuseIdentifier:cellIdentifier];
+        activityCell = [[IPIPageActivityCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     else if ([activity activityType] == IPKActivityTypeAdd && [activity trackableType] == IPKTrackableTypeProvider){
-        activityCell = [[IPIProviderActivityCell alloc] initWithActivity:activity reuseIdentifier:cellIdentifier];
+        activityCell = [[IPIProviderActivityCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     else if ([activity activityType] == IPKActivityTypeAdd && [activity trackableType] == IPKTrackableTypeCgListing){
-        activityCell = [[IPIProviderActivityCell alloc] initWithActivity:activity reuseIdentifier:cellIdentifier];
+        activityCell = [[IPIProviderActivityCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     else if ([activity activityType] == IPKActivityTypeFavorite && [activity trackableType] == IPKTrackableTypeTeam){
-        activityCell = [[IPIPageActivityCell alloc] initWithActivity:activity reuseIdentifier:cellIdentifier];
+        activityCell = [[IPIPageActivityCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     else if ([activity activityType] == IPKActivityTypeRank && [activity trackableType] == IPKTrackableTypeTeam){
-        activityCell;
+        activityCell = [[IPIRankPageActivityCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     else if ([activity activityType] == IPKActivityTypeFollow && [activity trackableType] == IPKTrackableTypeUser){
         activityCell;
@@ -76,7 +77,7 @@
         height = [IPIPageActivityCell cellHeight];
     }
     else if ([activity activityType] == IPKActivityTypeRank && [activity trackableType] == IPKTrackableTypeTeam){
-        height;
+        height = [IPIRankPageActivityCell cellHeightForActivity:activity];
     }
     else if ([activity activityType] == IPKActivityTypeFollow && [activity trackableType] == IPKTrackableTypeUser){
         height;

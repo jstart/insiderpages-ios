@@ -10,28 +10,25 @@
 
 @protocol IPIProviderViewHeaderDelegate <NSObject>
 
--(void)callButtonPressed:(IPKProvider*)provider;
--(void)directionButtonPressed:(IPKProvider*)provider;
--(void)shareButtonPressed:(IPKProvider*)provider;
 -(void)addToPageButtonPressed:(IPKProvider*)provider;
+-(void)addToDoButtonPressed:(IPKProvider*)provider;
 
 @end
 
 @interface IPIProviderViewHeader : UIView
 
-@property (nonatomic, strong) UIView * overlayView;
+@property (nonatomic, strong) UIImageView * overlayView;
 @property (nonatomic, strong) UILabel * nameLabel;
-@property (nonatomic, strong) UIButton * callButton;
-@property (nonatomic, strong) UIButton * directionsButton;
-@property (nonatomic, strong) UIButton * shareButton;
+@property (nonatomic, strong) UILabel * categoryLabel;
+@property (nonatomic, strong) UILabel * addressLabel;
+@property (nonatomic, strong) UILabel * address2Label;
 @property (nonatomic, strong) UIButton * addToPageButton;
+@property (nonatomic, strong) UIButton * addToDoButton;
 @property (nonatomic, weak) id<IPIProviderViewHeaderDelegate> delegate;
 
 @property (nonatomic, strong) IPKProvider * provider;
 
--(void)callButtonPressed;
--(void)directionButtonPressed;
--(void)shareButtonPressed;
 -(void)addToPageButtonPressed;
+-(void)addToDoButtonPressed;
 
 @end

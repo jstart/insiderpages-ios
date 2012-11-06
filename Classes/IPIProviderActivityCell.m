@@ -23,9 +23,9 @@
     }
 }
 
-- (id)initWithActivity:(IPKActivity*)activity reuseIdentifier:(NSString *)reuseIdentifier
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    self = [super initWithActivity:activity reuseIdentifier:reuseIdentifier];
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {        
         self.cellView = [[UIView alloc] initWithFrame:CGRectMake(15, 0, 290, 40)];
         self.cellView.backgroundColor = [UIColor whiteColor];
@@ -55,7 +55,6 @@
         self.nameLabel.backgroundColor = [UIColor whiteColor];
         self.nameLabel.font = [UIFont fontWithName:@"Myriad Web Pro" size:12];
         self.nameLabel.textColor = [UIColor colorWithHexString:@"999999"];
-        self.nameLabel.text = [activity.provider full_name];
         [maskedView addSubview:self.nameLabel];
     }
     return self;

@@ -28,7 +28,7 @@
     [super viewDidLoad];
 //    self.wantsFullScreenLayout = YES;
     CGRect frame = self.navigationController.view.frame;
-    frame.size.height = 362;
+    frame.size.height = [UIScreen mainScreen].bounds.size.height - 118;
     self.navigationController.view.frame = frame;
 }
 

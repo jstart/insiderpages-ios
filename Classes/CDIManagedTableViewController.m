@@ -28,7 +28,6 @@
 		frame.origin.y += [CDITableViewCell cellHeight];
 		frame.size.height -= [CDITableViewCell cellHeight];
 		_coverView = [[UIView alloc] initWithFrame:frame];
-		_coverView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
 		_coverView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.9f];
 		_coverView.alpha = 0.0f;
 		
@@ -264,22 +263,19 @@
 - (void)showCoverView {
 	UIView *coverView = self.coverView;
     _coverView = coverView;
-	[UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionAllowUserInteraction animations:^{
+	[UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionAllowUserInteraction animations:^{
 		coverView.alpha = 1.0f;
 	} completion:nil];
 }
 
 - (BOOL)showingCoverView {
-	return _coverView != nil;
+	return _coverView.alpha != 0.0f;
 }
 
-- (void)hideCoverView {
-	[UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionAllowUserInteraction animations:^{
+- (void)hideCoverViewWithCompletion:(void (^)(BOOL finished))completion {
+	[UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionAllowUserInteraction animations:^{
 		_coverView.alpha = 0.0f;
-	} completion:^(BOOL finished) {
-		[_coverView removeFromSuperview];
-		_coverView = nil;
-	}];
+	} completion:completion];
 }
 
 - (void)coverViewTapped:(id)sender {

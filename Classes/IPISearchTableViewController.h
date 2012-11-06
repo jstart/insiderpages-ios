@@ -10,5 +10,7 @@
 
 @property (nonatomic, strong) UISearchDisplayController * customSearchDisplayController;
 
+-(void)customizeSearchBar;
+
 @end
 

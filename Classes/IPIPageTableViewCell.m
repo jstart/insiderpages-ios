@@ -16,7 +16,15 @@
         _page = page;
         
         self.textLabel.text = [page name];
-        self.detailTextLabel.text = [page section_header];
+        IPKUser * viewingUser = self.user ? self.user : [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]];
+        NSSet * filteredSet = [page.following_users filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"remoteID == %@", viewingUser.remoteID]];
+        if (filteredSet.count > 0) {
+            self.detailTextLabel.text = @"Insider";
+        }else if ([page.owner.remoteID isEqualToNumber:viewingUser.remoteID]){
+            self.detailTextLabel.text = @"Creator";
+        }else{
+            self.detailTextLabel.text = @"Other";
+        }
         [self.pageCoverImageView setPathToNetworkImage:@"http://gentlemint.com/media/images/2012/04/26/3f31ab05.jpg.650x650_q85.jpg" forDisplaySize:self.pageCoverImageView.frame.size contentMode:UIViewContentModeScaleAspectFill
          ];
         [self setNeedsLayout];

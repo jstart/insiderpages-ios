@@ -5,6 +5,7 @@
 #import "IPIProviderMapsCarouselViewController.h"
 #import "TTTAttributedLabel.h"
 #import "IPIProviderMapCarouselView.h"
+#import "IPIPushNotificationRouter.h"
 
 @implementation IPIProviderMapsCarouselViewController
 
@@ -55,7 +56,7 @@
 -(void)setPage:(IPKPage *)page{
     _page = page;
     
-    [self.fetchedResultsController performFetch:nil];
+    self.fetchedResultsController = nil;
     
 }
 
@@ -174,11 +175,16 @@
 }
 
 - (BOOL)carousel:(iCarousel *)carousel shouldSelectItemAtIndex:(NSInteger)index{
+
     return YES;
 }
 
 - (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index{
-    
+//    IPKTeamMembership * tm = [[self.fetchedResultsController fetchedObjects] objectAtIndex:index];
+//    NSNumber * providerID = tm.listing.remoteID;
+//    NSString * listingType = tm.listing.listing_type;
+//    UIViewController * vc = [IPIPushNotificationRouter viewControllerForProviderID:providerID listingType:listingType];
+//    [self.parentViewController.navigationController pushViewController:vc animated:YES];
 }
 
 - (CGFloat)carouselItemWidth:(iCarousel *)carousel{

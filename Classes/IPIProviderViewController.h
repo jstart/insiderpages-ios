@@ -6,17 +6,17 @@
 //
 #import <MapKit/MapKit.h>
 #import <AddressBook/AddressBook.h>
-#import "IPIBookmarkBaseViewController.h"
-#import "IPIProviderPagesCarouselViewController.h"
+#import "IPIBookmarkBaseManagedViewController.h"
+#import "IPICallButton.h"
 
 @class IPKProvider;
 @class IPIProviderViewHeader;
 
-@interface IPIProviderViewController : IPIBookmarkBaseViewController
+@interface IPIProviderViewController : IPIBookmarkBaseManagedViewController
 
 @property (nonatomic, strong) IPKProvider *provider;
 @property (nonatomic, strong) MKMapView * mapView;
 @property (nonatomic, strong) IPIProviderViewHeader * headerView;
-@property (nonatomic, strong) IPIProviderPagesCarouselViewController * pagesCarousel;
+@property (nonatomic, strong) IPICallButton * callButton;
 
 @end

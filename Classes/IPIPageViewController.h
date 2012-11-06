@@ -19,4 +19,6 @@
 @property (nonatomic, strong) IPIRankBar * rankBar;
 @property (nonatomic, strong) UIButton * tabButton;
 
+-(void)tabSelected;
+
 @end

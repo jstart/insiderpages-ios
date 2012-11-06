@@ -41,7 +41,10 @@ static NSMutableDictionary * queueDictionary;
     else {
         NSMutableURLRequest *profileImageViewrequest = [NSMutableURLRequest requestWithURL:profileImageViewURL];
         [NSURLConnection sendAsynchronousRequest:profileImageViewrequest queue:[self queueForKey:cacheKey] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-            
+            if (error) {
+                NSLog(@"%@ %@", error, cacheKey);
+                return;
+            }
             UIImage * image = [UIImage imageWithData:data];
             UIImage * formattedImage = [image cropToSize:size usingMode:mode];
             UIImageView * rasterizationView = [[UIImageView alloc] initWithImage:formattedImage];
@@ -67,7 +70,10 @@ static NSMutableDictionary * queueDictionary;
     else {
         NSMutableURLRequest *profileImageViewrequest = [NSMutableURLRequest requestWithURL:profileImageViewURL];
         [NSURLConnection sendAsynchronousRequest:profileImageViewrequest queue:[self queueForKey:cacheKey] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-            
+            if (error) {
+                NSLog(@"%@ %@", error, cacheKey);
+                return;
+            }
             UIImage * image = [UIImage imageWithData:data];
             UIImage * formattedImage = [image cropToSize:size usingMode:mode];
             UIImageView * rasterizationView = [[UIImageView alloc] initWithImage:formattedImage];

@@ -9,7 +9,7 @@
 #import "IPIPushNotificationRouter.h"
 #import "IPISegmentContainerViewController.h"
 #import "IPIProviderViewController.h"
-
+#import "IPIUserViewController.h"
 
 @implementation IPIPushNotificationRouter
 
@@ -54,10 +54,10 @@
 
 +(UIViewController*)viewControllerForUserID:(NSNumber*)userID{
     //TBD
-//    IPIUserViewController * userViewController = [[IPIUserViewController alloc] init];
-//    IPKUser *user = [IPKUser objectWithRemoteID:userID];
-//    [userViewController setUser:user];
-//    return userViewController;
+    IPIUserViewController * userViewController = [[IPIUserViewController alloc] init];
+    IPKUser *user = [IPKUser objectWithRemoteID:userID];
+    [userViewController setUser:user];
+    return userViewController;
     return nil;
 }
 

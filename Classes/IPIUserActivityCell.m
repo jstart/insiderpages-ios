@@ -56,6 +56,9 @@
         [profileView addSubview:self.profileImageView];
         [self addSubview:profileView];
         
+        UITapGestureRecognizer * tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didSelectUser)];
+        [self.profileImageView addGestureRecognizer:tapGestureRecognizer];
+        
         self.activityLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(64, 15, 170, 45)];
         self.activityLabel.backgroundColor = [UIColor standardBackgroundColor];
         self.activityLabel.numberOfLines = 3;
@@ -107,6 +110,12 @@
 
 +(CGFloat)heightForCellWithText:(NSString *)text{
     return 55;
+}
+
+-(void)didSelectUser{
+    if (self.delegate) {
+        [self.delegate didSelectUser:self.activity.user];
+    }
 }
 
 @end
