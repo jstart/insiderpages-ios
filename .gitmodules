@@ -33,7 +33,7 @@
 	url = git://github.com/OliverLetterer/UIExpandableTableView.git
 [submodule "Vendor/YIFullScreenScroll"]
 	path = Vendor/YIFullScreenScroll
-	url = git://github.com:jstart/YIFullScreenScroll.git
+	url = git://github.com/jstart/YIFullScreenScroll.git
 [submodule "Vendor/ViewDeck"]
 	path = Vendor/ViewDeck
 	url = git://github.com/Inferis/ViewDeck.git
@@ -48,11 +48,11 @@
 	url = git://github.com/samvermette/SVPullToRefresh.git
 [submodule "Vendor/JSInfiniteScrollView"]
 	path = Vendor/JSInfiniteScrollView
-	url = gitgithub.com:jstart/JSInfiniteScrollView.git
+	url = gitgithub.com/jstart/JSInfiniteScrollView.git
 [submodule "Vendor/iCarousel"]
 	path = Vendor/iCarousel
-	url = git://github.com:jstart/iCarousel.git
-[submodule "Vendor/Development/PonyDebugger"]
+	url = git://github.com/jstart/iCarousel.git
+[submodule "Vendor/Development/ent/PonyDebugger"]
 	path = Vendor/Development/PonyDebugger
 	url = git://github.com/square/PonyDebugger.git
 [submodule "Vendor/Production/SDURLCache"]
