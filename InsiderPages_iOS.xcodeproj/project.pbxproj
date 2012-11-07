@@ -275,6 +275,10 @@
 		FD67CD571649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67CD511649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m */; };
 		FD67CD581649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67CD511649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m */; };
 		FD67CD591649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67CD511649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m */; };
+		FD67CDF51649FDDE000D3F49 /* CDIDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67CDF41649FDDE000D3F49 /* CDIDefines.m */; };
+		FD67CDF61649FDDE000D3F49 /* CDIDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67CDF41649FDDE000D3F49 /* CDIDefines.m */; };
+		FD67CDF71649FDDE000D3F49 /* CDIDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67CDF41649FDDE000D3F49 /* CDIDefines.m */; };
+		FD67CDF81649FDDE000D3F49 /* CDIDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67CDF41649FDDE000D3F49 /* CDIDefines.m */; };
 		FD69CD7B15FAB60600725D98 /* IADisqusComment.m in Sources */ = {isa = PBXBuildFile; fileRef = FD69CD7715FAB60600725D98 /* IADisqusComment.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FD69CD7C15FAB60600725D98 /* IADisquser.m in Sources */ = {isa = PBXBuildFile; fileRef = FD69CD7A15FAB60600725D98 /* IADisquser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FD6F945E15D45AEA00FF686B /* NICommonMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F943415D45AEA00FF686B /* NICommonMetrics.m */; };
@@ -2431,6 +2435,8 @@
 		FD67CD4F1649EF88000D3F49 /* UIScrollView+SVInfiniteScrolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVInfiniteScrolling.m"; sourceTree = "<group>"; };
 		FD67CD501649EF88000D3F49 /* UIScrollView+SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVPullToRefresh.h"; sourceTree = "<group>"; };
 		FD67CD511649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVPullToRefresh.m"; sourceTree = "<group>"; };
+		FD67CDF31649FDDE000D3F49 /* CDIDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIDefines.h; sourceTree = "<group>"; };
+		FD67CDF41649FDDE000D3F49 /* CDIDefines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIDefines.m; sourceTree = "<group>"; };
 		FD69CD7615FAB60600725D98 /* IADisqusComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IADisqusComment.h; sourceTree = "<group>"; };
 		FD69CD7715FAB60600725D98 /* IADisqusComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IADisqusComment.m; sourceTree = "<group>"; };
 		FD69CD7815FAB60600725D98 /* IADisqusConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IADisqusConfig.h; sourceTree = "<group>"; };
@@ -2967,6 +2973,8 @@
 			children = (
 				B208BBD115BF63A80080705D /* InsiderPages-Prefix.pch */,
 				B208BBD215BF63A80080705D /* main.m */,
+				FD67CDF31649FDDE000D3F49 /* CDIDefines.h */,
+				FD67CDF41649FDDE000D3F49 /* CDIDefines.m */,
 			);
 			path = "Other Sources";
 			sourceTree = "<group>";
@@ -6013,6 +6021,7 @@
 				FD5B525816485AD900D764FA /* IPIRankPageActivityCell.m in Sources */,
 				FD67CD521649EF88000D3F49 /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				FD67CD561649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m in Sources */,
+				FD67CDF51649FDDE000D3F49 /* CDIDefines.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6199,6 +6208,7 @@
 				FD5B525916485AD900D764FA /* IPIRankPageActivityCell.m in Sources */,
 				FD67CD531649EF88000D3F49 /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				FD67CD571649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m in Sources */,
+				FD67CDF61649FDDE000D3F49 /* CDIDefines.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6385,6 +6395,7 @@
 				FD5B525A16485AD900D764FA /* IPIRankPageActivityCell.m in Sources */,
 				FD67CD541649EF88000D3F49 /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				FD67CD581649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m in Sources */,
+				FD67CDF71649FDDE000D3F49 /* CDIDefines.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6571,6 +6582,7 @@
 				FD5B525B16485AD900D764FA /* IPIRankPageActivityCell.m in Sources */,
 				FD67CD551649EF88000D3F49 /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				FD67CD591649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m in Sources */,
+				FD67CDF81649FDDE000D3F49 /* CDIDefines.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
