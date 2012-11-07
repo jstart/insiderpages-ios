@@ -144,47 +144,6 @@
 		FD269F1F15D9B31F0050BF46 /* IIViewDeckController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F1C15D9B31F0050BF46 /* IIViewDeckController.m */; };
 		FD269F2015D9B31F0050BF46 /* WrapController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F1E15D9B31F0050BF46 /* WrapController.m */; };
 		FD269F2315D9B64B0050BF46 /* IPIPageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F2215D9B64B0050BF46 /* IPIPageTableViewCell.m */; };
-		FD269FF215DAB71D0050BF46 /* NSString+UISS.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F9D15DAB71D0050BF46 /* NSString+UISS.m */; };
-		FD269FF315DAB71D0050BF46 /* UILabel+UISS.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F9F15DAB71D0050BF46 /* UILabel+UISS.m */; };
-		FD269FF415DAB71D0050BF46 /* UISS.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FA215DAB71D0050BF46 /* UISS.m */; };
-		FD269FF515DAB71D0050BF46 /* UISSAbstractEnumValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FA415DAB71D0050BF46 /* UISSAbstractEnumValueConverter.m */; };
-		FD269FF615DAB71D0050BF46 /* UISSArgument.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FA715DAB71D0050BF46 /* UISSArgument.m */; };
-		FD269FF715DAB71D0050BF46 /* UISSAxisParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FAA15DAB71D0050BF46 /* UISSAxisParameter.m */; };
-		FD269FF815DAB71D0050BF46 /* UISSBarMetricsValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FAC15DAB71D0050BF46 /* UISSBarMetricsValueConverter.m */; };
-		FD269FF915DAB71D0050BF46 /* UISSCodeGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FAE15DAB71D0050BF46 /* UISSCodeGenerator.m */; };
-		FD269FFA15DAB71D0050BF46 /* UISSColorValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FB015DAB71D0050BF46 /* UISSColorValueConverter.m */; };
-		FD269FFB15DAB71D0050BF46 /* UISSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FB215DAB71D0050BF46 /* UISSConfig.m */; };
-		FD269FFC15DAB71D0050BF46 /* UISSConsoleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FB415DAB71D0050BF46 /* UISSConsoleViewController.m */; };
-		FD269FFD15DAB71D0050BF46 /* UISSControlStateValueConveter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FB615DAB71D0050BF46 /* UISSControlStateValueConveter.m */; };
-		FD269FFE15DAB71D0050BF46 /* UISSDisabledKeysPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FB915DAB71D0050BF46 /* UISSDisabledKeysPreprocessor.m */; };
-		FD269FFF15DAB71D0050BF46 /* UISSEdgeInsetsValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FBB15DAB71D0050BF46 /* UISSEdgeInsetsValueConverter.m */; };
-		FD26A00015DAB71D0050BF46 /* UISSError.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FBD15DAB71D0050BF46 /* UISSError.m */; };
-		FD26A00115DAB71D0050BF46 /* UISSErrorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FBF15DAB71D0050BF46 /* UISSErrorsViewController.m */; };
-		FD26A00215DAB71D0050BF46 /* UISSFloatValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FC115DAB71D0050BF46 /* UISSFloatValueConverter.m */; };
-		FD26A00315DAB71D0050BF46 /* UISSFontValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FC315DAB71D0050BF46 /* UISSFontValueConverter.m */; };
-		FD26A00415DAB71D0050BF46 /* UISSGeneratedCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FC515DAB71D0050BF46 /* UISSGeneratedCodeViewController.m */; };
-		FD26A00515DAB71D0050BF46 /* UISSImageValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FC715DAB71D0050BF46 /* UISSImageValueConverter.m */; };
-		FD26A00615DAB71D0050BF46 /* UISSIntegerValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FC915DAB71D0050BF46 /* UISSIntegerValueConverter.m */; };
-		FD26A00715DAB71D0050BF46 /* UISSOffsetValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FCB15DAB71D0050BF46 /* UISSOffsetValueConverter.m */; };
-		FD26A00815DAB71D0050BF46 /* UISSParser.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FCD15DAB71D0050BF46 /* UISSParser.m */; };
-		FD26A00915DAB71D0050BF46 /* UISSParserContext.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FCF15DAB71D0050BF46 /* UISSParserContext.m */; };
-		FD26A00A15DAB71D0050BF46 /* UISSPointValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FD115DAB71D0050BF46 /* UISSPointValueConverter.m */; };
-		FD26A00B15DAB71D0050BF46 /* UISSProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FD315DAB71D0050BF46 /* UISSProperty.m */; };
-		FD26A00C15DAB71D0050BF46 /* UISSPropertySetter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FD515DAB71D0050BF46 /* UISSPropertySetter.m */; };
-		FD26A00D15DAB71D0050BF46 /* UISSRectValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FD715DAB71D0050BF46 /* UISSRectValueConverter.m */; };
-		FD26A00E15DAB71D0050BF46 /* UISSSearchBarIconValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FD915DAB71D0050BF46 /* UISSSearchBarIconValueConverter.m */; };
-		FD26A00F15DAB71D0050BF46 /* UISSSegmentedControlSegmentValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FDB15DAB71D0050BF46 /* UISSSegmentedControlSegmentValueConverter.m */; };
-		FD26A01015DAB71D0050BF46 /* UISSSizeValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FDD15DAB71D0050BF46 /* UISSSizeValueConverter.m */; };
-		FD26A01115DAB71D0050BF46 /* UISSStatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FDF15DAB71D0050BF46 /* UISSStatusView.m */; };
-		FD26A01215DAB71D0050BF46 /* UISSStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FE115DAB71D0050BF46 /* UISSStatusViewController.m */; };
-		FD26A01315DAB71D0050BF46 /* UISSStatusWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FE315DAB71D0050BF46 /* UISSStatusWindow.m */; };
-		FD26A01415DAB71D0050BF46 /* UISSStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FE515DAB71D0050BF46 /* UISSStyle.m */; };
-		FD26A01515DAB71D0050BF46 /* UISSTextAttributesValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FE715DAB71D0050BF46 /* UISSTextAttributesValueConverter.m */; };
-		FD26A01615DAB71D0050BF46 /* UISSToolbarPositionConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FE915DAB71D0050BF46 /* UISSToolbarPositionConverter.m */; };
-		FD26A01715DAB71D0050BF46 /* UISSUIntegerValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FEB15DAB71D0050BF46 /* UISSUIntegerValueConverter.m */; };
-		FD26A01815DAB71D0050BF46 /* UISSUserInterfaceIdiomPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FED15DAB71D0050BF46 /* UISSUserInterfaceIdiomPreprocessor.m */; };
-		FD26A01915DAB71D0050BF46 /* UISSVariablesPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FEF15DAB71D0050BF46 /* UISSVariablesPreprocessor.m */; };
-		FD26A01A15DAB71D0050BF46 /* UIView+UISS.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FF115DAB71D0050BF46 /* UIView+UISS.m */; };
 		FD34DCC5161A09B70010ADF8 /* IPIRankBar.m in Sources */ = {isa = PBXBuildFile; fileRef = FD34DCC4161A09B70010ADF8 /* IPIRankBar.m */; };
 		FD34DD12161A0B550010ADF8 /* active.png in Resources */ = {isa = PBXBuildFile; fileRef = FD34DCC7161A0B550010ADF8 /* active.png */; };
 		FD34DD13161A0B550010ADF8 /* active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD34DCC8161A0B550010ADF8 /* active@2x.png */; };
@@ -262,7 +221,6 @@
 		FD547A8915DE95AD00922D5A /* IPIProviderHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD547A8815DE95AD00922D5A /* IPIProviderHeaderTableViewCell.m */; };
 		FD547A9515DEB4AF00922D5A /* RCLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FD547A9415DEB4AF00922D5A /* RCLocationManager.m */; };
 		FD547A9715DEB78B00922D5A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD547A9615DEB78A00922D5A /* CoreLocation.framework */; };
-		FD547AC015DF018B00922D5A /* SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = FD547ABF15DF018B00922D5A /* SVPullToRefresh.m */; };
 		FD558901161E459900D190D4 /* IPICollaboratorRankingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD558900161E459900D190D4 /* IPICollaboratorRankingsViewController.m */; };
 		FD5B522A16447E6B00D764FA /* IPICallButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5B522916447E6B00D764FA /* IPICallButton.m */; };
 		FD5B522B1644807900D764FA /* IPICallButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5B522916447E6B00D764FA /* IPICallButton.m */; };
@@ -310,6 +268,14 @@
 		FD63AA1515D66F0400764EF2 /* favorite_active.png in Resources */ = {isa = PBXBuildFile; fileRef = FD63AA1315D66F0400764EF2 /* favorite_active.png */; };
 		FD63AA1615D66F0400764EF2 /* favorite_inactive.png in Resources */ = {isa = PBXBuildFile; fileRef = FD63AA1415D66F0400764EF2 /* favorite_inactive.png */; };
 		FD6569E715FE731E00C32AEB /* IPIBasePageSegmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6569E615FE731E00C32AEB /* IPIBasePageSegmentViewController.m */; };
+		FD67CD521649EF88000D3F49 /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67CD4F1649EF88000D3F49 /* UIScrollView+SVInfiniteScrolling.m */; };
+		FD67CD531649EF88000D3F49 /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67CD4F1649EF88000D3F49 /* UIScrollView+SVInfiniteScrolling.m */; };
+		FD67CD541649EF88000D3F49 /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67CD4F1649EF88000D3F49 /* UIScrollView+SVInfiniteScrolling.m */; };
+		FD67CD551649EF88000D3F49 /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67CD4F1649EF88000D3F49 /* UIScrollView+SVInfiniteScrolling.m */; };
+		FD67CD561649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67CD511649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m */; };
+		FD67CD571649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67CD511649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m */; };
+		FD67CD581649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67CD511649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m */; };
+		FD67CD591649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67CD511649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m */; };
 		FD69CD7B15FAB60600725D98 /* IADisqusComment.m in Sources */ = {isa = PBXBuildFile; fileRef = FD69CD7715FAB60600725D98 /* IADisqusComment.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FD69CD7C15FAB60600725D98 /* IADisquser.m in Sources */ = {isa = PBXBuildFile; fileRef = FD69CD7A15FAB60600725D98 /* IADisquser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FD6F945E15D45AEA00FF686B /* NICommonMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6F943415D45AEA00FF686B /* NICommonMetrics.m */; };
@@ -569,47 +535,6 @@
 		FDD65D341630AB4E0022D936 /* IIViewDeckController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F1C15D9B31F0050BF46 /* IIViewDeckController.m */; };
 		FDD65D351630AB4E0022D936 /* WrapController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F1E15D9B31F0050BF46 /* WrapController.m */; };
 		FDD65D361630AB4E0022D936 /* IPIPageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F2215D9B64B0050BF46 /* IPIPageTableViewCell.m */; };
-		FDD65D371630AB4E0022D936 /* NSString+UISS.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F9D15DAB71D0050BF46 /* NSString+UISS.m */; };
-		FDD65D381630AB4E0022D936 /* UILabel+UISS.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F9F15DAB71D0050BF46 /* UILabel+UISS.m */; };
-		FDD65D391630AB4E0022D936 /* UISS.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FA215DAB71D0050BF46 /* UISS.m */; };
-		FDD65D3A1630AB4E0022D936 /* UISSAbstractEnumValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FA415DAB71D0050BF46 /* UISSAbstractEnumValueConverter.m */; };
-		FDD65D3B1630AB4E0022D936 /* UISSArgument.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FA715DAB71D0050BF46 /* UISSArgument.m */; };
-		FDD65D3C1630AB4E0022D936 /* UISSAxisParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FAA15DAB71D0050BF46 /* UISSAxisParameter.m */; };
-		FDD65D3D1630AB4E0022D936 /* UISSBarMetricsValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FAC15DAB71D0050BF46 /* UISSBarMetricsValueConverter.m */; };
-		FDD65D3E1630AB4E0022D936 /* UISSCodeGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FAE15DAB71D0050BF46 /* UISSCodeGenerator.m */; };
-		FDD65D3F1630AB4E0022D936 /* UISSColorValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FB015DAB71D0050BF46 /* UISSColorValueConverter.m */; };
-		FDD65D401630AB4E0022D936 /* UISSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FB215DAB71D0050BF46 /* UISSConfig.m */; };
-		FDD65D411630AB4E0022D936 /* UISSConsoleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FB415DAB71D0050BF46 /* UISSConsoleViewController.m */; };
-		FDD65D421630AB4E0022D936 /* UISSControlStateValueConveter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FB615DAB71D0050BF46 /* UISSControlStateValueConveter.m */; };
-		FDD65D431630AB4E0022D936 /* UISSDisabledKeysPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FB915DAB71D0050BF46 /* UISSDisabledKeysPreprocessor.m */; };
-		FDD65D441630AB4E0022D936 /* UISSEdgeInsetsValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FBB15DAB71D0050BF46 /* UISSEdgeInsetsValueConverter.m */; };
-		FDD65D451630AB4E0022D936 /* UISSError.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FBD15DAB71D0050BF46 /* UISSError.m */; };
-		FDD65D461630AB4E0022D936 /* UISSErrorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FBF15DAB71D0050BF46 /* UISSErrorsViewController.m */; };
-		FDD65D471630AB4E0022D936 /* UISSFloatValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FC115DAB71D0050BF46 /* UISSFloatValueConverter.m */; };
-		FDD65D481630AB4E0022D936 /* UISSFontValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FC315DAB71D0050BF46 /* UISSFontValueConverter.m */; };
-		FDD65D491630AB4E0022D936 /* UISSGeneratedCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FC515DAB71D0050BF46 /* UISSGeneratedCodeViewController.m */; };
-		FDD65D4A1630AB4E0022D936 /* UISSImageValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FC715DAB71D0050BF46 /* UISSImageValueConverter.m */; };
-		FDD65D4B1630AB4E0022D936 /* UISSIntegerValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FC915DAB71D0050BF46 /* UISSIntegerValueConverter.m */; };
-		FDD65D4C1630AB4E0022D936 /* UISSOffsetValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FCB15DAB71D0050BF46 /* UISSOffsetValueConverter.m */; };
-		FDD65D4D1630AB4E0022D936 /* UISSParser.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FCD15DAB71D0050BF46 /* UISSParser.m */; };
-		FDD65D4E1630AB4E0022D936 /* UISSParserContext.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FCF15DAB71D0050BF46 /* UISSParserContext.m */; };
-		FDD65D4F1630AB4E0022D936 /* UISSPointValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FD115DAB71D0050BF46 /* UISSPointValueConverter.m */; };
-		FDD65D501630AB4E0022D936 /* UISSProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FD315DAB71D0050BF46 /* UISSProperty.m */; };
-		FDD65D511630AB4E0022D936 /* UISSPropertySetter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FD515DAB71D0050BF46 /* UISSPropertySetter.m */; };
-		FDD65D521630AB4E0022D936 /* UISSRectValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FD715DAB71D0050BF46 /* UISSRectValueConverter.m */; };
-		FDD65D531630AB4E0022D936 /* UISSSearchBarIconValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FD915DAB71D0050BF46 /* UISSSearchBarIconValueConverter.m */; };
-		FDD65D541630AB4E0022D936 /* UISSSegmentedControlSegmentValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FDB15DAB71D0050BF46 /* UISSSegmentedControlSegmentValueConverter.m */; };
-		FDD65D551630AB4E0022D936 /* UISSSizeValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FDD15DAB71D0050BF46 /* UISSSizeValueConverter.m */; };
-		FDD65D561630AB4E0022D936 /* UISSStatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FDF15DAB71D0050BF46 /* UISSStatusView.m */; };
-		FDD65D571630AB4E0022D936 /* UISSStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FE115DAB71D0050BF46 /* UISSStatusViewController.m */; };
-		FDD65D581630AB4E0022D936 /* UISSStatusWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FE315DAB71D0050BF46 /* UISSStatusWindow.m */; };
-		FDD65D591630AB4E0022D936 /* UISSStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FE515DAB71D0050BF46 /* UISSStyle.m */; };
-		FDD65D5A1630AB4E0022D936 /* UISSTextAttributesValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FE715DAB71D0050BF46 /* UISSTextAttributesValueConverter.m */; };
-		FDD65D5B1630AB4E0022D936 /* UISSToolbarPositionConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FE915DAB71D0050BF46 /* UISSToolbarPositionConverter.m */; };
-		FDD65D5C1630AB4E0022D936 /* UISSUIntegerValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FEB15DAB71D0050BF46 /* UISSUIntegerValueConverter.m */; };
-		FDD65D5D1630AB4E0022D936 /* UISSUserInterfaceIdiomPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FED15DAB71D0050BF46 /* UISSUserInterfaceIdiomPreprocessor.m */; };
-		FDD65D5E1630AB4E0022D936 /* UISSVariablesPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FEF15DAB71D0050BF46 /* UISSVariablesPreprocessor.m */; };
-		FDD65D5F1630AB4E0022D936 /* UIView+UISS.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FF115DAB71D0050BF46 /* UIView+UISS.m */; };
 		FDD65D601630AB4E0022D936 /* AccordionView.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD9FDFC15DADC7F003E34EE /* AccordionView.m */; };
 		FDD65D611630AB4E0022D936 /* IPIAccordionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD9FDFF15DADF50003E34EE /* IPIAccordionViewController.m */; };
 		FDD65D621630AB4E0022D936 /* IPIAccordionPagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD9FE0215DAE909003E34EE /* IPIAccordionPagesViewController.m */; };
@@ -618,7 +543,6 @@
 		FDD65D651630AB4E0022D936 /* UIResponder+KeyboardCache.m in Sources */ = {isa = PBXBuildFile; fileRef = FD547A8015DE1FE300922D5A /* UIResponder+KeyboardCache.m */; };
 		FDD65D661630AB4E0022D936 /* IPIProviderHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD547A8815DE95AD00922D5A /* IPIProviderHeaderTableViewCell.m */; };
 		FDD65D671630AB4E0022D936 /* RCLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FD547A9415DEB4AF00922D5A /* RCLocationManager.m */; };
-		FDD65D681630AB4E0022D936 /* SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = FD547ABF15DF018B00922D5A /* SVPullToRefresh.m */; };
 		FDD65D691630AB4E0022D936 /* IPISocialShareHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD954BF15E24B2E00F38150 /* IPISocialShareHelper.m */; };
 		FDD65D6A1630AB4E0022D936 /* IPIBookmarkBaseManagedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD00928E15E55EA100BD2626 /* IPIBookmarkBaseManagedViewController.m */; };
 		FDD65D6B1630AB4E0022D936 /* IPIBookmarkContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD00929715E55EB000BD2626 /* IPIBookmarkContainerViewController.m */; };
@@ -1043,47 +967,6 @@
 		FDD65F211630ABAA0022D936 /* IIViewDeckController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F1C15D9B31F0050BF46 /* IIViewDeckController.m */; };
 		FDD65F221630ABAA0022D936 /* WrapController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F1E15D9B31F0050BF46 /* WrapController.m */; };
 		FDD65F231630ABAA0022D936 /* IPIPageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F2215D9B64B0050BF46 /* IPIPageTableViewCell.m */; };
-		FDD65F241630ABAA0022D936 /* NSString+UISS.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F9D15DAB71D0050BF46 /* NSString+UISS.m */; };
-		FDD65F251630ABAA0022D936 /* UILabel+UISS.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F9F15DAB71D0050BF46 /* UILabel+UISS.m */; };
-		FDD65F261630ABAA0022D936 /* UISS.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FA215DAB71D0050BF46 /* UISS.m */; };
-		FDD65F271630ABAA0022D936 /* UISSAbstractEnumValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FA415DAB71D0050BF46 /* UISSAbstractEnumValueConverter.m */; };
-		FDD65F281630ABAA0022D936 /* UISSArgument.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FA715DAB71D0050BF46 /* UISSArgument.m */; };
-		FDD65F291630ABAA0022D936 /* UISSAxisParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FAA15DAB71D0050BF46 /* UISSAxisParameter.m */; };
-		FDD65F2A1630ABAA0022D936 /* UISSBarMetricsValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FAC15DAB71D0050BF46 /* UISSBarMetricsValueConverter.m */; };
-		FDD65F2B1630ABAA0022D936 /* UISSCodeGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FAE15DAB71D0050BF46 /* UISSCodeGenerator.m */; };
-		FDD65F2C1630ABAA0022D936 /* UISSColorValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FB015DAB71D0050BF46 /* UISSColorValueConverter.m */; };
-		FDD65F2D1630ABAA0022D936 /* UISSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FB215DAB71D0050BF46 /* UISSConfig.m */; };
-		FDD65F2E1630ABAA0022D936 /* UISSConsoleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FB415DAB71D0050BF46 /* UISSConsoleViewController.m */; };
-		FDD65F2F1630ABAA0022D936 /* UISSControlStateValueConveter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FB615DAB71D0050BF46 /* UISSControlStateValueConveter.m */; };
-		FDD65F301630ABAA0022D936 /* UISSDisabledKeysPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FB915DAB71D0050BF46 /* UISSDisabledKeysPreprocessor.m */; };
-		FDD65F311630ABAA0022D936 /* UISSEdgeInsetsValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FBB15DAB71D0050BF46 /* UISSEdgeInsetsValueConverter.m */; };
-		FDD65F321630ABAA0022D936 /* UISSError.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FBD15DAB71D0050BF46 /* UISSError.m */; };
-		FDD65F331630ABAA0022D936 /* UISSErrorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FBF15DAB71D0050BF46 /* UISSErrorsViewController.m */; };
-		FDD65F341630ABAA0022D936 /* UISSFloatValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FC115DAB71D0050BF46 /* UISSFloatValueConverter.m */; };
-		FDD65F351630ABAA0022D936 /* UISSFontValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FC315DAB71D0050BF46 /* UISSFontValueConverter.m */; };
-		FDD65F361630ABAA0022D936 /* UISSGeneratedCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FC515DAB71D0050BF46 /* UISSGeneratedCodeViewController.m */; };
-		FDD65F371630ABAA0022D936 /* UISSImageValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FC715DAB71D0050BF46 /* UISSImageValueConverter.m */; };
-		FDD65F381630ABAA0022D936 /* UISSIntegerValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FC915DAB71D0050BF46 /* UISSIntegerValueConverter.m */; };
-		FDD65F391630ABAA0022D936 /* UISSOffsetValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FCB15DAB71D0050BF46 /* UISSOffsetValueConverter.m */; };
-		FDD65F3A1630ABAA0022D936 /* UISSParser.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FCD15DAB71D0050BF46 /* UISSParser.m */; };
-		FDD65F3B1630ABAA0022D936 /* UISSParserContext.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FCF15DAB71D0050BF46 /* UISSParserContext.m */; };
-		FDD65F3C1630ABAA0022D936 /* UISSPointValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FD115DAB71D0050BF46 /* UISSPointValueConverter.m */; };
-		FDD65F3D1630ABAA0022D936 /* UISSProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FD315DAB71D0050BF46 /* UISSProperty.m */; };
-		FDD65F3E1630ABAA0022D936 /* UISSPropertySetter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FD515DAB71D0050BF46 /* UISSPropertySetter.m */; };
-		FDD65F3F1630ABAA0022D936 /* UISSRectValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FD715DAB71D0050BF46 /* UISSRectValueConverter.m */; };
-		FDD65F401630ABAA0022D936 /* UISSSearchBarIconValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FD915DAB71D0050BF46 /* UISSSearchBarIconValueConverter.m */; };
-		FDD65F411630ABAA0022D936 /* UISSSegmentedControlSegmentValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FDB15DAB71D0050BF46 /* UISSSegmentedControlSegmentValueConverter.m */; };
-		FDD65F421630ABAA0022D936 /* UISSSizeValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FDD15DAB71D0050BF46 /* UISSSizeValueConverter.m */; };
-		FDD65F431630ABAA0022D936 /* UISSStatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FDF15DAB71D0050BF46 /* UISSStatusView.m */; };
-		FDD65F441630ABAA0022D936 /* UISSStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FE115DAB71D0050BF46 /* UISSStatusViewController.m */; };
-		FDD65F451630ABAA0022D936 /* UISSStatusWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FE315DAB71D0050BF46 /* UISSStatusWindow.m */; };
-		FDD65F461630ABAA0022D936 /* UISSStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FE515DAB71D0050BF46 /* UISSStyle.m */; };
-		FDD65F471630ABAA0022D936 /* UISSTextAttributesValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FE715DAB71D0050BF46 /* UISSTextAttributesValueConverter.m */; };
-		FDD65F481630ABAA0022D936 /* UISSToolbarPositionConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FE915DAB71D0050BF46 /* UISSToolbarPositionConverter.m */; };
-		FDD65F491630ABAA0022D936 /* UISSUIntegerValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FEB15DAB71D0050BF46 /* UISSUIntegerValueConverter.m */; };
-		FDD65F4A1630ABAA0022D936 /* UISSUserInterfaceIdiomPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FED15DAB71D0050BF46 /* UISSUserInterfaceIdiomPreprocessor.m */; };
-		FDD65F4B1630ABAA0022D936 /* UISSVariablesPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FEF15DAB71D0050BF46 /* UISSVariablesPreprocessor.m */; };
-		FDD65F4C1630ABAA0022D936 /* UIView+UISS.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FF115DAB71D0050BF46 /* UIView+UISS.m */; };
 		FDD65F4D1630ABAA0022D936 /* AccordionView.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD9FDFC15DADC7F003E34EE /* AccordionView.m */; };
 		FDD65F4E1630ABAA0022D936 /* IPIAccordionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD9FDFF15DADF50003E34EE /* IPIAccordionViewController.m */; };
 		FDD65F4F1630ABAA0022D936 /* IPIAccordionPagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD9FE0215DAE909003E34EE /* IPIAccordionPagesViewController.m */; };
@@ -1092,7 +975,6 @@
 		FDD65F521630ABAA0022D936 /* UIResponder+KeyboardCache.m in Sources */ = {isa = PBXBuildFile; fileRef = FD547A8015DE1FE300922D5A /* UIResponder+KeyboardCache.m */; };
 		FDD65F531630ABAA0022D936 /* IPIProviderHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD547A8815DE95AD00922D5A /* IPIProviderHeaderTableViewCell.m */; };
 		FDD65F541630ABAA0022D936 /* RCLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FD547A9415DEB4AF00922D5A /* RCLocationManager.m */; };
-		FDD65F551630ABAA0022D936 /* SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = FD547ABF15DF018B00922D5A /* SVPullToRefresh.m */; };
 		FDD65F561630ABAA0022D936 /* IPISocialShareHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD954BF15E24B2E00F38150 /* IPISocialShareHelper.m */; };
 		FDD65F571630ABAA0022D936 /* IPIBookmarkBaseManagedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD00928E15E55EA100BD2626 /* IPIBookmarkBaseManagedViewController.m */; };
 		FDD65F581630ABAA0022D936 /* IPIBookmarkContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD00929715E55EB000BD2626 /* IPIBookmarkContainerViewController.m */; };
@@ -1517,47 +1399,6 @@
 		FDD6610E1630AC250022D936 /* IIViewDeckController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F1C15D9B31F0050BF46 /* IIViewDeckController.m */; };
 		FDD6610F1630AC250022D936 /* WrapController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F1E15D9B31F0050BF46 /* WrapController.m */; };
 		FDD661101630AC250022D936 /* IPIPageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F2215D9B64B0050BF46 /* IPIPageTableViewCell.m */; };
-		FDD661111630AC250022D936 /* NSString+UISS.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F9D15DAB71D0050BF46 /* NSString+UISS.m */; };
-		FDD661121630AC250022D936 /* UILabel+UISS.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269F9F15DAB71D0050BF46 /* UILabel+UISS.m */; };
-		FDD661131630AC250022D936 /* UISS.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FA215DAB71D0050BF46 /* UISS.m */; };
-		FDD661141630AC250022D936 /* UISSAbstractEnumValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FA415DAB71D0050BF46 /* UISSAbstractEnumValueConverter.m */; };
-		FDD661151630AC250022D936 /* UISSArgument.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FA715DAB71D0050BF46 /* UISSArgument.m */; };
-		FDD661161630AC250022D936 /* UISSAxisParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FAA15DAB71D0050BF46 /* UISSAxisParameter.m */; };
-		FDD661171630AC250022D936 /* UISSBarMetricsValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FAC15DAB71D0050BF46 /* UISSBarMetricsValueConverter.m */; };
-		FDD661181630AC250022D936 /* UISSCodeGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FAE15DAB71D0050BF46 /* UISSCodeGenerator.m */; };
-		FDD661191630AC250022D936 /* UISSColorValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FB015DAB71D0050BF46 /* UISSColorValueConverter.m */; };
-		FDD6611A1630AC250022D936 /* UISSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FB215DAB71D0050BF46 /* UISSConfig.m */; };
-		FDD6611B1630AC250022D936 /* UISSConsoleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FB415DAB71D0050BF46 /* UISSConsoleViewController.m */; };
-		FDD6611C1630AC250022D936 /* UISSControlStateValueConveter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FB615DAB71D0050BF46 /* UISSControlStateValueConveter.m */; };
-		FDD6611D1630AC250022D936 /* UISSDisabledKeysPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FB915DAB71D0050BF46 /* UISSDisabledKeysPreprocessor.m */; };
-		FDD6611E1630AC250022D936 /* UISSEdgeInsetsValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FBB15DAB71D0050BF46 /* UISSEdgeInsetsValueConverter.m */; };
-		FDD6611F1630AC250022D936 /* UISSError.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FBD15DAB71D0050BF46 /* UISSError.m */; };
-		FDD661201630AC250022D936 /* UISSErrorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FBF15DAB71D0050BF46 /* UISSErrorsViewController.m */; };
-		FDD661211630AC250022D936 /* UISSFloatValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FC115DAB71D0050BF46 /* UISSFloatValueConverter.m */; };
-		FDD661221630AC250022D936 /* UISSFontValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FC315DAB71D0050BF46 /* UISSFontValueConverter.m */; };
-		FDD661231630AC250022D936 /* UISSGeneratedCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FC515DAB71D0050BF46 /* UISSGeneratedCodeViewController.m */; };
-		FDD661241630AC250022D936 /* UISSImageValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FC715DAB71D0050BF46 /* UISSImageValueConverter.m */; };
-		FDD661251630AC250022D936 /* UISSIntegerValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FC915DAB71D0050BF46 /* UISSIntegerValueConverter.m */; };
-		FDD661261630AC250022D936 /* UISSOffsetValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FCB15DAB71D0050BF46 /* UISSOffsetValueConverter.m */; };
-		FDD661271630AC250022D936 /* UISSParser.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FCD15DAB71D0050BF46 /* UISSParser.m */; };
-		FDD661281630AC250022D936 /* UISSParserContext.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FCF15DAB71D0050BF46 /* UISSParserContext.m */; };
-		FDD661291630AC250022D936 /* UISSPointValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FD115DAB71D0050BF46 /* UISSPointValueConverter.m */; };
-		FDD6612A1630AC250022D936 /* UISSProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FD315DAB71D0050BF46 /* UISSProperty.m */; };
-		FDD6612B1630AC250022D936 /* UISSPropertySetter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FD515DAB71D0050BF46 /* UISSPropertySetter.m */; };
-		FDD6612C1630AC250022D936 /* UISSRectValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FD715DAB71D0050BF46 /* UISSRectValueConverter.m */; };
-		FDD6612D1630AC250022D936 /* UISSSearchBarIconValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FD915DAB71D0050BF46 /* UISSSearchBarIconValueConverter.m */; };
-		FDD6612E1630AC250022D936 /* UISSSegmentedControlSegmentValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FDB15DAB71D0050BF46 /* UISSSegmentedControlSegmentValueConverter.m */; };
-		FDD6612F1630AC250022D936 /* UISSSizeValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FDD15DAB71D0050BF46 /* UISSSizeValueConverter.m */; };
-		FDD661301630AC250022D936 /* UISSStatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FDF15DAB71D0050BF46 /* UISSStatusView.m */; };
-		FDD661311630AC250022D936 /* UISSStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FE115DAB71D0050BF46 /* UISSStatusViewController.m */; };
-		FDD661321630AC250022D936 /* UISSStatusWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FE315DAB71D0050BF46 /* UISSStatusWindow.m */; };
-		FDD661331630AC250022D936 /* UISSStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FE515DAB71D0050BF46 /* UISSStyle.m */; };
-		FDD661341630AC250022D936 /* UISSTextAttributesValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FE715DAB71D0050BF46 /* UISSTextAttributesValueConverter.m */; };
-		FDD661351630AC250022D936 /* UISSToolbarPositionConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FE915DAB71D0050BF46 /* UISSToolbarPositionConverter.m */; };
-		FDD661361630AC250022D936 /* UISSUIntegerValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FEB15DAB71D0050BF46 /* UISSUIntegerValueConverter.m */; };
-		FDD661371630AC250022D936 /* UISSUserInterfaceIdiomPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FED15DAB71D0050BF46 /* UISSUserInterfaceIdiomPreprocessor.m */; };
-		FDD661381630AC250022D936 /* UISSVariablesPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FEF15DAB71D0050BF46 /* UISSVariablesPreprocessor.m */; };
-		FDD661391630AC250022D936 /* UIView+UISS.m in Sources */ = {isa = PBXBuildFile; fileRef = FD269FF115DAB71D0050BF46 /* UIView+UISS.m */; };
 		FDD6613A1630AC250022D936 /* AccordionView.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD9FDFC15DADC7F003E34EE /* AccordionView.m */; };
 		FDD6613B1630AC250022D936 /* IPIAccordionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD9FDFF15DADF50003E34EE /* IPIAccordionViewController.m */; };
 		FDD6613C1630AC250022D936 /* IPIAccordionPagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD9FE0215DAE909003E34EE /* IPIAccordionPagesViewController.m */; };
@@ -1566,7 +1407,6 @@
 		FDD6613F1630AC250022D936 /* UIResponder+KeyboardCache.m in Sources */ = {isa = PBXBuildFile; fileRef = FD547A8015DE1FE300922D5A /* UIResponder+KeyboardCache.m */; };
 		FDD661401630AC250022D936 /* IPIProviderHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD547A8815DE95AD00922D5A /* IPIProviderHeaderTableViewCell.m */; };
 		FDD661411630AC250022D936 /* RCLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FD547A9415DEB4AF00922D5A /* RCLocationManager.m */; };
-		FDD661421630AC250022D936 /* SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = FD547ABF15DF018B00922D5A /* SVPullToRefresh.m */; };
 		FDD661431630AC250022D936 /* IPISocialShareHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD954BF15E24B2E00F38150 /* IPISocialShareHelper.m */; };
 		FDD661441630AC250022D936 /* IPIBookmarkBaseManagedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD00928E15E55EA100BD2626 /* IPIBookmarkBaseManagedViewController.m */; };
 		FDD661451630AC250022D936 /* IPIBookmarkContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD00929715E55EB000BD2626 /* IPIBookmarkContainerViewController.m */; };
@@ -2571,7 +2411,6 @@
 		FD547A9415DEB4AF00922D5A /* RCLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCLocationManager.m; sourceTree = "<group>"; };
 		FD547A9615DEB78A00922D5A /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		FD547ABE15DF018B00922D5A /* SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPullToRefresh.h; sourceTree = "<group>"; };
-		FD547ABF15DF018B00922D5A /* SVPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPullToRefresh.m; sourceTree = "<group>"; };
 		FD5588FF161E459900D190D4 /* IPICollaboratorRankingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPICollaboratorRankingsViewController.h; sourceTree = "<group>"; };
 		FD558900161E459900D190D4 /* IPICollaboratorRankingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPICollaboratorRankingsViewController.m; sourceTree = "<group>"; };
 		FD5B522816447E6B00D764FA /* IPICallButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPICallButton.h; sourceTree = "<group>"; };
@@ -2594,6 +2433,10 @@
 		FD63AA1415D66F0400764EF2 /* favorite_inactive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = favorite_inactive.png; sourceTree = "<group>"; };
 		FD6569E515FE731E00C32AEB /* IPIBasePageSegmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIBasePageSegmentViewController.h; sourceTree = "<group>"; };
 		FD6569E615FE731E00C32AEB /* IPIBasePageSegmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIBasePageSegmentViewController.m; sourceTree = "<group>"; };
+		FD67CD4E1649EF88000D3F49 /* UIScrollView+SVInfiniteScrolling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVInfiniteScrolling.h"; sourceTree = "<group>"; };
+		FD67CD4F1649EF88000D3F49 /* UIScrollView+SVInfiniteScrolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVInfiniteScrolling.m"; sourceTree = "<group>"; };
+		FD67CD501649EF88000D3F49 /* UIScrollView+SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVPullToRefresh.h"; sourceTree = "<group>"; };
+		FD67CD511649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVPullToRefresh.m"; sourceTree = "<group>"; };
 		FD69CD7615FAB60600725D98 /* IADisqusComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IADisqusComment.h; sourceTree = "<group>"; };
 		FD69CD7715FAB60600725D98 /* IADisqusComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IADisqusComment.m; sourceTree = "<group>"; };
 		FD69CD7815FAB60600725D98 /* IADisqusConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IADisqusConfig.h; sourceTree = "<group>"; };
@@ -4080,7 +3923,10 @@
 			isa = PBXGroup;
 			children = (
 				FD547ABE15DF018B00922D5A /* SVPullToRefresh.h */,
-				FD547ABF15DF018B00922D5A /* SVPullToRefresh.m */,
+				FD67CD4E1649EF88000D3F49 /* UIScrollView+SVInfiniteScrolling.h */,
+				FD67CD4F1649EF88000D3F49 /* UIScrollView+SVInfiniteScrolling.m */,
+				FD67CD501649EF88000D3F49 /* UIScrollView+SVPullToRefresh.h */,
+				FD67CD511649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m */,
 			);
 			name = SVPullToRefresh;
 			path = SVPullToRefresh/SVPullToRefresh;
@@ -6083,47 +5929,6 @@
 				FD269F1F15D9B31F0050BF46 /* IIViewDeckController.m in Sources */,
 				FD269F2015D9B31F0050BF46 /* WrapController.m in Sources */,
 				FD269F2315D9B64B0050BF46 /* IPIPageTableViewCell.m in Sources */,
-				FD269FF215DAB71D0050BF46 /* NSString+UISS.m in Sources */,
-				FD269FF315DAB71D0050BF46 /* UILabel+UISS.m in Sources */,
-				FD269FF415DAB71D0050BF46 /* UISS.m in Sources */,
-				FD269FF515DAB71D0050BF46 /* UISSAbstractEnumValueConverter.m in Sources */,
-				FD269FF615DAB71D0050BF46 /* UISSArgument.m in Sources */,
-				FD269FF715DAB71D0050BF46 /* UISSAxisParameter.m in Sources */,
-				FD269FF815DAB71D0050BF46 /* UISSBarMetricsValueConverter.m in Sources */,
-				FD269FF915DAB71D0050BF46 /* UISSCodeGenerator.m in Sources */,
-				FD269FFA15DAB71D0050BF46 /* UISSColorValueConverter.m in Sources */,
-				FD269FFB15DAB71D0050BF46 /* UISSConfig.m in Sources */,
-				FD269FFC15DAB71D0050BF46 /* UISSConsoleViewController.m in Sources */,
-				FD269FFD15DAB71D0050BF46 /* UISSControlStateValueConveter.m in Sources */,
-				FD269FFE15DAB71D0050BF46 /* UISSDisabledKeysPreprocessor.m in Sources */,
-				FD269FFF15DAB71D0050BF46 /* UISSEdgeInsetsValueConverter.m in Sources */,
-				FD26A00015DAB71D0050BF46 /* UISSError.m in Sources */,
-				FD26A00115DAB71D0050BF46 /* UISSErrorsViewController.m in Sources */,
-				FD26A00215DAB71D0050BF46 /* UISSFloatValueConverter.m in Sources */,
-				FD26A00315DAB71D0050BF46 /* UISSFontValueConverter.m in Sources */,
-				FD26A00415DAB71D0050BF46 /* UISSGeneratedCodeViewController.m in Sources */,
-				FD26A00515DAB71D0050BF46 /* UISSImageValueConverter.m in Sources */,
-				FD26A00615DAB71D0050BF46 /* UISSIntegerValueConverter.m in Sources */,
-				FD26A00715DAB71D0050BF46 /* UISSOffsetValueConverter.m in Sources */,
-				FD26A00815DAB71D0050BF46 /* UISSParser.m in Sources */,
-				FD26A00915DAB71D0050BF46 /* UISSParserContext.m in Sources */,
-				FD26A00A15DAB71D0050BF46 /* UISSPointValueConverter.m in Sources */,
-				FD26A00B15DAB71D0050BF46 /* UISSProperty.m in Sources */,
-				FD26A00C15DAB71D0050BF46 /* UISSPropertySetter.m in Sources */,
-				FD26A00D15DAB71D0050BF46 /* UISSRectValueConverter.m in Sources */,
-				FD26A00E15DAB71D0050BF46 /* UISSSearchBarIconValueConverter.m in Sources */,
-				FD26A00F15DAB71D0050BF46 /* UISSSegmentedControlSegmentValueConverter.m in Sources */,
-				FD26A01015DAB71D0050BF46 /* UISSSizeValueConverter.m in Sources */,
-				FD26A01115DAB71D0050BF46 /* UISSStatusView.m in Sources */,
-				FD26A01215DAB71D0050BF46 /* UISSStatusViewController.m in Sources */,
-				FD26A01315DAB71D0050BF46 /* UISSStatusWindow.m in Sources */,
-				FD26A01415DAB71D0050BF46 /* UISSStyle.m in Sources */,
-				FD26A01515DAB71D0050BF46 /* UISSTextAttributesValueConverter.m in Sources */,
-				FD26A01615DAB71D0050BF46 /* UISSToolbarPositionConverter.m in Sources */,
-				FD26A01715DAB71D0050BF46 /* UISSUIntegerValueConverter.m in Sources */,
-				FD26A01815DAB71D0050BF46 /* UISSUserInterfaceIdiomPreprocessor.m in Sources */,
-				FD26A01915DAB71D0050BF46 /* UISSVariablesPreprocessor.m in Sources */,
-				FD26A01A15DAB71D0050BF46 /* UIView+UISS.m in Sources */,
 				FDD9FDFD15DADC7F003E34EE /* AccordionView.m in Sources */,
 				FDD9FE0015DADF50003E34EE /* IPIAccordionViewController.m in Sources */,
 				FDD9FE0315DAE909003E34EE /* IPIAccordionPagesViewController.m in Sources */,
@@ -6132,7 +5937,6 @@
 				FD547A8315DE1FE300922D5A /* UIResponder+KeyboardCache.m in Sources */,
 				FD547A8915DE95AD00922D5A /* IPIProviderHeaderTableViewCell.m in Sources */,
 				FD547A9515DEB4AF00922D5A /* RCLocationManager.m in Sources */,
-				FD547AC015DF018B00922D5A /* SVPullToRefresh.m in Sources */,
 				FDD954C015E24B2E00F38150 /* IPISocialShareHelper.m in Sources */,
 				FD00928F15E55EA100BD2626 /* IPIBookmarkBaseManagedViewController.m in Sources */,
 				FD00929D15E55EB000BD2626 /* IPIBookmarkContainerViewController.m in Sources */,
@@ -6216,6 +6020,8 @@
 				FDF6DB8C163F3FD600EE7057 /* IPICollaboratorTableViewCell.m in Sources */,
 				FD5B522A16447E6B00D764FA /* IPICallButton.m in Sources */,
 				FD5B525816485AD900D764FA /* IPIRankPageActivityCell.m in Sources */,
+				FD67CD521649EF88000D3F49 /* UIScrollView+SVInfiniteScrolling.m in Sources */,
+				FD67CD561649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6310,47 +6116,6 @@
 				FDD65D341630AB4E0022D936 /* IIViewDeckController.m in Sources */,
 				FDD65D351630AB4E0022D936 /* WrapController.m in Sources */,
 				FDD65D361630AB4E0022D936 /* IPIPageTableViewCell.m in Sources */,
-				FDD65D371630AB4E0022D936 /* NSString+UISS.m in Sources */,
-				FDD65D381630AB4E0022D936 /* UILabel+UISS.m in Sources */,
-				FDD65D391630AB4E0022D936 /* UISS.m in Sources */,
-				FDD65D3A1630AB4E0022D936 /* UISSAbstractEnumValueConverter.m in Sources */,
-				FDD65D3B1630AB4E0022D936 /* UISSArgument.m in Sources */,
-				FDD65D3C1630AB4E0022D936 /* UISSAxisParameter.m in Sources */,
-				FDD65D3D1630AB4E0022D936 /* UISSBarMetricsValueConverter.m in Sources */,
-				FDD65D3E1630AB4E0022D936 /* UISSCodeGenerator.m in Sources */,
-				FDD65D3F1630AB4E0022D936 /* UISSColorValueConverter.m in Sources */,
-				FDD65D401630AB4E0022D936 /* UISSConfig.m in Sources */,
-				FDD65D411630AB4E0022D936 /* UISSConsoleViewController.m in Sources */,
-				FDD65D421630AB4E0022D936 /* UISSControlStateValueConveter.m in Sources */,
-				FDD65D431630AB4E0022D936 /* UISSDisabledKeysPreprocessor.m in Sources */,
-				FDD65D441630AB4E0022D936 /* UISSEdgeInsetsValueConverter.m in Sources */,
-				FDD65D451630AB4E0022D936 /* UISSError.m in Sources */,
-				FDD65D461630AB4E0022D936 /* UISSErrorsViewController.m in Sources */,
-				FDD65D471630AB4E0022D936 /* UISSFloatValueConverter.m in Sources */,
-				FDD65D481630AB4E0022D936 /* UISSFontValueConverter.m in Sources */,
-				FDD65D491630AB4E0022D936 /* UISSGeneratedCodeViewController.m in Sources */,
-				FDD65D4A1630AB4E0022D936 /* UISSImageValueConverter.m in Sources */,
-				FDD65D4B1630AB4E0022D936 /* UISSIntegerValueConverter.m in Sources */,
-				FDD65D4C1630AB4E0022D936 /* UISSOffsetValueConverter.m in Sources */,
-				FDD65D4D1630AB4E0022D936 /* UISSParser.m in Sources */,
-				FDD65D4E1630AB4E0022D936 /* UISSParserContext.m in Sources */,
-				FDD65D4F1630AB4E0022D936 /* UISSPointValueConverter.m in Sources */,
-				FDD65D501630AB4E0022D936 /* UISSProperty.m in Sources */,
-				FDD65D511630AB4E0022D936 /* UISSPropertySetter.m in Sources */,
-				FDD65D521630AB4E0022D936 /* UISSRectValueConverter.m in Sources */,
-				FDD65D531630AB4E0022D936 /* UISSSearchBarIconValueConverter.m in Sources */,
-				FDD65D541630AB4E0022D936 /* UISSSegmentedControlSegmentValueConverter.m in Sources */,
-				FDD65D551630AB4E0022D936 /* UISSSizeValueConverter.m in Sources */,
-				FDD65D561630AB4E0022D936 /* UISSStatusView.m in Sources */,
-				FDD65D571630AB4E0022D936 /* UISSStatusViewController.m in Sources */,
-				FDD65D581630AB4E0022D936 /* UISSStatusWindow.m in Sources */,
-				FDD65D591630AB4E0022D936 /* UISSStyle.m in Sources */,
-				FDD65D5A1630AB4E0022D936 /* UISSTextAttributesValueConverter.m in Sources */,
-				FDD65D5B1630AB4E0022D936 /* UISSToolbarPositionConverter.m in Sources */,
-				FDD65D5C1630AB4E0022D936 /* UISSUIntegerValueConverter.m in Sources */,
-				FDD65D5D1630AB4E0022D936 /* UISSUserInterfaceIdiomPreprocessor.m in Sources */,
-				FDD65D5E1630AB4E0022D936 /* UISSVariablesPreprocessor.m in Sources */,
-				FDD65D5F1630AB4E0022D936 /* UIView+UISS.m in Sources */,
 				FDD65D601630AB4E0022D936 /* AccordionView.m in Sources */,
 				FDD65D611630AB4E0022D936 /* IPIAccordionViewController.m in Sources */,
 				FDD65D621630AB4E0022D936 /* IPIAccordionPagesViewController.m in Sources */,
@@ -6359,7 +6124,6 @@
 				FDD65D651630AB4E0022D936 /* UIResponder+KeyboardCache.m in Sources */,
 				FDD65D661630AB4E0022D936 /* IPIProviderHeaderTableViewCell.m in Sources */,
 				FDD65D671630AB4E0022D936 /* RCLocationManager.m in Sources */,
-				FDD65D681630AB4E0022D936 /* SVPullToRefresh.m in Sources */,
 				FDD65D691630AB4E0022D936 /* IPISocialShareHelper.m in Sources */,
 				FDD65D6A1630AB4E0022D936 /* IPIBookmarkBaseManagedViewController.m in Sources */,
 				FDD65D6B1630AB4E0022D936 /* IPIBookmarkContainerViewController.m in Sources */,
@@ -6443,6 +6207,8 @@
 				FDF6DB8D163F3FD600EE7057 /* IPICollaboratorTableViewCell.m in Sources */,
 				FD5B522D1644807A00D764FA /* IPICallButton.m in Sources */,
 				FD5B525916485AD900D764FA /* IPIRankPageActivityCell.m in Sources */,
+				FD67CD531649EF88000D3F49 /* UIScrollView+SVInfiniteScrolling.m in Sources */,
+				FD67CD571649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6537,47 +6303,6 @@
 				FDD65F211630ABAA0022D936 /* IIViewDeckController.m in Sources */,
 				FDD65F221630ABAA0022D936 /* WrapController.m in Sources */,
 				FDD65F231630ABAA0022D936 /* IPIPageTableViewCell.m in Sources */,
-				FDD65F241630ABAA0022D936 /* NSString+UISS.m in Sources */,
-				FDD65F251630ABAA0022D936 /* UILabel+UISS.m in Sources */,
-				FDD65F261630ABAA0022D936 /* UISS.m in Sources */,
-				FDD65F271630ABAA0022D936 /* UISSAbstractEnumValueConverter.m in Sources */,
-				FDD65F281630ABAA0022D936 /* UISSArgument.m in Sources */,
-				FDD65F291630ABAA0022D936 /* UISSAxisParameter.m in Sources */,
-				FDD65F2A1630ABAA0022D936 /* UISSBarMetricsValueConverter.m in Sources */,
-				FDD65F2B1630ABAA0022D936 /* UISSCodeGenerator.m in Sources */,
-				FDD65F2C1630ABAA0022D936 /* UISSColorValueConverter.m in Sources */,
-				FDD65F2D1630ABAA0022D936 /* UISSConfig.m in Sources */,
-				FDD65F2E1630ABAA0022D936 /* UISSConsoleViewController.m in Sources */,
-				FDD65F2F1630ABAA0022D936 /* UISSControlStateValueConveter.m in Sources */,
-				FDD65F301630ABAA0022D936 /* UISSDisabledKeysPreprocessor.m in Sources */,
-				FDD65F311630ABAA0022D936 /* UISSEdgeInsetsValueConverter.m in Sources */,
-				FDD65F321630ABAA0022D936 /* UISSError.m in Sources */,
-				FDD65F331630ABAA0022D936 /* UISSErrorsViewController.m in Sources */,
-				FDD65F341630ABAA0022D936 /* UISSFloatValueConverter.m in Sources */,
-				FDD65F351630ABAA0022D936 /* UISSFontValueConverter.m in Sources */,
-				FDD65F361630ABAA0022D936 /* UISSGeneratedCodeViewController.m in Sources */,
-				FDD65F371630ABAA0022D936 /* UISSImageValueConverter.m in Sources */,
-				FDD65F381630ABAA0022D936 /* UISSIntegerValueConverter.m in Sources */,
-				FDD65F391630ABAA0022D936 /* UISSOffsetValueConverter.m in Sources */,
-				FDD65F3A1630ABAA0022D936 /* UISSParser.m in Sources */,
-				FDD65F3B1630ABAA0022D936 /* UISSParserContext.m in Sources */,
-				FDD65F3C1630ABAA0022D936 /* UISSPointValueConverter.m in Sources */,
-				FDD65F3D1630ABAA0022D936 /* UISSProperty.m in Sources */,
-				FDD65F3E1630ABAA0022D936 /* UISSPropertySetter.m in Sources */,
-				FDD65F3F1630ABAA0022D936 /* UISSRectValueConverter.m in Sources */,
-				FDD65F401630ABAA0022D936 /* UISSSearchBarIconValueConverter.m in Sources */,
-				FDD65F411630ABAA0022D936 /* UISSSegmentedControlSegmentValueConverter.m in Sources */,
-				FDD65F421630ABAA0022D936 /* UISSSizeValueConverter.m in Sources */,
-				FDD65F431630ABAA0022D936 /* UISSStatusView.m in Sources */,
-				FDD65F441630ABAA0022D936 /* UISSStatusViewController.m in Sources */,
-				FDD65F451630ABAA0022D936 /* UISSStatusWindow.m in Sources */,
-				FDD65F461630ABAA0022D936 /* UISSStyle.m in Sources */,
-				FDD65F471630ABAA0022D936 /* UISSTextAttributesValueConverter.m in Sources */,
-				FDD65F481630ABAA0022D936 /* UISSToolbarPositionConverter.m in Sources */,
-				FDD65F491630ABAA0022D936 /* UISSUIntegerValueConverter.m in Sources */,
-				FDD65F4A1630ABAA0022D936 /* UISSUserInterfaceIdiomPreprocessor.m in Sources */,
-				FDD65F4B1630ABAA0022D936 /* UISSVariablesPreprocessor.m in Sources */,
-				FDD65F4C1630ABAA0022D936 /* UIView+UISS.m in Sources */,
 				FDD65F4D1630ABAA0022D936 /* AccordionView.m in Sources */,
 				FDD65F4E1630ABAA0022D936 /* IPIAccordionViewController.m in Sources */,
 				FDD65F4F1630ABAA0022D936 /* IPIAccordionPagesViewController.m in Sources */,
@@ -6586,7 +6311,6 @@
 				FDD65F521630ABAA0022D936 /* UIResponder+KeyboardCache.m in Sources */,
 				FDD65F531630ABAA0022D936 /* IPIProviderHeaderTableViewCell.m in Sources */,
 				FDD65F541630ABAA0022D936 /* RCLocationManager.m in Sources */,
-				FDD65F551630ABAA0022D936 /* SVPullToRefresh.m in Sources */,
 				FDD65F561630ABAA0022D936 /* IPISocialShareHelper.m in Sources */,
 				FDD65F571630ABAA0022D936 /* IPIBookmarkBaseManagedViewController.m in Sources */,
 				FDD65F581630ABAA0022D936 /* IPIBookmarkContainerViewController.m in Sources */,
@@ -6670,6 +6394,8 @@
 				FDF6DB8E163F3FD600EE7057 /* IPICollaboratorTableViewCell.m in Sources */,
 				FD5B522C1644807A00D764FA /* IPICallButton.m in Sources */,
 				FD5B525A16485AD900D764FA /* IPIRankPageActivityCell.m in Sources */,
+				FD67CD541649EF88000D3F49 /* UIScrollView+SVInfiniteScrolling.m in Sources */,
+				FD67CD581649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6764,47 +6490,6 @@
 				FDD6610E1630AC250022D936 /* IIViewDeckController.m in Sources */,
 				FDD6610F1630AC250022D936 /* WrapController.m in Sources */,
 				FDD661101630AC250022D936 /* IPIPageTableViewCell.m in Sources */,
-				FDD661111630AC250022D936 /* NSString+UISS.m in Sources */,
-				FDD661121630AC250022D936 /* UILabel+UISS.m in Sources */,
-				FDD661131630AC250022D936 /* UISS.m in Sources */,
-				FDD661141630AC250022D936 /* UISSAbstractEnumValueConverter.m in Sources */,
-				FDD661151630AC250022D936 /* UISSArgument.m in Sources */,
-				FDD661161630AC250022D936 /* UISSAxisParameter.m in Sources */,
-				FDD661171630AC250022D936 /* UISSBarMetricsValueConverter.m in Sources */,
-				FDD661181630AC250022D936 /* UISSCodeGenerator.m in Sources */,
-				FDD661191630AC250022D936 /* UISSColorValueConverter.m in Sources */,
-				FDD6611A1630AC250022D936 /* UISSConfig.m in Sources */,
-				FDD6611B1630AC250022D936 /* UISSConsoleViewController.m in Sources */,
-				FDD6611C1630AC250022D936 /* UISSControlStateValueConveter.m in Sources */,
-				FDD6611D1630AC250022D936 /* UISSDisabledKeysPreprocessor.m in Sources */,
-				FDD6611E1630AC250022D936 /* UISSEdgeInsetsValueConverter.m in Sources */,
-				FDD6611F1630AC250022D936 /* UISSError.m in Sources */,
-				FDD661201630AC250022D936 /* UISSErrorsViewController.m in Sources */,
-				FDD661211630AC250022D936 /* UISSFloatValueConverter.m in Sources */,
-				FDD661221630AC250022D936 /* UISSFontValueConverter.m in Sources */,
-				FDD661231630AC250022D936 /* UISSGeneratedCodeViewController.m in Sources */,
-				FDD661241630AC250022D936 /* UISSImageValueConverter.m in Sources */,
-				FDD661251630AC250022D936 /* UISSIntegerValueConverter.m in Sources */,
-				FDD661261630AC250022D936 /* UISSOffsetValueConverter.m in Sources */,
-				FDD661271630AC250022D936 /* UISSParser.m in Sources */,
-				FDD661281630AC250022D936 /* UISSParserContext.m in Sources */,
-				FDD661291630AC250022D936 /* UISSPointValueConverter.m in Sources */,
-				FDD6612A1630AC250022D936 /* UISSProperty.m in Sources */,
-				FDD6612B1630AC250022D936 /* UISSPropertySetter.m in Sources */,
-				FDD6612C1630AC250022D936 /* UISSRectValueConverter.m in Sources */,
-				FDD6612D1630AC250022D936 /* UISSSearchBarIconValueConverter.m in Sources */,
-				FDD6612E1630AC250022D936 /* UISSSegmentedControlSegmentValueConverter.m in Sources */,
-				FDD6612F1630AC250022D936 /* UISSSizeValueConverter.m in Sources */,
-				FDD661301630AC250022D936 /* UISSStatusView.m in Sources */,
-				FDD661311630AC250022D936 /* UISSStatusViewController.m in Sources */,
-				FDD661321630AC250022D936 /* UISSStatusWindow.m in Sources */,
-				FDD661331630AC250022D936 /* UISSStyle.m in Sources */,
-				FDD661341630AC250022D936 /* UISSTextAttributesValueConverter.m in Sources */,
-				FDD661351630AC250022D936 /* UISSToolbarPositionConverter.m in Sources */,
-				FDD661361630AC250022D936 /* UISSUIntegerValueConverter.m in Sources */,
-				FDD661371630AC250022D936 /* UISSUserInterfaceIdiomPreprocessor.m in Sources */,
-				FDD661381630AC250022D936 /* UISSVariablesPreprocessor.m in Sources */,
-				FDD661391630AC250022D936 /* UIView+UISS.m in Sources */,
 				FDD6613A1630AC250022D936 /* AccordionView.m in Sources */,
 				FDD6613B1630AC250022D936 /* IPIAccordionViewController.m in Sources */,
 				FDD6613C1630AC250022D936 /* IPIAccordionPagesViewController.m in Sources */,
@@ -6813,7 +6498,6 @@
 				FDD6613F1630AC250022D936 /* UIResponder+KeyboardCache.m in Sources */,
 				FDD661401630AC250022D936 /* IPIProviderHeaderTableViewCell.m in Sources */,
 				FDD661411630AC250022D936 /* RCLocationManager.m in Sources */,
-				FDD661421630AC250022D936 /* SVPullToRefresh.m in Sources */,
 				FDD661431630AC250022D936 /* IPISocialShareHelper.m in Sources */,
 				FDD661441630AC250022D936 /* IPIBookmarkBaseManagedViewController.m in Sources */,
 				FDD661451630AC250022D936 /* IPIBookmarkContainerViewController.m in Sources */,
@@ -6897,6 +6581,8 @@
 				FDF6DB8F163F3FD600EE7057 /* IPICollaboratorTableViewCell.m in Sources */,
 				FD5B522B1644807900D764FA /* IPICallButton.m in Sources */,
 				FD5B525B16485AD900D764FA /* IPIRankPageActivityCell.m in Sources */,
+				FD67CD551649EF88000D3F49 /* UIScrollView+SVInfiniteScrolling.m in Sources */,
+				FD67CD591649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

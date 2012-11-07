@@ -23,8 +23,6 @@
 #import "SDURLCache.h"
 #import "UIResponder+KeyboardCache.h"
 #import "UIFont+InsiderPagesiOSAdditions.h"
-#import "UISS.h"
-#import "UISSStatusWindow.h"
 #import "AFHTTPRequestOperationLogger.h"
 
 #import <Crashlytics/Crashlytics.h>
@@ -34,15 +32,11 @@
 #endif
 
 @interface IPIAppDelegate ()
-
-@property (nonatomic, strong) UISS *uiss;
-@property (nonatomic, strong) UISSStatusWindow *statusWindow;
-
 @end
 
 @implementation IPIAppDelegate
 
-@synthesize window = _window, uiss, statusWindow;
+@synthesize window = _window;
 
 + (IPIAppDelegate *)sharedAppDelegate {
 	return (IPIAppDelegate *)[[UIApplication sharedApplication] delegate];
