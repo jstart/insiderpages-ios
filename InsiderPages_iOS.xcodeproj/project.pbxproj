@@ -91,7 +91,6 @@
 		B28FD2DC15BF742D00365CD6 /* Gotham-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = B28FD2D615BF742D00365CD6 /* Gotham-BoldItalic.otf */; };
 		B28FD2DD15BF742D00365CD6 /* Gotham-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = B28FD2D715BF742D00365CD6 /* Gotham-Book.otf */; };
 		B28FD2DE15BF742D00365CD6 /* Gotham-BookItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = B28FD2D815BF742D00365CD6 /* Gotham-BookItalic.otf */; };
-		B28FD2E815BF774D00365CD6 /* CDIDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = B28FD2E715BF774D00365CD6 /* CDIDefines.m */; };
 		B29011CE15C505DA008FC626 /* CDISettingsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B29011CD15C505DA008FC626 /* CDISettingsTableViewCell.m */; };
 		B2AD031915C4896E00D9B909 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2AD031815C4896E00D9B909 /* AudioToolbox.framework */; };
 		B2AD032115C493C200D9B909 /* CDIWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2AD032015C493C100D9B909 /* CDIWebViewController.m */; };
@@ -472,7 +471,6 @@
 		FDD65CF51630AB4E0022D936 /* SSPullToRefreshSimpleContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BEC715BF63E00080705D /* SSPullToRefreshSimpleContentView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FDD65CF61630AB4E0022D936 /* SSPullToRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BEC915BF63E00080705D /* SSPullToRefreshView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FDD65CF71630AB4E0022D936 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BF7E15BF63E00080705D /* TTTAttributedLabel.m */; };
-		FDD65CF81630AB4E0022D936 /* CDIDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = B28FD2E715BF774D00365CD6 /* CDIDefines.m */; };
 		FDD65CF91630AB4E0022D936 /* CDIWebSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B23261A915C207FF00D455EF /* CDIWebSignInViewController.m */; };
 		FDD65CFA1630AB4E0022D936 /* CDIWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2AD032015C493C100D9B909 /* CDIWebViewController.m */; };
 		FDD65CFB1630AB4E0022D936 /* CDISettingsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B29011CD15C505DA008FC626 /* CDISettingsTableViewCell.m */; };
@@ -904,7 +902,6 @@
 		FDD65EE21630ABAA0022D936 /* SSPullToRefreshSimpleContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BEC715BF63E00080705D /* SSPullToRefreshSimpleContentView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FDD65EE31630ABAA0022D936 /* SSPullToRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BEC915BF63E00080705D /* SSPullToRefreshView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FDD65EE41630ABAA0022D936 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BF7E15BF63E00080705D /* TTTAttributedLabel.m */; };
-		FDD65EE51630ABAA0022D936 /* CDIDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = B28FD2E715BF774D00365CD6 /* CDIDefines.m */; };
 		FDD65EE61630ABAA0022D936 /* CDIWebSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B23261A915C207FF00D455EF /* CDIWebSignInViewController.m */; };
 		FDD65EE71630ABAA0022D936 /* CDIWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2AD032015C493C100D9B909 /* CDIWebViewController.m */; };
 		FDD65EE81630ABAA0022D936 /* CDISettingsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B29011CD15C505DA008FC626 /* CDISettingsTableViewCell.m */; };
@@ -1336,7 +1333,6 @@
 		FDD660CF1630AC250022D936 /* SSPullToRefreshSimpleContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BEC715BF63E00080705D /* SSPullToRefreshSimpleContentView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FDD660D01630AC250022D936 /* SSPullToRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BEC915BF63E00080705D /* SSPullToRefreshView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FDD660D11630AC250022D936 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BF7E15BF63E00080705D /* TTTAttributedLabel.m */; };
-		FDD660D21630AC250022D936 /* CDIDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = B28FD2E715BF774D00365CD6 /* CDIDefines.m */; };
 		FDD660D31630AC250022D936 /* CDIWebSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B23261A915C207FF00D455EF /* CDIWebSignInViewController.m */; };
 		FDD660D41630AC250022D936 /* CDIWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2AD032015C493C100D9B909 /* CDIWebViewController.m */; };
 		FDD660D51630AC250022D936 /* CDISettingsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B29011CD15C505DA008FC626 /* CDISettingsTableViewCell.m */; };
@@ -2130,8 +2126,6 @@
 		B28FD2D615BF742D00365CD6 /* Gotham-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Gotham-BoldItalic.otf"; sourceTree = "<group>"; };
 		B28FD2D715BF742D00365CD6 /* Gotham-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Gotham-Book.otf"; sourceTree = "<group>"; };
 		B28FD2D815BF742D00365CD6 /* Gotham-BookItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Gotham-BookItalic.otf"; sourceTree = "<group>"; };
-		B28FD2E415BF761C00365CD6 /* CDIDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIDefines.h; sourceTree = "<group>"; };
-		B28FD2E715BF774D00365CD6 /* CDIDefines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIDefines.m; sourceTree = "<group>"; };
 		B29011CC15C505DA008FC626 /* CDISettingsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDISettingsTableViewCell.h; sourceTree = "<group>"; };
 		B29011CD15C505DA008FC626 /* CDISettingsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDISettingsTableViewCell.m; sourceTree = "<group>"; };
 		B2A2B07915C0BE7300772CF6 /* CDKTask+InsiderPagesiOSAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CDKTask+InsiderPagesiOSAdditions.h"; sourceTree = "<group>"; };
@@ -2973,8 +2967,6 @@
 			children = (
 				B208BBD115BF63A80080705D /* InsiderPages-Prefix.pch */,
 				B208BBD215BF63A80080705D /* main.m */,
-				B28FD2E415BF761C00365CD6 /* CDIDefines.h */,
-				B28FD2E715BF774D00365CD6 /* CDIDefines.m */,
 			);
 			path = "Other Sources";
 			sourceTree = "<group>";
@@ -5866,7 +5858,6 @@
 				B208C14115BF63E20080705D /* SSPullToRefreshSimpleContentView.m in Sources */,
 				B208C14215BF63E20080705D /* SSPullToRefreshView.m in Sources */,
 				B208C1A515BF63E20080705D /* TTTAttributedLabel.m in Sources */,
-				B28FD2E815BF774D00365CD6 /* CDIDefines.m in Sources */,
 				B23261AA15C207FF00D455EF /* CDIWebSignInViewController.m in Sources */,
 				B2AD032115C493C200D9B909 /* CDIWebViewController.m in Sources */,
 				B29011CE15C505DA008FC626 /* CDISettingsTableViewCell.m in Sources */,
@@ -6053,7 +6044,6 @@
 				FDD65CF51630AB4E0022D936 /* SSPullToRefreshSimpleContentView.m in Sources */,
 				FDD65CF61630AB4E0022D936 /* SSPullToRefreshView.m in Sources */,
 				FDD65CF71630AB4E0022D936 /* TTTAttributedLabel.m in Sources */,
-				FDD65CF81630AB4E0022D936 /* CDIDefines.m in Sources */,
 				FDD65CF91630AB4E0022D936 /* CDIWebSignInViewController.m in Sources */,
 				FDD65CFA1630AB4E0022D936 /* CDIWebViewController.m in Sources */,
 				FDD65CFB1630AB4E0022D936 /* CDISettingsTableViewCell.m in Sources */,
@@ -6240,7 +6230,6 @@
 				FDD65EE21630ABAA0022D936 /* SSPullToRefreshSimpleContentView.m in Sources */,
 				FDD65EE31630ABAA0022D936 /* SSPullToRefreshView.m in Sources */,
 				FDD65EE41630ABAA0022D936 /* TTTAttributedLabel.m in Sources */,
-				FDD65EE51630ABAA0022D936 /* CDIDefines.m in Sources */,
 				FDD65EE61630ABAA0022D936 /* CDIWebSignInViewController.m in Sources */,
 				FDD65EE71630ABAA0022D936 /* CDIWebViewController.m in Sources */,
 				FDD65EE81630ABAA0022D936 /* CDISettingsTableViewCell.m in Sources */,
@@ -6427,7 +6416,6 @@
 				FDD660CF1630AC250022D936 /* SSPullToRefreshSimpleContentView.m in Sources */,
 				FDD660D01630AC250022D936 /* SSPullToRefreshView.m in Sources */,
 				FDD660D11630AC250022D936 /* TTTAttributedLabel.m in Sources */,
-				FDD660D21630AC250022D936 /* CDIDefines.m in Sources */,
 				FDD660D31630AC250022D936 /* CDIWebSignInViewController.m in Sources */,
 				FDD660D41630AC250022D936 /* CDIWebViewController.m in Sources */,
 				FDD660D51630AC250022D936 /* CDISettingsTableViewCell.m in Sources */,

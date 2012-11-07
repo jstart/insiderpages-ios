@@ -6,6 +6,3 @@
 *.xcworkspace
 *.moved-aside/
 DerivedData
-
-Resources/Fonts/*
-Other Sources/CDIDefines.*
