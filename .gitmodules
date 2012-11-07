@@ -72,7 +72,7 @@
 	url = git://github.com/AliSoftware/OHAttributedLabel.git
 [submodule "Vendor/Development/AFHTTPRequetOperationLogger"]
 	path = Vendor/Development/AFHTTPRequetOperationLogger
-	url = git://github.com/AFNetworking/AFHTTPRequestOperationLogger.git
+	url = git://github.com/AFNetworking/AFHTTPRequestOperationLogger
 [submodule "Vendor/Production/JMStaticContentTableViewController"]
 	path = Vendor/Production/JMStaticContentTableViewController
 	url = git://github.com/jakemarsh/JMStaticContentTableViewController.git
@@ -88,3 +88,6 @@
 [submodule "Vendor/Production/iCarousel"]
 	path = Vendor/Production/iCarousel
 	url = git://github.com/nicklockwood/iCarousel.git
+[submodule "Vendor/Development/AFHTTPRequestOperationLogger"]
+	path = Vendor/Development/AFHTTPRequestOperationLogger
+	url = git://github.com/AFNetworking/AFHTTPRequestOperationLogger
