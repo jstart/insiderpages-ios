@@ -33,7 +33,7 @@
 	url = git://github.com/OliverLetterer/UIExpandableTableView.git
 [submodule "Vendor/YIFullScreenScroll"]
 	path = Vendor/YIFullScreenScroll
-	url = git@github.com:jstart/YIFullScreenScroll.git
+	url = git://github.com:jstart/YIFullScreenScroll.git
 [submodule "Vendor/ViewDeck"]
 	path = Vendor/ViewDeck
 	url = git://github.com/Inferis/ViewDeck.git
@@ -48,10 +48,10 @@
 	url = git://github.com/samvermette/SVPullToRefresh.git
 [submodule "Vendor/JSInfiniteScrollView"]
 	path = Vendor/JSInfiniteScrollView
-	url = git@github.com:jstart/JSInfiniteScrollView.git
+	url = gitgithub.com:jstart/JSInfiniteScrollView.git
 [submodule "Vendor/iCarousel"]
 	path = Vendor/iCarousel
-	url = git@github.com:jstart/iCarousel.git
+	url = git://github.com:jstart/iCarousel.git
 [submodule "Vendor/Development/PonyDebugger"]
 	path = Vendor/Development/PonyDebugger
 	url = git://github.com/square/PonyDebugger.git
@@ -63,7 +63,7 @@
 	url = git://github.com/firebaseco/FireUIPagedScrollView.git
 [submodule "Vendor/Production/IADisquser"]
 	path = Vendor/Production/IADisquser
-	url = git@github.com:jstart/IADisquser.git
+	url = git://github.com:jstart/IADisquser.git
 [submodule "Vendor/Production/JCGridMenu"]
 	path = Vendor/Production/JCGridMenu
 	url = git://github.com/joecarney/JCGridMenu.git
