@@ -1,6 +1,6 @@
 [submodule "Vendor/InsiderPagesKit"]
 	path = Vendor/InsiderPagesKit
-	url = git@github.com:jstart/InsiderPagesKit.git
+	url = git://github.com/jstart/InsiderPagesKit.git
 [submodule "Vendor/Localytics"]
 	path = Vendor/Localytics
 	url = https://github.com/samsoffes/localytics-ios.git
@@ -37,9 +37,6 @@
 [submodule "Vendor/ViewDeck"]
 	path = Vendor/ViewDeck
 	url = git://github.com/Inferis/ViewDeck.git
-[submodule "Vendor/UISS"]
-	path = Vendor/UISS
-	url = git@github.com:jstart/UISS.git
 [submodule "Vendor/UIResponder-KeyboardCache"]
 	path = Vendor/UIResponder-KeyboardCache
 	url = git://github.com/mbrandonw/UIResponder-KeyboardCache.git
