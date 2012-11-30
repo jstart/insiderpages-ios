@@ -49,7 +49,7 @@
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
 
-	[self.tableView.pullToRefreshView triggerRefresh];
+	[self.tableView triggerPullToRefresh];
 }
 
 

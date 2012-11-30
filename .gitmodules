@@ -91,3 +91,6 @@
 [submodule "Vendor/Development/AFHTTPRequestOperationLogger"]
 	path = Vendor/Development/AFHTTPRequestOperationLogger
 	url = git://github.com/AFNetworking/AFHTTPRequestOperationLogger
+[submodule "Vendor/Development/PonyDebugger"]
+	path = Vendor/Development/PonyDebugger
+	url = git://github.com/square/PonyDebugger.git

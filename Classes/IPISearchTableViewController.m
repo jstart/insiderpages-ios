@@ -77,7 +77,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-    [self.tableView.pullToRefreshView triggerRefresh];
+    [self.tableView triggerPullToRefresh];
 }
 
 -(void)viewDidAppear:(BOOL)animated{

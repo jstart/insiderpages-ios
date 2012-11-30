@@ -141,7 +141,7 @@
     self.ignoreChange = NO;
     [self setEditing:YES animated:YES];
     [self.viewDeckController setPanningMode:IIViewDeckNavigationBarPanning];
-    [self.tableView.pullToRefreshView triggerRefresh];
+    [self.tableView triggerPullToRefresh];
     [self.navigationController.navigationBar setTitleVerticalPositionAdjustment:7 forBarMetrics:UIBarMetricsDefault];
 }
 

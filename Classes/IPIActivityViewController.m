@@ -97,7 +97,7 @@
     _fullScreenDelegate.shouldShowUIBarsOnScrollUp = YES;
     
     self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
-    [self.tableView.pullToRefreshView triggerRefresh];
+    [self.tableView triggerPullToRefresh];
     
 }
 
@@ -277,7 +277,7 @@
                         [[IPIAppDelegate sharedAppDelegate] registerOrLogin];
                     }
                     [SSRateLimit resetLimitForName:@"refresh-activity"];
-                    [self.tableView.pullToRefreshView triggerRefresh];
+                    [self.tableView triggerPullToRefresh];
                     self.loading = NO;
                     [self.tableView setUserInteractionEnabled:YES];
                 });
@@ -350,7 +350,7 @@
     } failure:^(AFJSONRequestOperation *operation, NSError *error) {
         
     }];
-    [self.tableView.pullToRefreshView triggerRefresh];
+    [self.tableView triggerPullToRefresh];
 	[self.tableView reloadData];
 }
 
@@ -573,19 +573,19 @@
     switch (item.tag) {
         case 0:
             self.filterType = IPKActivityFilterTypeYou;
-            [self.tableView.pullToRefreshView triggerRefresh];
+            [self.tableView triggerPullToRefresh];
             self.fetchedResultsController = nil;
             [self.tableView reloadData];
             break;
         case 1:
             self.filterType = IPKActivityFilterTypeFollowers;
-            [self.tableView.pullToRefreshView triggerRefresh];
+            [self.tableView triggerPullToRefresh];
             self.fetchedResultsController = nil;
             [self.tableView reloadData];
             break;
         case 2:
             self.filterType = IPKActivityFilterTypePopular;
-            [self.tableView.pullToRefreshView triggerRefresh];
+            [self.tableView triggerPullToRefresh];
             self.fetchedResultsController = nil;
             [self.tableView reloadData];
             break;

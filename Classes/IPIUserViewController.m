@@ -118,7 +118,7 @@ static CGFloat prevContentOffset = 0;
     [self.navigationController.navigationBar setTitleVerticalPositionAdjustment:4 forBarMetrics:UIBarMetricsDefault];
 //    [self setEditing:YES animated:YES];
     [SSRateLimit executeBlock:[self refresh] name:@"refresh-user" limit:0.0];
-    [self.tableView.pullToRefreshView triggerRefresh];
+    [self.tableView triggerPullToRefresh];
     [self.tableView setScrollIndicatorInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
     
     NSString * userID = [self.user.remoteID stringValue];

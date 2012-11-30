@@ -164,7 +164,7 @@ static CGFloat prevContentOffset = 0;
     [super viewWillAppear:animated];
 //    [self setEditing:YES animated:YES];
     [SSRateLimit executeBlock:[self refresh] name:@"refresh-add-to-pages" limit:0.0];
-    [self.tableView.pullToRefreshView triggerRefresh];
+    [self.tableView triggerPullToRefresh];
     [self.tableView setScrollIndicatorInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
 }
 

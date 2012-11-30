@@ -28,7 +28,7 @@
 #import <Crashlytics/Crashlytics.h>
 #if TARGET_IPHONE_SIMULATOR
     #import "DCIntrospect.h"
-//    #import <PonyDebugger/PonyDebugger.h>
+    #import <PonyDebugger/PonyDebugger.h>
 #endif
 
 @interface IPIAppDelegate ()
@@ -70,7 +70,6 @@
 	// Initialize the window
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	self.window.backgroundColor = [UIColor blackColor];
-	self.session = [FBSession activeSession];
     [self openSessionCheckCache:YES];
 
     IPIActivityViewController *viewController = [[IPIActivityViewController alloc] initWithStyle:UITableViewStyleGrouped];
@@ -97,16 +96,16 @@
     #if TARGET_IPHONE_SIMULATOR
         [[DCIntrospect sharedIntrospector] start];
  
-//        PDDebugger *debugger = [PDDebugger defaultInstance];
-//        [debugger enableNetworkTrafficDebugging];
-//        [debugger forwardAllNetworkTraffic];
-//        [debugger enableCoreDataDebugging];
-//        [debugger addManagedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread]];
-//        // Enable View Hierarchy debugging. This will swizzle UIView methods to monitor changes in the hierarchy
-//        // Choose a few UIView key paths to display as attributes of the dom nodes
-//        [debugger enableViewHierarchyDebugging];
-//        [debugger setDisplayedViewAttributeKeyPaths:@[@"frame", @"hidden", @"alpha", @"opaque"]];
-//        [debugger connectToURL:[NSURL URLWithString:@"ws://localhost:9000/device"]];
+        PDDebugger *debugger = [PDDebugger defaultInstance];
+        [debugger enableNetworkTrafficDebugging];
+        [debugger forwardAllNetworkTraffic];
+        [debugger enableCoreDataDebugging];
+        [debugger addManagedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread]];
+        // Enable View Hierarchy debugging. This will swizzle UIView methods to monitor changes in the hierarchy
+        // Choose a few UIView key paths to display as attributes of the dom nodes
+        [debugger enableViewHierarchyDebugging];
+        [debugger setDisplayedViewAttributeKeyPaths:@[@"frame", @"hidden", @"alpha", @"opaque"]];
+        [debugger connectToURL:[NSURL URLWithString:@"ws://localhost:9000/device"]];
     #endif
 //    [iOSHierarchyViewer start];
 //    [iOSHierarchyViewer addContext:[NSManagedObjectContext MR_contextForCurrentThread] name:@"Root managed context"];
@@ -147,29 +146,26 @@
   
   // Do something in response to this
     if (updatedObjects.count > 0){
-//        NSLog(@"Updated: %d Objects: %@", updatedObjects.count, updatedObjects);
+        NSLog(@"Updated: %d Objects: %@", updatedObjects.count, updatedObjects);
     }
     if (deletedObjects.count > 0){
-//        NSLog(@"Deleted: %d Objects: %@", deletedObjects.count, deletedObjects);
+        NSLog(@"Deleted: %d Objects: %@", deletedObjects.count, deletedObjects);
     }
     if (insertedObjects.count > 0){
-//        NSLog(@"Inserted: %d Objects: %@", insertedObjects.count, insertedObjects);
+        NSLog(@"Inserted: %d Objects: %@", insertedObjects.count, insertedObjects);
     }
     // This ensures no updated object is fault, which would cause the NSFetchedResultsController updates to fail.
     // http://www.mlsite.net/blog/?p=518
-    
-    NSMutableArray* updates = [[updatedObjects allObjects] mutableCopy];
-    [updates addObjectsFromArray:[deletedObjects allObjects]];
-    [updates addObjectsFromArray:[insertedObjects allObjects]];
-
-    for (NSInteger i = 0; i > 0; i++) {
-        [[[NSManagedObjectContext MR_contextForCurrentThread] objectWithID:[[updates objectAtIndex:i] objectID]] willAccessValueForKey:nil];
-            IPKTeamMembership * tm = [updates objectAtIndex:i];
-            NSLog(@"%@", tm);
-    }
+    NSArray* updates = [[note.userInfo objectForKey:@"updated"] allObjects];
+	for (NSInteger i = [updates count]-1; i >= 0; i--)
+	{
+		[[[NSManagedObjectContext MR_contextForCurrentThread] objectWithID:[[updates objectAtIndex:i] objectID]] willAccessValueForKey:nil];
+	}
     
     [[NSManagedObjectContext MR_contextForCurrentThread] mergeChangesFromContextDidSaveNotification:note];
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveWithErrorCallback:^(NSError *error){
+        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Core Data Error" message:[error description] delegate:nil cancelButtonTitle:@"Tell Chris" otherButtonTitles: nil];
+        [alertView show];
         NSLog(@"Failed to save to data store: %@", [error localizedDescription]);
         NSArray* detailedErrors = [[error userInfo] objectForKey:NSDetailedErrorsKey];
         if(detailedErrors != nil && [detailedErrors count] > 0) {
@@ -192,19 +188,20 @@
     SSHUDView *hud = [[SSHUDView alloc] initWithTitle:@"Contacting Facebook..." loading:YES];
 	[hud show];
     FBRequest *request = [FBRequest requestForMe];
-    [request setSession:self.session];
+    [request setSession:[FBSession activeSession]];
     [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error){
         if (error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSLog(@"%@ %@", @"Contacting Facebook Failed", error);
 //                [hud failAndDismissWithTitle:@"Contacting Facebook Failed"];
-                UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Contacting Facebook Failed" message:@"Would you like to try again?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Ok", nil];
+//                UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Contacting Facebook Failed" message:@"Would you like to try again?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Ok", nil];
+                UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Contacting Facebook Failed" message:[error description] delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Ok", nil];
                 [alertView show];
             });
             return;
         }
         [[NSUserDefaults standardUserDefaults] setObject:[result objectForKey:@"id"] forKey:@"FBUserId"];
-        [[IPKHTTPClient sharedClient] signInWithFacebookUserID:[result objectForKey:@"id"] accessToken:self.session.accessToken facebookMeResponse:result success:^(AFJSONRequestOperation *operation, id responseObject) {
+        [[IPKHTTPClient sharedClient] signInWithFacebookUserID:[result objectForKey:@"id"] accessToken:[FBSession activeSession].accessToken facebookMeResponse:result success:^(AFJSONRequestOperation *operation, id responseObject) {
             if ([[responseObject objectForKey:@"message"] isEqualToString:@"logged in"]) {
                 [self storeCookies];
                 
@@ -268,7 +265,7 @@
 -(void)login{
     SSHUDView *hud = [[SSHUDView alloc] initWithTitle:@"Logging in..." loading:YES];
 	[hud show];
-    [[IPKHTTPClient sharedClient] signInWithFacebookUserID:[[NSUserDefaults standardUserDefaults] objectForKey:@"FBUserId"] accessToken:self.session.accessToken facebookMeResponse:[NSDictionary dictionary] success:^(AFJSONRequestOperation *operation, id responseObject) {
+    [[IPKHTTPClient sharedClient] signInWithFacebookUserID:[[NSUserDefaults standardUserDefaults] objectForKey:@"FBUserId"] accessToken:[FBSession activeSession].accessToken facebookMeResponse:[NSDictionary dictionary] success:^(AFJSONRequestOperation *operation, id responseObject) {
         if ([[responseObject objectForKey:@"message"] isEqualToString:@"logged in"]) {
             [self storeCookies];
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -306,9 +303,12 @@
                                        allowLoginUI:YES
                                   completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
                                       /* handle success + failure in block */
+                                      NSLog(@"%@", error);
+                                      NSLog(@"%@", session);
                                       if (status == FBSessionStateOpen) {
-                                          self.session = session;
-                                          [self registerOrLogin];
+                                          if (![[NSUserDefaults standardUserDefaults] objectForKey:@"FBUserId"]) {
+                                              [self registerOrLogin];
+                                          }
                                       }
                                   }];
     
@@ -355,35 +355,9 @@
 
 - (void) openSessionCheckCache:(BOOL)check {
     // Create a new session object
-    if (!check && !self.session.isOpen) {
-        NSLog(@"Create new session: %@", self.session);
+    if (!check && ![FBSession activeSession].isOpen) {
+        NSLog(@"Create new session: %@", [FBSession activeSession]);
         [self createNewSession];
-    }
-    // Open the session in two scenarios:
-    // - When we are not loading from the cache, e.g. when a login
-    //   button is clicked.
-    // - When we are checking cache and have an available token,
-    //   e.g. when we need to show a logged vs. logged out display.
-    if (!check ||
-        (self.session.state == FBSessionStateCreatedTokenLoaded)) {
-        NSLog(@"!check new session: %@ ", self.session);
-        
-//        [self.session openWithCompletionHandler:
-//         ^(FBSession *session, FBSessionState state, NSError *error) {
-//             [self sessionStateChanged:session state:state error:error];
-//         }];
-        NSArray *permissions = [NSArray arrayWithObjects:@"email", @"user_location", nil];
-        [FBSession openActiveSessionWithReadPermissions:permissions
-                                           allowLoginUI:YES
-                                      completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
-                                          /* handle success + failure in block */
-                                          if (status == FBSessionStateOpen) {
-                                              self.session = session;
-                                              if (![[NSUserDefaults standardUserDefaults] objectForKey:@"FBUserId"]) {
-                                                  [self registerOrLogin];
-                                              }
-                                          }
-                                      }];
     }
 }
 
@@ -392,7 +366,7 @@
   sourceApplication:(NSString *)sourceApplication 
          annotation:(id)annotation 
 {
-    NSLog(@"OpenURL %@ Session %@", self.session, url);
+    NSLog(@"OpenURL %@ Session %@", [FBSession activeSession], url);
     if (![[FBSession activeSession] isOpen]) {
         return [[FBSession activeSession] handleOpenURL:url];
     }else{
@@ -460,7 +434,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
     [[LocalyticsSession sharedLocalyticsSession] close];
 	#endif
     // if the app is going away, we close the session object
-    [self.session close];
+    [[FBSession activeSession] close];
 }
 
 
