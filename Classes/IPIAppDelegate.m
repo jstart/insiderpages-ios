@@ -25,7 +25,6 @@
 #import "UIFont+InsiderPagesiOSAdditions.h"
 #import "AFHTTPRequestOperationLogger.h"
 
-#import <Crashlytics/Crashlytics.h>
 #if TARGET_IPHONE_SIMULATOR
     #import "DCIntrospect.h"
     #import <PonyDebugger/PonyDebugger.h>
@@ -45,7 +44,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
 	// Configure analytics
-	[Crashlytics startWithAPIKey:@"ff6f76d45da103570f8070443d1760ea5199fc81"];
+//	[Crashlytics startWithAPIKey:@"ff6f76d45da103570f8070443d1760ea5199fc81"];
 	#ifdef INSIDER_PAGES_LOCALYTICS_KEY
 	LLStartSession(CHEDDAR_LOCALYTICS_KEY);
 	#endif
@@ -57,7 +56,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDataModelChange:) name:NSManagedObjectContextObjectsDidChangeNotification object:[NSManagedObjectContext MR_contextForCurrentThread]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDataModelChange:) name:NSManagedObjectContextDidSaveNotification object:[NSManagedObjectContext MR_contextForCurrentThread]];
     [[NSManagedObjectContext MR_contextForCurrentThread] setMergePolicy:NSErrorMergePolicy];
-    
+    [self openSessionCheckCache:YES];
+
 #define TESTING 0
 #ifdef TESTING
     
@@ -70,7 +70,6 @@
 	// Initialize the window
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	self.window.backgroundColor = [UIColor blackColor];
-    [self openSessionCheckCache:YES];
 
     IPIActivityViewController *viewController = [[IPIActivityViewController alloc] initWithStyle:UITableViewStyleGrouped];
     UINavigationController *activityNavigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
@@ -146,24 +145,27 @@
   
   // Do something in response to this
     if (updatedObjects.count > 0){
-        NSLog(@"Updated: %d Objects: %@", updatedObjects.count, updatedObjects);
+//        NSLog(@"Updated: %d Objects: %@", updatedObjects.count, updatedObjects);
     }
     if (deletedObjects.count > 0){
-        NSLog(@"Deleted: %d Objects: %@", deletedObjects.count, deletedObjects);
+//        NSLog(@"Deleted: %d Objects: %@", deletedObjects.count, deletedObjects);
     }
     if (insertedObjects.count > 0){
-        NSLog(@"Inserted: %d Objects: %@", insertedObjects.count, insertedObjects);
+//        NSLog(@"Inserted: %d Objects: %@", insertedObjects.count, insertedObjects);
     }
     // This ensures no updated object is fault, which would cause the NSFetchedResultsController updates to fail.
     // http://www.mlsite.net/blog/?p=518
-    NSArray* updates = [[note.userInfo objectForKey:@"updated"] allObjects];
+    NSMutableArray* updates = [[updatedObjects allObjects] mutableCopy];
+    [updates addObjectsFromArray:[deletedObjects allObjects]];
+    [updates addObjectsFromArray:[insertedObjects allObjects]];
+    
 	for (NSInteger i = [updates count]-1; i >= 0; i--)
 	{
 		[[[NSManagedObjectContext MR_contextForCurrentThread] objectWithID:[[updates objectAtIndex:i] objectID]] willAccessValueForKey:nil];
 	}
     
     [[NSManagedObjectContext MR_contextForCurrentThread] mergeChangesFromContextDidSaveNotification:note];
-    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveWithErrorCallback:^(NSError *error){
+    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveNestedContextsErrorHandler:^(NSError *error){
         UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Core Data Error" message:[error description] delegate:nil cancelButtonTitle:@"Tell Chris" otherButtonTitles: nil];
         [alertView show];
         NSLog(@"Failed to save to data store: %@", [error localizedDescription]);

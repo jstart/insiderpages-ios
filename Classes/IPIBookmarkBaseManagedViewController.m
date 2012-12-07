@@ -93,7 +93,7 @@
     frame.origin.y = frame.origin.y - 17;
     [bookmarkButton customView].frame = frame;
     self.navigationItem.rightBarButtonItem = bookmarkButton;
-    IPKUser * currentUser = [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]];
+    IPKUser * currentUser = [IPKUser currentUserInContext:[NSManagedObjectContext MR_defaultContext]];
     NSArray * unreadNotificationsArray = [[currentUser.notifications filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"read == NO"]] allObjects];
     [self.notificationCountLabel setText:[NSString stringWithFormat:@"%d", unreadNotificationsArray.count]];
     

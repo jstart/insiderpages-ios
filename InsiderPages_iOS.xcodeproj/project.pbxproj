@@ -343,7 +343,6 @@
 		B208C14015BF63E20080705D /* SSPullToRefreshDefaultContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BEC515BF63E00080705D /* SSPullToRefreshDefaultContentView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B208C14115BF63E20080705D /* SSPullToRefreshSimpleContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BEC715BF63E00080705D /* SSPullToRefreshSimpleContentView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B208C14215BF63E20080705D /* SSPullToRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BEC915BF63E00080705D /* SSPullToRefreshView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		B208C1A515BF63E20080705D /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BF7E15BF63E00080705D /* TTTAttributedLabel.m */; };
 		B208C1EB15BF64630080705D /* libSSToolkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B208C1DF15BF63E30080705D /* libSSToolkit.a */; };
 		B208C1F415BF64630080705D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B208C1EC15BF64630080705D /* CoreData.framework */; };
 		B208C1F515BF64630080705D /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B208C1ED15BF64630080705D /* CoreText.framework */; };
@@ -644,6 +643,11 @@
 		FD7B96E5163B5B50002018A8 /* toggle_ranking_active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7B96D5163B5B50002018A8 /* toggle_ranking_active@2x.png */; };
 		FD81800E16697A630010D0AE /* libPonyDebugger.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB8219D166938F7000CEF9A /* libPonyDebugger.a */; };
 		FD81801016697A630010D0AE /* libSocketRocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD81800F16697A630010D0AE /* libSocketRocket.a */; };
+		FD81801416697EE70010D0AE /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FD81801316697EE70010D0AE /* TTTAttributedLabel.m */; };
+		FD81801516697EE70010D0AE /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FD81801316697EE70010D0AE /* TTTAttributedLabel.m */; };
+		FD81801616697EE70010D0AE /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FD81801316697EE70010D0AE /* TTTAttributedLabel.m */; };
+		FD81801716697EE70010D0AE /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FD81801316697EE70010D0AE /* TTTAttributedLabel.m */; };
+		FD81801816697EE70010D0AE /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FD81801316697EE70010D0AE /* TTTAttributedLabel.m */; };
 		FD91BFE415D5C888008158A6 /* IPIActivityPageTableViewFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD91BFE315D5C888008158A6 /* IPIActivityPageTableViewFooter.m */; };
 		FD961D8A1612632200CDEB89 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD961D891612632200CDEB89 /* FacebookSDK.framework */; };
 		FD961D8C1612636700CDEB89 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD961D8B1612636700CDEB89 /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -686,7 +690,6 @@
 		FDB2672B1627608A0040C5FB /* locked_tab.png in Resources */ = {isa = PBXBuildFile; fileRef = FDB267291627608A0040C5FB /* locked_tab.png */; };
 		FDB2672C1627608A0040C5FB /* locked_tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDB2672A1627608A0040C5FB /* locked_tab@2x.png */; };
 		FDB2672F162763710040C5FB /* IPIPageRankActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB2672E162763710040C5FB /* IPIPageRankActionViewController.m */; };
-		FDB2DB0215F040A400669CB5 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB2DB0115F040A400669CB5 /* Crashlytics.framework */; };
 		FDB3006815F90B080003CC60 /* FireUIPagedScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB3000B15F90B070003CC60 /* FireUIPagedScrollView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FDB300A315F90F1B0003CC60 /* IPIBookmarkBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB300A215F90F1B0003CC60 /* IPIBookmarkBaseViewController.m */; };
 		FDB300A615F90F710003CC60 /* IPISegmentContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB300A515F90F710003CC60 /* IPISegmentContainerViewController.m */; };
@@ -754,7 +757,6 @@
 		FDD65CF41630AB4E0022D936 /* SSPullToRefreshDefaultContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BEC515BF63E00080705D /* SSPullToRefreshDefaultContentView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FDD65CF51630AB4E0022D936 /* SSPullToRefreshSimpleContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BEC715BF63E00080705D /* SSPullToRefreshSimpleContentView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FDD65CF61630AB4E0022D936 /* SSPullToRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BEC915BF63E00080705D /* SSPullToRefreshView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		FDD65CF71630AB4E0022D936 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BF7E15BF63E00080705D /* TTTAttributedLabel.m */; };
 		FDD65CF91630AB4E0022D936 /* CDIWebSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B23261A915C207FF00D455EF /* CDIWebSignInViewController.m */; };
 		FDD65CFA1630AB4E0022D936 /* CDIWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2AD032015C493C100D9B909 /* CDIWebViewController.m */; };
 		FDD65CFB1630AB4E0022D936 /* CDISettingsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B29011CD15C505DA008FC626 /* CDISettingsTableViewCell.m */; };
@@ -927,7 +929,6 @@
 		FDD65DD01630AB4E0022D936 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B208C1F215BF64630080705D /* SystemConfiguration.framework */; };
 		FDD65DD11630AB4E0022D936 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B208C1F315BF64630080705D /* UIKit.framework */; };
 		FDD65DD21630AB4E0022D936 /* libSSToolkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B208C1DF15BF63E30080705D /* libSSToolkit.a */; };
-		FDD65DD31630AB4E0022D936 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB2DB0115F040A400669CB5 /* Crashlytics.framework */; };
 		FDD65DD41630AB4E0022D936 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD4201D01602761900CABF07 /* libTestFlight.a */; };
 		FDD65DD51630AB4E0022D936 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD961D891612632200CDEB89 /* FacebookSDK.framework */; };
 		FDD65DD71630AB4E0022D936 /* arches.png in Resources */ = {isa = PBXBuildFile; fileRef = B208BBDB15BF63A80080705D /* arches.png */; };
@@ -1184,7 +1185,6 @@
 		FDD65EE11630ABAA0022D936 /* SSPullToRefreshDefaultContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BEC515BF63E00080705D /* SSPullToRefreshDefaultContentView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FDD65EE21630ABAA0022D936 /* SSPullToRefreshSimpleContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BEC715BF63E00080705D /* SSPullToRefreshSimpleContentView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FDD65EE31630ABAA0022D936 /* SSPullToRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BEC915BF63E00080705D /* SSPullToRefreshView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		FDD65EE41630ABAA0022D936 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BF7E15BF63E00080705D /* TTTAttributedLabel.m */; };
 		FDD65EE61630ABAA0022D936 /* CDIWebSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B23261A915C207FF00D455EF /* CDIWebSignInViewController.m */; };
 		FDD65EE71630ABAA0022D936 /* CDIWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2AD032015C493C100D9B909 /* CDIWebViewController.m */; };
 		FDD65EE81630ABAA0022D936 /* CDISettingsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B29011CD15C505DA008FC626 /* CDISettingsTableViewCell.m */; };
@@ -1357,7 +1357,6 @@
 		FDD65FBD1630ABAA0022D936 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B208C1F215BF64630080705D /* SystemConfiguration.framework */; };
 		FDD65FBE1630ABAA0022D936 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B208C1F315BF64630080705D /* UIKit.framework */; };
 		FDD65FBF1630ABAA0022D936 /* libSSToolkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B208C1DF15BF63E30080705D /* libSSToolkit.a */; };
-		FDD65FC01630ABAA0022D936 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB2DB0115F040A400669CB5 /* Crashlytics.framework */; };
 		FDD65FC11630ABAA0022D936 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD4201D01602761900CABF07 /* libTestFlight.a */; };
 		FDD65FC21630ABAA0022D936 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD961D891612632200CDEB89 /* FacebookSDK.framework */; };
 		FDD65FC41630ABAA0022D936 /* arches.png in Resources */ = {isa = PBXBuildFile; fileRef = B208BBDB15BF63A80080705D /* arches.png */; };
@@ -1614,7 +1613,6 @@
 		FDD660CE1630AC250022D936 /* SSPullToRefreshDefaultContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BEC515BF63E00080705D /* SSPullToRefreshDefaultContentView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FDD660CF1630AC250022D936 /* SSPullToRefreshSimpleContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BEC715BF63E00080705D /* SSPullToRefreshSimpleContentView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FDD660D01630AC250022D936 /* SSPullToRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BEC915BF63E00080705D /* SSPullToRefreshView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		FDD660D11630AC250022D936 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BF7E15BF63E00080705D /* TTTAttributedLabel.m */; };
 		FDD660D31630AC250022D936 /* CDIWebSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B23261A915C207FF00D455EF /* CDIWebSignInViewController.m */; };
 		FDD660D41630AC250022D936 /* CDIWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2AD032015C493C100D9B909 /* CDIWebViewController.m */; };
 		FDD660D51630AC250022D936 /* CDISettingsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B29011CD15C505DA008FC626 /* CDISettingsTableViewCell.m */; };
@@ -1787,7 +1785,6 @@
 		FDD661AA1630AC250022D936 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B208C1F215BF64630080705D /* SystemConfiguration.framework */; };
 		FDD661AB1630AC250022D936 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B208C1F315BF64630080705D /* UIKit.framework */; };
 		FDD661AC1630AC250022D936 /* libSSToolkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B208C1DF15BF63E30080705D /* libSSToolkit.a */; };
-		FDD661AD1630AC250022D936 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB2DB0115F040A400669CB5 /* Crashlytics.framework */; };
 		FDD661AE1630AC250022D936 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD4201D01602761900CABF07 /* libTestFlight.a */; };
 		FDD661AF1630AC250022D936 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD961D891612632200CDEB89 /* FacebookSDK.framework */; };
 		FDD661B11630AC250022D936 /* arches.png in Resources */ = {isa = PBXBuildFile; fileRef = B208BBDB15BF63A80080705D /* arches.png */; };
@@ -2211,7 +2208,6 @@
 		c2b447b8df2dbac4f251a686 /* create_title.png in Resources */ = {isa = PBXBuildFile; fileRef = FDD90795161515EB00194652 /* create_title.png */; };
 		c31a32f0100f779e2f10313a /* call_button_keyline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD5B522F1644823400D764FA /* call_button_keyline@2x.png */; };
 		c3209a9a61abdf79aa36444c /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD662A01631DC8D0022D936 /* NSString+HTML.m */; };
-		c3d7c340cca442d2b93dfb6d /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB2DB0115F040A400669CB5 /* Crashlytics.framework */; };
 		c435f13e6b9f18d68f34cf20 /* IPIActivityCellHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FDE1EB83160B326D005C7F1B /* IPIActivityCellHelper.m */; };
 		c4a150951f0ab1eaa995b63d /* bookmark_x@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDD907651614F49000194652 /* bookmark_x@2x.png */; };
 		c4e0195b32f15b5a017d2c41 /* dislike_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDAAD95F161DF99F009BF670 /* dislike_icon@2x.png */; };
@@ -2307,7 +2303,6 @@
 		f7294b7ea1decc6186a0e7d8 /* StaticTextFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1CDBAB160844A20057F483 /* StaticTextFieldTableViewCell.m */; };
 		f7c854113d1839de3e0748b5 /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67CD4F1649EF88000D3F49 /* UIScrollView+SVInfiniteScrolling.m */; };
 		f7d1281a58e1b590d1aa4a5c /* cancel_button.png in Resources */ = {isa = PBXBuildFile; fileRef = FDD9078F161515EB00194652 /* cancel_button.png */; };
-		f86e0ba84234c13eca9735ce /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B208BF7E15BF63E00080705D /* TTTAttributedLabel.m */; };
 		f94414ca82c1bf45796749cc /* IPICollaboratorRankingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD558900161E459900D190D4 /* IPICollaboratorRankingsViewController.m */; };
 		f97610ce6aa8dbcbf21307a9 /* logout_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FD34DD04161A0B550010ADF8 /* logout_icon.png */; };
 		f9a7b119d6b3883bf1d40585 /* DCCrossHairView.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD99E5115D4CED1003BB635 /* DCCrossHairView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -2576,8 +2571,6 @@
 		B208BEC815BF63E00080705D /* SSPullToRefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSPullToRefreshView.h; sourceTree = "<group>"; };
 		B208BEC915BF63E00080705D /* SSPullToRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSPullToRefreshView.m; sourceTree = "<group>"; };
 		B208BF6715BF63E00080705D /* SSToolkit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = SSToolkit.xcodeproj; sourceTree = "<group>"; };
-		B208BF7D15BF63E00080705D /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
-		B208BF7E15BF63E00080705D /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
 		B208C1EC15BF64630080705D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		B208C1ED15BF64630080705D /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		B208C1EE15BF64630080705D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -2935,6 +2928,8 @@
 		FD7B96D4163B5B50002018A8 /* toggle_ranking_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toggle_ranking_active.png; sourceTree = "<group>"; };
 		FD7B96D5163B5B50002018A8 /* toggle_ranking_active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toggle_ranking_active@2x.png"; sourceTree = "<group>"; };
 		FD81800F16697A630010D0AE /* libSocketRocket.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSocketRocket.a; path = "../../../Library/Developer/Xcode/DerivedData/InsiderPages_iOS-akgtsvjfeekmrxfckihlbumooshg/Build/Products/Debug-iphoneos/libSocketRocket.a"; sourceTree = "<group>"; };
+		FD81801216697EE70010D0AE /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
+		FD81801316697EE70010D0AE /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
 		FD91BFE215D5C888008158A6 /* IPIActivityPageTableViewFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIActivityPageTableViewFooter.h; sourceTree = "<group>"; };
 		FD91BFE315D5C888008158A6 /* IPIActivityPageTableViewFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIActivityPageTableViewFooter.m; sourceTree = "<group>"; };
 		FD961D6916125B3700CDEB89 /* iOSHierarchyViewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSHierarchyViewer.h; sourceTree = "<group>"; };
@@ -2989,7 +2984,6 @@
 		FDB2672A1627608A0040C5FB /* locked_tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "locked_tab@2x.png"; sourceTree = "<group>"; };
 		FDB2672D162763710040C5FB /* IPIPageRankActionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIPageRankActionViewController.h; sourceTree = "<group>"; };
 		FDB2672E162763710040C5FB /* IPIPageRankActionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPIPageRankActionViewController.m; sourceTree = "<group>"; };
-		FDB2DB0115F040A400669CB5 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		FDB3000A15F90B070003CC60 /* FireUIPagedScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FireUIPagedScrollView.h; sourceTree = "<group>"; };
 		FDB3000B15F90B070003CC60 /* FireUIPagedScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FireUIPagedScrollView.m; sourceTree = "<group>"; };
 		FDB300A015F90EFC0003CC60 /* IPIBookmarkBaseManagedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPIBookmarkBaseManagedViewController.h; sourceTree = "<group>"; };
@@ -3223,7 +3217,6 @@
 				B208C1FA15BF64630080705D /* SystemConfiguration.framework in Frameworks */,
 				B208C1FB15BF64630080705D /* UIKit.framework in Frameworks */,
 				B208C1EB15BF64630080705D /* libSSToolkit.a in Frameworks */,
-				FDB2DB0215F040A400669CB5 /* Crashlytics.framework in Frameworks */,
 				FD4201D21602761900CABF07 /* libTestFlight.a in Frameworks */,
 				FD961D8A1612632200CDEB89 /* FacebookSDK.framework in Frameworks */,
 			);
@@ -3263,7 +3256,6 @@
 				FDD65DD01630AB4E0022D936 /* SystemConfiguration.framework in Frameworks */,
 				FDD65DD11630AB4E0022D936 /* UIKit.framework in Frameworks */,
 				FDD65DD21630AB4E0022D936 /* libSSToolkit.a in Frameworks */,
-				FDD65DD31630AB4E0022D936 /* Crashlytics.framework in Frameworks */,
 				FDD65DD41630AB4E0022D936 /* libTestFlight.a in Frameworks */,
 				FDD65DD51630AB4E0022D936 /* FacebookSDK.framework in Frameworks */,
 			);
@@ -3305,7 +3297,6 @@
 				FDD65FBD1630ABAA0022D936 /* SystemConfiguration.framework in Frameworks */,
 				FDD65FBE1630ABAA0022D936 /* UIKit.framework in Frameworks */,
 				FDD65FBF1630ABAA0022D936 /* libSSToolkit.a in Frameworks */,
-				FDD65FC01630ABAA0022D936 /* Crashlytics.framework in Frameworks */,
 				FDD65FC11630ABAA0022D936 /* libTestFlight.a in Frameworks */,
 				FDD65FC21630ABAA0022D936 /* FacebookSDK.framework in Frameworks */,
 			);
@@ -3345,7 +3336,6 @@
 				FDD661AA1630AC250022D936 /* SystemConfiguration.framework in Frameworks */,
 				FDD661AB1630AC250022D936 /* UIKit.framework in Frameworks */,
 				FDD661AC1630AC250022D936 /* libSSToolkit.a in Frameworks */,
-				FDD661AD1630AC250022D936 /* Crashlytics.framework in Frameworks */,
 				FDD661AE1630AC250022D936 /* libTestFlight.a in Frameworks */,
 				FDD661AF1630AC250022D936 /* FacebookSDK.framework in Frameworks */,
 			);
@@ -3385,7 +3375,6 @@
 				47c7ae5f71b2e06633848c89 /* SystemConfiguration.framework in Frameworks */,
 				9426838efdc761e12c528fcd /* UIKit.framework in Frameworks */,
 				886fd95b3f98567e65731a96 /* libSSToolkit.a in Frameworks */,
-				c3d7c340cca442d2b93dfb6d /* Crashlytics.framework in Frameworks */,
 				5c877986869f0847146ec77a /* libTestFlight.a in Frameworks */,
 				20dc943390190c6cfe7abf38 /* FacebookSDK.framework in Frameworks */,
 				fde549f88eaf2e2d3634a15d /* calabash.framework in Frameworks */,
@@ -3553,15 +3542,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B208BF7915BF63E00080705D /* TTTAttributedLabel */ = {
-			isa = PBXGroup;
-			children = (
-				B208BF7D15BF63E00080705D /* TTTAttributedLabel.h */,
-				B208BF7E15BF63E00080705D /* TTTAttributedLabel.m */,
-			);
-			path = TTTAttributedLabel;
-			sourceTree = "<group>";
-		};
 		B208C1FC15BF64690080705D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -3573,7 +3553,6 @@
 				FD961D8D1612638000CDEB89 /* AdSupport.framework */,
 				FD961D8B1612636700CDEB89 /* Accounts.framework */,
 				FD961D891612632200CDEB89 /* FacebookSDK.framework */,
-				FDB2DB0115F040A400669CB5 /* Crashlytics.framework */,
 				FDFC6B2F15EECDD00071299D /* AddressBook.framework */,
 				FDD954C115E24C2100F38150 /* Twitter.framework */,
 				FD547A9615DEB78A00922D5A /* CoreLocation.framework */,
@@ -4479,6 +4458,16 @@
 			name = Buttons;
 			sourceTree = "<group>";
 		};
+		FD81801116697EE70010D0AE /* TTTAttributedLabel */ = {
+			isa = PBXGroup;
+			children = (
+				FD81801216697EE70010D0AE /* TTTAttributedLabel.h */,
+				FD81801316697EE70010D0AE /* TTTAttributedLabel.m */,
+			);
+			name = TTTAttributedLabel;
+			path = TTTAttributedLabel/TTTAttributedLabel;
+			sourceTree = "<group>";
+		};
 		FD961D6816125B3700CDEB89 /* Hierarchy Viewer 1.4.6 */ = {
 			isa = PBXGroup;
 			children = (
@@ -4737,6 +4726,7 @@
 		FDD99E3815D4CEBB003BB635 /* Production */ = {
 			isa = PBXGroup;
 			children = (
+				FD81801116697EE70010D0AE /* TTTAttributedLabel */,
 				FD46C7EF162F285A002D9E36 /* iCarousel */,
 				FD234638161F88A8007F6484 /* NYXImagesKit */,
 				FD1CDBA2160844A20057F483 /* JMStaticContentTableViewController */,
@@ -4755,7 +4745,6 @@
 				FDAEF96B15D1DB4E009FAD52 /* InsiderPagesKit */,
 				B208BEBF15BF63E00080705D /* SSPullToRefresh */,
 				B208BECA15BF63E00080705D /* SSToolkit */,
-				B208BF7915BF63E00080705D /* TTTAttributedLabel */,
 			);
 			name = Production;
 			sourceTree = "<group>";
@@ -6441,7 +6430,6 @@
 				442d043994ef4da860d1c881 /* SSPullToRefreshDefaultContentView.m in Sources */,
 				fc44317ec0b281bfce04a958 /* SSPullToRefreshSimpleContentView.m in Sources */,
 				7ad960daa9638cae3d9176bc /* SSPullToRefreshView.m in Sources */,
-				f86e0ba84234c13eca9735ce /* TTTAttributedLabel.m in Sources */,
 				f54eb416b24cefe2cb208c90 /* CDIWebSignInViewController.m in Sources */,
 				3b4a3627fc764079b17f984a /* CDIWebViewController.m in Sources */,
 				b679f3f2c976176e6b5c27c7 /* CDISettingsTableViewCell.m in Sources */,
@@ -6598,6 +6586,7 @@
 				633969711272fbab683d67de /* UIScrollView+SVPullToRefresh.m in Sources */,
 				9c1756070609a9f6077178fa /* CDIDefines.m in Sources */,
 				c0e5acd573b4250c94ca78a1 /* AFHTTPRequestOperationLogger.m in Sources */,
+				FD81801816697EE70010D0AE /* TTTAttributedLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6628,7 +6617,6 @@
 				B208C14015BF63E20080705D /* SSPullToRefreshDefaultContentView.m in Sources */,
 				B208C14115BF63E20080705D /* SSPullToRefreshSimpleContentView.m in Sources */,
 				B208C14215BF63E20080705D /* SSPullToRefreshView.m in Sources */,
-				B208C1A515BF63E20080705D /* TTTAttributedLabel.m in Sources */,
 				B23261AA15C207FF00D455EF /* CDIWebSignInViewController.m in Sources */,
 				B2AD032115C493C200D9B909 /* CDIWebViewController.m in Sources */,
 				B29011CE15C505DA008FC626 /* CDISettingsTableViewCell.m in Sources */,
@@ -6785,6 +6773,7 @@
 				FD67CD561649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m in Sources */,
 				FD67CDF51649FDDE000D3F49 /* CDIDefines.m in Sources */,
 				FDF431EA164AF1F000A9A9E3 /* AFHTTPRequestOperationLogger.m in Sources */,
+				FD81801416697EE70010D0AE /* TTTAttributedLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6815,7 +6804,6 @@
 				FDD65CF41630AB4E0022D936 /* SSPullToRefreshDefaultContentView.m in Sources */,
 				FDD65CF51630AB4E0022D936 /* SSPullToRefreshSimpleContentView.m in Sources */,
 				FDD65CF61630AB4E0022D936 /* SSPullToRefreshView.m in Sources */,
-				FDD65CF71630AB4E0022D936 /* TTTAttributedLabel.m in Sources */,
 				FDD65CF91630AB4E0022D936 /* CDIWebSignInViewController.m in Sources */,
 				FDD65CFA1630AB4E0022D936 /* CDIWebViewController.m in Sources */,
 				FDD65CFB1630AB4E0022D936 /* CDISettingsTableViewCell.m in Sources */,
@@ -6972,6 +6960,7 @@
 				FD67CD571649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m in Sources */,
 				FD67CDF61649FDDE000D3F49 /* CDIDefines.m in Sources */,
 				FDF431EB164AF1F000A9A9E3 /* AFHTTPRequestOperationLogger.m in Sources */,
+				FD81801516697EE70010D0AE /* TTTAttributedLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7002,7 +6991,6 @@
 				FDD65EE11630ABAA0022D936 /* SSPullToRefreshDefaultContentView.m in Sources */,
 				FDD65EE21630ABAA0022D936 /* SSPullToRefreshSimpleContentView.m in Sources */,
 				FDD65EE31630ABAA0022D936 /* SSPullToRefreshView.m in Sources */,
-				FDD65EE41630ABAA0022D936 /* TTTAttributedLabel.m in Sources */,
 				FDD65EE61630ABAA0022D936 /* CDIWebSignInViewController.m in Sources */,
 				FDD65EE71630ABAA0022D936 /* CDIWebViewController.m in Sources */,
 				FDD65EE81630ABAA0022D936 /* CDISettingsTableViewCell.m in Sources */,
@@ -7159,6 +7147,7 @@
 				FD67CD581649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m in Sources */,
 				FD67CDF71649FDDE000D3F49 /* CDIDefines.m in Sources */,
 				FDF431EC164AF1F000A9A9E3 /* AFHTTPRequestOperationLogger.m in Sources */,
+				FD81801616697EE70010D0AE /* TTTAttributedLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7189,7 +7178,6 @@
 				FDD660CE1630AC250022D936 /* SSPullToRefreshDefaultContentView.m in Sources */,
 				FDD660CF1630AC250022D936 /* SSPullToRefreshSimpleContentView.m in Sources */,
 				FDD660D01630AC250022D936 /* SSPullToRefreshView.m in Sources */,
-				FDD660D11630AC250022D936 /* TTTAttributedLabel.m in Sources */,
 				FDD660D31630AC250022D936 /* CDIWebSignInViewController.m in Sources */,
 				FDD660D41630AC250022D936 /* CDIWebViewController.m in Sources */,
 				FDD660D51630AC250022D936 /* CDISettingsTableViewCell.m in Sources */,
@@ -7346,6 +7334,7 @@
 				FD67CD591649EF88000D3F49 /* UIScrollView+SVPullToRefresh.m in Sources */,
 				FD67CDF81649FDDE000D3F49 /* CDIDefines.m in Sources */,
 				FDF431ED164AF1F000A9A9E3 /* AFHTTPRequestOperationLogger.m in Sources */,
+				FD81801716697EE70010D0AE /* TTTAttributedLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

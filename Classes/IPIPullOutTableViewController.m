@@ -55,7 +55,6 @@
             staticContentCell.tableViewCellSubclass = [IPIPullOutUserCell class];
             staticContentCell.cellHeight = [IPIPullOutUserCell cellHeight];
             IPKUser * user = [IPKUser currentUserInContext:[NSManagedObjectContext MR_contextForCurrentThread]];
-            
             [((IPIPullOutUserCell*)cell).profileImageView setPathToNetworkImage:[user imageProfilePathForSize:IPKUserProfileImageSizeMedium]];
             cell.textLabel.text = user.name;
             cell.accessoryType = UITableViewCellAccessoryNone;

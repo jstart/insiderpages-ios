@@ -259,14 +259,13 @@
         self.ignoreChange = YES;
         [self.tableView setUserInteractionEnabled:NO];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-            [IPKActivity deleteAllLocal];
-            self.fetchedResultsController = nil;
+//            [IPKActivity deleteAllLocal];
             [[IPKHTTPClient sharedClient] getPageActivititesWithCurrentPage:@1 perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
-                self.fetchedResultsController = nil;
                 dispatch_async(dispatch_get_main_queue(), ^{
                     self.ignoreChange = NO;
                     self.loading = NO;
                     NSLog(@"retrieved %d activity items", ((NSArray*)responseObject[@"activities"]).count);
+                    self.fetchedResultsController = nil;
                     [[self tableView] reloadData];
                     [self.tableView setUserInteractionEnabled:YES];
                 });
