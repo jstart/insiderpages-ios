@@ -16,7 +16,6 @@
 - (void)setActivity:(IPKActivity *)activity {
     if (_activity != activity) {
         _activity = activity;
-        NSLog(@"%lu", activity.top_listings.count);
 
         int count = 0;
         if (activity.top_listings.count > 3) {
@@ -33,6 +32,7 @@
         for (int i = 0; i < count; i++) {
             IPIProviderActivityCell * providerCell = [self.providerCellArray objectAtIndex:i];
             providerCell.nameLabel.text = ((IPKProvider *)[activity.top_listings objectAtIndex:i]).full_name;
+            providerCell.rankLabel.text = [NSString stringWithFormat:@"%d", i+1];
         }
     }
     [self setNeedsLayout];

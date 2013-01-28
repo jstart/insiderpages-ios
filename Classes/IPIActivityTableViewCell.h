@@ -13,7 +13,7 @@
 @property (nonatomic, strong) IPKActivity *activity;
 @property (nonatomic, strong) TTTAttributedLabel *activityLabel;
 @property (nonatomic, strong) NINetworkImageView * profileImageView;
-//@property (nonatomic, strong) UILabel * timeLabel;
+@property (nonatomic, strong) UILabel * timeLabel;
 
 +(CGFloat)heightForCellWithText:(NSString *)text;
 

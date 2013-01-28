@@ -27,35 +27,21 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {        
-        self.cellView = [[UIView alloc] initWithFrame:CGRectMake(15, 0, 290, 40)];
-        self.cellView.backgroundColor = [UIColor whiteColor];
-        self.cellView.layer.cornerRadius = 3;
-        [[self.cellView layer] setMasksToBounds:NO];
-        [[self.cellView layer] setShadowColor:[UIColor blackColor].CGColor];
-        [[self.cellView layer] setShadowOpacity:0.34f];
-        [[self.cellView layer] setShadowRadius:3.0f];
-        [[self.cellView layer] setShadowOffset:CGSizeMake(0, 1)];
-        
-        UIView *nonAlphaView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 290, 40)];
-        nonAlphaView.backgroundColor = [UIColor whiteColor];
-        nonAlphaView.layer.cornerRadius = 3;
-        [[nonAlphaView layer] setMasksToBounds:YES];
-        [self.cellView addSubview:nonAlphaView];
+        self.cellView = [[UIImageView alloc] initWithFrame:CGRectMake(48, 0, 264, 46)];
+        [self.cellView setImage:[UIImage imageNamed:@"list_item_background"]];
         [self addSubview:self.cellView];
         
-        UIView *maskedView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 290, 40)];
-        maskedView.backgroundColor = [UIColor whiteColor];
-        [nonAlphaView addSubview:maskedView];
+        self.rankLabel = [[UILabel alloc] initWithFrame:CGRectMake(12, 11, 21, 21)];
+        self.rankLabel.backgroundColor = [UIColor colorWithHexString:@"666666"];
+        self.rankLabel.font = [UIFont fontWithName:@"Myriad Web Pro" size:21];
+        self.rankLabel.textColor = [UIColor colorWithHexString:@"ffffff"];
+        [self.cellView addSubview:self.rankLabel];
         
-        self.placeIconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 11, 16)];
-        self.placeIconImageView.image = [UIImage imageNamed:@"places_icon_white"];
-        [maskedView addSubview:self.placeIconImageView];
-        
-        self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 14, 260, 14)];
-        self.nameLabel.backgroundColor = [UIColor whiteColor];
-        self.nameLabel.font = [UIFont fontWithName:@"Myriad Web Pro" size:12];
-        self.nameLabel.textColor = [UIColor colorWithHexString:@"999999"];
-        [maskedView addSubview:self.nameLabel];
+        self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(27, 15, 264-35, 14)];
+        self.nameLabel.backgroundColor = [UIColor colorWithHexString:@"666666"];
+        self.nameLabel.font = [UIFont fontWithName:@"Myriad Web Pro" size:13];
+        self.nameLabel.textColor = [UIColor colorWithHexString:@"ffffff"];
+        [self.cellView addSubview:self.nameLabel];
     }
     return self;
 }

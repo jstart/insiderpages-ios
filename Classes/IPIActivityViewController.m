@@ -91,7 +91,7 @@
     [self.tabBar setSelectedItem:[self.tabBar.items objectAtIndex:1]];
     [[self view] addSubview:self.tabBar];
 //	self.noContentView = [[CDINoListsView alloc] initWithFrame:CGRectZero];
-    self.tableView.backgroundView.backgroundColor = [UIColor standardBackgroundColor];
+    self.tableView.backgroundView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"new_pattern"]];
     
 	_fullScreenDelegate = [[YIFullScreenScroll alloc] initWithViewController:self];
     _fullScreenDelegate.shouldShowUIBarsOnScrollUp = YES;
@@ -260,7 +260,7 @@
         [self.tableView setUserInteractionEnabled:NO];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
 //            [IPKActivity deleteAllLocal];
-            [[IPKHTTPClient sharedClient] getPageActivititesWithCurrentPage:@1 perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
+            [[IPKHTTPClient sharedClient] getPageActivititesWithCurrentPage:@1 perPage:@10 success:^(AFJSONRequestOperation *operation, id responseObject) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     self.ignoreChange = NO;
                     self.loading = NO;
@@ -312,18 +312,20 @@
         }
         self.ignoreChange = YES;
 
-        [[IPKHTTPClient sharedClient] getPageActivititesWithCurrentPage:self.currentPage perPage:self.perPage success:^(AFJSONRequestOperation *operation, id responseObject) {
-            self.fetchedResultsController = nil;
+        [[IPKHTTPClient sharedClient] getPageActivititesWithCurrentPage:self.currentPage perPage:@10 success:^(AFJSONRequestOperation *operation, id responseObject) {
             NSLog(@"retrieved %d activity items", ((NSArray*)responseObject[@"activities"]).count);
-            dispatch_async(dispatch_get_main_queue(), ^{
+            dispatch_sync(dispatch_get_main_queue(), ^{
                 self.loading = NO;
                 self.ignoreChange = NO;
+                self.fetchedResultsController = nil;
+                [self.tableView.pullToRefreshView stopAnimating];
                 [[self tableView] reloadData];
             });
         } failure:^(AFJSONRequestOperation *operation, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [SSRateLimit resetLimitForName:@"refresh-activity"];
                 self.loading = NO;
+                [self.tableView.pullToRefreshView stopAnimating];
             });
         }];
     };
@@ -612,7 +614,7 @@
 
 - (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView
 {
-    return [_fullScreenDelegate scrollViewShouldScrollToTop:scrollView];;
+    return [_fullScreenDelegate scrollViewShouldScrollToTop:scrollView];
 }
 
 - (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView

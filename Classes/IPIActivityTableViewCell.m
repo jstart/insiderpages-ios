@@ -38,7 +38,7 @@
         [self.profileImageView setUserInteractionEnabled:YES];
         self.profileImageView.layer.borderWidth = 1;
         self.profileImageView.layer.borderColor = [UIColor whiteColor].CGColor;
-        [self.profileImageView setFrame:CGRectMake(0, 0, 45, 45)];
+        [self.profileImageView setFrame:CGRectMake(0, 0, 21, 21)];
         [self.profileImageView setInitialImage:[UIImage imageNamed:@"reload-button"]];
 
         UITapGestureRecognizer * tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didSelectUser)];
@@ -52,34 +52,39 @@
         [[profileView layer] setShadowOffset:CGSizeMake(0, 2)];
         
         CGRect profileFrame = profileView.frame;
-        profileFrame.origin.x = 15;
-        profileFrame.origin.y = 0;
+        profileFrame.origin.x = 16;
+        profileFrame.origin.y = 28;
         profileView.frame = profileFrame;
 
         [profileView addSubview:self.profileImageView];
                 
         [self addSubview:profileView];
         
-        self.activityLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(64, 15, 240, 45)];
+        UIImageView * activityMessageView = [[UIImageView alloc] initWithFrame:CGRectMake(48, 0, 264, 69)];
+        [activityMessageView setImage:[UIImage imageNamed:@"activity_box"]];
+        
+        [self addSubview:activityMessageView];
+        
+        self.activityLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(7, 11, 240, 45)];
         self.activityLabel.backgroundColor = [UIColor standardBackgroundColor];
         self.activityLabel.numberOfLines = 3;
-        self.activityLabel.verticalAlignment = TTTAttributedLabelVerticalAlignmentBottom;
+        self.activityLabel.verticalAlignment = TTTAttributedLabelVerticalAlignmentTop;
         self.activityLabel.contentMode = UIViewContentModeBottom;
-        [self addSubview:self.activityLabel];
-//        self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width-80, 5, 80, 20)];
-//        self.timeLabel.backgroundColor = [UIColor clearColor];
-//        [self.timeLabel setFont:[UIFont systemFontOfSize:[UIFont smallSystemFontSize]]];
-//        [self addSubview:self.timeLabel];
+        [activityMessageView addSubview:self.activityLabel];
+        self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width-80, 5, 80, 20)];
+        self.timeLabel.backgroundColor = [UIColor clearColor];
+        [self.timeLabel setFont:[UIFont systemFontOfSize:[UIFont smallSystemFontSize]]];
+        [self addSubview:self.timeLabel];
 	}
 	return self;
 }
 
 - (void) layoutSubviews {
     [super layoutSubviews];
-    self.activityLabel.center = CGPointMake(0, self.profileImageView.center.y);
-    CGRect textLabelFrame = self.activityLabel.frame;
-    textLabelFrame.origin.x = 64;
-    self.activityLabel.frame = textLabelFrame;
+//    self.activityLabel.center = CGPointMake(0, self.profileImageView.center.y);
+//    CGRect textLabelFrame = self.activityLabel.frame;
+//    textLabelFrame.origin.x = 64;
+//    self.activityLabel.frame = textLabelFrame;
 }
 
 +(CGFloat)heightForCellWithText:(NSString *)text{

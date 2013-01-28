@@ -71,16 +71,16 @@
     [button setBackgroundImage:image forState:UIControlStateNormal];
     [button setAdjustsImageWhenHighlighted:YES];
     
-    button.frame= CGRectMake(0.0, 0.0, image.size.width, image.size.height);
+    button.frame= CGRectMake(0.0, 5.0, image.size.width, image.size.height);
     
     [button addTarget:self action:@selector(presentBookmarkViewController) forControlEvents:UIControlEventTouchUpInside];
     [button addTarget:self action:@selector(presentBookmarkViewController) forControlEvents:UIControlEventTouchDragInside];
 
-    UIView *v=[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, image.size.width + 7, image.size.height) ];
+    UIView *v=[[UIView alloc] initWithFrame:CGRectMake(0.0, 10.0, image.size.width + 7, image.size.height) ];
     
     [v addSubview:button];
     
-    self.notificationCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, 11, 20, 20)];
+    self.notificationCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, 14, 20, 20)];
     [self.notificationCountLabel setFont:[UIFont fontWithName:@"ArialRoundedMTBold" size:12]];
     [self.notificationCountLabel setTextAlignment:NSTextAlignmentCenter];
     [self.notificationCountLabel setContentMode:UIViewContentModeCenter];
@@ -90,7 +90,7 @@
     
     UIBarButtonItem * bookmarkButton = [[UIBarButtonItem alloc] initWithCustomView:v];
     CGRect frame = [[bookmarkButton customView] frame];
-    frame.origin.y = frame.origin.y - 17;
+//    frame.origin.y = frame.origin.y - 17;
     [bookmarkButton customView].frame = frame;
     self.navigationItem.rightBarButtonItem = bookmarkButton;
     IPKUser * currentUser = [IPKUser currentUserInContext:[NSManagedObjectContext MR_defaultContext]];

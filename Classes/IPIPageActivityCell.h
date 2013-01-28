@@ -13,12 +13,14 @@
 
 @property (nonatomic, strong) IPKPage * page;
 
-@property (strong, nonatomic) NINetworkImageView * coverImageView;
 @property (strong, nonatomic) UILabel * nameLabel;
+@property (strong, nonatomic) UILabel * descriptionLabel;
+@property (strong, nonatomic) UILabel * timeLabel;
+
 @property (strong, nonatomic) UIImageView * placeIconImageView;
 @property (strong, nonatomic) UILabel * placeNumberLabel;
-@property (strong, nonatomic) UIImageView * likeIconImageView;
-@property (strong, nonatomic) UILabel * likeNumberLabel;
+@property (strong, nonatomic) UIImageView * followerIconImageView;
+@property (strong, nonatomic) UILabel * followerNumberLabel;
 @property (strong, nonatomic) UIImageView * commentIconImageView;
 @property (strong, nonatomic) UILabel * commentNumberLabel;
 

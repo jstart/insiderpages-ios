@@ -27,7 +27,7 @@
 
 #if TARGET_IPHONE_SIMULATOR
     #import "DCIntrospect.h"
-    #import <PonyDebugger/PonyDebugger.h>
+//    #import <PonyDebugger/PonyDebugger.h>
 #endif
 
 @interface IPIAppDelegate ()
@@ -53,8 +53,8 @@
     
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"InsiderPages.sqlite"];
 //    NSLog(@"%@",[[NSManagedObjectContext MR_contextForCurrentThread] persistentStoreCoordinator].managedObjectModel.entities);
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDataModelChange:) name:NSManagedObjectContextObjectsDidChangeNotification object:[NSManagedObjectContext MR_contextForCurrentThread]];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDataModelChange:) name:NSManagedObjectContextDidSaveNotification object:[NSManagedObjectContext MR_contextForCurrentThread]];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDataModelChange:) name:NSManagedObjectContextObjectsDidChangeNotification object:[NSManagedObjectContext MR_contextForCurrentThread]];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDataModelChange:) name:NSManagedObjectContextDidSaveNotification object:[NSManagedObjectContext MR_contextForCurrentThread]];
     [[NSManagedObjectContext MR_contextForCurrentThread] setMergePolicy:NSErrorMergePolicy];
     [self openSessionCheckCache:YES];
 
@@ -95,16 +95,16 @@
     #if TARGET_IPHONE_SIMULATOR
         [[DCIntrospect sharedIntrospector] start];
  
-        PDDebugger *debugger = [PDDebugger defaultInstance];
-        [debugger enableNetworkTrafficDebugging];
-        [debugger forwardAllNetworkTraffic];
-        [debugger enableCoreDataDebugging];
-        [debugger addManagedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread]];
-        // Enable View Hierarchy debugging. This will swizzle UIView methods to monitor changes in the hierarchy
-        // Choose a few UIView key paths to display as attributes of the dom nodes
-        [debugger enableViewHierarchyDebugging];
-        [debugger setDisplayedViewAttributeKeyPaths:@[@"frame", @"hidden", @"alpha", @"opaque"]];
-        [debugger connectToURL:[NSURL URLWithString:@"ws://localhost:9000/device"]];
+//        PDDebugger *debugger = [PDDebugger defaultInstance];
+//        [debugger enableNetworkTrafficDebugging];
+//        [debugger forwardAllNetworkTraffic];
+//        [debugger enableCoreDataDebugging];
+//        [debugger addManagedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread]];
+//        // Enable View Hierarchy debugging. This will swizzle UIView methods to monitor changes in the hierarchy
+//        // Choose a few UIView key paths to display as attributes of the dom nodes
+//        [debugger enableViewHierarchyDebugging];
+//        [debugger setDisplayedViewAttributeKeyPaths:@[@"frame", @"hidden", @"alpha", @"opaque"]];
+//        [debugger connectToURL:[NSURL URLWithString:@"ws://localhost:9000/device"]];
     #endif
 //    [iOSHierarchyViewer start];
 //    [iOSHierarchyViewer addContext:[NSManagedObjectContext MR_contextForCurrentThread] name:@"Root managed context"];
@@ -143,7 +143,6 @@
     NSSet *deletedObjects = [[note userInfo] objectForKey:NSDeletedObjectsKey];
     NSSet *insertedObjects = [[note userInfo] objectForKey:NSInsertedObjectsKey];
   
-  // Do something in response to this
     if (updatedObjects.count > 0){
 //        NSLog(@"Updated: %d Objects: %@", updatedObjects.count, updatedObjects);
     }
@@ -301,12 +300,18 @@
 {
     NSArray *permissions = [NSArray arrayWithObjects:@"email", @"user_location", nil];
     
-    [FBSession openActiveSessionWithReadPermissions:permissions
-                                       allowLoginUI:YES
+    [FBSession openActiveSessionWithPermissions:permissions allowLoginUI:YES
                                   completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
                                       /* handle success + failure in block */
-                                      NSLog(@"%@", error);
-                                      NSLog(@"%@", session);
+                                      if (error) {
+                                          NSLog(@"%@", error);
+                                          NSLog(@"%@", session);
+                                      }
+                                      
+                                      if (status == FBSessionStateClosed){
+                                          NSLog(@"Session closed");
+                                      }
+                                      
                                       if (status == FBSessionStateOpen) {
                                           if (![[NSUserDefaults standardUserDefaults] objectForKey:@"FBUserId"]) {
                                               [self registerOrLogin];
@@ -334,25 +339,24 @@
         }
             break;
         case FBSessionStateClosed:
-            break;
-        case FBSessionStateClosedLoginFailed:
-
-            [self openSessionCheckCache:NO];
+            
+        case FBSessionStateClosedLoginFailed: {
             [FBSession.activeSession closeAndClearTokenInformation];
+        }
             break;
         default:
             break;
     }
     
     if (error) {
-        UIAlertView *alertView = [[UIAlertView alloc]
-                                  initWithTitle:@"Error"
-                                  message:error.localizedDescription
-                                  delegate:nil
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-        [alertView show];
-    }    
+//        UIAlertView *alertView = [[UIAlertView alloc]
+//                                  initWithTitle:@"Error"
+//                                  message:error.localizedDescription
+//                                  delegate:nil
+//                                  cancelButtonTitle:@"OK"
+//                                  otherButtonTitles:nil];
+//        [alertView show];
+    }
 }
 
 - (void) openSessionCheckCache:(BOOL)check {

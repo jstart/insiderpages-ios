@@ -38,7 +38,7 @@
 }
 
 +(UIColor *)standardBackgroundColor{
-    return  [self colorWithHexString:@"eeeeee"];
+    return  [self colorWithHexString:@"e9e9e9"];
 }
 
 +(UIColor *)pulloutBackgroundColor{

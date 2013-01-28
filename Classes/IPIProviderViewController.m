@@ -152,20 +152,21 @@
 }
 
 - (Class)entityClass {
-    return [IPKTeamMembership class];
+    return [IPKPage class];
 }
 
 - (NSPredicate *)predicate {
-	return [NSPredicate predicateWithFormat:@"listing.remoteID == %@", self.provider.remoteID];
+//	return [NSPredicate predicateWithFormat:@"ANY teamMemberships.listing == %@", ];
+    return [NSPredicate predicateWithFormat:@"(0 != SUBQUERY(teamMemberships, $teamMembership, $teamMembership.listing == %@).@count)", self.provider];
 }
 
 -(NSArray *)sortDescriptors{
-    return @[[NSSortDescriptor sortDescriptorWithKey:@"team_id" ascending:YES]];
+    return @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 	IPIPageActivityCell *pageCell = (IPIPageActivityCell *)cell;
-	pageCell.page = ((IPKTeamMembership*)[self objectForViewIndexPath:indexPath]).team;
+	pageCell.page = ((IPKPage*)[self objectForViewIndexPath:indexPath]);
 }
 
 #pragma mark - UITableViewDataSource
@@ -261,6 +262,10 @@
     addToPageViewController.provider = self.provider;
     UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:addToPageViewController];
     [self presentModalViewController:navController animated:YES];
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller{
+//    NSLog(@"%@", controller.fetchedObjects);
 }
 
 @end

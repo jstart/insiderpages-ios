@@ -10,9 +10,9 @@
 
 @interface IPIProviderActivityCell : IPIAbstractActivityCell
 
-@property (nonatomic, strong) UIView * cellView;
+@property (nonatomic, strong) UIImageView * cellView;
 
-@property (nonatomic, strong) UIImageView * placeIconImageView;
+@property (nonatomic, strong) UILabel * rankLabel;
 
 @property (nonatomic, strong) UILabel * nameLabel;
 

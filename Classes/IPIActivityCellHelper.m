@@ -106,7 +106,7 @@
 
 +(Class)headerViewClassForActivity:(IPKActivity*)activity{
     if ([activity trackableType] == IPKTrackableTypeProvider || [activity trackableType] == IPKTrackableTypeCgListing){
-        return [IPIMiniPageActivityCell class];
+        return [IPIActivityTableViewCell class];
     }else if ([activity trackableType] == IPKTrackableTypeUser){
         return [IPIUserActivityCell class];
     }
